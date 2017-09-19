@@ -1,0 +1,27 @@
+# -*- mode: org -*-
+# -*- coding: utf-8 -*-
+#+TITLE: Internship with Benoit Baudry
+#+DATE:
+#+AUTHOR: Simon Bihel
+#+EMAIL: [[mailto:simon.bihel@ens-rennes.fr]]
+#+WEBSITE: [[simonbihel.me]]
+#+LINK: [[https://github.com/sbihel/internship_amplification]]
+#+LANGUAGE: en
+
+* Introduction
+
+* Findings
+** Bibliography
+*** Writing
+
+*** References
+
+** Contribution
+
+* Development
+
+* Global Goals
+
+* Journal
+
+* Conclusion
