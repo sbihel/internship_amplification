@@ -23,5 +23,22 @@
 * Global Goals
 
 * Journal
+** <2017-09-18 Mon>--<2017-09-24 Sun>
+*** Things Done
+- Read /Search-based software testing: Past, present and future/
+  ([[http://mcminn.io/publications/c18.pdf][mcminn2011search]])
+  + Already read from previous internship
+- Read /B-Refactoring: Automatic Test Code Refactoring to Improve Dynamic Analysis/
+  ([[https://hal.archives-ouvertes.fr/hal-01309004/file/banana-refactoring.pdf][xuan2016b]])
+- Read /Test data regeneration: generating new test data from existing test data/
+  ([[http://www0.cs.ucl.ac.uk/staff/mharman/stvr-regeneration.pdf][yoo2012test]])
+- Read /The Emerging Field of Test Amplification: A Survey/
+  ([[https://arxiv.org/pdf/1705.10692.pdf][danglot2017emerging]])
+- Read /Erlang Code Evolution Control/
+  ([[https://arxiv.org/pdf/1709.05291.pdf][arXiv:1709.05291]])
+*** Blocking Points
+*** Planned Work
+- [ ] Read papers
+- [ ] Meeting with Benoit <2017-09-22 Fri 15:00-15:30>
 
 * Conclusion
