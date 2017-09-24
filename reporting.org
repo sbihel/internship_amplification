@@ -25,6 +25,18 @@
 * Journal
 ** <2017-09-18 Mon>--<2017-09-24 Sun>
 *** Things Done
+- Meeting with Benoit
+  + [[https://github.com/STAMP-project/dspot/issues/187][1]], [[https://github.com/STAMP-project/dspot/issues/129][2]], [[https://github.com/STAMP-project/dspot/issues/54][3]] issues for possible work to do
+  + 1 possible work: explain if a mutant isn't killed because of oracle or input
+  + focus on mutation (e.g. mutation score)
+  + work will be on [[https://github.com/STAMP-project/dspot][Dspot]] and [[https://github.com/STAMP-project/pitest-descartes][PIT]].
+*** Blocking Points
+*** Planned Work
+- [ ] Read papers
+- [X] Meeting with Benoit <2017-09-22 Fri 15:00-15:30>
+
+** <2017-09-25 Mon>--<2017-10-01 Sun>
+*** Things Done
 - Read /Search-based software testing: Past, present and future/
   ([[http://mcminn.io/publications/c18.pdf][mcminn2011search]])
   + Already read from previous internship
@@ -38,14 +50,10 @@
   ([[https://arxiv.org/pdf/1709.05291.pdf][arXiv:1709.05291]])
 - Read /Genetic Improvement of Software: a Comprehensive Survey/
   ([[http://ieeexplore.ieee.org/stamp/stamp.jsp?arnumber=7911210][petke2017genetic]])
-- Meeting with Benoit
-  + [[https://github.com/STAMP-project/dspot/issues/187][1]], [[https://github.com/STAMP-project/dspot/issues/129][2]], [[https://github.com/STAMP-project/dspot/issues/54][3]] issues for possible work to do
-  + 1 possible work: explain if a mutant isn't killed because of oracle or input
-  + focus on mutation (e.g. mutation score)
 *** Blocking Points
 *** Planned Work
 - [ ] Read papers
-- [X] Meeting with Benoit <2017-09-22 Fri 15:00-15:30>
+- [ ] Think of issues to address ([[https://github.com/STAMP-project/dspot/issues/187][1]], [[https://github.com/STAMP-project/dspot/issues/129][2]], [[https://github.com/STAMP-project/dspot/issues/54][3]])
 
 ** <2017-10-09 Mon>--<2017-10-15 Sun>
 *** Things Done
