@@ -85,25 +85,29 @@
   + More details than we can find in baudry2015dspot
 - Meeting with Benoit
   + The purpose of DSpot has shifted right?
-    - interesting to talk about the history in bibliography? Provably not
-  + Enough space to talk about related work?
+    - interesting to talk about the history in bibliography? No, there is a new
+      paper
+  + Enough space to talk about related work? present a few papers in details and
+    cite others
   + Current organisation of bibliography
     - General techniques
       + Definitions
       + Mutants
       + etc
     - Useful tools
-      + DSpot (high level, just evoke Spon)
+      + DSpot
+  + do extensive evlauation (comparison from scratch vs amplification)
+  + find literals to help tests
+  + add mutation operator for specific data structures
+  + stack mutations
+  + add explanations
+  + 3 big open problems
 *** Blocking Points
 *** Planned Work
 - [ ] Read papers
 - [ ] Think of issues to address ([[https://github.com/STAMP-project/dspot/issues/187][1]], [[https://github.com/STAMP-project/dspot/issues/129][2]], [[https://github.com/STAMP-project/dspot/issues/54][3]])
-- [ ] Meeting with Benoit <2017-11-23 Thu 15:00-15:30>
-
-** <2017-10-09 Mon>--<2017-10-15 Sun>
-*** Things Done
-*** Blocking Points
-*** Planned Work
-- [ ] Set a meeting with Benoit
+- [X] Meeting with Benoit <2017-11-23 Thu 15:00-16:00>
+- [ ] Send link to repo
+- [ ] Ask Maud about plane tickets refund
 
 * Conclusion
