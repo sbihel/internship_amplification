@@ -1,0 +1,48 @@
+\documentclass{proc}
+
+\usepackage[pdftex]{graphicx}
+\graphicspath{{img/}}
+
+\usepackage{hyperref}
+\usepackage{url} \urlstyle{sf}
+\newcommand{\email}[1]{\href{mailto:#1}{#1}}
+
+\usepackage{color}
+\def\addref#1{{\color{red}$[$#1$]$}}
+\newcommand{\todo}[1]{\colorbox{red!70}{\textcolor{white}{\textbf{TODO}\ifx&#1&\else: #1\fi}}}
+\newcommand{\done}{\colorbox{ForestGreen!70}{\textcolor{white}{\textbf{DONE}}}}
+
+\title{Search-Based Test Amplification \\
+       \large Internship Bibliographic Study}
+
+\author{%
+  Simon Bihel \\ Univ. Rennes 1 \& ENS Rennes \\ \email{simon.bihel@ens-rennes.fr}%
+  \and Benoit Baudry \\ KTH Royal Institute of Technology \\ \email{baudry@kth.se}%
+}
+
+\date{February 2018}
+
+\begin{document}
+\maketitle
+
+\section*{Introduction}
+
+\section{Search-Based Software Engineering}
+
+\section{Test Suite Amplification}
+
+\section{Planned Work}
+
+\subsection{Evaluation of the Added Value of Hand-Written Tests}
+
+\subsection{Using Literals Found in Source Code}
+
+\subsection{Adding Explanations}
+
+\section*{Conclusion}
+
+
+\bibliographystyle{ieeetr}
+\bibliography{bibl}
+
+\end{document}

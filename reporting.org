@@ -35,7 +35,7 @@
 - [ ] Read papers
 - [X] Meeting with Benoit <2017-09-22 Fri 15:00-15:30>
 
-** <2017-09-25 Mon>--<2017-11-26 Sun>
+** <2017-09-25 Mon>--<2017-12-03 Sun>
 *** Things Done
 - Read /Search-based software testing: Past, present and future/
   ([[http://mcminn.io/publications/c18.pdf][mcminn2011search]])
@@ -79,7 +79,7 @@
   + TODO
 - Read /Spoon: A Library for Implementing Analyses and Transformations of Java Source Code/
   ([[https://hal.archives-ouvertes.fr/hal-01078532v2/document][hal-01078532]])
-  + TODO
+  + let's say it's like llvm/clang for now
 - Read /Tailored source code transformations to synthesize computationally diverse program variants/
   ([[https://arxiv.org/pdf/1401.7635][baudry2014tailored]])
   + More details than we can find in baudry2015dspot
@@ -102,12 +102,15 @@
   + stack mutations
   + add explanations
   + 3 big open problems
+- Read /A Systematic Literature Review on Test Amplification/
+  + TODO
+- Read /Genetic-Improvement based Unit Test Amplification for Java/
+  + TODO
 *** Blocking Points
 *** Planned Work
 - [ ] Read papers
-- [ ] Think of issues to address ([[https://github.com/STAMP-project/dspot/issues/187][1]], [[https://github.com/STAMP-project/dspot/issues/129][2]], [[https://github.com/STAMP-project/dspot/issues/54][3]])
 - [X] Meeting with Benoit <2017-11-23 Thu 15:00-16:00>
 - [ ] Send link to repo
-- [ ] Ask Maud about plane tickets refund
+- [X] Ask Maud about plane tickets refund
 
 * Conclusion
