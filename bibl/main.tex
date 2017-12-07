@@ -7,10 +7,11 @@
 \usepackage{url} \urlstyle{sf}
 \newcommand{\email}[1]{\href{mailto:#1}{#1}}
 
-\usepackage{color}
-\def\addref#1{{\color{red}$[$#1$]$}}
-\newcommand{\todo}[1]{\colorbox{red!70}{\textcolor{white}{\textbf{TODO}\ifx&#1&\else: #1\fi}}}
-\newcommand{\done}{\colorbox{ForestGreen!70}{\textcolor{white}{\textbf{DONE}}}}
+\usepackage[dvipsnames]{xcolor}
+\newcommand{\addref}[1]{\colorbox{TealBlue!100}{\textcolor{white}{\textbf{$[$\ifx&#1&\ \else#1\fi$]$}}}}
+\newcommand{\todo}[1]{\colorbox{Red!75}{\textcolor{white}{\textbf{TODO\ifx&#1&\else: #1\fi}}}}
+\newcommand{\done}{\colorbox{YellowGreen!100}{\textcolor{white}{\textbf{DONE}}}}
+\newcommand{\review}{\colorbox{YellowOrange!100}{\textcolor{white}{\textbf{REVIEW}}}}
 
 \title{Search-Based Test Amplification \\
        \large Internship Bibliographic Study}
@@ -26,20 +27,85 @@
 \maketitle
 
 \section*{Introduction}
+\label{intro}
+
+\todo{Why we test software, why we use search-based}
+
+\todo{We can assume existing large test suite}
+
+\todo{test suite evaluation}
+
+\todo{outline}
+
 
 \section{Search-Based Software Engineering}
+\label{sbse}
+\todo{intro}
+
+\subsection{Motivations}
+\label{motiv}
+\todo{}
+
+\cite{mcminn2011search}
+
+\subsection{Search-Based Optimization Algorithms}
+\label{example_algo}
+\todo{}
+
+\subsection{Application Areas}
+\label{applications}
+\todo{}
+
+\cite{danglot2017emerging}
+\cite{xuan2015dynamic}
+
 
 \section{Test Suite Amplification}
+\label{tsa}
+\todo{intro}
+
+\addref{new survey paper}
+
+\subsection{Sosies Synthesis}
+\label{sosies}
+\todo{}
+
+\cite{baudry2015dspot,baudry2015automatic,baudry2014tailored}
+
+\subsection{Test Suite Evaluation}
+\label{testsuite_eval}
+\todo{}
+
+\addref{new dspot paper}
+
+\subsection{Related Works}
+\label{related}
+\todo{}
+
+\cite{yoo2012test}
+\cite{fraser2011evosuite}
+
 
 \section{Planned Work}
+\label{planned}
+\todo{intro}
 
 \subsection{Evaluation of the Added Value of Hand-Written Tests}
+\label{evaluation}
+\todo{}
 
 \subsection{Using Literals Found in Source Code}
+\label{mutation}
+\todo{}
 
 \subsection{Adding Explanations}
+\label{explanation}
+\todo{}
+
 
 \section*{Conclusion}
+\label{conclu}
+\todo{recall what will be done, in what context}
 
 
 \bibliographystyle{ieeetr}

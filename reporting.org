@@ -44,7 +44,6 @@
   ([[https://hal.archives-ouvertes.fr/hal-01309004/file/banana-refactoring.pdf][xuan2016b]])
   + Split tests for each fragment to cover a simple part of the control flow.
   + Help with respect to fault localization.
-  + TODO
 - Read /Test data regeneration: generating new test data from existing test data/
   ([[http://www0.cs.ucl.ac.uk/staff/mharman/stvr-regeneration.pdf][yoo2012test]])
   + TODO
@@ -73,7 +72,10 @@
       different using DSpot and TDR. "
 - Read /Automatic Software Diversity in the Light of Test Suites/
   ([[https://arxiv.org/pdf/1509.00144.pdf][baudry2015automatic]])
-  + TODO
+  + analysis of common features (e.g. number of tests covering one statement)
+  + plastic behavior (have different behaviors while still remaining correct)
+    study
+  + different details compared to baudry2015dspot and baudry2014tailored
 - Read /Measuring software redundancy/
   ([[https://pdfs.semanticscholar.org/0a93/144638ebfc924550798b620835a3fc9785cf.pdf][carzaniga2015measuring]])
   + TODO
@@ -105,6 +107,12 @@
 - Read /A Systematic Literature Review on Test Amplification/
   + TODO
 - Read /Genetic-Improvement based Unit Test Amplification for Java/
+  + TODO
+- Read /Evosuite/
+  ([[http://www.evosuite.org/evosuite/][fraser2011evosuite]])
+  + State-of-the-art tool
+- Read /Dynamic Analysis can be Improved with Automatic Test Suite Refactoring/
+  ([[https://arxiv.org/pdf/1506.01883.pdf][xuan2015dynamic]])
   + TODO
 *** Blocking Points
 *** Planned Work
