@@ -1,7 +1,9 @@
-\documentclass{proc}
+\documentclass[11pt]{sdm}
 
-\usepackage[pdftex]{graphicx}
-\graphicspath{{img/}}
+\usepackage{graphicx}
+\graphicspath{{../img/}}
+
+\pagestyle{plain}
 
 \usepackage{hyperref}
 \usepackage{url} \urlstyle{sf}
@@ -13,13 +15,17 @@
 \newcommand{\done}{\colorbox{YellowGreen!100}{\textcolor{white}{\textbf{DONE}}}}
 \newcommand{\review}{\colorbox{YellowOrange!100}{\textcolor{white}{\textbf{REVIEW}}}}
 
-\title{Search-Based Test Amplification \\
-       \large Internship Bibliographic Study}
+\title{Search-Based Test Amplification}
 
-\author{%
-  Simon Bihel \\ Univ. Rennes 1 \& ENS Rennes \\ \email{simon.bihel@ens-rennes.fr}%
-  \and Benoit Baudry \\ KTH Royal Institute of Technology \\ \email{baudry@kth.se}%
-}
+\author{Simon \textsc{Bihel}}
+\supervisorOne{Benoit \textsc{Baudry}}
+\supervisorTwo{}
+\team{KTH Royal Institute of Technology}
+\school{ens-Rennes}
+
+\domain{Domain: Software Engineering}
+
+\abstract{write your abstract here}
 
 \date{February 2018}
 
@@ -29,13 +35,20 @@
 \section*{Introduction}
 \label{intro}
 
-\todo{Why we test software, why we use search-based}
+With the poor use of formal specifications for software development, programmers ensure the well-behavior of software with hand-written tests.
+Meta-heuristic optimizing techniques are used to automate the process of testing (e.g.\ generating test data).
+% target function is a software metric
 
-\todo{We can assume existing large test suite}
+With practices such as test-driven development, software projects come with strong test suites.
+Knowledge of the expected properties of the program can be extracted from the large number of test cases.
+This knowledge can be used in turn to enhance the test suite to improve certain software metrics.
 
-\todo{test suite evaluation}
+Different goals can be pursued to reduce the likelihood of bugs, to help during debugging, etc.
+The amplification can be achieved by generating variants of existing tests, modifying the tests execution, etc.
+\todo{badly written}
 
-\todo{outline}
+After explaining the basics of Search-Based Software Testing in Section~\ref{sbse} we will present how it can be used to amplify test suites in Section~\ref{tsa}.
+In Section~\ref{planned} we detail the different paths the internship could explore.
 
 
 \section{Search-Based Software Engineering}
