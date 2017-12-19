@@ -23,11 +23,23 @@
 \team{KTH Royal Institute of Technology}
 \school{ens-Rennes}
 
-\domain{Domain: Software Engineering}
+\domain{Domain: Software Engineering - Artificial Intelligence}
 
-\abstract{write your abstract here}
+\abstract{%
+With the poor use of formal specifications for software development, programmers ensure the well-behavior of software with hand-written tests.%
+Meta-heuristic optimizing techniques are used to automate the process of testing (e.g.\ generating test data).%
+%
+With practices such as test-driven development, software projects come with strong test suites.%
+Knowledge of the expected properties of the program can be extracted from the large number of test cases.%
+This knowledge can be used in turn to enhance the test suite to improve certain software metrics.%
+%
+Different goals can be pursued to reduce the likelihood of bugs, to help during debugging, etc.%
+The amplification can be achieved by generating variants of existing tests, modifying the tests execution, etc.%
+}
 
 \date{February 2018}
+
+% Ought to be 10 to 15 pages long
 
 \begin{document}
 \maketitle
@@ -53,21 +65,46 @@ In Section~\ref{planned} we detail the different paths the internship could expl
 
 \section{Search-Based Software Engineering}
 \label{sbse}
-\todo{intro}
+
+In this section we present the reasons for the emergence of Search-Based Software Engineering (SBSE) and give examples of applications.
 
 \subsection{Motivations}
 \label{motiv}
 \todo{}
 
+Software projects are continuously getting more complex.
+They often rely on informal specifications that change during the evolution of the project.
+Because of the scale and weak structure, formal methods cannot be used in many cases.
+
+In order to tackle problems such as optimization or testing, we need insightful approximating methods.
+
+Over time software engineers have developed many metrics to evaluate a piece of software and get feedback on its quality.
+
 \cite{mcminn2011search}
 
 \subsection{Search-Based Optimization Algorithms}
 \label{example_algo}
+
+To reach a software engineering goal for these complex systems we use \textit{soft-computing} (or \textit{computational intelligence}) to find inexact or sub-optimal solutions in a reasonable time.
+In~\ref{basic_algo} we present some algorithms to give an idea of the capabilities of these techniques.
+In~\ref{fitness_func} we show how we can pursue engineering goals with these optimization processes.
+
+\subsubsection{Basic algorithms}
+\label{basic_algo}
+\todo{}
+
+\subsubsection{Metrics as fitness functions}
+\label{fitness_func}
 \todo{}
 
 \subsection{Application Areas}
 \label{applications}
 \todo{}
+
+\begin{itemize}
+  \item test data generation
+  \item test data regeneration
+\end{itemize}
 
 \cite{danglot2017emerging}
 \cite{xuan2015dynamic}
@@ -75,13 +112,50 @@ In Section~\ref{planned} we detail the different paths the internship could expl
 
 \section{Test Suite Amplification}
 \label{tsa}
-\todo{intro}
+In this section we present the specific problem of enhancing an existing test suite.
+First,~\ref{motiv_tsa} exposes the motivations for trying to amplify a preexisting and seemingly strong test suite.
+Then~\tef{related} presents a few papers to give an idea of the related works.
+The works that the internship will be based on are presented in~\ref{sosies} and~\ref{testsuite_eval}.
 
 \addref{new survey paper}
+
+\subsection{Motivations}
+\label{motiv_tsa}
+\todo{}
+
+Important projects from big companies now come with extensive test suites thanks to good practices.
+It is thus reasonable to try and see if we can push even further the quality of such projects.
+
+We can see the test suite as a starting population of already good quality for our evolutionary algorithms.
+But most importantly, we can use the test suite as a set of specifications that give us knowledge about what the software is supposed to do and thus allow us to detect more bugs.
+It gives us an \textit{oracle}.
+
+Another thing we can do is enhance the test suite to make it better for certain metrics.
+
+\subsection{Related Works}
+\label{related}
+\todo{}
+
+\subsubsection{Test Data Regeneration}
+\cite{yoo2012test}
+\todo{}
+
+\subsubsection{B-Refactoring}
+\cite{xuan2016b}
+\todo{}
+
+\subsubsection{Evosuite}
+\cite{fraser2011evosuite}
+\todo{}
+
 
 \subsection{Sosies Synthesis}
 \label{sosies}
 \todo{}
+
+\begin{itemize}
+  \item
+\end{itemize}
 
 \cite{baudry2015dspot,baudry2015automatic,baudry2014tailored}
 
@@ -89,31 +163,43 @@ In Section~\ref{planned} we detail the different paths the internship could expl
 \label{testsuite_eval}
 \todo{}
 
+\begin{itemize}
+  \item
+\end{itemize}
+
 \addref{new dspot paper}
-
-\subsection{Related Works}
-\label{related}
-\todo{}
-
-\cite{yoo2012test}
-\cite{fraser2011evosuite}
 
 
 \section{Planned Work}
 \label{planned}
-\todo{intro}
+This section explains the different paths that we could explore during the internship.
 
 \subsection{Evaluation of the Added Value of Hand-Written Tests}
 \label{evaluation}
 \todo{}
 
+\begin{itemize}
+  \item explain that no objective evaluation has been made to prove the value of having a pre-existing test suite
+  \item explain what kind of experiment
+\end{itemize}
+
 \subsection{Using Literals Found in Source Code}
 \label{mutation}
 \todo{}
 
+\begin{itemize}
+  \item Explanation of mutation operators for strings
+  \item how we could collect literals
+  \item what kind of experiment
+\end{itemize}
+
 \subsection{Adding Explanations}
 \label{explanation}
 \todo{}
+
+\begin{itemize}
+  \item explain the problem of understanding PRs
+\end{itemize}
 
 
 \section*{Conclusion}

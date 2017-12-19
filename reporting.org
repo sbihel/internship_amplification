@@ -118,7 +118,7 @@
 *** Planned Work
 - [ ] Read papers
 - [X] Meeting with Benoit <2017-11-23 Thu 15:00-16:00>
-- [ ] Send link to repo
+- [X] Send link to repo
 - [X] Ask Maud about plane tickets refund
 
 * Conclusion
