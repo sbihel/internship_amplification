@@ -98,7 +98,7 @@
       + etc
     - Useful tools
       + DSpot
-  + do extensive evlauation (comparison from scratch vs amplification)
+  + do extensive evaluation (comparison from scratch vs amplification)
   + find literals to help tests
   + add mutation operator for specific data structures
   + stack mutations
