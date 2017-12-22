@@ -114,6 +114,17 @@
 - Read /Dynamic Analysis can be Improved with Automatic Test Suite Refactoring/
   ([[https://arxiv.org/pdf/1506.01883.pdf][xuan2015dynamic]])
   + TODO
+- Meeting with Benoit
+  + reduce only the generated tests
+  + big question: minimal generated tests
+    - pre or post treatement
+    - order of presenting PRs
+    - this is the big question question
+  + add an example of junit test
+  + talk about the trend of genetic improvement
+  + don't necesseraly cite /Automatic software diversity in the light of test
+    suites/ and /Tailored source code transformations to synthesize
+    computationally diverse program variants/
 *** Blocking Points
 *** Planned Work
 - [ ] Read papers
