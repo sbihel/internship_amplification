@@ -120,16 +120,21 @@
     - pre or post treatement
     - order of presenting PRs
     - this is the big question question
+    - we don't want to touch the original suite
+    - we want the programmer to understand the new tests
   + add an example of junit test
   + talk about the trend of genetic improvement
   + don't necesseraly cite /Automatic software diversity in the light of test
     suites/ and /Tailored source code transformations to synthesize
     computationally diverse program variants/
+- Read /A Few Billion Lines of Code Later/
+  + TODO
 *** Blocking Points
 *** Planned Work
 - [ ] Read papers
 - [X] Meeting with Benoit <2017-11-23 Thu 15:00-16:00>
 - [X] Send link to repo
 - [X] Ask Maud about plane tickets refund
+- [X] Meeting with Benoit <2017-12-22 Fri 10:30-11:30>
 
 * Conclusion
