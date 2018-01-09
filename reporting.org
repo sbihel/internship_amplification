@@ -23,20 +23,13 @@
 * Global Goals
 
 * Journal
-** <2017-09-18 Mon>--<2017-09-24 Sun>
+** <2017-09-18 Mon>--<2018-02-07 Wed>
 *** Things Done
 - Meeting with Benoit
   + [[https://github.com/STAMP-project/dspot/issues/187][1]], [[https://github.com/STAMP-project/dspot/issues/129][2]], [[https://github.com/STAMP-project/dspot/issues/54][3]] issues for possible work to do
   + 1 possible work: explain if a mutant isn't killed because of oracle or input
   + focus on mutation (e.g. mutation score)
   + work will be on [[https://github.com/STAMP-project/dspot][Dspot]] and [[https://github.com/STAMP-project/pitest-descartes][PIT]].
-*** Blocking Points
-*** Planned Work
-- [ ] Read papers
-- [X] Meeting with Benoit <2017-09-22 Fri 15:00-15:30>
-
-** <2017-09-25 Mon>--<2017-12-03 Sun>
-*** Things Done
 - Read /Search-based software testing: Past, present and future/
   ([[http://mcminn.io/publications/c18.pdf][mcminn2011search]])
   + Already read from previous internship
@@ -111,6 +104,8 @@
 - Read /Evosuite/
   ([[http://www.evosuite.org/evosuite/][fraser2011evosuite]])
   + State-of-the-art tool
+  + Very sophisticated, difficult to reproduce experiments because it changes
+    fast and a lot of parameters are tweaked
 - Read /Dynamic Analysis can be Improved with Automatic Test Suite Refactoring/
   ([[https://arxiv.org/pdf/1506.01883.pdf][xuan2015dynamic]])
   + TODO
@@ -119,7 +114,7 @@
   + big question: minimal generated tests
     - pre or post treatement
     - order of presenting PRs
-    - this is the big question question
+    - this is the big question
     - we don't want to touch the original suite
     - we want the programmer to understand the new tests
   + add an example of junit test
@@ -128,10 +123,20 @@
     suites/ and /Tailored source code transformations to synthesize
     computationally diverse program variants/
 - Read /A Few Billion Lines of Code Later/
-  + TODO
+  ([[https://pdfs.semanticscholar.org/295f/4ffa651675b22ae8e2f3f30b400330da0c69.pdf][bessey2010few]])
+  + Great to understand the limits of static analysis but also some of the
+    limits of all analysis
+  + Difficult to analyze code because of the diversity of build automation tools
+  + "By default, companies refuse to let an external force modify anything."
+  + "A misunderstood explanation means the error is ignored or, worse,
+    transmuted into a false positive."
+  + Many standards
+  + Some people don't care about bugs, sometimes improving the tool reveals more
+    bugs which is bad for the manager
 *** Blocking Points
 *** Planned Work
-- [ ] Read papers
+- [X] Read papers
+- [X] Meeting with Benoit <2017-09-22 Fri 15:00-15:30>
 - [X] Meeting with Benoit <2017-11-23 Thu 15:00-16:00>
 - [X] Send link to repo
 - [X] Ask Maud about plane tickets refund

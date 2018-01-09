@@ -3,17 +3,48 @@
 \usepackage{graphicx}
 \graphicspath{{../img/}}
 
+\usepackage{subcaption}
+\usepackage{cleveref}
+
 \pagestyle{plain}
 
 \usepackage{hyperref}
 \usepackage{url} \urlstyle{sf}
 \newcommand{\email}[1]{\href{mailto:#1}{#1}}
 
+\usepackage{xspace}
+
 \usepackage[dvipsnames]{xcolor}
 \newcommand{\addref}[1]{\colorbox{TealBlue!100}{\textcolor{white}{\textbf{$[$\ifx&#1&\ \else#1\fi$]$}}}}
 \newcommand{\todo}[1]{\colorbox{Red!75}{\textcolor{white}{\textbf{TODO\ifx&#1&\else: #1\fi}}}}
 \newcommand{\done}{\colorbox{YellowGreen!100}{\textcolor{white}{\textbf{DONE}}}}
 \newcommand{\review}{\colorbox{YellowOrange!100}{\textcolor{white}{\textbf{REVIEW}}}}
+
+\newcommand{\dspot}{DSpot\xspace}
+\newcommand{\pitest}{Pitest\xspace}
+
+\usepackage{listings}
+\lstset{%
+%  backgroundcolor=\color{white},   % choose the background color; you must add \usepackage{color} or \usepackage{xcolor}
+  basicstyle=\small,        % the size of the fonts that are used for the code
+  captionpos=b,                    % sets the caption-position to bottom
+  commentstyle=\color{cyan},    % comment style
+  escapeinside={(*@}{@*)},          % if you want to add LaTeX within your code
+  keywordstyle=\color{blue},       % keyword style
+  stringstyle=\color{red},       % keyword style
+  numberstyle=\tiny\color{black}, % the style that is used for the line-numbers
+  stepnumber=1,                    % the step between two line-numbers. If it's 1, each line will be numbered
+  title=\lstname,                   % show the filename of files included with \lstinputlisting; also try caption instead of title
+  language=Java,
+  breakatwhitespace=false,         % sets if automatic breaks should only happen at whitespace
+  breaklines=true,                 % sets automatic line breaking
+  extendedchars=true,              % lets you use non-ASCII characters; for 8-bits encodings only, does not work with UTF-8
+  %frame=single,                    % adds a frame around the code
+  showspaces=false,                % show spaces everywhere adding particular underscores; it overrides 'showstringspaces'
+  showstringspaces=false,          % underline spaces within strings only
+  showtabs=false,                  % show tabs within strings adding particular underscores
+  tabsize=2                       % sets default tabsize to 2 spaces
+}
 
 \title{Search-Based Test Amplification}
 
@@ -66,7 +97,7 @@ In Section~\ref{planned} we detail the different paths the internship could expl
 \section{Search-Based Software Engineering}
 \label{sbse}
 
-In this section we present the reasons for the emergence of Search-Based Software Engineering (SBSE) and give examples of applications.
+In this section we present the reasons for the emergence of Search-Based Software Engineering (SBSE)~\cite{harman2001search,mcminn2011search} and give examples of applications.
 
 \subsection{Motivations}
 \label{motiv}
@@ -80,8 +111,6 @@ In order to tackle problems such as optimization or testing, we need insightful 
 
 Over time software engineers have developed many metrics to evaluate a piece of software and get feedback on its quality.
 
-\cite{mcminn2011search}
-
 \subsection{Search-Based Optimization Algorithms}
 \label{example_algo}
 
@@ -91,7 +120,46 @@ In~\ref{fitness_func} we show how we can pursue engineering goals with these opt
 
 \subsubsection{Basic algorithms}
 \label{basic_algo}
-\todo{}
+
+\begin{figure}
+  \centering
+  \begin{subfigure}[b]{}
+\caption{Hill Climbing}
+\label{fig:hill_climbing}
+  \end{subfigure}
+  \begin{subfigure}[b]{}
+\caption{Simulated Annealing}
+\label{fig:simulated_annealing}
+  \end{subfigure}
+  \begin{subfigure}[b]{}
+\caption{Genetic Algorithm}
+\label{fig:genetic_algo}
+  \end{subfigure}
+\caption{Basic optimization algorithms}
+\label{fig:optimization_algos}
+\end{figure}
+
+% ----- Hill Climbing & Simulated Annealing
+The simplest form of such algorithm is the Hill Climbing.
+Its process is pictured in \figurename~\ref{fig:hill_climbing}.
+It only consists of starting from a random position and from there, and iteratively, find a direction to move in to improve the fitness function.
+As the algorithm is searching only for direct improvement we can only find a local optima.
+We could start the algorithm with a different starting position but we can also allow the algorithm to move in a direction that does not improve directly the score in the hope to later find a higher local optima.
+This is called Simulated Annealing and we show an example in \figurename~\ref{fig:simulated_annealing}.
+
+% ----- Genetic Algorithm
+These methods are described as `local' search approaches as they only consider only one solution at a time.
+Genetic Algorithms, on the other hand, consider multiple points in the search space at once as shown in \figurename~\ref{fig:genetic_algo}.
+Each point is referred as an `individual' and the set of individuals is called a `population'.
+Each iteration we keep the fittest individuals and do crossover of them to generate new individuals.
+In a multi-dimensional search space we can see dimensions as genes and a crossover is the combination of genes from two individuals.
+
+% ----- How to use them for real problems?
+In order to use these methods for software engineering problems we have two requirements:
+\begin{description}
+  \item[Representation] We need to encode our individuals, e.g.\ programs, in a way that they can be manipulated by the optimization algorithm. We will explore this problem in~\ref{applications}.
+  \item[Fitness function] We need a way to tell that an individual is better than another one, e.g.\ that a program is safer than another one. We present the use of software metrics as fitness function next in~\ref{fitness_func}.
+\end{description}
 
 \subsubsection{Metrics as fitness functions}
 \label{fitness_func}
@@ -102,22 +170,22 @@ In~\ref{fitness_func} we show how we can pursue engineering goals with these opt
   \item mutation score
 \end{itemize}
 
-\subsection{Application Areas}
+\subsection{Genetic Improvement}
 \label{applications}
-\todo{Remove this part? Superfluous}
+\todo{}
 
 \begin{itemize}
-  \item test data generation
-  \item test data regeneration
+  \item
 \end{itemize}
 
-\cite{danglot2017emerging}
-\cite{xuan2015dynamic}
+\cite{petke2017genetic}
+
+% TODO find a fit \cite{xuan2015dynamic}
 
 
 \section{Test Suite Amplification}
 \label{tsa}
-In this section we present the specific problem of enhancing an existing test suite.
+In this section we present the specific problem of enhancing an existing test suite~\cite{danglot2017emerging}.
 First,~\ref{motiv_tsa} exposes the motivations for trying to amplify a preexisting and seemingly strong test suite.
 Then~\tef{related} presents a few papers to give an idea of the related works.
 The works that the internship will be based on are presented in~\ref{sosies} and~\ref{testsuite_eval}.
@@ -136,6 +204,25 @@ But most importantly, we can use the test suite as a set of specifications that 
 It gives us an \textit{oracle}.
 
 Another thing we can do is enhance the test suite to make it better for certain metrics.
+
+\begin{itemize}
+  \item junit example
+\end{itemize}
+
+\begin{lstlisting}[caption={An archetypal example of an object-oriented test case  (taken from the Apache Commons Collections, in the class TreeListTest, line 270)},label=lst:archetype,float,language=java,numbers=left]
+testIterationOrder() {
+  TreeList tl = new TreeList(10); (*@\label{input-begin}@*)
+  for (int i = 0; i < size; i++)
+    {tl.add(i);}(*@\label{input-end}@*)
+  int i = 0;
+  ListIterator it = tl.listIterator();(*@\label{test}@*)
+  while (it.hasNext()) {
+    Integer val = it.next();
+    assertEquals(i++, val.intValue());
+  }
+}
+\end{lstlisting}
+
 
 \subsection{Related Works}
 \label{related}
@@ -162,14 +249,14 @@ Another thing we can do is enhance the test suite to make it better for certain 
   \item same outputs for specified input domain, different output outside
 \end{itemize}
 
-\cite{baudry2015dspot,baudry2015automatic,baudry2014tailored}
+\cite{baudry2015dspot} %,baudry2015automatic,baudry2014tailored
 
 \subsection{Test Suite Amplification}
 \label{testsuite_eval}
 \todo{}
 
 \begin{itemize}
-  \item
+  \item don't touch the original suite
 \end{itemize}
 
 \addref{new dspot paper}
@@ -220,6 +307,7 @@ This section explains the different paths that we could explore during the inter
 
 \begin{itemize}
   \item explain the problem of understanding PRs
+  \item we want the programmer to understand the new tests~\cite{bessey2010few}
 \end{itemize}
 
 \subsection{Learning the set of good amplification operators}
@@ -236,6 +324,8 @@ This section explains the different paths that we could explore during the inter
 
 \begin{itemize}
   \item related to `add new test method or replace another one'
+  \item pre or post treatement
+  \item order of presenting PRs
 \end{itemize}
 
 
