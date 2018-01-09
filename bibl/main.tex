@@ -113,6 +113,7 @@ Over time software engineers have developed many metrics to evaluate a piece of 
 
 \subsection{Search-Based Optimization Algorithms}
 \label{example_algo}
+\review{}
 
 To reach a software engineering goal for these complex systems we use \textit{soft-computing} (or \textit{computational intelligence}) to find inexact or sub-optimal solutions in a reasonable time.
 In~\ref{basic_algo} we present some algorithms to give an idea of the capabilities of these techniques.
@@ -169,12 +170,26 @@ In order to use these methods for software engineering problems we have two requ
 
 \subsubsection{Metrics as fitness functions}
 \label{fitness_func}
-\todo{}
 
-\begin{itemize}
-  \item basic metrics such as code coverage
-  \item mutation score
-\end{itemize}
+% ----- Motivations for metrics
+Evaluating a piece of code automatically is not an easy task depending on the property we want to assess.
+To evaluate the performances, one might just run the program with a certain kind of workload.
+But when we want to tell the chances of having bugs or tell that the modularity will not get in the way of future evolution, it gets harder.
+These properties are already difficult to express informally and often depend on a programmer's intuition that has developed over years of practice.
+Because companies need to be able to tell if their products are of good quality, significant efforts from the industry and research worlds have been put in developing \textit{metrics}.
+
+% ----- Metrics for testing
+As the internship will focus on testing, we will spend a bit of time here to present metrics used to assess the quality and quantity of testing, and thus the likelihood of absence of bugs.
+One that is widely used is the \textit{code coverage} metric.
+Informally, it is the amount of code executed by a test suite.
+It can be as simple as the percentage of statement executed, or something more complex and thus more likely to find edge cases and bugs.
+For example, the branch coverage, where you want every branch of each control structure to be executed.
+Many variants exist, each with its bugs category that it can find and its cost as it requires the execution of many tests.
+
+% ----- Mutation score
+To add more confidence that the test suite is effective, we can evaluate it by voluntarily introducing bugs in the software and see if it is capable of detecting them.
+This is what we call \textit{mutation testing} as we are creating \textit{mutants} of the main piece of software.
+In~\ref{applications} we explain how to create such mutants.
 
 \subsection{Genetic Improvement}
 \label{applications}
