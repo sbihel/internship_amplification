@@ -57,15 +57,15 @@
 \domain{Domain: Software Engineering - Artificial Intelligence}
 
 \abstract{%
-With the poor use of formal specifications for software development, programmers ensure the well-behavior of software with hand-written tests.%
-Meta-heuristic optimizing techniques are used to automate the process of testing (e.g.\ generating test data).%
-%
-With practices such as test-driven development, software projects come with strong test suites.%
-Knowledge of the expected properties of the program can be extracted from the large number of test cases.%
-This knowledge can be used in turn to enhance the test suite to improve certain software metrics.%
-%
-Different goals can be pursued to reduce the likelihood of bugs, to help during debugging, etc.%
-The amplification can be achieved by generating variants of existing tests, modifying the tests execution, etc.%
+% With the poor use of formal specifications for software development, programmers ensure the well-behavior of software with hand-written tests.%
+% Meta-heuristic optimizing techniques are used to automate the process of testing (e.g.\ generating test data).%
+% %
+% With practices such as test-driven development, software projects come with strong test suites.%
+% Knowledge of the expected properties of the program can be extracted from the large number of test cases.%
+% This knowledge can be used in turn to enhance the test suite to improve certain software metrics.%
+% %
+% Different goals can be pursued to reduce the likelihood of bugs, to help during debugging, etc.%
+% The amplification can be achieved by generating variants of existing tests, modifying the tests execution, etc.%
 }
 
 \date{February 2018}
@@ -77,23 +77,28 @@ The amplification can be achieved by generating variants of existing tests, modi
 
 \section*{Introduction}
 \label{intro}
+% ----- Context
+Tests embed the knowledge of expected behavior of a software.
+With practices such as test-driven development, software projects now come with strong test suites.
+While it is essential to hunt for bugs, the cost in time is significant for programmers as they can end up spending a majority of their time on writing test.
+As always we want to reduce the human cost by searching for tasks to automate.
 
-With the poor use of formal specifications for software development, programmers ensure the well-behavior of software with hand-written tests.
-Meta-heuristic optimizing techniques are used to automate the process of testing (e.g.\ generating test data).
-% target function is a software metric
+% ----- Test Data Generation and SBSE
+The problem of automatically generating tests has been around for decades but these techniques have to start from scratch, assuming that no external help is available.
+A field that has been tackling these large problems is the Search-Based Software Engineering in which dynamic and approximate techniques are used in order to find solutions in a reasonable time.
+With new test practices we can work on extending previous techniques in hope of better performance and smarter tests.
 
-With practices such as test-driven development, software projects come with strong test suites.
-Knowledge of the expected properties of the program can be extracted from the large number of test cases.
-This knowledge can be used in turn to enhance the test suite to improve certain software metrics.
+% ----- State of the Art
+Different tools have been developed, more or less general in the goal they try to achieve (e.g.\ test more parts, optimize the tests execution).
+This internship will focus on one particular tool called~\dspot{}.
+It is a tool that creates new test cases with the purpose of finding more bugs.
 
-Different goals can be pursued to reduce the likelihood of bugs, to help during debugging, etc.
-The amplification can be achieved by generating variants of existing tests, modifying the tests execution, etc.
-\todo{badly written}
-
+% ----- Outline
 After explaining the basics of Search-Based Software Testing in Section~\ref{sbse} we will present how it can be used to amplify test suites in Section~\ref{tsa}.
 In Section~\ref{planned} we detail the different paths the internship could explore.
 
 
+% ========== Section 1 ==========
 \section{Search-Based Software Engineering}
 \label{sbse}
 
@@ -116,27 +121,27 @@ Over time software engineers have developed many metrics to evaluate a piece of 
 \review{}
 
 To reach a software engineering goal for these complex systems we use \textit{soft-computing} (or \textit{computational intelligence}) to find inexact or sub-optimal solutions in a reasonable time.
-In~\ref{basic_algo} we present some algorithms to give an idea of the capabilities of these techniques.
-In~\ref{fitness_func} we show how we can pursue engineering goals with these optimization processes.
+In Section~\ref{basic_algo} we present some algorithms to give an idea of the capabilities of these techniques.
+In Section~\ref{fitness_func} we show how we can pursue engineering goals with these optimization processes.
 
 \subsubsection{Basic algorithms}
 \label{basic_algo}
 
 \begin{figure}
   \centering
-  \begin{subfigure}[b]{0.3\textwidth}
+  \begin{subfigure}[b]{0.33\textwidth}
     \includegraphics[width=\textwidth]{hillclimbing}
 \caption{Hill Climbing}
 \label{fig:hill_climbing}
-  \end{subfigure}
-  ~
-  \begin{subfigure}[b]{0.3\textwidth}
+  \end{subfigure}%
+~%
+  \begin{subfigure}[b]{0.33\textwidth}
     \includegraphics[width=\textwidth]{simulated_annealing}
 \caption{Simulated Annealing}
 \label{fig:simulated_annealing}
-  \end{subfigure}
-  ~
-  \begin{subfigure}[b]{0.3\textwidth}
+  \end{subfigure}%
+~%
+  \begin{subfigure}[b]{0.33\textwidth}
     \includegraphics[width=\textwidth]{genetic_algo}
 \caption{Genetic Algorithm}
 \label{fig:genetic_algo}
@@ -144,7 +149,6 @@ In~\ref{fitness_func} we show how we can pursue engineering goals with these opt
 \caption{Basic optimization algorithms}
 \label{fig:optimization_algos}
 \end{figure}
-
 
 % ----- Hill Climbing & Simulated Annealing
 The simplest form of such algorithm is the Hill Climbing.
@@ -156,7 +160,7 @@ This is called Simulated Annealing and we show an example in \figurename~\ref{fi
 
 % ----- Genetic Algorithm
 These methods are described as `local' search approaches as they only consider only one solution at a time.
-Genetic Algorithms, on the other hand, consider multiple points in the search space at once as shown in \figurename~\ref{fig:genetic_algo}.
+Genetic Algorithms (GAs), on the other hand, consider multiple points in the search space at once as shown in \figurename~\ref{fig:genetic_algo}.
 Each point is referred as an `individual' and the set of individuals is called a `population'.
 Each iteration we keep the fittest individuals and do crossover of them to generate new individuals.
 In a multi-dimensional search space we can see dimensions as genes and a crossover is the combination of genes from two individuals.
@@ -164,13 +168,12 @@ In a multi-dimensional search space we can see dimensions as genes and a crossov
 % ----- How to use them for real problems?
 In order to use these methods for software engineering problems we have two requirements:
 \begin{description}
-  \item[Representation] We need to encode our individuals, e.g.\ programs, in a way that they can be manipulated by the optimization algorithm. We will explore this problem in~\ref{applications}.
-  \item[Fitness function] We need a way to tell that an individual is better than another one, e.g.\ that a program is safer than another one. We present the use of software metrics as fitness function next in~\ref{fitness_func}.
+  \item[Representation] We need to encode our individuals, e.g.\ programs, in a way that they can be manipulated by the optimization algorithm. We will explore this problem in Section~\ref{applications}.
+  \item[Fitness function] We need a way to tell that an individual is better than another one, e.g.\ that a program is safer than another one. We present the use of software metrics as fitness function next in Section~\ref{fitness_func}.
 \end{description}
 
 \subsubsection{Metrics as fitness functions}
 \label{fitness_func}
-
 % ----- Motivations for metrics
 Evaluating a piece of code automatically is not an easy task depending on the property we want to assess.
 To evaluate the performances, one might just run the program with a certain kind of workload.
@@ -189,27 +192,33 @@ Many variants exist, each with its bugs category that it can find and its cost a
 % ----- Mutation score
 To add more confidence that the test suite is effective, we can evaluate it by voluntarily introducing bugs in the software and see if it is capable of detecting them.
 This is what we call \textit{mutation testing} as we are creating \textit{mutants} of the main piece of software.
-In~\ref{applications} we explain how to create such mutants.
+In Section~\ref{applications} we explain how to create such mutants.
 
 \subsection{Genetic Improvement}
 \label{applications}
 \todo{}
+% ----- Intro to genetic improvement
+SBSE techniques can be applied to modify and improve existing software in what is called \textit{Genetic Improvement} (GI)~\cite{petke2017genetic}.
+In order to modify a program we need a representation and \textit{operators} (i.e.\ set of possible actions).
+Numerous representations exist such as ASTs, bytecode, the program's text file itself, etc.
+Then the operators can range from modifying elementary operators (e.g.\ addition) to deleting unused part of the program.
 
-\begin{itemize}
-  \item
-\end{itemize}
+% ----- Why is it possible?
+The range of possible programs is so vast that we need: (i) methods such as evolutionary computing which is well-suited to finding good trade-offs between potentially competing objectives; (ii) use the fact that human-developed code is repetitive; and (iii) not start from scratch and use human knowledge.
 
-\cite{petke2017genetic}
+% ----- use tests as a guide for semantic faithfulness
+In particular, tests can act as a guide for semantic faithfulness and, as we have seen, to assess the degree of improvement.
 
-% TODO find a fit \cite{xuan2015dynamic}
+% \cite{xuan2015dynamic}
 
 
+% ========== Section 2 ==========
 \section{Test Suite Amplification}
 \label{tsa}
 In this section we present the specific problem of enhancing an existing test suite~\cite{danglot2017emerging}.
-First,~\ref{motiv_tsa} exposes the motivations for trying to amplify a preexisting and seemingly strong test suite.
+First, Section~\ref{motiv_tsa} exposes the motivations for trying to amplify a preexisting and seemingly strong test suite.
 Then~\tef{related} presents a few papers to give an idea of the related works.
-The works that the internship will be based on are presented in~\ref{sosies} and~\ref{testsuite_eval}.
+The tool that the internship will be based on is called \dspot{} and it is presented in Section~\ref{testsuite_eval}.
 
 \addref{new survey paper}
 
@@ -217,18 +226,16 @@ The works that the internship will be based on are presented in~\ref{sosies} and
 \label{motiv_tsa}
 \todo{}
 
+% ----- Why it is possible
 Important projects from big companies now come with extensive test suites thanks to good practices.
 It is thus reasonable to try and see if we can push even further the quality of such projects.
+To achieve that, we want automated tools that can generate additional tests in order to evaluate more situations, or rework the test suite to have a better score for a certain fitness function (e.g.\ optimizing tests execution time).
+In either way we preserve the original, hand-written, test suite as it contains much of the human knowledge of the expected behavior of the software.
 
-We can see the test suite as a starting population of already good quality for our evolutionary algorithms.
+% ----- How we can use the test suite
+We can see the test suite as a starting population of good quality for our evolutionary algorithms.
 But most importantly, we can use the test suite as a set of specifications that give us knowledge about what the software is supposed to do and thus allow us to detect more bugs.
 It gives us an \textit{oracle}.
-
-Another thing we can do is enhance the test suite to make it better for certain metrics.
-
-\begin{itemize}
-  \item junit example
-\end{itemize}
 
 \begin{lstlisting}[caption={An archetypal example of an object-oriented test case  (taken from the Apache Commons Collections, in the class TreeListTest, line 270)},label=lst:archetype,float,language=java,numbers=left]
 testIterationOrder() {
@@ -244,45 +251,75 @@ testIterationOrder() {
 }
 \end{lstlisting}
 
+% ----- What can we do with it
+An example of test case is given in Listing~\ref{lst:archetype}.
+
 
 \subsection{Related Works}
 \label{related}
-\todo{}
-
-\subsubsection{Test Data Regeneration}
-\cite{yoo2012test}
-\todo{}
+Before presenting the tool that the internship will focus on, we present some related works to give an idea of amplification goals and amplification techniques.
+In Section~\ref{brefactoring} we present a tool with the goal of helping fault-localization.
+Then two other general purpose test data generators are presented in Sections~\ref{tdr} and~\ref{evosuite}.
 
 \subsubsection{B-Refactoring}
-\cite{xuan2016b}
+\label{brefactoring}
+% ----- Introduction
+To give an example of a precise software engineering goal and test suite refactoring, we chose to present B-Refactoring~\cite{xuan2016b}.
+It is a test code refactoring technique to split a test case into small test fragments, helping for fault localization for example.
+
+% ----- Precise goal
+To explain in more details, the goal is to have a simpler part of the control flow for each test.
+Test cases, especially hand-written ones, can test different properties at once but the problem is that certain analysis which use tests traces require simple control flows in order to increase their precision.
+An example is the process of bug fixing, in which you need to locate the source of the bug in order to fix it.
+A test suite based tool for fault localization would run the test suite and, using the test traces, locate the faulty part that is executed by the failed tests and not by the passing tests.
+In the case of an \texttt{if} condition where in the execution of a test where both branches are executed, there is not enough precision for the fault localization tool to be effective.
+
+% ----- How to they do it?
+To have a test suite that is better suited for fault localization, B-Refactoring will \textit{split} tests that explore multiple branches into smaller tests --- keeping the same overall behavior.
+
+\todo{explain the technique}
+
+\subsubsection{Test Data Regeneration}
+\label{tdr}
+% ----- Introduction
+An example of work on generating additional test cases from an existing test suite is the work of Search-based Test Data Regeneration (TDR)~\cite{yoo2012test}.
+It is a technique that generates new tests in order to improve a given fitness function (e.g.\ branch coverage).
+
+% ----- How do they do it?
 \todo{}
 
 \subsubsection{Evosuite}
+\label{evosuite}
 \cite{fraser2011evosuite}
 \todo{}
 
 
-\subsection{Sosies Synthesis}
-\label{sosies}
-\todo{}
-
-\begin{itemize}
-  \item same outputs for specified input domain, different output outside
-\end{itemize}
-
-\cite{baudry2015dspot} %,baudry2015automatic,baudry2014tailored
-
-\subsection{Test Suite Amplification}
+\subsection{DSpot}
 \label{testsuite_eval}
 \todo{}
+% ----- Introduction
 
-\begin{itemize}
-  \item don't touch the original suite
-\end{itemize}
 
+\begin{figure}
+  \centering
+  \fbox{\includegraphics[trim=2cm 17.02cm 4.09cm 10.46cm, clip]{rq3_resources/protostuff.pdf}}
+  \caption{Example of what \dspot{} produces: a diff to improve an existing test case.}
+\label{fig:diff-protostuff}
+\end{figure}
+
+\begin{figure}
+  \centering
+  \includegraphics[scale=0.5]{io-spaces.pdf}
+  \caption{On the left, the testing input space is composed by specified input points (orange diamonds) and unspecified input points (black diamonds). On the right, the observation space over a given program state depicts the assertions of tests. The green circles are values that are already asserted in the existing test suite, the newly added assertions are shown as black circles.}
+\label{fig:io-spaces}
+\end{figure}
+
+\cite{pawlak2016spoon}
 \addref{new dspot paper}
+\cite{baudry2015dspot} %,baudry2015automatic,baudry2014tailored
 
 
+% ========== Section 3 ==========
 \section{Planned Work}
 \label{planned}
 This section explains the different paths that we could explore during the internship.
@@ -290,64 +327,77 @@ This section explains the different paths that we could explore during the inter
 \subsection{Evaluation of the Added Value of Hand-Written Tests}
 \label{evaluation}
 \todo{}
+% ----- Motivations
+Up to now, no empirical evaluation has been done on the added value of amplification rather than generating tests from scratch.
+Even if it seems obvious that it helps, with insights on the semantics and a strong starting population for evolutionary algorithms, it is important to experimentally measure the gain.
 
-\begin{itemize}
-  \item explain that no objective evaluation has been made to prove the value of having a pre-existing test suite
-  \item explain what kind of experiment
-\end{itemize}
+% ----- Methodology
+\todo{what kind of experiments}
 
 \subsection{Using Literals Found in Source Code}
 \label{mutation}
-\todo{}
+% ----- Problem statement
+Among elementary types are character strings.
+With a problem such as test data generation, it is often difficult to generate valid strings as the search space is large and specific values are expected.
+But in such cases where there are explicit equality tests, one could collect these precise values and limit the search space to them.
 
-\begin{itemize}
-  \item Explanation of mutation operators for strings
-  \item how we could collect literals
-  \item what kind of experiment
-\end{itemize}
+% ----- How could we do it?
+We have different options to achieve this collection.
+A purely dynamic of doing things would be to instrument the code to detect when the argument is used in an equality test and from there collect a value that would be accepted.
+Another possibility would be to statically harvest all literals found in the code.
+% TODO advantages?
+
+% ----- How would we evaluate it?
+As an evaluation, a comparison with and without this enhancement on programs that heavily rely on string would be sufficient.
 
 \subsection{Creating mutation operators for specific data structures}
 \label{create_operators}
 \todo{}
-
-\begin{itemize}
-  \item
-\end{itemize}
+% ----- Problem statement
+In the same branch of the strings generation problem, with complex and multi-dimensional data structures that often need precise comfiguration, we need smarter generator and mutation operators to avoid senseless inputs.
 
 \subsection{Stacking mutations}
 \label{stacking}
 \todo{}
+% ----- Problem statement
+For now in~\dspot{}, when a program is modified, a single mutation operator is applied.
+It makes it easy to detect precise weaknesses in the System Under Test by at the same time we could detect more weaknesses by stacking mutations.
+Evolved tests would be more complex and more distant from the existing test suite.
 
-\begin{itemize}
-  \item
-\end{itemize}
+% ----- Contribution
+Of course there would be smaller chances of generate good inputs but we could study the interactions between various mutation operators to only use the ones that would work well together.
 
 \subsection{Adding Explanations}
 \label{explanation}
-\todo{}
+% ----- Problem statement
+When a new test is generated and found useful, a merge/pull request is created for the developer to decide whether to accept the new test.
+The role of the developer is to judge the usefulness of the additional test.
+% TODO why actually?
+As always we want to minimize to efforts from the human so we need to help the developer by explaining the new test.
+It is also essential to explain why a test is relevant because in most cases a test that is not understood will be at best ignored, at worst labeled as false positive~\cite{bessey2010few}.
 
-\begin{itemize}
-  \item explain the problem of understanding PRs
-  \item we want the programmer to understand the new tests~\cite{bessey2010few}
-\end{itemize}
+A similar problem is the ordering of pull requests.
+If we could in some way define the importance of tests we could present to the developer the most important tests first.
+
+% ----- How would we do it?
+\todo{how would we do it?}
 
 \subsection{Learning the set of good amplification operators}
 \label{learning}
 \todo{}
-
-\begin{itemize}
-  \item
-\end{itemize}
+% ----- Problem statement
+In order to generate the least amount of programs that don't make sense, knowing which operators work well in general would make them used more often.
 
 \subsection{Reduce the amplified tests to a minimal set of useful tests}
 \label{minimal}
-\todo{}
+% ----- Problem statement
+Overall, the ultimate goal would be to generate a minimal set of amplified tests.
 
-\begin{itemize}
-  \item related to `add new test method or replace another one'
-  \item pre or post treatement
-  \item order of presenting PRs
-\end{itemize}
+% ----- How would we do it?
+In order to achieve this, we could explore different options.
+With a post treatment we would, from a complete set of tests, we could remove overlapping tests, fusion others, split tests depending on the different goals achieved, etc.
+On the other hand, to avoid tests that would end up being removed or modified we could generating from the start with a more detailed goal.
+In this way would could also replace another test if needed.
 
 
 \section*{Conclusion}

@@ -73,7 +73,7 @@
   ([[https://pdfs.semanticscholar.org/0a93/144638ebfc924550798b620835a3fc9785cf.pdf][carzaniga2015measuring]])
   + TODO
 - Read /Spoon: A Library for Implementing Analyses and Transformations of Java Source Code/
-  ([[https://hal.archives-ouvertes.fr/hal-01078532v2/document][hal-01078532]])
+  ([[https://hal.archives-ouvertes.fr/hal-01078532v2/document][pawlak2016spoon]])
   + let's say it's like llvm/clang for now
 - Read /Tailored source code transformations to synthesize computationally diverse program variants/
   ([[https://arxiv.org/pdf/1401.7635][baudry2014tailored]])
