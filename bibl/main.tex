@@ -106,20 +106,22 @@ In this section we present the reasons for the emergence of Search-Based Softwar
 
 \subsection{Motivations}
 \label{motiv}
-\todo{}
+% ----- History
+In the field of mathematical optimization, meta-heuristic techniques have been developed.
+With the use of specific strategies, such methods can find sufficiently good solutions to optimization problems in a lower time than would be required to find an optimal solution.
+They are especially useful in situations with incomplete information and often rely on randomness to explore the \textit{search space} (i.e.\ the set of possible solutions).
 
-Software projects are continuously getting more complex.
-They often rely on informal specifications that change during the evolution of the project.
-Because of the scale and weak structure, formal methods cannot be used in many cases.
+% ----- Complexity of problems in SE
+With the rise of complexity in software projects, needs for automation and approximation rose.
+In optimization problems where it is impossible to predict the performance of a configuration and where too many configurations are available to try, approximate methods started to be used.
+In the field of software testing, which is often a tedious job for developers, approximate tools started to be built in order to write tests in place of a human.
 
-In order to tackle problems such as optimization or testing, we need insightful approximating methods.
-
-Over time software engineers have developed many metrics to evaluate a piece of software and get feedback on its quality.
+% ----- Announcing SBSE
+This use of meta-heuristic techniques to solve software engineering problems is what constitute the field of Search-Based Software Engineering (SBSE).
+The formulation of SE problems as optimization is at the heart of all works of SBSE as we need to define a function to maximise for goals that are not always easy to formally describe, and we need to define the search space with what actions (i.e.\ manipulations) can the meta-heuristic algorithm employ.
 
 \subsection{Search-Based Optimization Algorithms}
 \label{example_algo}
-\review{}
-
 To reach a software engineering goal for these complex systems we use \textit{soft-computing} (or \textit{computational intelligence}) to find inexact or sub-optimal solutions in a reasonable time.
 In Section~\ref{basic_algo} we present some algorithms to give an idea of the capabilities of these techniques.
 In Section~\ref{fitness_func} we show how we can pursue engineering goals with these optimization processes.
@@ -196,7 +198,6 @@ In Section~\ref{applications} we explain how to create such mutants.
 
 \subsection{Genetic Improvement}
 \label{applications}
-\todo{}
 % ----- Intro to genetic improvement
 SBSE techniques can be applied to modify and improve existing software in what is called \textit{Genetic Improvement} (GI)~\cite{petke2017genetic}.
 In order to modify a program we need a representation and \textit{operators} (i.e.\ set of possible actions).
@@ -204,12 +205,10 @@ Numerous representations exist such as ASTs, bytecode, the program's text file i
 Then the operators can range from modifying elementary operators (e.g.\ addition) to deleting unused part of the program.
 
 % ----- Why is it possible?
-The range of possible programs is so vast that we need: (i) methods such as evolutionary computing which is well-suited to finding good trade-offs between potentially competing objectives; (ii) use the fact that human-developed code is repetitive; and (iii) not start from scratch and use human knowledge.
-
-% ----- use tests as a guide for semantic faithfulness
-In particular, tests can act as a guide for semantic faithfulness and, as we have seen, to assess the degree of improvement.
-
-% \cite{xuan2015dynamic}
+The range of possible programs is vast but GI is a reasonable approach.
+We are not generating programs from scratch so we have a strong starting population for evolutionary algorithms.
+Industry-level code is repetitive, so even with a simple set of operators we can change the behavior of a program and still being valid.
+In the case of software projects with a test suite, we can use it as a guide for semantic faithfulness while trying to improve another metric.
 
 
 % ========== Section 2 ==========
@@ -224,18 +223,6 @@ The tool that the internship will be based on is called \dspot{} and it is prese
 
 \subsection{Motivations}
 \label{motiv_tsa}
-\todo{}
-
-% ----- Why it is possible
-Important projects from big companies now come with extensive test suites thanks to good practices.
-It is thus reasonable to try and see if we can push even further the quality of such projects.
-To achieve that, we want automated tools that can generate additional tests in order to evaluate more situations, or rework the test suite to have a better score for a certain fitness function (e.g.\ optimizing tests execution time).
-In either way we preserve the original, hand-written, test suite as it contains much of the human knowledge of the expected behavior of the software.
-
-% ----- How we can use the test suite
-We can see the test suite as a starting population of good quality for our evolutionary algorithms.
-But most importantly, we can use the test suite as a set of specifications that give us knowledge about what the software is supposed to do and thus allow us to detect more bugs.
-It gives us an \textit{oracle}.
 
 \begin{lstlisting}[caption={An archetypal example of an object-oriented test case  (taken from the Apache Commons Collections, in the class TreeListTest, line 270)},label=lst:archetype,float,language=java,numbers=left]
 testIterationOrder() {
@@ -251,8 +238,21 @@ testIterationOrder() {
 }
 \end{lstlisting}
 
-% ----- What can we do with it
+% ----- Tests
 An example of test case is given in Listing~\ref{lst:archetype}.
+We can see that it triggers the System Under Test with inputs and then assert that certain properties hold.
+Tests assess the quality of a software by evaluating some situations.
+
+% ----- Why it is possible
+Important projects from big companies now come with extensive test suites thanks to good practices.
+It is thus reasonable to try and see if we can push even further the quality of such projects.
+To achieve that, we want automated tools that can generate additional tests in order to evaluate more situations, or rework the test suite to have a better score for a certain fitness function (e.g.\ optimizing tests execution time).
+% In either way we preserve the original, hand-written, test suite as it contains much of the human knowledge of the expected behavior of the software.
+
+% ----- How we can use the test suite
+We can simply use GI on the test suite to improve it as you would for any kind of piece of code.
+But more importantly, we can see the test suite as a set of specifications that gives us knowledge about what the software is supposed to do --- it is called an \textit{oracle}.
+So we have a relation between the software and its test suite and we can use this relation to extend both, for example a bigger and more precise oracle.
 
 
 \subsection{Related Works}
@@ -283,10 +283,11 @@ To have a test suite that is better suited for fault localization, B-Refactoring
 \label{tdr}
 % ----- Introduction
 An example of work on generating additional test cases from an existing test suite is the work of Search-based Test Data Regeneration (TDR)~\cite{yoo2012test}.
-It is a technique that generates new tests in order to improve a given fitness function (e.g.\ branch coverage).
+It is a technique that modify tests in order to improve a given fitness function (e.g.\ branch coverage) while keeping the same behavior (execution trace).
+It is useful to avoid the System Under Test to be over-fitted to the test suite (i.e.\ it knows the expected output of a test in advance).
 
 % ----- How do they do it?
-\todo{}
+They consider simple cases such as integer or strings and to generate neighbours cases they apply simple transformations (e.g.\ add 1 to an integer).
 
 \subsubsection{Evosuite}
 \label{evosuite}
@@ -296,9 +297,14 @@ It is a technique that generates new tests in order to improve a given fitness f
 
 \subsection{DSpot}
 \label{testsuite_eval}
-\todo{}
-% ----- Introduction
 
+\subsubsection{Introduction}
+\begin{figure}
+  \centering
+  \includegraphics[scale=0.5]{io-spaces.pdf}
+  \caption{On the left, the testing input space is composed by specified input points (orange diamonds) and unspecified input points (black diamonds). On the right, the observation space over a given program state depicts the assertions of tests. The green circles are values that are already asserted in the existing test suite, the newly added assertions are shown as black circles.}
+\label{fig:io-spaces}
+\end{figure}
 
 \begin{figure}
   \centering
@@ -307,16 +313,29 @@ It is a technique that generates new tests in order to improve a given fitness f
 \label{fig:diff-protostuff}
 \end{figure}
 
-\begin{figure}
-  \centering
-  \includegraphics[scale=0.5]{io-spaces.pdf}
-  \caption{On the left, the testing input space is composed by specified input points (orange diamonds) and unspecified input points (black diamonds). On the right, the observation space over a given program state depicts the assertions of tests. The green circles are values that are already asserted in the existing test suite, the newly added assertions are shown as black circles.}
-\label{fig:io-spaces}
-\end{figure}
+% ----- Introduction
+In previous work, we have seen techniques used to enhance a test suite without the input of humans.
+This induces limitations, for example we might only optimize a test suite while keeping the same set of behaviors triggered, or new tests can only detect obvious bugs such as crashes, or new tests are there only to detect regression.
+With~\dspot{}~\cite{baudry2015dspot}\addref{new dspot paper} the goal is to extend the oracle by covering more of the input space ---~\figurename~\ref{fig:io-spaces} illustrates the input and output spaces of test cases.
+The tool generates mutants of the software and if the test suite does not detect these changes, adds a test case or improves an existing test case that will check the appropriate part of the software.
+This new test is submitted to the developers for them to decide whether to keep it or not.
+An example of such pull-request is shown in~\figurename~\ref{fig:diff-protostuff}.
+
+% ----- Programmer's input
+The new tests can detect changes in behavior that are not detected by the current test suite.
+We cannot assume that the current software version, if it passes all tests, is perfect.
+This is why we need to ask the programmer, whether the current behavior is correct and whether they think the generated test is good.
+In other words when we found changes to are undetected, we have reached the limits of the oracle and ask the programmer to validate the proposed extension.
+
+\subsubsection{Inner Workings}
+
+\paragraph{I-Amplification}
+
+\paragraph{A-Amplification}
+
+\paragraph{Implementation}
 
 \cite{pawlak2016spoon}
-\addref{new dspot paper}
-\cite{baudry2015dspot} %,baudry2015automatic,baudry2014tailored
 
 
 % ========== Section 3 ==========
@@ -326,7 +345,6 @@ This section explains the different paths that we could explore during the inter
 
 \subsection{Evaluation of the Added Value of Hand-Written Tests}
 \label{evaluation}
-\todo{}
 % ----- Motivations
 Up to now, no empirical evaluation has been done on the added value of amplification rather than generating tests from scratch.
 Even if it seems obvious that it helps, with insights on the semantics and a strong starting population for evolutionary algorithms, it is important to experimentally measure the gain.
@@ -352,13 +370,11 @@ As an evaluation, a comparison with and without this enhancement on programs tha
 
 \subsection{Creating mutation operators for specific data structures}
 \label{create_operators}
-\todo{}
 % ----- Problem statement
 In the same branch of the strings generation problem, with complex and multi-dimensional data structures that often need precise comfiguration, we need smarter generator and mutation operators to avoid senseless inputs.
 
 \subsection{Stacking mutations}
 \label{stacking}
-\todo{}
 % ----- Problem statement
 For now in~\dspot{}, when a program is modified, a single mutation operator is applied.
 It makes it easy to detect precise weaknesses in the System Under Test by at the same time we could detect more weaknesses by stacking mutations.
@@ -372,7 +388,6 @@ Of course there would be smaller chances of generate good inputs but we could st
 % ----- Problem statement
 When a new test is generated and found useful, a merge/pull request is created for the developer to decide whether to accept the new test.
 The role of the developer is to judge the usefulness of the additional test.
-% TODO why actually?
 As always we want to minimize to efforts from the human so we need to help the developer by explaining the new test.
 It is also essential to explain why a test is relevant because in most cases a test that is not understood will be at best ignored, at worst labeled as false positive~\cite{bessey2010few}.
 
@@ -384,7 +399,6 @@ If we could in some way define the importance of tests we could present to the d
 
 \subsection{Learning the set of good amplification operators}
 \label{learning}
-\todo{}
 % ----- Problem statement
 In order to generate the least amount of programs that don't make sense, knowing which operators work well in general would make them used more often.
 
