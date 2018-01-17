@@ -194,7 +194,7 @@ Many variants exist, each with its bugs category that it can find and its cost a
 % ----- Mutation score
 To add more confidence that the test suite is effective, we can evaluate it by voluntarily introducing bugs in the software and see if it is capable of detecting them.
 This is what we call \textit{mutation testing} as we are creating \textit{mutants} of the main piece of software.
-In Section~\ref{applications} we explain how to create such mutants.
+In Section~\ref{applications} we explain how to create software mutants.
 
 \subsection{Genetic Improvement}
 \label{applications}
@@ -239,7 +239,7 @@ testIterationOrder() {
 \end{lstlisting}
 
 % ----- Tests
-An example of test case is given in Listing~\ref{lst:archetype}.
+An example of Java test case is given in Listing~\ref{lst:archetype}.
 We can see that it triggers the System Under Test with inputs and then assert that certain properties hold.
 Tests assess the quality of a software by evaluating some situations.
 
@@ -288,6 +288,7 @@ It is useful to avoid the System Under Test to be over-fitted to the test suite 
 
 % ----- How do they do it?
 They consider simple cases such as integer or strings and to generate neighbours cases they apply simple transformations (e.g.\ add 1 to an integer).
+\todo{more on literal neighbours}
 
 \subsubsection{Evosuite}
 \label{evosuite}
@@ -316,7 +317,8 @@ They consider simple cases such as integer or strings and to generate neighbours
 % ----- Introduction
 In previous work, we have seen techniques used to enhance a test suite without the input of humans.
 This induces limitations, for example we might only optimize a test suite while keeping the same set of behaviors triggered, or new tests can only detect obvious bugs such as crashes, or new tests are there only to detect regression.
-With~\dspot{}~\cite{baudry2015dspot}\addref{new dspot paper} the goal is to extend the oracle by covering more of the input space ---~\figurename~\ref{fig:io-spaces} illustrates the input and output spaces of test cases.
+With~\dspot{}~\cite{baudry2015dspot}\addref{new dspot paper}\footnote{\url{https://github.com/STAMP-project/dspot}} the goal is to extend the oracle by covering more of the input space ---~\figurename~\ref{fig:io-spaces} illustrates the input and output spaces of test cases.
+It is a Java tool that tries to improve the mutation score of the test suite.
 The tool generates mutants of the software and if the test suite does not detect these changes, adds a test case or improves an existing test case that will check the appropriate part of the software.
 This new test is submitted to the developers for them to decide whether to keep it or not.
 An example of such pull-request is shown in~\figurename~\ref{fig:diff-protostuff}.
@@ -328,14 +330,28 @@ This is why we need to ask the programmer, whether the current behavior is corre
 In other words when we found changes to are undetected, we have reached the limits of the oracle and ask the programmer to validate the proposed extension.
 
 \subsubsection{Inner Workings}
+\dspot{} has two kind of amplifications, one for generating new inputs and one for generating new assertions.
+Next we present them and also give some hints on the implementation.
 
 \paragraph{I-Amplification}
+To generate new test inputs from existing test~\dspot{} uses different operators.
+\begin{description}
+  \item[\textit{Amplification of literals}] Similarly to TDR (Section~\ref{tdr}) literals (numeric, boolean, string) are replaced by neighbours. For example, an integer can be multiplied by 2 or a random character can be added to a string.
+  \item[\textit{Amplification of method calls}] Methods calls can be duplicated, removed, or made-up by picking a random variable in the test and calling one of its methods with random parameters.
+  \item[\textit{Test objects}] If a new object is required for an amplified method call, one of the appropriate type will be built by using the default constructor.
+\end{description}
 
 \paragraph{A-Amplification}
+To extend the oracle~\dspot{} adds assertions in tests.
+Assertions are added on objects from the original test case.
+They are generated as follows: the state of program is collected after execution of the test case to know the actual values and use these values as oracle.
 
 \paragraph{Implementation}
+\dspot{} is written in Java, uses Spoon~\cite{pawlak2016spoon} for analysis and transformation of tests, and uses Pitest\footnote{\url{http://pitest.org/}} to measure the mutation score.
 
-\cite{pawlak2016spoon}
+Because the assertions and their expected values are hardcoded we do not want tests with non-deterministic executions.
+In order to avoid generating such tests each new test is executed multiple times and if it fails at least once then the test is rejected.
+It does not give guarantee on the absence of non-deterministic but it can remove obvious ones and ease the review process of developers.
 
 
 % ========== Section 3 ==========
@@ -416,7 +432,13 @@ In this way would could also replace another test if needed.
 
 \section*{Conclusion}
 \label{conclu}
-\todo{recall what will be done, in what context}
+In this document we have presented the use of approximate techniques in order to reach software engineering goals.
+In particular we have explore the field of test suite amplification which aims at increasing the quality of a software project.
+The internship will be based on a tool called~\dspot{} which amplify a test suite for a better coverage.
+
+Many extensions are possible.
+Amplification operators can always get more complex and smarter to manipulate non-primitive elements.
+Interactions with developers are essential as we are trying to automate their jobs but still need their approval, but with complex code mutations to reach certain edge cases we need to find minimal and simple explanations.
 
 
 \bibliographystyle{ieeetr}
