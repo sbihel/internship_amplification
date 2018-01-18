@@ -5,7 +5,7 @@
 
 \usepackage{subcaption}
 \usepackage{cleveref}
-
+\usepackage{comment}
 \pagestyle{plain}
 
 \usepackage{hyperref}
@@ -86,6 +86,7 @@ This internship will focus on one particular tool called~\dspot{}, a tool that c
 
 \section*{Introduction}
 \label{intro}
+\begin{comment}
 % ----- Context
 Tests embed the knowledge of expected behavior of a software.
 With practices such as test-driven development, software projects now come with strong test suites.
@@ -100,6 +101,15 @@ With new test practices we can work on extending previous techniques in hope of 
 % ----- State of the Art
 Different tools have been developed, more or less general in the goal they try to achieve (e.g.\ test more parts, optimize the tests execution).
 This internship will focus on one particular tool called~\dspot{}, a tool that creates new test cases with the purpose of finding more bugs.
+\end{comment}
+
+The adoption of test-driven and agile methods for software development and with the more recent emergence of DevOps, developers have serious incentives to write strong test suites. They contain large number of test cases, which embed rich knowledge about relevant input and expeted behavior. The key incentive for developers is that these test suites can  be automatically executed on demand to minimize regression bugs as the code continuously evolve. However, the production and maintenance of large test suites to detect these regressions is time consuming, and, consequently, developers tend to focus on nominal paths when writing test cases, missing the corner, rare cases. The key challenge we address in this thesis is as follows: automatically analyze existing test cases and exploit the knowledge that developers have embedded there in order to generate variant test cases that target new behavior. This is called \emph{test amplification}.
+
+Automatic test generation is a traditional area in software testing: the goal is to generate test cases according to a specific test criterion. However, test generation techniques tend to ignore the existence of manually written test suites: they assume that no tests exist at all, or that they are  either too few or of too low quality for being considered useful in the generation process. The emerging field of test amplification considers a different approach and explicitly aims at exploiting knowledge from existing test cases. For this thesis, we focus on search-based techniques to exploit this knowledge. 
+
+Search-based software engineering is the discipline that investigates metaheuristic search (e.g., genetic algorithms or simulated annealing) to automate software engineering tasks. In the case of automatic test generation, this consists in iteratively generating test cases and selecting the ones that improve an objective, expressed as a fitness function (e.g., increase code coverage). This thesis investigates metaheuristics to optimize the process of unit test amplification. For example, test amplification tends to generate a large number of new test cases. This is challenging for the developers who wish to minimize the time spent on test execution and who want to understand these new tests before integrating them in their code base. Meta heuristics can serve to minimize the number of relevant test cases, or generate summaries  for developers to understant the new test cases. 
+
+Search-based test amplification is an experimental approach to software research. The thesis will hence contain a significant experimental part, which consists in testing the metaheuristics on real-world open source projects and determine the relevance of the search-based technique for amplification. The search-based algorithms will be included in the DSpot tool for experimental purposes.
 
 % ----- Outline
 After explaining the basics of Search-Based Software Testing in Section~\ref{sbse} we will present how it can be used to amplify test suites in Section~\ref{tsa}.
