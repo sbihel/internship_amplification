@@ -22,6 +22,7 @@
 
 \newcommand{\dspot}{DSpot\xspace}
 \newcommand{\pitest}{Pitest\xspace}
+\newcommand{\evosuite}{EvoSuite\xspace}
 
 \usepackage{listings}
 \lstset{%
@@ -46,6 +47,8 @@
   tabsize=2                       % sets default tabsize to 2 spaces
 }
 
+\usepackage{ragged2e}
+
 \title{Search-Based Test Amplification}
 
 \author{Simon \textsc{Bihel}}
@@ -57,15 +60,21 @@
 \domain{Domain: Software Engineering - Artificial Intelligence}
 
 \abstract{%
-% With the poor use of formal specifications for software development, programmers ensure the well-behavior of software with hand-written tests.%
-% Meta-heuristic optimizing techniques are used to automate the process of testing (e.g.\ generating test data).%
-% %
-% With practices such as test-driven development, software projects come with strong test suites.%
-% Knowledge of the expected properties of the program can be extracted from the large number of test cases.%
-% This knowledge can be used in turn to enhance the test suite to improve certain software metrics.%
-% %
-% Different goals can be pursued to reduce the likelihood of bugs, to help during debugging, etc.%
-% The amplification can be achieved by generating variants of existing tests, modifying the tests execution, etc.%
+  \justify{%
+% Just a copy of the intro
+% ----- Context
+Tests embed the knowledge of expected behavior of a software.
+With practices such as test-driven development, software projects now come with strong test suites.
+While it is essential to hunt for bugs, the cost in time is significant for programmers as they can end up spending a majority of their time on writing test.
+As always we want to reduce the human cost by searching for tasks to automate.
+% ----- Test Data Generation and SBSE
+The problem of automatically generating tests has been around for decades but these techniques have to start from scratch, assuming that no external help is available.
+A field that has been tackling these large problems is the Search-Based Software Engineering in which dynamic and approximate techniques are used in order to find solutions in a reasonable time.
+With new test practices we can work on extending previous techniques in hope of better performance and smarter tests.
+% ----- State of the Art
+Different tools have been developed, more or less general in the goal they try to achieve (e.g.\ test more parts, optimize the tests execution).
+This internship will focus on one particular tool called~\dspot{}, a tool that creates new test cases with the purpose of finding more bugs.
+  }
 }
 
 \date{February 2018}
@@ -90,8 +99,7 @@ With new test practices we can work on extending previous techniques in hope of 
 
 % ----- State of the Art
 Different tools have been developed, more or less general in the goal they try to achieve (e.g.\ test more parts, optimize the tests execution).
-This internship will focus on one particular tool called~\dspot{}.
-It is a tool that creates new test cases with the purpose of finding more bugs.
+This internship will focus on one particular tool called~\dspot{}, a tool that creates new test cases with the purpose of finding more bugs.
 
 % ----- Outline
 After explaining the basics of Search-Based Software Testing in Section~\ref{sbse} we will present how it can be used to amplify test suites in Section~\ref{tsa}.
@@ -219,7 +227,7 @@ First, Section~\ref{motiv_tsa} exposes the motivations for trying to amplify a p
 Then Section~\ref{related} presents a few papers to give an idea of the related works.
 The tool that the internship will be based on is called \dspot{} and it is presented in Section~\ref{testsuite_eval}.
 
-\addref{new survey paper}
+% TODO \addref{new survey paper}
 
 \subsection{Motivations}
 \label{motiv_tsa}
@@ -276,8 +284,8 @@ In the case of an \texttt{if} condition where in the execution of a test where b
 
 % ----- How to they do it?
 To have a test suite that is better suited for fault localization, B-Refactoring will \textit{split} tests that explore multiple branches into smaller tests --- keeping the same overall behavior.
-
-\todo{explain the technique}
+The split is done by splitting statements of the test case, resulting in smaller tests that possibly aren't \textit{impure} (i.e.\ explore a single branch of the control flow).
+To form the groups of statements, the tool goes through the statements until one that causes the execution of two branches of the control flow, closes the current group and continues with a new empty group.
 
 \subsubsection{Test Data Regeneration}
 \label{tdr}
@@ -287,13 +295,19 @@ It is a technique that modify tests in order to improve a given fitness function
 It is useful to avoid the System Under Test to be over-fitted to the test suite (i.e.\ it knows the expected output of a test in advance).
 
 % ----- How do they do it?
-They consider simple cases such as integer or strings and to generate neighbours cases they apply simple transformations (e.g.\ add 1 to an integer).
-\todo{more on literal neighbours}
+They consider simple elements such as integer or strings and to generate neighbours cases they apply simple transformations (e.g.\ add 1 to an integer).
 
-\subsubsection{Evosuite}
+\subsubsection{EvoSuite}
 \label{evosuite}
-\cite{fraser2011evosuite}
-\todo{}
+% ----- Introduction
+\evosuite{}~\cite{fraser2011evosuite} is a state-of-the-art and industry-grade tool that can do both test suite generation and test suite optimization.
+It uses search-based approach to generate test cases and does optimizations by considering metrics for the whole test suite instead of optimizing each test case.
+Developers then have to review the new tests and accept them.
+
+% ----- Assertion generation
+Assertions can also be generated.
+Assertions are there to increase the mutation score, so the test cases will be executed on several mutants of the main software piece and assertions will be added to detects these mutants.
+Such method generates many assertions and has a risk of overfitting so the tool tries to reduce the set of assertions.
 
 
 \subsection{DSpot}
@@ -317,7 +331,8 @@ They consider simple cases such as integer or strings and to generate neighbours
 % ----- Introduction
 In previous work, we have seen techniques used to enhance a test suite without the input of humans.
 This induces limitations, for example we might only optimize a test suite while keeping the same set of behaviors triggered, or new tests can only detect obvious bugs such as crashes, or new tests are there only to detect regression.
-With~\dspot{}~\cite{baudry2015dspot}\addref{new dspot paper}\footnote{\url{https://github.com/STAMP-project/dspot}} the goal is to extend the oracle by covering more of the input space ---~\figurename~\ref{fig:io-spaces} illustrates the input and output spaces of test cases.
+With~\dspot{}\footnote{\url{https://github.com/STAMP-project/dspot}}~\cite{baudry2015dspot} the goal is to extend the oracle by covering more of the input space ---~\figurename~\ref{fig:io-spaces} illustrates the input and output spaces of test cases.
+% TODO \addref{new dspot paper}
 It is a Java tool that tries to improve the mutation score of the test suite.
 The tool generates mutants of the software and if the test suite does not detect these changes, adds a test case or improves an existing test case that will check the appropriate part of the software.
 This new test is submitted to the developers for them to decide whether to keep it or not.
@@ -342,9 +357,11 @@ To generate new test inputs from existing test~\dspot{} uses different operators
 \end{description}
 
 \paragraph{A-Amplification}
-To extend the oracle~\dspot{} adds assertions in tests.
+To extend the oracle~\dspot{} adds assertions in tests in a similar fashion to~\evosuite{} (Section~\ref{evosuite}).
 Assertions are added on objects from the original test case.
 They are generated as follows: the state of program is collected after execution of the test case to know the actual values and use these values as oracle.
+
+Because tests are improved versions of manually written tests, the assertions are of better quality but also easier to understand for the developers.
 
 \paragraph{Implementation}
 \dspot{} is written in Java, uses Spoon~\cite{pawlak2016spoon} for analysis and transformation of tests, and uses Pitest\footnote{\url{http://pitest.org/}} to measure the mutation score.
@@ -366,7 +383,6 @@ Up to now, no empirical evaluation has been done on the added value of amplifica
 Even if it seems obvious that it helps, with insights on the semantics and a strong starting population for evolutionary algorithms, it is important to experimentally measure the gain.
 
 % ----- Methodology
-\todo{what kind of experiments}
 
 \subsection{Using Literals Found in Source Code}
 \label{mutation}
@@ -379,7 +395,6 @@ But in such cases where there are explicit equality tests, one could collect the
 We have different options to achieve this collection.
 A purely dynamic of doing things would be to instrument the code to detect when the argument is used in an equality test and from there collect a value that would be accepted.
 Another possibility would be to statically harvest all literals found in the code.
-% TODO advantages?
 
 % ----- How would we evaluate it?
 As an evaluation, a comparison with and without this enhancement on programs that heavily rely on string would be sufficient.
@@ -411,7 +426,6 @@ A similar problem is the ordering of pull requests.
 If we could in some way define the importance of tests we could present to the developer the most important tests first.
 
 % ----- How would we do it?
-\todo{how would we do it?}
 
 \subsection{Learning the set of good amplification operators}
 \label{learning}
