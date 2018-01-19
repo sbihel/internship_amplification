@@ -61,19 +61,17 @@
 
 \abstract{%
   \justify{%
-% Just a copy of the intro
 % ----- Context
-Tests embed the knowledge of expected behavior of a software.
-With practices such as test-driven development, software projects now come with strong test suites.
-While it is essential to hunt for bugs, the cost in time is significant for programmers as they can end up spending a majority of their time on writing test.
-As always we want to reduce the human cost by searching for tasks to automate.
-% ----- Test Data Generation and SBSE
-The problem of automatically generating tests has been around for decades but these techniques have to start from scratch, assuming that no external help is available.
-A field that has been tackling these large problems is the Search-Based Software Engineering in which dynamic and approximate techniques are used in order to find solutions in a reasonable time.
-With new test practices we can work on extending previous techniques in hope of better performance and smarter tests.
-% ----- State of the Art
-Different tools have been developed, more or less general in the goal they try to achieve (e.g.\ test more parts, optimize the tests execution).
-This internship will focus on one particular tool called~\dspot{}, a tool that creates new test cases with the purpose of finding more bugs.
+With practices such a test-driven development, software projects now come with strong test suites.
+They embed knowledge of supported inputs and expected behavior which make it easy to detect bugs such as unwanted changes in behavior as the code evolves with time.
+But writing and maintaining a large number of test cases is time consuming for the developers and as they are humans they can miss some edge cases resulting in sub-optimal testing.
+% ----- SBST
+To address these problems, automated methods have been developed to generate tests from scratch, optimize test suites, or extend test suites.
+Because the space of possible tests is so vast, approximate meta-heuristic methods are often used for these problems.
+In particular, evolutionary methods are particularly suited for amplifying and improving an existing test suite by generating variants of test cases.
+% -----
+Tools have been developed to amplify test suites but optimizing the generated tests is still an open problem.
+Because developers are still involved in the loop, by reviewing and merging new tests, this thesis focuses on reduce the amount of work the developer has to provide by reducing the number of generated tests and making them easier to understand for a human.
   }
 }
 
@@ -86,30 +84,28 @@ This internship will focus on one particular tool called~\dspot{}, a tool that c
 
 \section*{Introduction}
 \label{intro}
-\begin{comment}
-% ----- Context
-Tests embed the knowledge of expected behavior of a software.
-With practices such as test-driven development, software projects now come with strong test suites.
-While it is essential to hunt for bugs, the cost in time is significant for programmers as they can end up spending a majority of their time on writing test.
-As always we want to reduce the human cost by searching for tasks to automate.
+The adoption of test-driven and agile methods for software development and with the more recent emergence of DevOps, developers have serious incentives to write strong test suites.
+They contain large number of test cases, which embed rich knowledge about relevant input and expected behavior.
+The key incentive for developers is that these test suites can be automatically executed on demand to minimize regression bugs as the code continuously evolves.
+However, the production and maintenance of large test suites to detect these regressions is time consuming, and, consequently, developers tend to focus on nominal paths when writing test cases, missing the corner, rare cases.
+The key challenge we address in this thesis is as follows: automatically analyze existing test cases and exploit the knowledge that developers have embedded there in order to generate variant test cases that target new behavior.
+This is called \emph{test amplification}~\cite{danglot2017emerging}.
 
-% ----- Test Data Generation and SBSE
-The problem of automatically generating tests has been around for decades but these techniques have to start from scratch, assuming that no external help is available.
-A field that has been tackling these large problems is the Search-Based Software Engineering in which dynamic and approximate techniques are used in order to find solutions in a reasonable time.
-With new test practices we can work on extending previous techniques in hope of better performance and smarter tests.
+Automatic test generation is a traditional area in software testing~\cite{mcminn2011search}: the goal is to generate test cases according to a specific test criterion.
+However, test generation techniques tend to ignore the existence of manually written test suites: they assume that no tests exist at all, or that they are either too few or of too low quality for being considered useful in the generation process.
+The emerging field of test amplification considers a different approach and explicitly aims at exploiting knowledge from existing test cases.
+For this thesis, we focus on search-based techniques to exploit this knowledge.
 
-% ----- State of the Art
-Different tools have been developed, more or less general in the goal they try to achieve (e.g.\ test more parts, optimize the tests execution).
-This internship will focus on one particular tool called~\dspot{}, a tool that creates new test cases with the purpose of finding more bugs.
-\end{comment}
+Search-based software engineering~\cite{harman2001search} is the discipline that investigates meta-heuristic search (e.g., genetic algorithms or simulated annealing) to automate software engineering tasks.
+In the case of automatic test generation, this consists in iteratively generating test cases and selecting the ones that improve an objective, expressed as a fitness function (e.g., increase code coverage).
+This thesis investigates meta-heuristics to optimize the process of unit test amplification.
+For example, test amplification tends to generate a large number of new test cases.
+This is challenging for the developers who wish to minimize the time spent on test execution and who want to understand these new tests before integrating them in their code base.
+Meta-heuristics can serve to minimize the number of relevant test cases, or generate summaries for developers to understand the new test cases.
 
-The adoption of test-driven and agile methods for software development and with the more recent emergence of DevOps, developers have serious incentives to write strong test suites. They contain large number of test cases, which embed rich knowledge about relevant input and expeted behavior. The key incentive for developers is that these test suites can  be automatically executed on demand to minimize regression bugs as the code continuously evolve. However, the production and maintenance of large test suites to detect these regressions is time consuming, and, consequently, developers tend to focus on nominal paths when writing test cases, missing the corner, rare cases. The key challenge we address in this thesis is as follows: automatically analyze existing test cases and exploit the knowledge that developers have embedded there in order to generate variant test cases that target new behavior. This is called \emph{test amplification}.
-
-Automatic test generation is a traditional area in software testing: the goal is to generate test cases according to a specific test criterion. However, test generation techniques tend to ignore the existence of manually written test suites: they assume that no tests exist at all, or that they are  either too few or of too low quality for being considered useful in the generation process. The emerging field of test amplification considers a different approach and explicitly aims at exploiting knowledge from existing test cases. For this thesis, we focus on search-based techniques to exploit this knowledge. 
-
-Search-based software engineering is the discipline that investigates metaheuristic search (e.g., genetic algorithms or simulated annealing) to automate software engineering tasks. In the case of automatic test generation, this consists in iteratively generating test cases and selecting the ones that improve an objective, expressed as a fitness function (e.g., increase code coverage). This thesis investigates metaheuristics to optimize the process of unit test amplification. For example, test amplification tends to generate a large number of new test cases. This is challenging for the developers who wish to minimize the time spent on test execution and who want to understand these new tests before integrating them in their code base. Meta heuristics can serve to minimize the number of relevant test cases, or generate summaries  for developers to understant the new test cases. 
-
-Search-based test amplification is an experimental approach to software research. The thesis will hence contain a significant experimental part, which consists in testing the metaheuristics on real-world open source projects and determine the relevance of the search-based technique for amplification. The search-based algorithms will be included in the DSpot tool for experimental purposes.
+Search-based test amplification is an experimental approach to software research.
+The thesis will hence contain a significant experimental part, which consists in testing the meta-heuristics on real-world open source projects and determine the relevance of the search-based technique for amplification.
+The search-based algorithms will be included in the~\dspot{}~\cite{baudry2015dspot} tool for experimental purposes.
 
 % ----- Outline
 After explaining the basics of Search-Based Software Testing in Section~\ref{sbse} we will present how it can be used to amplify test suites in Section~\ref{tsa}.
@@ -301,23 +297,36 @@ To form the groups of statements, the tool goes through the statements until one
 \label{tdr}
 % ----- Introduction
 An example of work on generating additional test cases from an existing test suite is the work of Search-based Test Data Regeneration (TDR)~\cite{yoo2012test}.
-It is a technique that modify tests in order to improve a given fitness function (e.g.\ branch coverage) while keeping the same behavior (execution trace).
-It is useful to avoid the System Under Test to be over-fitted to the test suite (i.e.\ it knows the expected output of a test in advance).
+It is a general-purpose technique that modifies (i.e.\ \emph{regenerate}) test cases to improve the fault detection capability of a test suite.
+A modified test case should keep the \emph{same behavior} according to a certain metric (i.e.\ it has the same contribution to test objectives).
+Having more tests with different inputs brings redundancy which can be desirable for more robustness, and it brings more diversity as hand-written test can miss some cases.
+It is useful to avoid the system to be over-fitted to the test suite (i.e.\ it knows the expected output of a test in advance).
 
 % ----- How do they do it?
-They consider simple elements such as integer or strings and to generate neighbours cases they apply simple transformations (e.g.\ add 1 to an integer).
+The TDR technique is based on the hill climbing algorithm with the notions of neighbour solutions and search radius.
+If we look at the integer input domain, modification operators will try to generate neighbour values.
+Integer operators are $\lambda x.x + 1$, $\lambda x.x - 1$, $\lambda x.x * 2$, and $\lambda x.\lceil x / 2\rceil$ and they generate inputs that are shifted of scaled.
+To control the search process, a limit is set on the number and size of modifications that can be applied on the input vector.
+Among neighbours tests, among the ones that have the same quality metric as the original, the most different one is kept.
+
+Aiming for different inputs with identical behaviour is a difficult problem and induces the generation of many non-viable tests.
 
 \subsubsection{EvoSuite}
 \label{evosuite}
 % ----- Introduction
-\evosuite{}~\cite{fraser2011evosuite} is a state-of-the-art and industry-grade tool that can do both test suite generation and test suite optimization.
-It uses search-based approach to generate test cases and does optimizations by considering metrics for the whole test suite instead of optimizing each test case.
-Developers then have to review the new tests and accept them.
+\evosuite{}~\cite{fraser2011evosuite} is a state-of-the-art and industry-grade Java tool that can generate test suites from scratch using a search-based approach.
+Instead of studying each test case independently,~\evosuite{} manipulates whole test suites, seeing them as an individual whose genes are test cases.
+In this case tests are sequences of method calls exercising the unit under test and setting up complex objects in order to do so.
+Multiple metrics can be used as fitness function of a test suite, for example code coverage or mutation score.
 
 % ----- Assertion generation
-Assertions can also be generated.
-Assertions are there to increase the mutation score, so the test cases will be executed on several mutants of the main software piece and assertions will be added to detects these mutants.
-Such method generates many assertions and has a risk of overfitting so the tool tries to reduce the set of assertions.
+Assertions are also generated automatically.
+They are there to increase the mutation score, so the test cases will be executed on several mutants of the main software piece and assertions will be added to detects these mutants (i.e.\ increase regression detection).
+This method generates many assertions and has a risk of over-fitting so~\evosuite{} tries to reduce the set of assertions.
+And while it is sufficient for regression testing, it is difficult to build an oracle capable of knowing what the software is really supposed to do as opposed to what it can do with its current version.
+
+At the end of the process, developers have to review and accept the tests.
+Automatically generating tests from scratch that a developer can understand is very difficult because the tool sees a fitness score while the developer searches for a logical setup, meaningful triggers and relevant assertions.
 
 
 \subsection{DSpot}
@@ -424,7 +433,7 @@ Evolved tests would be more complex and more distant from the existing test suit
 % ----- Contribution
 Of course there would be smaller chances of generate good inputs but we could study the interactions between various mutation operators to only use the ones that would work well together.
 
-\subsection{Adding Explanations}
+\subsection{Explanations and Importance}
 \label{explanation}
 % ----- Problem statement
 When a new test is generated and found useful, a merge/pull request is created for the developer to decide whether to accept the new test.
@@ -433,9 +442,10 @@ As always we want to minimize to efforts from the human so we need to help the d
 It is also essential to explain why a test is relevant because in most cases a test that is not understood will be at best ignored, at worst labeled as false positive~\cite{bessey2010few}.
 
 A similar problem is the ordering of pull requests.
-If we could in some way define the importance of tests we could present to the developer the most important tests first.
+If we could in some way define the importance of tests, we could present to the developer the most important tests first.
+The importance could be based on the amount of regression bugs the test could detect (the highest mutation score) but this could lead to prioritize long and complex tests.
 
-% ----- How would we do it?
+In the end the two problems are linked because we want tests that focus on one particular scenario so it is simple and easier to understand for the developer and also we want to understand the real value of this scenario to be able to provide an explanation.
 
 \subsection{Learning the set of good amplification operators}
 \label{learning}
