@@ -37,6 +37,13 @@
 \usetheme[sectionpage=progressbar,subsectionpage=progressbar,numbering=fraction,
           progressbar=foot]{metropolis}
 
+\usepackage{xpatch}
+\usepackage[citestyle=authortitle,backend=bibtex]{biblatex}
+\addbibresource{bibl}
+\xapptobibmacro{cite}{\setunit{\nametitledelim}\printfield{year}}{}{}
+\usepackage{chngcntr}
+\counterwithin*{footnote}{page}
+
 \title{Search-Based Test Amplification}
 \subtitle{Supervisor: Benoit Baudry\\KTH, Sweden\\\displaydate{startdate} -- \displaydate{enddate}}
 
@@ -80,6 +87,7 @@
 \end{frame}
 
 \begin{frame}{Concepts}
+  System-Under-Test: function, class, whole program...
   \begin{description}
     \item[Inputs] E.g.\ function parameters, method calls to setup and stimulate an object
     \item[Assertions] Used to test whether the function's output is correct, that the object is in the right state
@@ -131,13 +139,13 @@ testIterationOrder() {
     Large search space of instructions and values.
   \end{block}
 
-  \begin{exampleblock}{Search-based techniques~\cite{harman2001search,mcminn2011search,fraser2011evosuite}}
+  \begin{exampleblock}{Search-based techniques~\footcite{mcminn2011search,fraser2011evosuite}}
     Random, iterative and heuristic-based techniques (e.g.\ Genetic Algorithms, simulated annealing).
   \end{exampleblock}
 
   \pause{}
 
-  \begin{block}{The oracle problem~\cite{barr2015oracle}}
+  \begin{block}{The oracle problem~\footcite{barr2015oracle}}
     What should the output of a test be?
 
     \begin{itemize}
@@ -149,14 +157,14 @@ testIterationOrder() {
 
 \section{Test Suite Amplification}
 
-\begin{frame}{Motivations~\cite{danglot2017emerging}}
+\begin{frame}{Motivations~\footcite{danglot2017emerging}}
   \begin{itemize}
     \item Reduce search-space by using the existing test suite as a (good) starting population.
     \item Use knowledge in hand-written tests for a better oracle.
   \end{itemize}
 \end{frame}
 
-\begin{frame}{Test Data Regeneration~\cite{yoo2012test}}
+\begin{frame}{Test Data Regeneration~\footcite{yoo2012test}}
   \metroset{block=fill}
   \begin{block}{Goal}
     Modify a test case while keeping the same branch coverage.
@@ -169,12 +177,14 @@ testIterationOrder() {
   Test cases are vectors of integers.
   Modified tests are called \emph{neighbors}.
 \end{frame}
-\begin{frame}{Test Data Regeneration~\cite{yoo2012test}}
+\begin{frame}{Test Data Regeneration~\footcite{yoo2012test}}
   Modification \emph{operator}:
   \begin{itemize}
     \item $\lambda x. x + 1$ and $\lambda x. x - 1$
     \item $\lambda x. x * 2$ and $\lambda x. \lceil x / 2\rceil$
   \end{itemize}
+
+  \pause{}
 
   Reduces the search space with a \emph{Search Radius}.
   \begin{itemize}
@@ -187,14 +197,14 @@ testIterationOrder() {
   Experiments needed to find best values.
 \end{frame}
 
-\begin{frame}{DSpot~\cite{baudry2015dspot}}
+\begin{frame}{DSpot~\footcite{baudry2015dspot}}
   \metroset{block=fill}
   \begin{block}{Goal}
-    Create tests for unexplored parts of the software (i.e.\ tests that can detect undetected mutants).
+    Create tests for unexplored parts of the software (i.e.\ tests that can detect previously undetected mutants).
   \end{block}
 
   \begin{center}
-    \includegraphics[scale=0.5]{io-spaces.pdf}
+    \includegraphics[scale=0.45]{io-spaces.pdf}
 
     % \fbox{\includegraphics[trim=2cm 17.02cm 4.09cm 10.46cm, clip, width=\textwidth]{rq3_resources/protostuff.pdf}}
   \end{center}
@@ -203,14 +213,15 @@ testIterationOrder() {
 
   \alert{New tests should be approved by the developers.}
 \end{frame}
-\begin{frame}{DSpot~\cite{baudry2015dspot} --- Amplification Operators}
+\begin{frame}{DSpot~\footcite{baudry2015dspot} --- Amplification Operators}
   \begin{description}
     \item[Literals] replaced with neighbor values.
     \item[Method calls] duplicated, removed or made-up (with random or default parameters).
   \end{description}
-  Operators cannot be stacked.
+  Operators are not stacked.
 
   \vfill
+  \pause{}
 
   \begin{description}
     \item[Assertions] generated to capture the state of the system after the test's execution.
@@ -255,11 +266,5 @@ testIterationOrder() {
 \end{frame}
 
 \appendix
-
-\begin{frame}[allowframebreaks]{References}
-  \bibliographystyle{abbrv}
-  \bibliography{bibl}
-\end{frame}
-
 
 \end{document}

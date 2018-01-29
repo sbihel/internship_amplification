@@ -134,7 +134,17 @@
   + Many standards
   + Some people don't care about bugs, sometimes improving the tool reveals more
     bugs which is bad for the manager
-- Talk rehearsal <2018-01-28 Mon 08:30>
+- Talk rehearsal <2018-01-28 Mon 08:30>, notes by Vladislav
+  + More illustrations (workflow graph?)
+  + Check the test case example (too complicated for not much, not really java)
+  + Year and conference acronym in footcite
+  + Careful with lambdas for TDR (check with supervisor)
+  + More details on commits/pull requests and emphasize the importance of
+    developers reviewing generated tests
+  + Slide 10 -> ugly (different spacings)
+  + Stacking operators: explanation too sparse
+  + 4th point in conclusion slide too vague. Not just the goal but also the mean
+    to achieve it
 *** Blocking Points
 *** Planned Work
 - [X] Read papers
