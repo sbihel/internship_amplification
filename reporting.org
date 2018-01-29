@@ -50,6 +50,7 @@
 - Read /Genetic Improvement of Software: a Comprehensive Survey/
   ([[http://ieeexplore.ieee.org/stamp/stamp.jsp?arnumber=7911210][petke2017genetic]])
   + TODO
+  + [[http://www.cs.bham.ac.uk/~wbl/biblio/][http://www.cs.bham.ac.uk/~wbl/biblio/]]
 - Read [[http://massol.myxwiki.org/xwiki/bin/view/Blog/MutationTestingDescartes][blog on PIT and Descartes]]
   + Sum up PIT/Descartes
   + List of wanted features
@@ -133,6 +134,7 @@
   + Many standards
   + Some people don't care about bugs, sometimes improving the tool reveals more
     bugs which is bad for the manager
+- Talk rehearsal <2018-01-28 Mon 08:30>
 *** Blocking Points
 *** Planned Work
 - [X] Read papers
