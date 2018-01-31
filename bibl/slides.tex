@@ -1,5 +1,8 @@
 \documentclass{beamer}
 
+\usetheme[sectionpage=progressbar,subsectionpage=progressbar,numbering=fraction,
+          progressbar=foot]{metropolis}
+
 \graphicspath{{../img/}}
 
 \usepackage{appendixnumberbeamer}
@@ -10,41 +13,19 @@
 \newdate{enddate}{22}{06}{2018}
 
 \usepackage{minted}
+\usepackage{inconsolata}
+\setmonofont{Inconsolatazi4}
 
-\usepackage{listings}
-\lstset{%
-%  backgroundcolor=\color{white},   % choose the background color; you must add \usepackage{color} or \usepackage{xcolor}
-  basicstyle=\small,        % the size of the fonts that are used for the code
-  captionpos=b,                    % sets the caption-position to bottom
-  commentstyle=\color{cyan},    % comment style
-  escapeinside={(*@}{@*)},          % if you want to add LaTeX within your code
-  keywordstyle=\color{blue},       % keyword style
-  stringstyle=\color{red},       % keyword style
-  numberstyle=\tiny\color{black}, % the style that is used for the line-numbers
-  stepnumber=1,                    % the step between two line-numbers. If it's 1, each line will be numbered
-  title=\lstname,                   % show the filename of files included with \lstinputlisting; also try caption instead of title
-  language=Java,
-  breakatwhitespace=false,         % sets if automatic breaks should only happen at whitespace
-  breaklines=true,                 % sets automatic line breaking
-  extendedchars=true,              % lets you use non-ASCII characters; for 8-bits encodings only, does not work with UTF-8
-  %frame=single,                    % adds a frame around the code
-  showspaces=false,                % show spaces everywhere adding particular underscores; it overrides 'showstringspaces'
-  showstringspaces=false,          % underline spaces within strings only
-  showtabs=false,                  % show tabs within strings adding particular underscores
-  tabsize=2                       % sets default tabsize to 2 spaces
-}
-
-\usetheme[sectionpage=progressbar,subsectionpage=progressbar,numbering=fraction,
-          progressbar=foot]{metropolis}
+\usepackage{textcomp}
 
 \usepackage{xpatch}
 \usepackage[citestyle=authortitle,backend=bibtex]{biblatex}
 \addbibresource{bibl}
 \xapptobibmacro{cite}{\setunit{\nametitledelim}\printfield{year}}{}{}
-\usepackage{chngcntr}
-\counterwithin*{footnote}{page}
+% \usepackage{chngcntr}
+% \counterwithin*{footnote}{page}
 
-\title{Search-Based Test Amplification}
+\title{Search-Based Test Amplification\\\large{COLQ --- M2 SIF}}
 \subtitle{Supervisor: Benoit Baudry\\KTH, Sweden\\\displaydate{startdate} -- \displaydate{enddate}}
 
 \date{\displaydate{defensedate}}
@@ -59,12 +40,6 @@
 \begin{document}
 
 \maketitle
-
-% \begin{frame}{Table of contents}
-%   \setbeamertemplate{section in toc}[sections numbered]
-%   \tableofcontents[hideallsubsections]
-% \end{frame}
-
 
 \section{Introduction}
 
@@ -94,19 +69,20 @@
   \end{description}
 \end{frame}
 \begin{frame}[fragile]{Test Example}
-\begin{lstlisting}[language=java,numbers=left]
+  \begin{minted}[linenos]{java}
 testIterationOrder() {
-  TreeList tl = new TreeList(10); (*@\label{input-begin}@*)
-  for (int i = 0; i < size; i++)
-    {tl.add(i);}(*@\label{input-end}@*)
+  TreeList tl = new TreeList(10);
+  for (int i = 0; i < size; i++) {
+    tl.add(i);
+  }
   int i = 0;
-  ListIterator it = tl.listIterator();(*@\label{test}@*)
+  ListIterator it = tl.listIterator();
   while (it.hasNext()) {
     Integer val = it.next();
     assertEquals(i++, val.intValue());
   }
 }
-\end{lstlisting}
+  \end{minted}
 \end{frame}
 
 \begin{frame}{Metrics for Test Suites}
@@ -174,22 +150,25 @@ testIterationOrder() {
     \end{itemize}
   \end{block}
 
+  \vfill
+
   Test cases are vectors of integers.
   Modified tests are called \emph{neighbors}.
 \end{frame}
-\begin{frame}{Test Data Regeneration~\footcite{yoo2012test}}
+
+\begin{frame}{Test Data Regeneration}
   Modification \emph{operator}:
   \begin{itemize}
-    \item $\lambda x. x + 1$ and $\lambda x. x - 1$
-    \item $\lambda x. x * 2$ and $\lambda x. \lceil x / 2\rceil$
+    \item $+ 1$ and $- 1$
+    \item $* 2$ and $\lceil / 2\rceil$
   \end{itemize}
 
   \pause{}
 
-  Reduces the search space with a \emph{Search Radius}.
+  Reduces the search space with a \emph{Search Radius}:
   \begin{itemize}
-    \item Limit the number of modifications to avoid searching too far.
     \item Move further away from original test.
+    \item Limit the number of modifications to avoid searching too far.
   \end{itemize}
 
   \vfill
@@ -200,53 +179,71 @@ testIterationOrder() {
 \begin{frame}{DSpot~\footcite{baudry2015dspot}}
   \metroset{block=fill}
   \begin{block}{Goal}
-    Create tests for unexplored parts of the software (i.e.\ tests that can detect previously undetected mutants).
+    Create tests for undetected mutants.
   \end{block}
-
   \begin{center}
     \includegraphics[scale=0.45]{io-spaces.pdf}
 
     % \fbox{\includegraphics[trim=2cm 17.02cm 4.09cm 10.46cm, clip, width=\textwidth]{rq3_resources/protostuff.pdf}}
   \end{center}
-
   \pause{}
-
-  \alert{New tests should be approved by the developers.}
+  \alert{New tests ought to be approved by the developers.}
+  Do not mess with people's code.
 \end{frame}
-\begin{frame}{DSpot~\footcite{baudry2015dspot} --- Amplification Operators}
-  \begin{description}
-    \item[Literals] replaced with neighbor values.
-    \item[Method calls] duplicated, removed or made-up (with random or default parameters).
-  \end{description}
-  Operators are not stacked.
+
+\begin{frame}{DSpot --- Amplification Operators}
+  \metroset{block=fill}
+  \begin{block}{Input amplification}
+    \textbf{Literals \textrightarrow{}} replaced with neighbor values.
+
+    \textbf{Method calls \textrightarrow{}} duplicated, removed or made-up (with random or default parameters).
+
+    \pause{}
+    \small{Only one operator can be applied}
+  \end{block}
 
   \vfill
   \pause{}
 
-  \begin{description}
-    \item[Assertions] generated to capture the state of the system after the test's execution.
-  \end{description}
+  \begin{block}{Assertion amplification}
+    Capture the state of the system after the test's execution.
+  \end{block}
 \end{frame}
 
 
 \section{Planned Work}
 
 \begin{frame}{Easing the Review Process}
-  Developers have to review generated tests.
-  \begin{itemize}
-    \item Adding explanations: we have to make it easier for them to understand what the target of the new test is.
-    \item Misunderstood tests are ignored or labelled as false-positive.
-    \item Tests should be ordered as to present the most important ones first.
-  \end{itemize}
+  \begin{block}{Human review process}
+    \begin{itemize}
+      \item Takes time.
+      \item Misunderstood tests are ignored or labelled as false-positive.
+    \end{itemize}
+  \end{block}
+
+  \begin{block}{What we could do}
+    \begin{itemize}
+      \item Add explanations \textbf{\textrightarrow} easier to understand what the target of the new test is.
+      \item Avoid testing completely different things.
+      \item Order tests by importance.
+    \end{itemize}
+  \end{block}
 \end{frame}
+% modify existing test case or add a new one
 
 \begin{frame}{Efficient Generation}
-  Generating a minimal set of tests would also reduce the work of developers \textbf{if} each test stays simple and logical.
+  Minimal set of tests \textbf{if} each test stays simple and logical.
 
-  Stacking operators could allow the generation of tests covering more properties.
-  \begin{itemize}
-    \item Increases the search space, study the usefulness of each operator.
-  \end{itemize}
+  \vfill
+
+  \begin{block}{Stacking operators}
+    \begin{itemize}
+      \item More properties covered.
+      \item Increases the search space, study the usefulness of each operator.
+    \end{itemize}
+  \end{block}
+
+  Modify existing test case or add a new one?
 \end{frame}
 
 
@@ -255,16 +252,41 @@ testIterationOrder() {
 \begin{frame}{Summary}
   \begin{enumerate}
     \item Practitioners need help designing good quality test suites.
+    \item Search spaces are vast and tests need to be precise. % and follow a human-like logic.
     \item Automated techniques are available to enhance hand-written test.
-    \item Search spaces are vast and tests need to be precise and follow a human-like logic.
-    \item The internship will focus on adapting automated techniques for human interactions needs.
+    \item The internship will focus on adapting these techniques for human interactions needs.
   \end{enumerate}
-\end{frame}
-
-\begin{frame}[standout]
-  Thank you.
+  Expected contribution: \textbf{explanations} and \textbf{focus}.
 \end{frame}
 
 \appendix
+
+\begin{frame}[standout]
+
+\end{frame}
+
+\begin{frame}{EvoSuite}
+  \includegraphics[width=0.75\textwidth]{evosuite-logo}
+  \begin{itemize}
+    \item Test Suite Generation \emph{from scratch}.
+    \item State-of-the-Art \& industry grade.
+  \end{itemize}
+
+  \vfill
+
+  \metroset{block=fill}
+  \begin{block}{Differences}
+    \begin{itemize}
+      \item Treats test suites as a whole.
+      \item Gen.\ Algo.\ with tests cases as genes.
+    \end{itemize}
+  \end{block}
+
+  \begin{block}{What could be adapted}
+    \begin{itemize}
+      \item Tests minimization.
+    \end{itemize}
+  \end{block}
+\end{frame}
 
 \end{document}
