@@ -1,0 +1,59 @@
+\documentclass[11pt]{sdm_internship}
+
+\usepackage{graphicx}
+\graphicspath{{../img/}}
+
+\usepackage{subcaption}
+\usepackage{cleveref}
+\usepackage{comment}
+\pagestyle{plain}
+
+\usepackage{hyperref}
+\usepackage{url} \urlstyle{sf}
+\newcommand{\email}[1]{\href{mailto:#1}{#1}}
+
+\usepackage{xspace}
+
+\usepackage[dvipsnames]{xcolor}
+\newcommand{\addref}[1]{\colorbox{TealBlue!100}{\textcolor{white}{\textbf{$[$\ifx&#1&\ \else#1\fi$]$}}}}
+\newcommand{\todo}[1]{\colorbox{Red!75}{\textcolor{white}{\textbf{TODO\ifx&#1&\else: #1\fi}}}}
+\newcommand{\done}{\colorbox{YellowGreen!100}{\textcolor{white}{\textbf{DONE}}}}
+\newcommand{\review}{\colorbox{YellowOrange!100}{\textcolor{white}{\textbf{REVIEW}}}}
+
+\newcommand{\dspot}{DSpot\xspace}
+
+\usepackage{minted}
+
+\usepackage{ragged2e}
+
+\title{}
+
+\author{Simon \textsc{Bihel}}
+\supervisorOne{Benoit \textsc{Baudry}}
+\supervisorTwo{~}
+\team{KTH Royal Institute of Technology}
+\school{ens-Rennes}
+
+\domain{Domain: Software Engineering --- Artificial Intelligence}
+
+\abstract{%
+  \justify{%
+  }
+}
+
+\begin{document}
+\maketitle
+
+\section*{Introduction}
+\label{intro}
+
+
+\section*{Conclusion}
+\label{conclu}
+
+
+\section*{References}
+\bibliographystyle{ieeetr}
+\bibliography{bibl}
+
+\end{document}

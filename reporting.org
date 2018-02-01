@@ -145,6 +145,9 @@
   + Stacking operators: explanation too sparse
   + 4th point in conclusion slide too vague. Not just the goal but also the mean
     to achieve it
+- Read /Automatic Test Case Optimization: A Bacteriologic Algorithm/
+  ([[https://www.researchgate.net/profile/Jean-Marc_Jezequel/publication/3248230_Automatic_Test_Case_Optimization_A_Bacteriologic_Algorithm/links/0912f50ca4c15eb416000000.pdf][baudry2005automatic]])
+  + TODO
 *** Blocking Points
 *** Planned Work
 - [X] Read papers
