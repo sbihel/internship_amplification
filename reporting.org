@@ -148,6 +148,17 @@
 - Read /Automatic Test Case Optimization: A Bacteriologic Algorithm/
   ([[https://www.researchgate.net/profile/Jean-Marc_Jezequel/publication/3248230_Automatic_Test_Case_Optimization_A_Bacteriologic_Algorithm/links/0912f50ca4c15eb416000000.pdf][baudry2005automatic]])
   + TODO
+  + Compared to DSpot, no assertions generation, small programs.
+- [[https://blog.acolyer.org/2018/01/23/why-is-random-testing-effective-for-partition-tolerance-bugs/]]
+- Read /Clustering Test Cases to Achieve Effective & Scalable Prioritisation Incorporating Expert Knowledge/
+  ([[http://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.211.9479&rep=rep1&type=pdf][yoo2009clustering]])
+  + TODO
+- Read /Search Based Software Engineering: Techniques, Taxonomy, Tutorial/
+  ([[https://www.researchgate.net/profile/Mark_Harman/publication/221051156_Search_Based_Software_Engineering_Techniques_Taxonomy_Tutorial/links/0046352052592d5c2c000000/Search-Based-Software-Engineering-Techniques-Taxonomy-Tutorial.pdf][harman2012search]])
+  + TODO
+- Read /Regression Testing Minimisation, Selection and Prioritisation : A Survey/
+  ([[http://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.169.8696&rep=rep1&type=pdf][yoo2012regression]])
+  + TODO
 *** Blocking Points
 *** Planned Work
 - [X] Read papers
