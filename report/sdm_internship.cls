@@ -81,9 +81,9 @@ Université Rennes 1]
 
 % INCLUDE HERE THE LOGO OF YOUR INSTITUTION
 %\textbf{INSERT ``\%'' IN FRONT OF ALL THE LOGO YOU DO NOT NEED - A SINGLE ONE SHOULD REMAIN AT THE BOTTOM OF THIS PAGE}
-\begin{flushleft}
 \includegraphics[width=0.09\textwidth]{\@school}
-\end{flushleft}
+\hfill%
+\includegraphics[width=0.09\textwidth]{logo_FR1}
 \end{center}
 \end{titlepage}
 
