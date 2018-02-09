@@ -168,4 +168,59 @@
 - [X] Ask Maud about plane tickets refund
 - [X] Meeting with Benoit <2017-12-22 Fri 10:30-11:30>
 
+** Week 1 <2018-02-07 Wed>--<2018-02-18 Sun>
+*** Things Done
+- Wrote the little example of use of Spoon (I simply added it in [[https://github.com/SpoonLabs/spoon-examples][spoon-examples]])
+#+NAME: RemoveIf
+#+BEGIN_SRC java
+package fr.inria.gforge.spoon.transformation;
+
+import spoon.processing.AbstractProcessor;
+import spoon.reflect.code.*;
+
+/**
+ * Removes if when there is no else and if the body consists only of a return
+ *
+ * @author Simon Bihel
+ */
+public class RemoveIfReturn extends AbstractProcessor<CtIf> {
+
+    @Override
+    public void process(CtIf element) {
+        CtStatement elseStmt = element.getElseStatement();
+        if (elseStmt == null) { return; } // should not be an else
+
+        CtStatement thenStmt = element.getThenStatement();
+        if (thenStmt instanceof CtReturn) { // simple case with directly a then statement
+            element.replace(thenStmt);
+            return;
+        }
+        if (thenStmt instanceof CtBlock) { // case with a block which first statement is a return
+            CtStatement firstStmt = ((CtBlock) thenStmt).getStatement(0);
+            if (firstStmt instanceof CtReturn) {
+                element.replace(thenStmt);
+            }
+        }
+    }
+}
+#+END_SRC
+- Read /On Automatically Generating Commit Messages via Summarization of Source Code Changes/
+  ([[https://www.researchgate.net/profile/Luis_Cortes11/publication/267326224_On_Automatically_Generating_Commit_Messages_via_Summarization_of_Source_Code_Changes/links/5583f12208ae4738295bd3ca.pdf][cortes2014automatically]])
+  + TODO
+*** Blocking Points
+*** Planned Work
+- [ ] should I register for ICST2018
+- [X] Sign papers grant
+- [X] Is there a Slack or something?
+- [-] Get familiar with Spoon
+  + [ ] Read paper
+  + [-] Little project, remove `if`s when there is no `else` and the body is
+    - [X] Write the program
+    - [ ] Write tests
+    just a `return`.
+- [ ] Get familiar with Dspot
+- [ ] See /boiler-plates/ for NLP way of building sentences.
+  + [ ] Search for papers and read them
+- [ ] Sign contract with KTH Relocation <2018-02-13 Tue 14:00>--<2018-02-13 Tue 15:30>
+
 * Conclusion
