@@ -8,60 +8,79 @@
 #+LINK: [[https://github.com/sbihel/internship_amplification]]
 #+LANGUAGE: en
 
+
 * Introduction
+
 
 * Findings
 ** Bibliography
 *** Writing
 
 *** References
-**** Generating natural laguage descriptions for software artifacts
-- [[cortes2014automatically]] Commit message generation
-**** Commits survey
-- [[alali2008s]]
-- [[hattori2008nature]]
-- [[hindle2008large]]
-- [[dragan2011using]]
+**** Cultural
+- /Search Based Software Engineering: Techniques, Taxonomy, Tutorial/
+  ([[https://www.researchgate.net/profile/Mark_Harman/publication/221051156_Search_Based_Software_Engineering_Techniques_Taxonomy_Tutorial/links/0046352052592d5c2c000000/Search-Based-Software-Engineering-Techniques-Taxonomy-Tutorial.pdf][harman2012search]])
+  + TODO
+- /A Few Billion Lines of Code Later/
+  ([[https://pdfs.semanticscholar.org/295f/4ffa651675b22ae8e2f3f30b400330da0c69.pdf][bessey2010few]])
+  + Great to understand the limits of static analysis but also some of the
+    limits of all analysis
+  + Difficult to analyze code because of the diversity of build automation tools
+  + "By default, companies refuse to let an external force modify anything."
+  + "A misunderstood explanation means the error is ignored or, worse,
+    transmuted into a false positive."
+  + Many standards
+  + Some people don't care about bugs, sometimes improving the tool reveals more
+    bugs which is bad for the manager
+- /Spoon: A Library for Implementing Analyses and Transformations of Java Source Code/
+  ([[https://hal.archives-ouvertes.fr/hal-01078532v2/document][pawlak2016spoon]])
+  + let's say it's like llvm/clang for now
+- /Regression Testing Minimisation, Selection and Prioritisation : A Survey/
+  ([[http://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.169.8696&rep=rep1&type=pdf][yoo2012regression]])
+  + TODO
+- /Clustering Test Cases to Achieve Effective & Scalable Prioritisation Incorporating Expert Knowledge/
+  ([[http://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.211.9479&rep=rep1&type=pdf][yoo2009clustering]])
+  + TODO
+- /Measuring software redundancy/
+  ([[https://pdfs.semanticscholar.org/0a93/144638ebfc924550798b620835a3fc9785cf.pdf][carzaniga2015measuring]])
+  + TODO
+- /Automatic Software Diversity in the Light of Test Suites/
+  ([[https://arxiv.org/pdf/1509.00144.pdf][baudry2015automatic]])
+  + analysis of common features (e.g. number of tests covering one statement)
+  + plastic behavior (have different behaviors while still remaining correct)
+    study
+  + different details compared to baudry2015dspot and baudry2014tailored
+- /Tailored source code transformations to synthesize computationally diverse program variants/
+  ([[https://arxiv.org/pdf/1401.7635][baudry2014tailored]])
+  + More details than we can find in baudry2015dspot
 
-** Contribution
-
-* Development
-
-* Global Goals
-
-* Journal
-** Preliminary Bibliographical Work <2017-09-18 Mon>--<2018-02-07 Wed>
-*** Things Done
-- Meeting with Benoit
-  + [[https://github.com/STAMP-project/dspot/issues/187][1]], [[https://github.com/STAMP-project/dspot/issues/129][2]], [[https://github.com/STAMP-project/dspot/issues/54][3]] issues for possible work to do
-  + 1 possible work: explain if a mutant isn't killed because of oracle or input
-  + focus on mutation (e.g. mutation score)
-  + work will be on [[https://github.com/STAMP-project/dspot][Dspot]] and [[https://github.com/STAMP-project/pitest-descartes][PIT]].
-- Read /Search-based software testing: Past, present and future/
+**** Search-based Software Testing
+- /Search-based software testing: Past, present and future/
   ([[http://mcminn.io/publications/c18.pdf][mcminn2011search]])
   + Already read from previous internship
-- Read /B-Refactoring: Automatic Test Code Refactoring to Improve Dynamic Analysis/
-  ([[https://hal.archives-ouvertes.fr/hal-01309004/file/banana-refactoring.pdf][xuan2016b]])
-  + Split tests for each fragment to cover a simple part of the control flow.
-  + Help with respect to fault localization.
-- Read /Test data regeneration: generating new test data from existing test data/
-  ([[http://www0.cs.ucl.ac.uk/staff/mharman/stvr-regeneration.pdf][yoo2012test]])
-  + TODO
-- Read /The Emerging Field of Test Amplification: A Survey/
-  ([[https://arxiv.org/pdf/1705.10692.pdf][danglot2017emerging]])
-  + Dense
-  + Good overview of goals (Table 1) and methods (Table 2)
-- Read /Erlang Code Evolution Control/
-  ([[https://arxiv.org/pdf/1709.05291.pdf][arXiv:1709.05291]])
-  + TODO
-- Read /Genetic Improvement of Software: a Comprehensive Survey/
+- /Genetic Improvement of Software: a Comprehensive Survey/
   ([[http://ieeexplore.ieee.org/stamp/stamp.jsp?arnumber=7911210][petke2017genetic]])
   + TODO
   + [[http://www.cs.bham.ac.uk/~wbl/biblio/][http://www.cs.bham.ac.uk/~wbl/biblio/]]
-- Read [[http://massol.myxwiki.org/xwiki/bin/view/Blog/MutationTestingDescartes][blog on PIT and Descartes]]
-  + Sum up PIT/Descartes
-  + List of wanted features
-- Read /DSpot: Test Amplification for Automatic Assessment of Computational Diversity/
+- /Evosuite/
+  ([[http://www.evosuite.org/evosuite/][fraser2011evosuite]])
+  + State-of-the-art tool
+  + Very sophisticated, difficult to reproduce experiments because it changes
+    fast and a lot of parameters are tweaked
+
+**** Test Amplification
+- /B-Refactoring: Automatic Test Code Refactoring to Improve Dynamic Analysis/
+  ([[https://hal.archives-ouvertes.fr/hal-01309004/file/banana-refactoring.pdf][xuan2016b]])
+  + Split tests for each fragment to cover a simple part of the control flow.
+  + Help with respect to fault localization.
+- /Test data regeneration: generating new test data from existing test data/
+  ([[http://www0.cs.ucl.ac.uk/staff/mharman/stvr-regeneration.pdf][yoo2012test]])
+  + TODO
+- /The Emerging Field of Test Amplification: A Survey/
+  ([[https://arxiv.org/pdf/1705.10692.pdf][danglot2017emerging]])
+  + Dense
+  + Good overview of goals (Table 1) and methods (Table 2)
+- /DSpot: Test Amplification for Automatic Assessment of Computational Diversity/
   ([[https://arxiv.org/pdf/1503.05807.pdf][baudry2015dspot]])
   + Comparison with TDR (yoo2012test) and also concurent to
     carzaniga2015measuring
@@ -71,21 +90,79 @@
       data types and sequences of method calls."
     - "We count the number of variants that are identified as computationally
       different using DSpot and TDR. "
-- Read /Automatic Software Diversity in the Light of Test Suites/
-  ([[https://arxiv.org/pdf/1509.00144.pdf][baudry2015automatic]])
-  + analysis of common features (e.g. number of tests covering one statement)
-  + plastic behavior (have different behaviors while still remaining correct)
-    study
-  + different details compared to baudry2015dspot and baudry2014tailored
-- Read /Measuring software redundancy/
-  ([[https://pdfs.semanticscholar.org/0a93/144638ebfc924550798b620835a3fc9785cf.pdf][carzaniga2015measuring]])
+- /A Systematic Literature Review on Test Amplification/
   + TODO
-- Read /Spoon: A Library for Implementing Analyses and Transformations of Java Source Code/
-  ([[https://hal.archives-ouvertes.fr/hal-01078532v2/document][pawlak2016spoon]])
-  + let's say it's like llvm/clang for now
-- Read /Tailored source code transformations to synthesize computationally diverse program variants/
-  ([[https://arxiv.org/pdf/1401.7635][baudry2014tailored]])
-  + More details than we can find in baudry2015dspot
+- /Genetic-Improvement based Unit Test Amplification for Java/
+  + TODO
+- /Dynamic Analysis can be Improved with Automatic Test Suite Refactoring/
+  ([[https://arxiv.org/pdf/1506.01883.pdf][xuan2015dynamic]])
+  + TODO
+- /Automatic Test Case Optimization: A Bacteriologic Algorithm/
+  ([[https://www.researchgate.net/profile/Jean-Marc_Jezequel/publication/3248230_Automatic_Test_Case_Optimization_A_Bacteriologic_Algorithm/links/0912f50ca4c15eb416000000.pdf][baudry2005automatic]])
+  + TODO
+  + Compared to DSpot, no assertions generation, small programs.
+
+**** Generating natural language descriptions for software artifacts
+- /On Automatically Generating Commit Messages via Summarization of Source Code Changes/
+  ([[https://www.researchgate.net/profile/Luis_Cortes11/publication/267326224_On_Automatically_Generating_Commit_Messages_via_Summarization_of_Source_Code_Changes/links/5583f12208ae4738295bd3ca.pdf][cortes2014automatically]])
+  /ChangeScribe: A Tool for Automatically Generating Commit Messages/
+  ([[http://www.cs.wm.edu/~denys/pubs/ICSE%2715-ChangeScribeTool-CRC.pdf][linares2015changescribe]])
+  + TODO
+  + Good entry point for the related work
+  + Classifies commit with stereotypes
+  + Uses templates for sentences, and fills it with commit stereotypes
+    ([[dragan2011using]])
+- /Automatically Capturing Source Code Context of NL-Queries for Software Maintenance and Reuse/
+  ([[http://servo.cs.wlu.edu/pubs/bitstream/handle/id/199/Hill09.pdf?sequence=4][hill2009automatically]])
+  + TODO
+- /Comment Generation for Source Code: State of the Art, Challenges and Opportunities/
+  ([[https://arxiv.org/pdf/1802.02971.pdf]])
+  + TODO
+
+**** Commits survey
+- /What’s a Typical Commit? A Characterization of Open Source Software Repositories/
+  ([[https://www.researchgate.net/profile/Huzefa_Kagdi/publication/4349695_What%27s_a_Typical_Commit_A_Characterization_of_Open_Source_Software_Repositories/links/00b7d528a6e2589336000000.pdf][alali2008s]])
+  - TODO
+  - Maybe a bit old?
+  - Useful to know what terms to use
+  - According to [[cortes2014automatically]] the most used terms are fix, add,
+    test, bug, patch and the most used combinations are file-fix, fix-use,
+    add-bug, remove-test, and file-update.
+- /On the Nature of Commits/
+  ([[https://sci-hub.tw/10.1109/ASEW.2008.4686322][hattori2008nature]])
+  + TODO
+- /What do large commits tell us? A taxonomical study of large commits/
+  ([[http://maveric0.uwaterloo.ca/~migod/846/papers/msr08-hindle.pdf][hindle2008large]])
+  + TODO
+- /Using Stereotypes to Help Characterize Commits/
+  ([[http://www.cs.kent.edu/~jmaletic/papers/ICSM11.pdf][dragan2011using]])
+  + TODO
+
+**** Code Evolution
+- /Erlang Code Evolution Control/
+  ([[https://arxiv.org/pdf/1709.05291.pdf][arXiv:1709.05291]])
+  + TODO
+
+** Contribution
+
+
+* Development
+
+
+* Global Goals
+
+
+* Journal
+** Preliminary Bibliographical Work <2017-09-18 Mon>--<2018-02-07 Wed>
+*** Things Done
+- Meeting with Benoit
+  + [[https://github.com/STAMP-project/dspot/issues/187][1]], [[https://github.com/STAMP-project/dspot/issues/129][2]], [[https://github.com/STAMP-project/dspot/issues/54][3]] issues for possible work to do
+  + 1 possible work: explain if a mutant isn't killed because of oracle or input
+  + focus on mutation (e.g. mutation score)
+  + work will be on [[https://github.com/STAMP-project/dspot][Dspot]] and [[https://github.com/STAMP-project/pitest-descartes][PIT]].
+- Read [[http://massol.myxwiki.org/xwiki/bin/view/Blog/MutationTestingDescartes][blog on PIT and Descartes]]
+  + Sum up PIT/Descartes
+  + List of wanted features
 - Meeting with Benoit
   + The purpose of DSpot has shifted right?
     - interesting to talk about the history in bibliography? No, there is a new
@@ -105,18 +182,6 @@
   + stack mutations
   + add explanations
   + 3 big open problems
-- Read /A Systematic Literature Review on Test Amplification/
-  + TODO
-- Read /Genetic-Improvement based Unit Test Amplification for Java/
-  + TODO
-- Read /Evosuite/
-  ([[http://www.evosuite.org/evosuite/][fraser2011evosuite]])
-  + State-of-the-art tool
-  + Very sophisticated, difficult to reproduce experiments because it changes
-    fast and a lot of parameters are tweaked
-- Read /Dynamic Analysis can be Improved with Automatic Test Suite Refactoring/
-  ([[https://arxiv.org/pdf/1506.01883.pdf][xuan2015dynamic]])
-  + TODO
 - Meeting with Benoit
   + reduce only the generated tests
   + big question: minimal generated tests
@@ -130,17 +195,6 @@
   + don't necesseraly cite /Automatic software diversity in the light of test
     suites/ and /Tailored source code transformations to synthesize
     computationally diverse program variants/
-- Read /A Few Billion Lines of Code Later/
-  ([[https://pdfs.semanticscholar.org/295f/4ffa651675b22ae8e2f3f30b400330da0c69.pdf][bessey2010few]])
-  + Great to understand the limits of static analysis but also some of the
-    limits of all analysis
-  + Difficult to analyze code because of the diversity of build automation tools
-  + "By default, companies refuse to let an external force modify anything."
-  + "A misunderstood explanation means the error is ignored or, worse,
-    transmuted into a false positive."
-  + Many standards
-  + Some people don't care about bugs, sometimes improving the tool reveals more
-    bugs which is bad for the manager
 - Talk rehearsal <2018-01-28 Mon 08:30>, notes by Vladislav
   - More illustrations (workflow graph?)
   + Check the test case example (too complicated for not much, not really java)
@@ -152,21 +206,10 @@
   + Stacking operators: explanation too sparse
   + 4th point in conclusion slide too vague. Not just the goal but also the mean
     to achieve it
-- Read /Automatic Test Case Optimization: A Bacteriologic Algorithm/
-  ([[https://www.researchgate.net/profile/Jean-Marc_Jezequel/publication/3248230_Automatic_Test_Case_Optimization_A_Bacteriologic_Algorithm/links/0912f50ca4c15eb416000000.pdf][baudry2005automatic]])
-  + TODO
-  + Compared to DSpot, no assertions generation, small programs.
 - [[https://blog.acolyer.org/2018/01/23/why-is-random-testing-effective-for-partition-tolerance-bugs/]]
-- Read /Clustering Test Cases to Achieve Effective & Scalable Prioritisation Incorporating Expert Knowledge/
-  ([[http://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.211.9479&rep=rep1&type=pdf][yoo2009clustering]])
-  + TODO
-- Read /Search Based Software Engineering: Techniques, Taxonomy, Tutorial/
-  ([[https://www.researchgate.net/profile/Mark_Harman/publication/221051156_Search_Based_Software_Engineering_Techniques_Taxonomy_Tutorial/links/0046352052592d5c2c000000/Search-Based-Software-Engineering-Techniques-Taxonomy-Tutorial.pdf][harman2012search]])
-  + TODO
-- Read /Regression Testing Minimisation, Selection and Prioritisation : A Survey/
-  ([[http://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.169.8696&rep=rep1&type=pdf][yoo2012regression]])
-  + TODO
+
 *** Blocking Points
+
 *** Planned Work
 - [X] Read papers
 - [X] Meeting with Benoit <2017-09-22 Fri 15:00-15:30>
@@ -174,6 +217,7 @@
 - [X] Send link to repo
 - [X] Ask Maud about plane tickets refund
 - [X] Meeting with Benoit <2017-12-22 Fri 10:30-11:30>
+
 
 ** Week 1 & 2 <2018-02-07 Wed>--<2018-02-18 Sun>
 *** Things Done
@@ -214,29 +258,6 @@ public class RemoveIfReturn extends AbstractProcessor<CtIf> {
 #+Name: RemoveIfTest
 #+BEGIN_SRC java
 #+END_SRC
-- Read /On Automatically Generating Commit Messages via Summarization of Source Code Changes/
-  ([[https://www.researchgate.net/profile/Luis_Cortes11/publication/267326224_On_Automatically_Generating_Commit_Messages_via_Summarization_of_Source_Code_Changes/links/5583f12208ae4738295bd3ca.pdf][cortes2014automatically]])
-  /ChangeScribe: A Tool for Automatically Generating Commit Messages/
-  ([[http://www.cs.wm.edu/~denys/pubs/ICSE%2715-ChangeScribeTool-CRC.pdf][linares2015changescribe]])
-  + TODO
-  + Good entry point for the related work
-  + Classifies commit with stereotypes
-  + Uses templates for sentences, and fills it with commit stereotypes
-    ([[dragan2011using]])
-- Read /What’s a Typical Commit? A Characterization of Open Source Software Repositories/
-  ([[https://www.researchgate.net/profile/Huzefa_Kagdi/publication/4349695_What%27s_a_Typical_Commit_A_Characterization_of_Open_Source_Software_Repositories/links/00b7d528a6e2589336000000.pdf][alali2008s]])
-  - TODO
-  - Maybe a bit old?
-  - Useful to know what terms to use
-  - According to [[cortes2014automatically]] the most used terms are fix, add,
-    test, bug, patch and the most used combinations are file-fix, fix-use,
-    add-bug, remove-test, and file-update.
-- Read /On the Nature of Commits/
-  ([[https://sci-hub.tw/10.1109/ASEW.2008.4686322][hattori2008nature]])
-  + TODO
-- Read /What do large commits tell us? A taxonomical study of large commits/
-  ([[http://maveric0.uwaterloo.ca/~migod/846/papers/msr08-hindle.pdf][hindle2008large]])
-  + TODO
 - [[https://clang-analyzer.llvm.org/][Clang static analyzer]] for windows
   + Clang is painful to install on Windows... It requires llvm and Microsoft
     Visual Studio. And there is no other choice than building from source. And
@@ -244,23 +265,19 @@ public class RemoveIfReturn extends AbstractProcessor<CtIf> {
   + Should probably use [[http://cppcheck.sourceforge.net/][CPPcheck]]
   + Cppcheck has a GUI and an installer for Windows. 👍
   + example of bugs [[http://courses.cs.vt.edu/~cs1206/Fall00/bugs_CAS.html]]
-- Read /Using Stereotypes to Help Characterize Commits/
-  ([[http://www.cs.kent.edu/~jmaletic/papers/ICSM11.pdf][dragan2011using]])
-  + TODO
-- Read /Automatically Capturing Source Code Context of NL-Queries for Software Maintenance and Reuse/
-  ([[http://servo.cs.wlu.edu/pubs/bitstream/handle/id/199/Hill09.pdf?sequence=4][hill2009automatically]])
-  + TODO
-- Read /Comment Generation for Source Code: State of the Art, Challenges and Opportunities/
-  ([[https://arxiv.org/pdf/1802.02971.pdf]])
-  + TODO
 - To what extent are documenting source code changes useful for us?
   + Only few changes made by DSpot
   + TODO
 - GitHub's [[https://help.github.com/articles/creating-a-pull-request-template-for-your-repository/][PR templates]] are just plain text templates.
+
 *** Blocking Points
+- Software Maintenance seems to be an important keyword/field for the
+  documentation of code
 - Is it useful to explore approaches for augmenting the context provided by
   differencing tools?
+
 *** Planned Work
+- [ ] Read papers
 - [ ] should I register for ICST2018
 - [X] Sign papers grant
 - [X] Is there a Slack or something?
@@ -280,5 +297,6 @@ public class RemoveIfReturn extends AbstractProcessor<CtIf> {
   + it is for mechatronics students who write small programs for arduinos
   + show them what tests are and what's possible to discover bugs
   + [ ] Think of what they could be taught
+
 
 * Conclusion
