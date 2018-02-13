@@ -49,10 +49,10 @@
   + analysis of common features (e.g. number of tests covering one statement)
   + plastic behavior (have different behaviors while still remaining correct)
     study
-  + different details compared to baudry2015dspot and baudry2014tailored
+  + different details compared to [[baudry2015dspot]] and [[baudry2014tailored]]
 - /Tailored source code transformations to synthesize computationally diverse program variants/
   ([[https://arxiv.org/pdf/1401.7635][baudry2014tailored]])
-  + More details than we can find in baudry2015dspot
+  + More details than in [[baudry2015dspot]]
 
 **** Search-based Software Testing
 - /Search-based software testing: Past, present and future/
@@ -82,8 +82,8 @@
   + Good overview of goals (Table 1) and methods (Table 2)
 - /DSpot: Test Amplification for Automatic Assessment of Computational Diversity/
   ([[https://arxiv.org/pdf/1503.05807.pdf][baudry2015dspot]])
-  + Comparison with TDR (yoo2012test) and also concurent to
-    carzaniga2015measuring
+  + Comparison with TDR [[yoo2012test]] and also concurrent to
+    [[carzaniga2015measuring]]
     - "the key differences between DSpot and TDR are: TDR stacks multiple
       transformations together; DSpot has more new transformation operators on
       test cases: DSpot considers a richer observation space based on arbitrary
@@ -112,14 +112,42 @@
   + Classifies commit with stereotypes
   + Uses templates for sentences, and fills it with commit stereotypes
     ([[dragan2011using]])
-- /Automatically Capturing Source Code Context of NL-Queries for Software Maintenance and Reuse/
-  ([[http://servo.cs.wlu.edu/pubs/bitstream/handle/id/199/Hill09.pdf?sequence=4][hill2009automatically]])
-  + TODO
 - /Comment Generation for Source Code: State of the Art, Challenges and Opportunities/
   ([[https://arxiv.org/pdf/1802.02971.pdf]])
   + TODO
+  + Information Retrieval ("analyze the natural language clues in the source
+    code") -> not relevant
+  + Program Structure Information (summary from important statements) -> not
+    relevant(?)
+  + Software Artifacts Beyond Source Code (using the social interaction
+    revolving around development) -> not relevant
+  + Fundamental NLP Techniques -> not relevant
+  + Not very useful... "current approach only generate descriptive comments"
+- /Using Stereotypes to Help Characterize Commits/
+  ([[http://www.cs.kent.edu/~jmaletic/papers/ICSM11.pdf][dragan2011using]])
+  + Only categorize based on added or deleted methods
+- /Summarizing Software Artifacts: A Literature Review/
+  ([[https://link.springer.com/content/pdf/10.1007%2Fs11390-016-1671-1.pdf][nazar2016summarizing]])
+  + TODO
+- /The Emergent Laws of Method and Class Stereotypes in Object Oriented Software/
+  ([[https://etd.ohiolink.edu/!etd.send_file?accession=kent1290570321&disposition=inline][dragan2011emergent]])
+  + Excerpt from PhD Thesis
+  + Source of the Taxonomy of Method Stereotypes
+- /Automatically Documenting Software Artifacts/
+  ([[http://www.cs.wm.edu/~denys/pubs/dissertations/Boyang-thesis.pdf][li2018automatically]])
+  + TODO
+  + PhD thesis
+  + Chapter 4 on tag for unit tests
+- /Survey of Methods to Generate Natural Language from Source Code/
+  ([[http://www.languageandcode.org/nlse2015/neubig15nlse-survey.pdf][neubig2016survey]])
+  + TODO
+- /Towards Automatic Generation of Short Summaries of Commits/
+  ([[https://arxiv.org/pdf/1703.09603.pdf][jiang2017towards]])
+- /Automatically Generating Commit Messages from Diffs using Neural Machine Translation/
+  ([[https://arxiv.org/pdf/1708.09492.pdf][jiang2017automatically]])
+  + trying to be less verbose and add context
 
-**** Commits survey
+**** Commits/Code survey
 - /What’s a Typical Commit? A Characterization of Open Source Software Repositories/
   ([[https://www.researchgate.net/profile/Huzefa_Kagdi/publication/4349695_What%27s_a_Typical_Commit_A_Characterization_of_Open_Source_Software_Repositories/links/00b7d528a6e2589336000000.pdf][alali2008s]])
   - TODO
@@ -134,14 +162,43 @@
 - /What do large commits tell us? A taxonomical study of large commits/
   ([[http://maveric0.uwaterloo.ca/~migod/846/papers/msr08-hindle.pdf][hindle2008large]])
   + TODO
-- /Using Stereotypes to Help Characterize Commits/
-  ([[http://www.cs.kent.edu/~jmaletic/papers/ICSM11.pdf][dragan2011using]])
-  + TODO
+- /Cognitive Processes in Program Comprehension/
+  ([[https://ac.els-cdn.com/016412128790032X/1-s2.0-016412128790032X-main.pdf?_tid=aff39f10-109e-11e8-8c6f-00000aacb360&acdnat=1518513618_e744f6cb72ebf42954fbb25e1eb42220][letovsky1987cognitive]])
+  + Foundational paper
+- /On the Naturalness of Software/
+  ([[http://ieeexplore.ieee.org/stamp/stamp.jsp?tp=&arnumber=6227135][hindle2012naturalness]])
+  + Code is repetitive and predictable
 
 **** Code Evolution
 - /Erlang Code Evolution Control/
   ([[https://arxiv.org/pdf/1709.05291.pdf][arXiv:1709.05291]])
   + TODO
+
+**** Not Relevant
+***** Knowledge
+- /Poster: Construct Bug Knowledge Graph for Bug Resolution/
+  ([[http://ieeexplore.ieee.org/stamp/stamp.jsp?tp=&arnumber=7965299][wang2017construct]])
+- /Towards the Visualization of Usage and Decision Knowledge in Continuous Software Engineering/
+  ([[https://wwwbruegge.in.tum.de/lehrstuhl_1/research/paper/johanssen2017visualization.pdf][johanssen2017towards]])
+  + Pretty figures
+  + Design of a tool to visualize various kinds of knowledge
+- /Method Execution Reports: Generating Text and Visualization to Describe Program Behavior/
+  ([[http://bergel.eu/MyPapers/Beck17a-MethodExecutionReports.pdf][beck2017method]])
+***** Others
+- /A Neural Architecture for Generating Natural Language Descriptions from Source Code Changes/
+  ([[https://arxiv.org/pdf/1704.04856.pdf][loyola2017neural]])
+  + Multiple good citation to papers on NL and SE
+- /Automatically Capturing Source Code Context of NL-Queries for Software Maintenance and Reuse/
+  ([[http://servo.cs.wlu.edu/pubs/bitstream/handle/id/199/Hill09.pdf?sequence=4][hill2009automatically]])
+- /How to effectively use topic models for software engineering tasks? an approach based on genetic algorithms/
+  ([[https://dl.acm.org/citation.cfm?id=2486788.2486857][panichella2013effectively]])
+  + Enhancement that doesn't really interest us
+  + "in the context of three different SE tasks: (1) traceability link recovery,
+    (2) feature location, and (3) software artifact labeling."
+- /Software traceability with topic modeling/
+  ([[https://dl.acm.org/citation.cfm?doid=1806799.1806817][asuncion2010software]])
+  + "navigate the software architecture and view semantic topics associated with
+    relevant artifacts and architectural components"
 
 ** Contribution
 
@@ -150,12 +207,15 @@
 
 
 * Global Goals
+** TODO Report <2018-06-08 Fri 12:00>
+** TODO Defense <2018-06-25 Mon>
+- TODO Defense Rehearsal @ ENS <2018-06-22 Fri>
 
 
 * Journal
 ** Preliminary Bibliographical Work <2017-09-18 Mon>--<2018-02-07 Wed>
 *** Things Done
-- Meeting with Benoit
+- Meeting with Benoit <2017-09-22 Fri>
   + [[https://github.com/STAMP-project/dspot/issues/187][1]], [[https://github.com/STAMP-project/dspot/issues/129][2]], [[https://github.com/STAMP-project/dspot/issues/54][3]] issues for possible work to do
   + 1 possible work: explain if a mutant isn't killed because of oracle or input
   + focus on mutation (e.g. mutation score)
@@ -163,7 +223,7 @@
 - Read [[http://massol.myxwiki.org/xwiki/bin/view/Blog/MutationTestingDescartes][blog on PIT and Descartes]]
   + Sum up PIT/Descartes
   + List of wanted features
-- Meeting with Benoit
+- Meeting with Benoit <2017-11-23 Thu>
   + The purpose of DSpot has shifted right?
     - interesting to talk about the history in bibliography? No, there is a new
       paper
@@ -182,7 +242,7 @@
   + stack mutations
   + add explanations
   + 3 big open problems
-- Meeting with Benoit
+- Meeting with Benoit <2017-12-22 Fri>
   + reduce only the generated tests
   + big question: minimal generated tests
     - pre or post treatement
@@ -267,8 +327,15 @@ public class RemoveIfReturn extends AbstractProcessor<CtIf> {
   + example of bugs [[http://courses.cs.vt.edu/~cs1206/Fall00/bugs_CAS.html]]
 - To what extent are documenting source code changes useful for us?
   + Only few changes made by DSpot
-  + TODO
+  + The source of the change is a tool, not a human
+  + Still useful to see how they formulate features in natural language
+  + DSpot doesn't add new features, we want the purpose of enhanced tests.
+  + Don't really care about Pyramid method because it compares with human
+    written messages
 - GitHub's [[https://help.github.com/articles/creating-a-pull-request-template-for-your-repository/][PR templates]] are just plain text templates.
+- Went through papers that cited ChangeScribe. Went partly through citations by
+  ChangeScribe.
+- Spent a lot of time on generating natural language from source code
 
 *** Blocking Points
 - Software Maintenance seems to be an important keyword/field for the
@@ -278,7 +345,7 @@ public class RemoveIfReturn extends AbstractProcessor<CtIf> {
 
 *** Planned Work
 - [ ] Read papers
-- [ ] should I register for ICST2018
+- [ ] should I register for ICST? and ICSE?
 - [X] Sign papers grant
 - [X] Is there a Slack or something?
 - [-] Get familiar with Spoon
@@ -290,13 +357,16 @@ public class RemoveIfReturn extends AbstractProcessor<CtIf> {
 - [ ] Get familiar with Dspot
 - [ ] See /boiler-plates/ for NLP way of building sentences.
   + [ ] Search for papers and read them
-- [ ] Sign contract with KTH Relocation <2018-02-13 Tue 14:00>--<2018-02-13 Tue 15:30>
-- [ ] Categorize papers of preliminaries
-- [-] Lookup what static analysis is possible with +clang+ Cppcheck
+- [X] Sign contract with KTH Relocation <2018-02-13 Tue 14:00>--<2018-02-13 Tue 15:30>
+- [X] Categorize papers of preliminaries
+- [-] Lookup what static analysis is possible with +clang+ Cppcheck [33%]
   + [X] find tools
   + it is for mechatronics students who write small programs for arduinos
   + show them what tests are and what's possible to discover bugs
   + [ ] Think of what they could be taught
+  + [-] Test Cppcheck on a windows machine
+    - [X] Install windows on the small computer
+    - [ ] Test the code provided in the course
 
 
 * Conclusion
