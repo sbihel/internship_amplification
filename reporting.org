@@ -1,5 +1,6 @@
 # -*- mode: org -*-
 # -*- coding: utf-8 -*-
+#+STARTUP: overview indent inlineimages logdrawer
 #+TITLE: Internship with Benoit Baudry at KTH
 #+DATE: <2018-02-07 Wed>--<2018-06-22 Fri>
 #+AUTHOR: Simon Bihel
@@ -42,7 +43,7 @@
   ([[http://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.211.9479&rep=rep1&type=pdf][yoo2009clustering]])
   + TODO
 - /Measuring software redundancy/
-  ([[https://pdfs.semanticscholar.org/0a93/144638ebfc924550798b620835a3fc9785cf.pdf][carzaniga2015measuring]])
+  ([[https://pdfs.semanticscholar.org/0a93/144638ebfc924550798b620835a3fc9785cf.pdf][carzaniga2015measuring]]) <<carzaniga2015measuring>>
   + TODO
 - /Automatic Software Diversity in the Light of Test Suites/
   ([[https://arxiv.org/pdf/1509.00144.pdf][baudry2015automatic]])
@@ -51,7 +52,7 @@
     study
   + different details compared to [[baudry2015dspot]] and [[baudry2014tailored]]
 - /Tailored source code transformations to synthesize computationally diverse program variants/
-  ([[https://arxiv.org/pdf/1401.7635][baudry2014tailored]])
+  ([[https://arxiv.org/pdf/1401.7635][baudry2014tailored]]) <<baudry2014tailored>>
   + More details than in [[baudry2015dspot]]
 
 **** Search-based Software Testing
@@ -67,6 +68,8 @@
   + State-of-the-art tool
   + Very sophisticated, difficult to reproduce experiments because it changes
     fast and a lot of parameters are tweaked
+- /An Approach to Test Data Generation for Killing Multiple Mutants/ ✨
+  ([[http://ieeexplore.ieee.org/abstract/document/4021328/][liu2006approach]])
 
 **** Test Amplification
 - /B-Refactoring: Automatic Test Code Refactoring to Improve Dynamic Analysis/
@@ -74,14 +77,13 @@
   + Split tests for each fragment to cover a simple part of the control flow.
   + Help with respect to fault localization.
 - /Test data regeneration: generating new test data from existing test data/
-  ([[http://www0.cs.ucl.ac.uk/staff/mharman/stvr-regeneration.pdf][yoo2012test]])
-  + TODO
+  ([[http://www0.cs.ucl.ac.uk/staff/mharman/stvr-regeneration.pdf][yoo2012test]]) <<yoo2012test>>
 - /The Emerging Field of Test Amplification: A Survey/
   ([[https://arxiv.org/pdf/1705.10692.pdf][danglot2017emerging]])
   + Dense
   + Good overview of goals (Table 1) and methods (Table 2)
 - /DSpot: Test Amplification for Automatic Assessment of Computational Diversity/
-  ([[https://arxiv.org/pdf/1503.05807.pdf][baudry2015dspot]])
+  ([[https://arxiv.org/pdf/1503.05807.pdf][baudry2015dspot]]) <<baudry2015dspot>>
   + Comparison with TDR [[yoo2012test]] and also concurrent to
     [[carzaniga2015measuring]]
     - "the key differences between DSpot and TDR are: TDR stacks multiple
@@ -104,7 +106,7 @@
 
 **** Generating natural language descriptions for software artifacts
 - /On Automatically Generating Commit Messages via Summarization of Source Code Changes/
-  ([[https://www.researchgate.net/profile/Luis_Cortes11/publication/267326224_On_Automatically_Generating_Commit_Messages_via_Summarization_of_Source_Code_Changes/links/5583f12208ae4738295bd3ca.pdf][cortes2014automatically]])
+  ([[https://www.researchgate.net/profile/Luis_Cortes11/publication/267326224_On_Automatically_Generating_Commit_Messages_via_Summarization_of_Source_Code_Changes/links/5583f12208ae4738295bd3ca.pdf][cortes2014automatically]]) <<cortes2014automatically>>
   /ChangeScribe: A Tool for Automatically Generating Commit Messages/
   ([[http://www.cs.wm.edu/~denys/pubs/ICSE%2715-ChangeScribeTool-CRC.pdf][linares2015changescribe]])
   + TODO
@@ -124,28 +126,95 @@
   + Fundamental NLP Techniques -> not relevant
   + Not very useful... "current approach only generate descriptive comments"
 - /Using Stereotypes to Help Characterize Commits/
-  ([[http://www.cs.kent.edu/~jmaletic/papers/ICSM11.pdf][dragan2011using]])
+  ([[http://www.cs.kent.edu/~jmaletic/papers/ICSM11.pdf][dragan2011using]]) <<dragan2011using>>
   + Only categorize based on added or deleted methods
 - /Summarizing Software Artifacts: A Literature Review/
-  ([[https://link.springer.com/content/pdf/10.1007%2Fs11390-016-1671-1.pdf][nazar2016summarizing]])
+  ([[https://link.springer.com/content/pdf/10.1007%2Fs11390-016-1671-1.pdf][nazar2016summarizing]]) <<nazar2016summarizing>>
   + TODO
 - /The Emergent Laws of Method and Class Stereotypes in Object Oriented Software/
   ([[https://etd.ohiolink.edu/!etd.send_file?accession=kent1290570321&disposition=inline][dragan2011emergent]])
   + Excerpt from PhD Thesis
   + Source of the Taxonomy of Method Stereotypes
-- /Automatically Documenting Software Artifacts/
+  + C++
+- /Automatically Documenting Software Artifacts/ ✨
   ([[http://www.cs.wm.edu/~denys/pubs/dissertations/Boyang-thesis.pdf][li2018automatically]])
-  + TODO
   + PhD thesis
-  + Chapter 4 on tag for unit tests
-- /Survey of Methods to Generate Natural Language from Source Code/
+  + Chapter 4 (p. 109) on tag for unit tests
+  + catalog of 21 stereotypes for methods in unit tests
+    - 14 JUnit API-Based Stereotypes for Methods in Unit Test Cases
+      + Boolean verifier
+      + Null verifier
+      + Equality verifier
+      + Identity verifier
+      + Utility verifier
+      + Exception verifier
+      + Condition Matcher
+      + Assumption setter
+      + Test initializer
+      + Test cleaner
+      + Logger
+      + Ignored method
+      + Hybrid verifier
+      + Unclassified
+    - 7 C/D-Flow Based Stereotypes for Methods in Unit Test Cases
+      + Branch verifier
+      + Iterative verifier
+      + Public field verifier
+      + API utility verifier
+      + Internal call verifier
+      + Execution tester
+      + Empty tester
+- /Survey of Methods to Generate Natural Language from Source Code/ ✨
   ([[http://www.languageandcode.org/nlse2015/neubig15nlse-survey.pdf][neubig2016survey]])
+  1. Survey papers
+    - recommends [[nazar2016summarizing]]
+  2. Generation Methods
+  3. Content Selection Methods
+  4. Targeted Software Units
+  5. +Training Data Creation+
+  6. Evaluation
   + TODO
 - /Towards Automatic Generation of Short Summaries of Commits/
   ([[https://arxiv.org/pdf/1703.09603.pdf][jiang2017towards]])
 - /Automatically Generating Commit Messages from Diffs using Neural Machine Translation/
   ([[https://arxiv.org/pdf/1708.09492.pdf][jiang2017automatically]])
   + trying to be less verbose and add context
+- /Automatically Documenting Unit Test Cases/ ✨
+  ([[http://www.cs.wm.edu/~denys/pubs/_ICST'16-JUnitTestScribe-CRC.pdf][li2016automatically]])
+  + Survey with developers and projects mining study to justify automatic
+    documentation of unit tests
+  + uses a SWUM implementation in C#
+  + example of templates and placeholders
+  + TODO
+- /On Automatic Summarization of What and Why Information in Source Code Changes/
+  ([[http://ieeexplore.ieee.org/stamp/stamp.jsp?tp=&arnumber=7551998][shen2016automatic]])
+  + TODO
+  + Better /ChangeScribe/
+  + Categories of Commits in Terms of Maintenance Task and Corresponding Description
+    (based on [[swanson1976dimensions]])
+    | Categories of commits |           Description            |
+    |-----------------------+----------------------------------|
+    | Implementation        | New requirements                 |
+    | Corrective            | Processing failure               |
+    |                       | Performance failure              |
+    |                       | Implementation failure           |
+    | Adaptive              | Change in data environment       |
+    | Perfective            | Processing inefficiency          |
+    |                       | Performance enhancement          |
+    |                       | Maintainability                  |
+    | Non functional        | Code clean-up                    |
+    |                       | Legal                            |
+    |                       | Source control system management |
+- /The Dimensions of Maintenance/
+  ([[http://www.mit.jyu.fi/ope/kurssit/TIES462/Materiaalit/Swanson.pdf][swanson1976dimensions]]) <<swanson1976dimensions>>
+  + Foundational paper
+- /JStereoCode: Automatically Identifying Method and Class Stereotypes in Java Code/
+  ([[https://dl.acm.org/citation.cfm?id=2351747][moreno2012jstereocode]])
+  + Extending Dragan's work for Java
+***** Summarizing
+- /Automatically Identifying Focal Methods under Test in Unit Test Cases/
+  ([[https://www.researchgate.net/profile/Mohammad_Ghafari3/publication/295918716_Automatically_Identifying_Focal_Methods_Under_Test_in_Unit_Test_Cases/links/57cd3d5f08ae89cd1e87bf9f.pdf][ghafari2015automatically]])
+  + TODO
 
 **** Commits/Code survey
 - /What’s a Typical Commit? A Characterization of Open Source Software Repositories/
@@ -168,6 +237,11 @@
 - /On the Naturalness of Software/
   ([[http://ieeexplore.ieee.org/stamp/stamp.jsp?tp=&arnumber=6227135][hindle2012naturalness]])
   + Code is repetitive and predictable
+
+**** Natural Language Generator
+- /SimpleNLG: A realisation engine for practical applications/
+  ([[http://www.aclweb.org/anthology/W09-0613][gatt2009simplenlg]])
+  + TODO
 
 **** Code Evolution
 - /Erlang Code Evolution Control/
@@ -209,7 +283,7 @@
 * Global Goals
 ** TODO Report <2018-06-08 Fri 12:00>
 ** TODO Defense <2018-06-25 Mon>
-- TODO Defense Rehearsal @ ENS <2018-06-22 Fri>
+*** TODO Defense Rehearsal @ ENS <2018-06-22 Fri>
 
 
 * Journal
@@ -270,7 +344,7 @@
 
 *** Blocking Points
 
-*** Planned Work
+*** Planned Work [6/6]
 - [X] Read papers
 - [X] Meeting with Benoit <2017-09-22 Fri 15:00-15:30>
 - [X] Meeting with Benoit <2017-11-23 Thu 15:00-16:00>
@@ -325,6 +399,9 @@ public class RemoveIfReturn extends AbstractProcessor<CtIf> {
   + Should probably use [[http://cppcheck.sourceforge.net/][CPPcheck]]
   + Cppcheck has a GUI and an installer for Windows. 👍
   + example of bugs [[http://courses.cs.vt.edu/~cs1206/Fall00/bugs_CAS.html]]
+  + no bug in the provided code
+- Software Maintenance seems to be an important keyword/field for the
+  documentation of code
 - To what extent are documenting source code changes useful for us?
   + Only few changes made by DSpot
   + The source of the change is a tool, not a human
@@ -336,37 +413,76 @@ public class RemoveIfReturn extends AbstractProcessor<CtIf> {
 - Went through papers that cited ChangeScribe. Went partly through citations by
   ChangeScribe.
 - Spent a lot of time on generating natural language from source code
+- Submitted a [[https://github.com/jceb/vim-orgmode/pull/291][fix]] for a bug in vim-orgmode
+- Natural Language Generators
+  + found on github, for java
+    1. [[https://github.com/simplenlg/simplenlg][SimpleNLG]]
+      - 410 stars, 215 citations
+      - Seems to be just what we need
+    2. [[https://github.com/kariminf/nalangen][NaLanGen]]
+      - 2 stars
+  + ChangeScribe seems to use a homemade generator
+- "The Software Word Usage Model (SWUM) is one of the first models of this type,
+  and can be used for converting Java method calls into natural language
+  statements (Hill et al., 2009)."
+- Looking at the code of DSpot to get info on generated tests
+  + looks like a list of amplified test are generated and you don't know what
+    was the amplifier
 
 *** Blocking Points
-- Software Maintenance seems to be an important keyword/field for the
-  documentation of code
 - Is it useful to explore approaches for augmenting the context provided by
   differencing tools?
 
-*** Planned Work
-- [ ] Read papers
-- [ ] should I register for ICST? and ICSE?
+*** Planned Work [6/12]
+- [X] Read papers
+- [ ] should I register for ICST? and +ICSE+? -> Yes, talk/remind Benoit
+  - Not eligible for [[http://www.es.mdh.se/icst2018/kaist-diversity-student-travel-awards/]]
 - [X] Sign papers grant
 - [X] Is there a Slack or something?
 - [-] Get familiar with Spoon
   + [ ] Read paper
-  + [-] Little project, remove `if`s when there is no `else` and the body is
-    just a `return`.
+  + [-] Little project, remove ~if~ when there is no ~else~ and the body is
+    just a ~return~.
     - [X] Write the program
     - [ ] Write tests
 - [ ] Get familiar with Dspot
-- [ ] See /boiler-plates/ for NLP way of building sentences.
+  + [ ] Running it
+  + [ ] Contributing
+    - [ ] Pick issues
+    - [ ] Fix them
+- [-] See /boiler-plates/ for NLP way of building sentences.
+  + a.k.a templates, placeholder templates
   + [ ] Search for papers and read them
+  + [X] Search for tools
 - [X] Sign contract with KTH Relocation <2018-02-13 Tue 14:00>--<2018-02-13 Tue 15:30>
 - [X] Categorize papers of preliminaries
-- [-] Lookup what static analysis is possible with +clang+ Cppcheck [33%]
+- [X] Lookup what static analysis is possible with +clang+ Cppcheck [100%]
   + [X] find tools
   + it is for mechatronics students who write small programs for arduinos
   + show them what tests are and what's possible to discover bugs
-  + [ ] Think of what they could be taught
-  + [-] Test Cppcheck on a windows machine
+  + [X] Think of what they could be taught
+  + [X] Test Cppcheck on a windows machine
     - [X] Install windows on the small computer
-    - [ ] Test the code provided in the course
+    - [X] Test the code provided in the course
+- [ ] Go to Entré for badge and PIN code outside working hours
+- [ ] Run tools that I encounter in papers
+
+
+** Week 3 <2018-02-19 Mon>--<2018-02-25 Sun>
+*** Things Done
+
+*** Blocking Points
+
+*** Planned Work [1/5]
+- [X] Read papers
+- [ ] Register for ICST
+- [ ] Get familiar with Dspot
+  + [ ] Running it
+  + [ ] Contributing
+    - [ ] Pick issues
+    - [ ] Fix them
+- [ ] Go to Entré for badge and PIN code outside working hours
+- [ ] Run tools that I encounter in papers
 
 
 * Conclusion
