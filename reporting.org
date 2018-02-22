@@ -1,13 +1,18 @@
 # -*- mode: org -*-
 # -*- coding: utf-8 -*-
 #+STARTUP: overview indent inlineimages logdrawer
+#+HTML_HEAD: <link rel="stylesheet" type="text/css" href="http://gongzhitaao.org/orgcss/org.css"/>
+# #+INFOJS_OPT: view:info toc:nil
+
 #+TITLE: Internship with Benoit Baudry at KTH
+#+SUBTITLE: Adaptation of Amplified Unit Tests for Human Comprehension
 #+DATE: <2018-02-07 Wed>--<2018-06-22 Fri>
 #+AUTHOR: Simon Bihel
 #+EMAIL: [[mailto:simon.bihel@ens-rennes.fr]]
 #+WEBSITE: [[simonbihel.me]]
 #+LINK: [[https://github.com/sbihel/internship_amplification]]
 #+LANGUAGE: en
+#+KEYWORDs: labbook, internship
 
 
 * Introduction
@@ -16,6 +21,26 @@
 * Findings
 ** Bibliography
 *** Writing
+**** Context
+
+**** Problem statement
+Amplified tests have a large number of new assertions and new inputs and DSpot
+keeps tests depending on the fact that they detect new mutants. What that means
+is that there is no enquiry on the usefulness of each amplification. Because the
+number of new mutants killed is often times significantly lower than the number
+of amplifications --- especially the number of assertions which are the one to
+effectively detect a mutant --- we end up with a lot of useless statements. This
+noise is problematic because it makes the review process longer, and because the
+less focused a program is, the harder it is to comprehend. And noise is not the
+only threat to focus as the new mutants can be completely different and from a
+different part of the SUT compared to the ones the original test case could
+detect. To sum-up, the two identified problems to tackle are noise reduction,
+and focus confinement.
+
+**** On the usefulness of works from (code maintenance|software artifacts summarization)
+
+**** On the usefulness of works from test cases minimization
+
 
 *** References
 **** Cultural
@@ -63,11 +88,14 @@
   ([[http://ieeexplore.ieee.org/stamp/stamp.jsp?arnumber=7911210][petke2017genetic]])
   + TODO
   + [[http://www.cs.bham.ac.uk/~wbl/biblio/][http://www.cs.bham.ac.uk/~wbl/biblio/]]
-- /Evosuite/
-  ([[http://www.evosuite.org/evosuite/][fraser2011evosuite]])
+- /Evosuite/ ✨
+  ([[http://www.evosuite.org/evosuite/][fraser2011evosuite]]) ([[https://pdfs.semanticscholar.org/df36/d5c8c8ecace7f5b9347a0880daf2c10b3d4b.pdf][fraser2013evosuite]])
   + State-of-the-art tool
   + Very sophisticated, difficult to reproduce experiments because it changes
     fast and a lot of parameters are tweaked
+  + minimization
+    - remove unnecessary statements
+    - careful not to generate long test cases
 - /An Approach to Test Data Generation for Killing Multiple Mutants/ ✨
   ([[http://ieeexplore.ieee.org/abstract/document/4021328/][liu2006approach]])
 
@@ -92,9 +120,9 @@
       data types and sequences of method calls."
     - "We count the number of variants that are identified as computationally
       different using DSpot and TDR. "
-- /A Systematic Literature Review on Test Amplification/
+- /A Systematic Literature Review on Test Amplification/ ✨
   + TODO
-- /Genetic-Improvement based Unit Test Amplification for Java/
+- /Genetic-Improvement based Unit Test Amplification for Java/ ✨
   + TODO
 - /Dynamic Analysis can be Improved with Automatic Test Suite Refactoring/
   ([[https://arxiv.org/pdf/1506.01883.pdf][xuan2015dynamic]])
@@ -109,11 +137,11 @@
   ([[https://www.researchgate.net/profile/Luis_Cortes11/publication/267326224_On_Automatically_Generating_Commit_Messages_via_Summarization_of_Source_Code_Changes/links/5583f12208ae4738295bd3ca.pdf][cortes2014automatically]]) <<cortes2014automatically>>
   /ChangeScribe: A Tool for Automatically Generating Commit Messages/
   ([[http://www.cs.wm.edu/~denys/pubs/ICSE%2715-ChangeScribeTool-CRC.pdf][linares2015changescribe]])
-  + TODO
   + Good entry point for the related work
   + Classifies commit with stereotypes
   + Uses templates for sentences, and fills it with commit stereotypes
     ([[dragan2011using]])
+  + lacks 'why' information
 - /Comment Generation for Source Code: State of the Art, Challenges and Opportunities/
   ([[https://arxiv.org/pdf/1802.02971.pdf]])
   + TODO
@@ -128,13 +156,11 @@
 - /Using Stereotypes to Help Characterize Commits/
   ([[http://www.cs.kent.edu/~jmaletic/papers/ICSM11.pdf][dragan2011using]]) <<dragan2011using>>
   + Only categorize based on added or deleted methods
-- /Summarizing Software Artifacts: A Literature Review/
-  ([[https://link.springer.com/content/pdf/10.1007%2Fs11390-016-1671-1.pdf][nazar2016summarizing]]) <<nazar2016summarizing>>
-  + TODO
-- /The Emergent Laws of Method and Class Stereotypes in Object Oriented Software/
+- /The Emergent Laws of Method and Class Stereotypes in Object Oriented
+  Software/
   ([[https://etd.ohiolink.edu/!etd.send_file?accession=kent1290570321&disposition=inline][dragan2011emergent]])
   + Excerpt from PhD Thesis
-  + Source of the Taxonomy of Method Stereotypes
+  + Source of the Taxonomy of Method Stereotypes ✨
   + C++
 - /Automatically Documenting Software Artifacts/ ✨
   ([[http://www.cs.wm.edu/~denys/pubs/dissertations/Boyang-thesis.pdf][li2018automatically]])
@@ -169,68 +195,119 @@
   1. Survey papers
     - recommends [[nazar2016summarizing]]
   2. Generation Methods
-  3. Content Selection Methods
-  4. Targeted Software Units
+    1. manual rules/templates
+      + SWUM [[hill2009automatically]]&[[sridhara2010towards]]
+        - test cases [[zhang2011automated]] & [[kamimura2013towards]]
+        - changes [[buse2010automatically]] & [[cortes2014automatically]]
+        - exceptions [[buse2008automatic]]
+      - multiple lines description [[sridhara2011automatically]]
+        + not useful, too high level
+      - using execution path information [[buse2008automatic]] & [[zhang2011automated]]
+        + not useful(?)
+  3. +Content Selection Methods+
+  4. +Targeted Software Units+
   5. +Training Data Creation+
   6. Evaluation
-  + TODO
+    - TODO later
 - /Towards Automatic Generation of Short Summaries of Commits/
   ([[https://arxiv.org/pdf/1703.09603.pdf][jiang2017towards]])
 - /Automatically Generating Commit Messages from Diffs using Neural Machine Translation/
   ([[https://arxiv.org/pdf/1708.09492.pdf][jiang2017automatically]])
   + trying to be less verbose and add context
 - /Automatically Documenting Unit Test Cases/ ✨
-  ([[http://www.cs.wm.edu/~denys/pubs/_ICST'16-JUnitTestScribe-CRC.pdf][li2016automatically]])
+  ([[http://www.cs.wm.edu/~denys/pubs/_ICST'16-JUnitTestScribe-CRC.pdf][li2016automatically]]) ([[https://github.com/boyangwm/UnitTestScribe][git]])
   + Survey with developers and projects mining study to justify automatic
     documentation of unit tests
   + uses a SWUM implementation in C#
   + example of templates and placeholders
-  + TODO
+  + as with other similar works it may not be useful for us
 - /On Automatic Summarization of What and Why Information in Source Code Changes/
   ([[http://ieeexplore.ieee.org/stamp/stamp.jsp?tp=&arnumber=7551998][shen2016automatic]])
-  + TODO
-  + Better /ChangeScribe/
+  + Better then /ChangeScribe/[[cortes2014automatically]]
   + Categories of Commits in Terms of Maintenance Task and Corresponding Description
-    (based on [[swanson1976dimensions]])
+    (based on [[swanson1976dimensions]]) (why informatio)
+    +-----------------------+----------------------------------+
     | Categories of commits |           Description            |
-    |-----------------------+----------------------------------|
+    +-----------------------+----------------------------------+
     | Implementation        | New requirements                 |
+    +-----------------------+----------------------------------+
     | Corrective            | Processing failure               |
     |                       | Performance failure              |
     |                       | Implementation failure           |
+    +-----------------------+----------------------------------+
     | Adaptive              | Change in data environment       |
+    +-----------------------+----------------------------------+
     | Perfective            | Processing inefficiency          |
     |                       | Performance enhancement          |
     |                       | Maintainability                  |
+    +-----------------------+----------------------------------+
     | Non functional        | Code clean-up                    |
     |                       | Legal                            |
     |                       | Source control system management |
+    +-----------------------+----------------------------------+
+  + What information: description (more like diff (ChangeDistiller) dump) of
+    changes
+  + only keep information for methods that are called many times
+  + boilerplates not interesting
 - /The Dimensions of Maintenance/
   ([[http://www.mit.jyu.fi/ope/kurssit/TIES462/Materiaalit/Swanson.pdf][swanson1976dimensions]]) <<swanson1976dimensions>>
   + Foundational paper
 - /JStereoCode: Automatically Identifying Method and Class Stereotypes in Java Code/
   ([[https://dl.acm.org/citation.cfm?id=2351747][moreno2012jstereocode]])
-  + Extending Dragan's work for Java
+  + Extending Dragan's work <<dragan2011using>> for Java
+- /Towards Generating Human-Oriented Summaries of Unit Test Cases/ ✨
+  ([[http://www.cs.ubc.ca/~murphy/papers/summarization/icpc13era-t9-p-16545-preprint.pdf][kamimura2013towards]]) <<kamimura2013towards>>
+- /Automatically Documenting Program Changes/
+  ([[http://web.eecs.umich.edu/~weimerw/p/weimer-ase2010-deltadoc-preprint.pdf][buse2010automatically]]) <<buse2010automatically>>
+  + precise description
+  + nicely written, but not useful for us
+- /Automatic Documentation Inference for Exceptions/ ✨
+  ([[http://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.143.8478&rep=rep1&type=pdf][buse2008automatic]]) <<buse2008automatic>>
+  + well written
+  + could be used to improve the documentation and precision of ~try/catch~
+    amplification
+- /Automated Documentation Inference to Explain Failed Tests/
+  ([[http://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.700.252&rep=rep1&type=pdf][zhang2011automated]]) <<zhang2011automated>>
+  + could be used to improve the documentation and precision of ~try/catch~
+    amplification
+
 ***** Summarizing
+- /Summarizing Software Artifacts: A Literature Review/ ✨
+  ([[https://link.springer.com/content/pdf/10.1007%2Fs11390-016-1671-1.pdf][nazar2016summarizing]]) <<nazar2016summarizing>>
+  + very complete
 - /Automatically Identifying Focal Methods under Test in Unit Test Cases/
   ([[https://www.researchgate.net/profile/Mohammad_Ghafari3/publication/295918716_Automatically_Identifying_Focal_Methods_Under_Test_in_Unit_Test_Cases/links/57cd3d5f08ae89cd1e87bf9f.pdf][ghafari2015automatically]])
-  + TODO
+  + not useful, we are focusing on explaining edge cases
+- /Towards Automatically Generating Summary Comments for Java Methods/ ✨
+  ([[http://servo.cs.wlu.edu/pubs/bitstream/handle/id/200/towards-automatically-generating-summary-comments-for-methods.pdf?sequence=3][sridhara2010towards]]) <<sridhara2010towards>>
+  (+ PhD thesis)
+  - well written
+  - SWUM, central lines selection, ...
+  - again not exactly useful for us
+- /Integrating Natural Language and Program Structure Information to Improve Software Search and Exploration/
+  ([[https://search.proquest.com/openview/89d289c5561fc953875cf9d6f223a7cc/1?pq-origsite=gscholar&cbl=18750&diss=y][hill2010integrating]])
+  + PhD thesis
+  + Source of SWUM
+  + SWUM implementation as Eclipse plugin
+- /Swummary: Self-Documenting Code/
+  ([[https://scholarscompass.vcu.edu/capstone/114/][herbert2016swummary]]) ([[https://github.com/herbertkb/Swummary][git]])
+  + focal method extraction -> Swum.NET
+- /Automatic Source Code Summarization of Context for Java Methods/
+  ([[http://ieeexplore.ieee.org/stamp/stamp.jsp?tp=&arnumber=7181703][mcburney2016automatic]])
+  + looks very complete but again not quite useful
 
 **** Commits/Code survey
 - /What’s a Typical Commit? A Characterization of Open Source Software Repositories/
   ([[https://www.researchgate.net/profile/Huzefa_Kagdi/publication/4349695_What%27s_a_Typical_Commit_A_Characterization_of_Open_Source_Software_Repositories/links/00b7d528a6e2589336000000.pdf][alali2008s]])
-  - TODO
-  - Maybe a bit old?
   - Useful to know what terms to use
   - According to [[cortes2014automatically]] the most used terms are fix, add,
     test, bug, patch and the most used combinations are file-fix, fix-use,
     add-bug, remove-test, and file-update.
 - /On the Nature of Commits/
   ([[https://sci-hub.tw/10.1109/ASEW.2008.4686322][hattori2008nature]])
-  + TODO
 - /What do large commits tell us? A taxonomical study of large commits/
   ([[http://maveric0.uwaterloo.ca/~migod/846/papers/msr08-hindle.pdf][hindle2008large]])
-  + TODO
+  + extending [[swanson1976dimensions]]
 - /Cognitive Processes in Program Comprehension/
   ([[https://ac.els-cdn.com/016412128790032X/1-s2.0-016412128790032X-main.pdf?_tid=aff39f10-109e-11e8-8c6f-00000aacb360&acdnat=1518513618_e744f6cb72ebf42954fbb25e1eb42220][letovsky1987cognitive]])
   + Foundational paper
@@ -258,12 +335,13 @@
   + Design of a tool to visualize various kinds of knowledge
 - /Method Execution Reports: Generating Text and Visualization to Describe Program Behavior/
   ([[http://bergel.eu/MyPapers/Beck17a-MethodExecutionReports.pdf][beck2017method]])
+
 ***** Others
 - /A Neural Architecture for Generating Natural Language Descriptions from Source Code Changes/
   ([[https://arxiv.org/pdf/1704.04856.pdf][loyola2017neural]])
   + Multiple good citation to papers on NL and SE
 - /Automatically Capturing Source Code Context of NL-Queries for Software Maintenance and Reuse/
-  ([[http://servo.cs.wlu.edu/pubs/bitstream/handle/id/199/Hill09.pdf?sequence=4][hill2009automatically]])
+  ([[http://servo.cs.wlu.edu/pubs/bitstream/handle/id/199/Hill09.pdf?sequence=4][hill2009automatically]]) <<hill2009automatically>>
 - /How to effectively use topic models for software engineering tasks? an approach based on genetic algorithms/
   ([[https://dl.acm.org/citation.cfm?id=2486788.2486857][panichella2013effectively]])
   + Enhancement that doesn't really interest us
@@ -273,21 +351,38 @@
   ([[https://dl.acm.org/citation.cfm?doid=1806799.1806817][asuncion2010software]])
   + "navigate the software architecture and view semantic topics associated with
     relevant artifacts and architectural components"
+- /Automatically Detecting and Describing High Level Actions within Methods/
+  ([[http://servo.cs.wlu.edu/pubs/bitstream/handle/id/204/automatically-detetct-and-describe-high-level-actions-in-methods.pdf?sequence=1][sridhara2011automatically]]) <<sridhara2011automatically>>
+  + too high level
+- /Automatic Generation of Natural Language Summaries for Java Classes/
+  ([[http://servo.cs.wlu.edu/pubs/bitstream/handle/id/285/icpc13summaries-submitted.pdf?sequence=1][moreno2013automatic]])
+- /Using Method Stereotype Distribution as a Signature Descriptor for Software Systems/
+  ([[http://www.cs.kent.edu/~ndragan/ICSM09.pdf][dragan2009using]])
+- /Reverse Engineering Method Stereotypes/
+  ([[http://www.cs.kent.edu/~jmaletic/papers/ICSM06.pdf][dragan2006reverse]])
+- /Supporting Program Comprehension with Source Code Summarization/
+  ([[https://www.researchgate.net/profile/Jairo_Aponte/publication/215739380_Supporting_program_comprehension_with_source_code_summarization/links/554771110cf2e2031b36b7fd.pdf][haiduc2010supporting]])
+  - motivations
+- /Natural Language-based Software Analyses and Tools for Software Maintenance/
+  ([[https://users.drew.edu/ehill1/papers/lncs12.pdf][pollock2009natural]])
+  + more about analysis than generation
 
 ** Contribution
 
 
 * Development
+** TODO Extract hard-coded amplifications messages
 
 
-* Global Goals
+* Global Goals [0/2]
 ** TODO Report <2018-06-08 Fri 12:00>
 ** TODO Defense <2018-06-25 Mon>
+*** TODO Talk @ Workshop Software Engineering Research <2018-03-08 Thu 10:00>
 *** TODO Defense Rehearsal @ ENS <2018-06-22 Fri>
 
 
-* Journal
-** Preliminary Bibliographical Work <2017-09-18 Mon>--<2018-02-07 Wed>
+* Journal [2/21]
+** DONE Preliminary Bibliographical Work <2017-09-18 Mon>--<2018-02-07 Wed>
 *** Things Done
 - Meeting with Benoit <2017-09-22 Fri>
   + [[https://github.com/STAMP-project/dspot/issues/187][1]], [[https://github.com/STAMP-project/dspot/issues/129][2]], [[https://github.com/STAMP-project/dspot/issues/54][3]] issues for possible work to do
@@ -353,7 +448,7 @@
 - [X] Meeting with Benoit <2017-12-22 Fri 10:30-11:30>
 
 
-** Week 1 & 2 <2018-02-07 Wed>--<2018-02-18 Sun>
+** DONE Week 1 & 2 <2018-02-07 Wed>--<2018-02-18 Sun>
 *** Things Done
 - Wrote the little example of use of Spoon (I simply added it in [[https://github.com/SpoonLabs/spoon-examples][spoon-examples]])
 #+NAME: RemoveIf
@@ -468,21 +563,258 @@ public class RemoveIfReturn extends AbstractProcessor<CtIf> {
 - [ ] Run tools that I encounter in papers
 
 
-** Week 3 <2018-02-19 Mon>--<2018-02-25 Sun>
+** TODO Week 3 <2018-02-19 Mon>--<2018-02-25 Sun>
+*** Things Done
+- Work on DSpot documentation
+- Read reviews of bibliographic report
+- How to remember what amplification has been applied?
+  + +Go through logs+
+    - nothing useful in them
+  + Comments directly in the code
+    - name of the amplifier used in the line before
+    - could easily be enriched if necessary
+  + +Enrich test methods with a new parameter+
+    - last resort
+- A =json= file summarizes killed mutants (with their location)
+- Need to keep focus
+#+BEGIN_QUOTE
+To select the new test case to be proposed as pull request, we look for an
+amplified test that kills mutants which are all located in the same method.
+#+END_QUOTE
+(this was done manually)
+- Need for automated minimization
+#+BEGIN_QUOTE
+A second point in the preparation of the pull request relates to the length of
+the amplified test. Once a test method has been selected as a candidate pull
+request, we analyze it and manually make it clearer and more concise, we call
+this process the manual minimization of the amplified test. We note that
+automated min- imization of amplified tests is an interesting area of future
+work, left out of the scope of this paper.
+#+END_QUOTE
+- SWUM is really about analysis. Trying to reformulate things without making
+  sense of them.
+- Possible title: Adaptation of Amplified Unit Tests for Human Comprehension
+- [[https://github.com/abb-iss/Swum.NET][Swum.NET]]
+#+BEGIN_QUOTE
+UnitTestScribe also uses SWUM.NET to generate a general NL description for each
+unit test case method. SWUM.NET captures both linguistic and structural
+information about a program, and then generates a sentence describing the
+purpose of a source code method.
+#+END_QUOTE
+- Started writing
+
+*** Blocking Points
+- [X] Where is the `keep test that kills mutants all located in the same
+  method'? Seems to be implemented reading the paper, but [[https://github.com/STAMP-project/dspot/issues/130][issue]] still open and
+  it proposes a solution that seems different than just looking at the json file
+  at then end of the process.
+  + it was done manually
+
+*** Planned Work [3/12]
+- [X] Read papers
+- [ ] Register for ICST
+- [-] +Get familiar with+ Dspot [1/6]
+  + [X] Running it
+  + [ ] Contributing
+    - [ ] Pick issues
+    - [ ] Fix them
+  + [-] Write documentation [2/4]
+    - [-] Key methods [3/5]
+      + [X] Assertion generation [2/2]
+        - [X] ~AssertGenerator~
+        - [X] ~MethodsAssertGenerator~
+      + [-] Input amplification [1/2]
+        - [X] glue
+        - [ ] amplifiers
+      + [X] Pre-amplification
+      + [X] Amplification
+      + [-] Compilation & run [2/3]
+        - [X] ~compileAndRunTests~
+        - [X] ~buildClassForSelection~
+        - [ ] ~TestCompiler~
+    - [X] Rename ~amplifyTests~ to express the fact that it is only doing input
+      amplification
+    - [ ] ~compileAndRunTests~
+      + [ ] Why return ~null~ when not all methods were compilable or some
+        tests failed?
+    - [X] Renaming plural variables
+  + [ ] Work on removing all deprecated classes in stamp [0/1]
+    - [ ] Remove unused deprecated methods of ~TestSelector~
+  + [ ] More precise ~try/catch~?
+    - Would that be useful? Feasible?
+  + [ ] Extract hard-coded amplifications messages
+- [-] Lab access denied outside working hours
+  + [X] Go to Entré
+  + [X] Go again to Entré
+  + [X] Send email to request access to the lab
+    - resend
+  + [ ] Resolved
+- [X] Run tools that I encounter in papers
+  + tools not really useful are they(?)
+  + closing this for now
+- [X] Find a way to know which amplifications have been applied and/or how to
+  implement it
+- [ ] Make DHELL PR maven compiler version
+  + [[https://github.com/spring-guides/gs-maven/issues/21]]
+- [ ] Start writing
+  + [ ] Problem statement
+    - [ ] scientific
+    - [ ] technical
+  + [ ] Comparison with works on description
+  + [ ] Comparison with works on test cases minimization
+- [ ] Start doing a simple NL commit messages generator
+- [ ] Maybe reorganize the references on descriptions
+- [ ] Read about identify essential parts of a test for killing a specific
+  mutant
+- [ ] Search for papers on mutation testing and same location targeting
+
+
+** TODO Week 4 <2018-02-26 Mon>--<2018-03-04 Sun>
 *** Things Done
 
 *** Blocking Points
 
-*** Planned Work [1/5]
-- [X] Read papers
-- [ ] Register for ICST
-- [ ] Get familiar with Dspot
-  + [ ] Running it
-  + [ ] Contributing
-    - [ ] Pick issues
-    - [ ] Fix them
-- [ ] Go to Entré for badge and PIN code outside working hours
-- [ ] Run tools that I encounter in papers
+*** Planned Work
+
+
+** TODO Week 5  <2018-03-05 Mon>--<2018-03-11 Sun>
+*** Things Done
+
+*** Blocking Points
+
+*** Planned Work [0/1]
+- [ ] Talk @ Workshop Software Engineering Research <2018-03-08 Thu 10:00>
+
+
+** TODO Week 6  <2018-03-12 Mon>--<2018-03-18 Sun>
+*** Things Done
+
+*** Blocking Points
+
+*** Planned Work
+
+
+** TODO Week 7  <2018-03-19 Mon>--<2018-03-25 Sun>
+*** Things Done
+
+*** Blocking Points
+
+*** Planned Work
+
+
+** TODO Week 8  <2018-03-26 Mon>--<2018-04-01 Sun>
+*** Things Done
+
+*** Blocking Points
+
+*** Planned Work
+
+
+** TODO Week 9  <2018-04-02 Mon>--<2018-04-08 Sun>
+*** Things Done
+
+*** Blocking Points
+
+*** Planned Work
+
+
+** TODO Week 10 <2018-04-09 Mon>--<2018-04-15 Sun>
+*** Things Done
+
+*** Blocking Points
+
+*** Planned Work
+
+
+** TODO Week 11 <2018-04-16 Mon>--<2018-04-22 Sun>
+*** Things Done
+
+*** Blocking Points
+
+*** Planned Work
+
+
+** TODO Week 12 <2018-04-23 Mon>--<2018-04-29 Sun>
+*** Things Done
+
+*** Blocking Points
+
+*** Planned Work
+
+
+** TODO Week 13 <2018-04-30 Mon>--<2018-05-06 Sun>
+*** Things Done
+
+*** Blocking Points
+
+*** Planned Work
+
+
+** TODO Week 14 <2018-05-07 Mon>--<2018-05-13 Sun>
+*** Things Done
+
+*** Blocking Points
+
+*** Planned Work
+
+
+** TODO Week 15 <2018-05-14 Mon>--<2018-05-20 Sun>
+*** Things Done
+
+*** Blocking Points
+
+*** Planned Work
+
+
+** TODO Week 16 <2018-05-21 Mon>--<2018-05-27 Sun>
+*** Things Done
+
+*** Blocking Points
+
+*** Planned Work
+
+
+** TODO Week 17 <2018-05-28 Mon>--<2018-06-03 Sun>
+*** Things Done
+
+*** Blocking Points
+
+*** Planned Work
+
+
+** TODO Week 18 <2018-06-04 Mon>--<2018-06-10 Sun>
+*** Things Done
+
+*** Blocking Points
+
+*** Planned Work [0/1]
+- [ ] Report <2018-06-08 Fri 12:00>
+
+
+** TODO Week 19 <2018-06-11 Mon>--<2018-06-17 Sun>
+*** Things Done
+
+*** Blocking Points
+
+*** Planned Work
+
+
+** TODO Week 20 <2018-06-18 Mon>--<2018-06-24 Sun>
+*** Things Done
+
+*** Blocking Points
+
+*** Planned Work [0/1]
+- [ ] Defense Rehearsal @ ENS <2018-06-22 Fri>
+
+
+** TODO Week 21 <2018-06-25 Mon>--<2018-07-01 Sun>
+*** Things Done
+
+*** Blocking Points
+
+*** Planned Work [0/1]
+- [ ] Defense <2018-06-25 Mon>
 
 
 * Conclusion
