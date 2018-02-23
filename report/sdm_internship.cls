@@ -83,6 +83,8 @@ Université Rennes 1]
 %\textbf{INSERT ``\%'' IN FRONT OF ALL THE LOGO YOU DO NOT NEED - A SINGLE ONE SHOULD REMAIN AT THE BOTTOM OF THIS PAGE}
 \includegraphics[width=0.09\textwidth]{\@school}
 \hfill%
+\includegraphics[width=0.09\textwidth]{KTH_Logotyp_RGB_2013}
+~
 \includegraphics[width=0.09\textwidth]{logo_FR1}
 \end{center}
 \end{titlepage}
