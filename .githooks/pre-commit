@@ -1,4 +1,7 @@
 #!/bin/sh
+
+echo "pre-commit started"
+
 #
 # An example hook script to verify what is about to be committed.
 # Called by "git commit" with no arguments.  The hook should
@@ -53,3 +56,6 @@ reporting_path="${root_path}/reporting.org"
 output_path="${root_path}/reporting.html"
 vim -e -X -R -c "OrgExportToHTML" -c q $reporting_path
 git add $output_path
+
+
+echo "pre-commit finished"
