@@ -1,6 +1,6 @@
 # -*- mode: org -*-
 # -*- coding: utf-8 -*-
-#+STARTUP: overview indent inlineimages logdrawer
+#+STARTUP: overview indent inlineimages logdrawer hidestars
 #+HTML_HEAD: <link rel="stylesheet" type="text/css" href="http://gongzhitaao.org/orgcss/org.css"/>
 # #+INFOJS_OPT: view:info toc:nil
 
@@ -12,7 +12,7 @@
 #+WEBSITE: [[simonbihel.me]]
 #+LINK: [[https://github.com/sbihel/internship_amplification]]
 #+LANGUAGE: en
-#+KEYWORDs: labbook, internship
+#+KEYWORDS: labbook, internship
 
 
 * Introduction
@@ -24,22 +24,37 @@
 **** Context
 
 **** Problem statement
-Amplified tests have a large number of new assertions and new inputs and DSpot
-keeps tests depending on the fact that they detect new mutants. What that means
-is that there is no enquiry on the usefulness of each amplification. Because the
-number of new mutants killed is often times significantly lower than the number
-of amplifications --- especially the number of assertions which are the one to
+Amplified tests have many new assertions and new inputs and DSpot keeps tests
+depending on the fact that they detect new mutants. What that means is that
+there is no enquiry on the usefulness of each amplification. Because the number
+of new mutants killed is often times significantly lower than the number of
+amplifications --- especially the number of assertions which are the one to
 effectively detect a mutant --- we end up with a lot of useless statements. This
 noise is problematic because it makes the review process longer, and because the
 less focused a program is, the harder it is to comprehend. And noise is not the
 only threat to focus as the new mutants can be completely different and from a
 different part of the SUT compared to the ones the original test case could
-detect. To sum-up, the two identified problems to tackle are noise reduction,
-and focus confinement.
+detect. The final step towards a human-friendly output would be to add context
+and human-like description of the amplification. To sum-up, the three identified
+problems to tackle are noise reduction, focus confinement, and natural language
+description of the amplification.
 
 **** On the usefulness of works from (code maintenance|software artifacts summarization)
+A lot of effort has been put in generating human friendly descriptions for
+various kinds of software artifacts. In particular, there have been works on
+generating documentation (or comments or description or summary) for source
+code, methods, and more interestingly unit test cases. These tools can generate
+natural language description of /what/ the piece of code does and identify to
+most important parts or lines of code. But as for /why/ a code change was done
+or the role a piece of code plays --- i.e. understand the intentions of the
+developers --- it is harder and tools need additional information or limit the
+scope by identifying stereotypes (e.g. labelling a commit as Feature Addition).
+
+But those works are not directly useful for our problem.
 
 **** On the usefulness of works from test cases minimization
+
+**** What do we then propose as contribution
 
 
 *** References
@@ -88,7 +103,7 @@ and focus confinement.
   ([[http://ieeexplore.ieee.org/stamp/stamp.jsp?arnumber=7911210][petke2017genetic]])
   + TODO
   + [[http://www.cs.bham.ac.uk/~wbl/biblio/][http://www.cs.bham.ac.uk/~wbl/biblio/]]
-- /Evosuite/ ✨
+- /Evosuite/ 🌟
   ([[http://www.evosuite.org/evosuite/][fraser2011evosuite]]) ([[https://pdfs.semanticscholar.org/df36/d5c8c8ecace7f5b9347a0880daf2c10b3d4b.pdf][fraser2013evosuite]])
   + State-of-the-art tool
   + Very sophisticated, difficult to reproduce experiments because it changes
@@ -96,7 +111,7 @@ and focus confinement.
   + minimization
     - remove unnecessary statements
     - careful not to generate long test cases
-- /An Approach to Test Data Generation for Killing Multiple Mutants/ ✨
+- /An Approach to Test Data Generation for Killing Multiple Mutants/ 🌟
   ([[http://ieeexplore.ieee.org/abstract/document/4021328/][liu2006approach]])
 
 **** Test Amplification
@@ -120,9 +135,9 @@ and focus confinement.
       data types and sequences of method calls."
     - "We count the number of variants that are identified as computationally
       different using DSpot and TDR. "
-- /A Systematic Literature Review on Test Amplification/ ✨
+- /A Systematic Literature Review on Test Amplification/ 🌟
   + TODO
-- /Genetic-Improvement based Unit Test Amplification for Java/ ✨
+- /Genetic-Improvement based Unit Test Amplification for Java/ 🌟
   + TODO
 - /Dynamic Analysis can be Improved with Automatic Test Suite Refactoring/
   ([[https://arxiv.org/pdf/1506.01883.pdf][xuan2015dynamic]])
@@ -133,36 +148,32 @@ and focus confinement.
   + Compared to DSpot, no assertions generation, small programs.
 
 **** Generating natural language descriptions for software artifacts
-- /On Automatically Generating Commit Messages via Summarization of Source Code Changes/
-  ([[https://www.researchgate.net/profile/Luis_Cortes11/publication/267326224_On_Automatically_Generating_Commit_Messages_via_Summarization_of_Source_Code_Changes/links/5583f12208ae4738295bd3ca.pdf][cortes2014automatically]]) <<cortes2014automatically>>
-  /ChangeScribe: A Tool for Automatically Generating Commit Messages/
-  ([[http://www.cs.wm.edu/~denys/pubs/ICSE%2715-ChangeScribeTool-CRC.pdf][linares2015changescribe]])
-  + Good entry point for the related work
-  + Classifies commit with stereotypes
-  + Uses templates for sentences, and fills it with commit stereotypes
-    ([[dragan2011using]])
-  + lacks 'why' information
-- /Comment Generation for Source Code: State of the Art, Challenges and Opportunities/
-  ([[https://arxiv.org/pdf/1802.02971.pdf]])
-  + TODO
-  + Information Retrieval ("analyze the natural language clues in the source
-    code") -> not relevant
-  + Program Structure Information (summary from important statements) -> not
-    relevant(?)
-  + Software Artifacts Beyond Source Code (using the social interaction
-    revolving around development) -> not relevant
-  + Fundamental NLP Techniques -> not relevant
-  + Not very useful... "current approach only generate descriptive comments"
-- /Using Stereotypes to Help Characterize Commits/
-  ([[http://www.cs.kent.edu/~jmaletic/papers/ICSM11.pdf][dragan2011using]]) <<dragan2011using>>
-  + Only categorize based on added or deleted methods
-- /The Emergent Laws of Method and Class Stereotypes in Object Oriented
-  Software/
-  ([[https://etd.ohiolink.edu/!etd.send_file?accession=kent1290570321&disposition=inline][dragan2011emergent]])
-  + Excerpt from PhD Thesis
-  + Source of the Taxonomy of Method Stereotypes ✨
-  + C++
-- /Automatically Documenting Software Artifacts/ ✨
+***** Surveys
+- /Survey of Methods to Generate Natural Language from Source Code/ 🌟
+  ([[http://www.languageandcode.org/nlse2015/neubig15nlse-survey.pdf][neubig2016survey]])
+  1. Survey papers
+    - recommends [[nazar2016summarizing]]
+  2. Generation Methods
+    1. manual rules/templates
+      + SWUM [[hill2009automatically]]&[[sridhara2010towards]]
+        - test cases [[zhang2011automated]] & [[kamimura2013towards]]
+        - changes [[buse2010automatically]] & [[cortes2014automatically]]
+        - exceptions [[buse2008automatic]]
+      - multiple lines description [[sridhara2011automatically]]
+        + not useful, too high level
+      - using execution path information [[buse2008automatic]] & [[zhang2011automated]]
+        + not useful(?)
+  3. +Content Selection Methods+
+  4. +Targeted Software Units+
+  5. +Training Data Creation+
+  6. Evaluation
+    - TODO later
+- /Summarizing Software Artifacts: A Literature Review/ 🌟
+  ([[https://link.springer.com/content/pdf/10.1007%2Fs11390-016-1671-1.pdf][nazar2016summarizing]]) <<nazar2016summarizing>>
+  + very complete
+
+***** Tools for tests
+- /Automatically Documenting Software Artifacts/ 🌟
   ([[http://www.cs.wm.edu/~denys/pubs/dissertations/Boyang-thesis.pdf][li2018automatically]])
   + PhD thesis
   + Chapter 4 (p. 109) on tag for unit tests
@@ -190,42 +201,46 @@ and focus confinement.
       + Internal call verifier
       + Execution tester
       + Empty tester
-- /Survey of Methods to Generate Natural Language from Source Code/ ✨
-  ([[http://www.languageandcode.org/nlse2015/neubig15nlse-survey.pdf][neubig2016survey]])
-  1. Survey papers
-    - recommends [[nazar2016summarizing]]
-  2. Generation Methods
-    1. manual rules/templates
-      + SWUM [[hill2009automatically]]&[[sridhara2010towards]]
-        - test cases [[zhang2011automated]] & [[kamimura2013towards]]
-        - changes [[buse2010automatically]] & [[cortes2014automatically]]
-        - exceptions [[buse2008automatic]]
-      - multiple lines description [[sridhara2011automatically]]
-        + not useful, too high level
-      - using execution path information [[buse2008automatic]] & [[zhang2011automated]]
-        + not useful(?)
-  3. +Content Selection Methods+
-  4. +Targeted Software Units+
-  5. +Training Data Creation+
-  6. Evaluation
-    - TODO later
-- /Towards Automatic Generation of Short Summaries of Commits/
-  ([[https://arxiv.org/pdf/1703.09603.pdf][jiang2017towards]])
-- /Automatically Generating Commit Messages from Diffs using Neural Machine Translation/
-  ([[https://arxiv.org/pdf/1708.09492.pdf][jiang2017automatically]])
-  + trying to be less verbose and add context
-- /Automatically Documenting Unit Test Cases/ ✨
+- /Automatically Documenting Unit Test Cases/ 🌟
   ([[http://www.cs.wm.edu/~denys/pubs/_ICST'16-JUnitTestScribe-CRC.pdf][li2016automatically]]) ([[https://github.com/boyangwm/UnitTestScribe][git]])
   + Survey with developers and projects mining study to justify automatic
     documentation of unit tests
   + uses a SWUM implementation in C#
   + example of templates and placeholders
   + as with other similar works it may not be useful for us
+- /Towards Generating Human-Oriented Summaries of Unit Test Cases/ 🌟
+  ([[http://www.cs.ubc.ca/~murphy/papers/summarization/icpc13era-t9-p-16545-preprint.pdf][kamimura2013towards]]) <<kamimura2013towards>>
+- /Automated Documentation Inference to Explain Failed Tests/
+  ([[http://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.700.252&rep=rep1&type=pdf][zhang2011automated]]) <<zhang2011automated>>
+  + could be used to improve the documentation and precision of ~try/catch~
+    amplification
+- /Automatically Identifying Focal Methods under Test in Unit Test Cases/
+  ([[https://www.researchgate.net/profile/Mohammad_Ghafari3/publication/295918716_Automatically_Identifying_Focal_Methods_Under_Test_in_Unit_Test_Cases/links/57cd3d5f08ae89cd1e87bf9f.pdf][ghafari2015automatically]])
+  + not useful, we are focusing on explaining edge cases
+
+***** Commits/Code changes
+- /On Automatically Generating Commit Messages via Summarization of Source Code Changes/
+  ([[https://www.researchgate.net/profile/Luis_Cortes11/publication/267326224_On_Automatically_Generating_Commit_Messages_via_Summarization_of_Source_Code_Changes/links/5583f12208ae4738295bd3ca.pdf][cortes2014automatically]]) <<cortes2014automatically>>
+  /ChangeScribe: A Tool for Automatically Generating Commit Messages/
+  ([[http://www.cs.wm.edu/~denys/pubs/ICSE%2715-ChangeScribeTool-CRC.pdf][linares2015changescribe]])
+  + Good entry point for the related work
+  + Classifies commit with stereotypes
+  + Uses templates for sentences, and fills it with commit stereotypes
+    ([[dragan2011using]])
+  + lacks 'why' information
+- /Using Stereotypes to Help Characterize Commits/
+  ([[http://www.cs.kent.edu/~jmaletic/papers/ICSM11.pdf][dragan2011using]]) <<dragan2011using>>
+  + Only categorize based on added or deleted methods
+- /Towards Automatic Generation of Short Summaries of Commits/
+  ([[https://arxiv.org/pdf/1703.09603.pdf][jiang2017towards]])
+- /Automatically Generating Commit Messages from Diffs using Neural Machine Translation/
+  ([[https://arxiv.org/pdf/1708.09492.pdf][jiang2017automatically]])
+  + trying to be less verbose and add context
 - /On Automatic Summarization of What and Why Information in Source Code Changes/
   ([[http://ieeexplore.ieee.org/stamp/stamp.jsp?tp=&arnumber=7551998][shen2016automatic]])
   + Better then /ChangeScribe/[[cortes2014automatically]]
   + Categories of Commits in Terms of Maintenance Task and Corresponding Description
-    (based on [[swanson1976dimensions]]) (why informatio)
+    (based on [[swanson1976dimensions]]) (why information)
     +-----------------------+----------------------------------+
     | Categories of commits |           Description            |
     +-----------------------+----------------------------------+
@@ -249,36 +264,40 @@ and focus confinement.
     changes
   + only keep information for methods that are called many times
   + boilerplates not interesting
+- /Automatically Documenting Program Changes/
+  ([[http://web.eecs.umich.edu/~weimerw/p/weimer-ase2010-deltadoc-preprint.pdf][buse2010automatically]]) <<buse2010automatically>>
+  + precise description
+  + nicely written, but not useful for us
+
+***** General/Others
+- /Comment Generation for Source Code: State of the Art, Challenges and Opportunities/
+  ([[https://arxiv.org/pdf/1802.02971.pdf]])
+  + TODO
+  + Information Retrieval ("analyze the natural language clues in the source
+    code") -> not relevant
+  + Program Structure Information (summary from important statements) -> not
+    relevant(?)
+  + Software Artifacts Beyond Source Code (using the social interaction
+    revolving around development) -> not relevant
+  + Fundamental NLP Techniques -> not relevant
+  + Not very useful... "current approach only generate descriptive comments"
+- /The Emergent Laws of Method and Class Stereotypes in Object Oriented Software/
+  ([[https://etd.ohiolink.edu/!etd.send_file?accession=kent1290570321&disposition=inline][dragan2011emergent]])
+  + Excerpt from PhD Thesis
+  + Source of the Taxonomy of Method Stereotypes 🌟
+  + C++
 - /The Dimensions of Maintenance/
   ([[http://www.mit.jyu.fi/ope/kurssit/TIES462/Materiaalit/Swanson.pdf][swanson1976dimensions]]) <<swanson1976dimensions>>
   + Foundational paper
 - /JStereoCode: Automatically Identifying Method and Class Stereotypes in Java Code/
   ([[https://dl.acm.org/citation.cfm?id=2351747][moreno2012jstereocode]])
   + Extending Dragan's work <<dragan2011using>> for Java
-- /Towards Generating Human-Oriented Summaries of Unit Test Cases/ ✨
-  ([[http://www.cs.ubc.ca/~murphy/papers/summarization/icpc13era-t9-p-16545-preprint.pdf][kamimura2013towards]]) <<kamimura2013towards>>
-- /Automatically Documenting Program Changes/
-  ([[http://web.eecs.umich.edu/~weimerw/p/weimer-ase2010-deltadoc-preprint.pdf][buse2010automatically]]) <<buse2010automatically>>
-  + precise description
-  + nicely written, but not useful for us
-- /Automatic Documentation Inference for Exceptions/ ✨
+- /Automatic Documentation Inference for Exceptions/ 🌟
   ([[http://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.143.8478&rep=rep1&type=pdf][buse2008automatic]]) <<buse2008automatic>>
   + well written
   + could be used to improve the documentation and precision of ~try/catch~
     amplification
-- /Automated Documentation Inference to Explain Failed Tests/
-  ([[http://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.700.252&rep=rep1&type=pdf][zhang2011automated]]) <<zhang2011automated>>
-  + could be used to improve the documentation and precision of ~try/catch~
-    amplification
-
-***** Summarizing
-- /Summarizing Software Artifacts: A Literature Review/ ✨
-  ([[https://link.springer.com/content/pdf/10.1007%2Fs11390-016-1671-1.pdf][nazar2016summarizing]]) <<nazar2016summarizing>>
-  + very complete
-- /Automatically Identifying Focal Methods under Test in Unit Test Cases/
-  ([[https://www.researchgate.net/profile/Mohammad_Ghafari3/publication/295918716_Automatically_Identifying_Focal_Methods_Under_Test_in_Unit_Test_Cases/links/57cd3d5f08ae89cd1e87bf9f.pdf][ghafari2015automatically]])
-  + not useful, we are focusing on explaining edge cases
-- /Towards Automatically Generating Summary Comments for Java Methods/ ✨
+- /Towards Automatically Generating Summary Comments for Java Methods/ 🌟
   ([[http://servo.cs.wlu.edu/pubs/bitstream/handle/id/200/towards-automatically-generating-summary-comments-for-methods.pdf?sequence=3][sridhara2010towards]]) <<sridhara2010towards>>
   (+ PhD thesis)
   - well written
@@ -563,7 +582,7 @@ public class RemoveIfReturn extends AbstractProcessor<CtIf> {
 - [ ] Run tools that I encounter in papers
 
 
-** TODO Week 3 <2018-02-19 Mon>--<2018-02-25 Sun>
+** DONE Week 3 <2018-02-19 Mon>--<2018-02-25 Sun>
 *** Things Done
 - Work on DSpot documentation
 - Read reviews of bibliographic report
@@ -602,6 +621,8 @@ information about a program, and then generates a sentence describing the
 purpose of a source code method.
 #+END_QUOTE
 - Started writing
+- Made a [[https://github.com/rhysd/vim-grammarous/pull/59][PR]] for vim-grammarous
+- [[https://github.com/STAMP-project/dspot/issues/54][Discussion]] on how to minimize generated tests
 
 *** Blocking Points
 - [X] Where is the `keep test that kills mutants all located in the same
@@ -610,7 +631,7 @@ purpose of a source code method.
   at then end of the process.
   + it was done manually
 
-*** Planned Work [3/12]
+*** Planned Work [7/12]
 - [X] Read papers
 - [ ] Register for ICST
 - [-] +Get familiar with+ Dspot [1/6]
@@ -643,27 +664,36 @@ purpose of a source code method.
   + [ ] More precise ~try/catch~?
     - Would that be useful? Feasible?
   + [ ] Extract hard-coded amplifications messages
-- [-] Lab access denied outside working hours
+- [X] Lab access denied outside working hours
   + [X] Go to Entré
   + [X] Go again to Entré
   + [X] Send email to request access to the lab
     - resend
-  + [ ] Resolved
+  + [X] Resolved
 - [X] Run tools that I encounter in papers
   + tools not really useful are they(?)
   + closing this for now
 - [X] Find a way to know which amplifications have been applied and/or how to
   implement it
-- [ ] Make DHELL PR maven compiler version
+- [X] Make DHELL [[https://github.com/STAMP-project/dhell/pull/3][PR]] maven compiler version
   + [[https://github.com/spring-guides/gs-maven/issues/21]]
-- [ ] Start writing
-  + [ ] Problem statement
-    - [ ] scientific
+- [-] Start writing [0/4]
+  + [-] Problem statement
+    - [X] scientific
+      + quite short
     - [ ] technical
-  + [ ] Comparison with works on description
+  + [-] Comparison with works on description
+    - [X] Explaining what they do
+      + badly written
+      + quite short
+    - [ ] Why we can't apply them for our work
   + [ ] Comparison with works on test cases minimization
-- [ ] Start doing a simple NL commit messages generator
-- [ ] Maybe reorganize the references on descriptions
+    - [ ] Explaining what they do
+    - [ ] Why we can't apply them for our work
+  + [ ] Whether using an NLG is useful
+- [X] +Start doing a simple NL commit messages generator+
+  + for later, first we need minimization
+- [X] Maybe reorganize the references on descriptions
 - [ ] Read about identify essential parts of a test for killing a specific
   mutant
 - [ ] Search for papers on mutation testing and same location targeting
@@ -674,7 +704,38 @@ purpose of a source code method.
 
 *** Blocking Points
 
-*** Planned Work
+*** Planned Work [0/5]
+- [ ] Register for ICST
+- [ ] Dspot [0/5]
+  + [ ] Contributing
+    - [ ] Pick issues
+    - [ ] Fix them
+  + [ ] Write documentation [0/2]
+    - [ ] Key methods [0/2]
+      + [ ] Input amplification
+        - [ ] amplifiers
+      + [ ] Compilation & run
+        - [ ] ~TestCompiler~
+    - [ ] ~compileAndRunTests~
+      + [ ] Why return ~null~ when not all methods were compilable or some
+        tests failed?
+  + [ ] Work on removing all deprecated classes in stamp
+    - [ ] Remove unused deprecated methods of ~TestSelector~
+  + [ ] More precise ~try/catch~?
+    - Would that be useful? Feasible?
+  + [ ] Extract hard-coded amplifications messages
+- [ ] Start writing [0/4]
+  + [ ] Problem statement
+    - [ ] technical
+  + [ ] Comparison with works on description
+    - [ ] Why we can't apply them for our work
+  + [ ] Comparison with works on test cases minimization
+    - [ ] Explaining what they do
+    - [ ] Why we can't apply them for our work
+  + [ ] Whether using an NLG is useful
+- [ ] Read about identify essential parts of a test for killing a specific
+  mutant
+- [ ] Search for papers on mutation testing and same location targeting
 
 
 ** TODO Week 5  <2018-03-05 Mon>--<2018-03-11 Sun>
