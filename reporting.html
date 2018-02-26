@@ -1,0 +1,2006 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<!-- 2018-02-26 Mon 11:01 -->
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Internship with Benoit Baudry at KTH</title>
+<meta name="generator" content="Org mode" />
+<meta name="author" content="Simon Bihel" />
+<meta name="keywords" content="labbook, internship" />
+<style type="text/css">
+ <!--/*--><![CDATA[/*><!--*/
+  .title  { text-align: center;
+             margin-bottom: .2em; }
+  .subtitle { text-align: center;
+              font-size: medium;
+              font-weight: bold;
+              margin-top:0; }
+  .todo   { font-family: monospace; color: red; }
+  .done   { font-family: monospace; color: green; }
+  .priority { font-family: monospace; color: orange; }
+  .tag    { background-color: #eee; font-family: monospace;
+            padding: 2px; font-size: 80%; font-weight: normal; }
+  .timestamp { color: #bebebe; }
+  .timestamp-kwd { color: #5f9ea0; }
+  .org-right  { margin-left: auto; margin-right: 0px;  text-align: right; }
+  .org-left   { margin-left: 0px;  margin-right: auto; text-align: left; }
+  .org-center { margin-left: auto; margin-right: auto; text-align: center; }
+  .underline { text-decoration: underline; }
+  #postamble p, #preamble p { font-size: 90%; margin: .2em; }
+  p.verse { margin-left: 3%; }
+  pre {
+    border: 1px solid #ccc;
+    box-shadow: 3px 3px 3px #eee;
+    padding: 8pt;
+    font-family: monospace;
+    overflow: auto;
+    margin: 1.2em;
+  }
+  pre.src {
+    position: relative;
+    overflow: visible;
+    padding-top: 1.2em;
+  }
+  pre.src:before {
+    display: none;
+    position: absolute;
+    background-color: white;
+    top: -10px;
+    right: 10px;
+    padding: 3px;
+    border: 1px solid black;
+  }
+  pre.src:hover:before { display: inline;}
+  /* Languages per Org manual */
+  pre.src-asymptote:before { content: 'Asymptote'; }
+  pre.src-awk:before { content: 'Awk'; }
+  pre.src-C:before { content: 'C'; }
+  /* pre.src-C++ doesn't work in CSS */
+  pre.src-clojure:before { content: 'Clojure'; }
+  pre.src-css:before { content: 'CSS'; }
+  pre.src-D:before { content: 'D'; }
+  pre.src-ditaa:before { content: 'ditaa'; }
+  pre.src-dot:before { content: 'Graphviz'; }
+  pre.src-calc:before { content: 'Emacs Calc'; }
+  pre.src-emacs-lisp:before { content: 'Emacs Lisp'; }
+  pre.src-fortran:before { content: 'Fortran'; }
+  pre.src-gnuplot:before { content: 'gnuplot'; }
+  pre.src-haskell:before { content: 'Haskell'; }
+  pre.src-hledger:before { content: 'hledger'; }
+  pre.src-java:before { content: 'Java'; }
+  pre.src-js:before { content: 'Javascript'; }
+  pre.src-latex:before { content: 'LaTeX'; }
+  pre.src-ledger:before { content: 'Ledger'; }
+  pre.src-lisp:before { content: 'Lisp'; }
+  pre.src-lilypond:before { content: 'Lilypond'; }
+  pre.src-lua:before { content: 'Lua'; }
+  pre.src-matlab:before { content: 'MATLAB'; }
+  pre.src-mscgen:before { content: 'Mscgen'; }
+  pre.src-ocaml:before { content: 'Objective Caml'; }
+  pre.src-octave:before { content: 'Octave'; }
+  pre.src-org:before { content: 'Org mode'; }
+  pre.src-oz:before { content: 'OZ'; }
+  pre.src-plantuml:before { content: 'Plantuml'; }
+  pre.src-processing:before { content: 'Processing.js'; }
+  pre.src-python:before { content: 'Python'; }
+  pre.src-R:before { content: 'R'; }
+  pre.src-ruby:before { content: 'Ruby'; }
+  pre.src-sass:before { content: 'Sass'; }
+  pre.src-scheme:before { content: 'Scheme'; }
+  pre.src-screen:before { content: 'Gnu Screen'; }
+  pre.src-sed:before { content: 'Sed'; }
+  pre.src-sh:before { content: 'shell'; }
+  pre.src-sql:before { content: 'SQL'; }
+  pre.src-sqlite:before { content: 'SQLite'; }
+  /* additional languages in org.el's org-babel-load-languages alist */
+  pre.src-forth:before { content: 'Forth'; }
+  pre.src-io:before { content: 'IO'; }
+  pre.src-J:before { content: 'J'; }
+  pre.src-makefile:before { content: 'Makefile'; }
+  pre.src-maxima:before { content: 'Maxima'; }
+  pre.src-perl:before { content: 'Perl'; }
+  pre.src-picolisp:before { content: 'Pico Lisp'; }
+  pre.src-scala:before { content: 'Scala'; }
+  pre.src-shell:before { content: 'Shell Script'; }
+  pre.src-ebnf2ps:before { content: 'ebfn2ps'; }
+  /* additional language identifiers per "defun org-babel-execute"
+       in ob-*.el */
+  pre.src-cpp:before  { content: 'C++'; }
+  pre.src-abc:before  { content: 'ABC'; }
+  pre.src-coq:before  { content: 'Coq'; }
+  pre.src-groovy:before  { content: 'Groovy'; }
+  /* additional language identifiers from org-babel-shell-names in
+     ob-shell.el: ob-shell is the only babel language using a lambda to put
+     the execution function name together. */
+  pre.src-bash:before  { content: 'bash'; }
+  pre.src-csh:before  { content: 'csh'; }
+  pre.src-ash:before  { content: 'ash'; }
+  pre.src-dash:before  { content: 'dash'; }
+  pre.src-ksh:before  { content: 'ksh'; }
+  pre.src-mksh:before  { content: 'mksh'; }
+  pre.src-posh:before  { content: 'posh'; }
+  /* Additional Emacs modes also supported by the LaTeX listings package */
+  pre.src-ada:before { content: 'Ada'; }
+  pre.src-asm:before { content: 'Assembler'; }
+  pre.src-caml:before { content: 'Caml'; }
+  pre.src-delphi:before { content: 'Delphi'; }
+  pre.src-html:before { content: 'HTML'; }
+  pre.src-idl:before { content: 'IDL'; }
+  pre.src-mercury:before { content: 'Mercury'; }
+  pre.src-metapost:before { content: 'MetaPost'; }
+  pre.src-modula-2:before { content: 'Modula-2'; }
+  pre.src-pascal:before { content: 'Pascal'; }
+  pre.src-ps:before { content: 'PostScript'; }
+  pre.src-prolog:before { content: 'Prolog'; }
+  pre.src-simula:before { content: 'Simula'; }
+  pre.src-tcl:before { content: 'tcl'; }
+  pre.src-tex:before { content: 'TeX'; }
+  pre.src-plain-tex:before { content: 'Plain TeX'; }
+  pre.src-verilog:before { content: 'Verilog'; }
+  pre.src-vhdl:before { content: 'VHDL'; }
+  pre.src-xml:before { content: 'XML'; }
+  pre.src-nxml:before { content: 'XML'; }
+  /* add a generic configuration mode; LaTeX export needs an additional
+     (add-to-list 'org-latex-listings-langs '(conf " ")) in .emacs */
+  pre.src-conf:before { content: 'Configuration File'; }
+
+  table { border-collapse:collapse; }
+  caption.t-above { caption-side: top; }
+  caption.t-bottom { caption-side: bottom; }
+  td, th { vertical-align:top;  }
+  th.org-right  { text-align: center;  }
+  th.org-left   { text-align: center;   }
+  th.org-center { text-align: center; }
+  td.org-right  { text-align: right;  }
+  td.org-left   { text-align: left;   }
+  td.org-center { text-align: center; }
+  dt { font-weight: bold; }
+  .footpara { display: inline; }
+  .footdef  { margin-bottom: 1em; }
+  .figure { padding: 1em; }
+  .figure p { text-align: center; }
+  .inlinetask {
+    padding: 10px;
+    border: 2px solid gray;
+    margin: 10px;
+    background: #ffffcc;
+  }
+  #org-div-home-and-up
+   { text-align: right; font-size: 70%; white-space: nowrap; }
+  textarea { overflow-x: auto; }
+  .linenr { font-size: smaller }
+  .code-highlighted { background-color: #ffff00; }
+  .org-info-js_info-navigation { border-style: none; }
+  #org-info-js_console-label
+    { font-size: 10px; font-weight: bold; white-space: nowrap; }
+  .org-info-js_search-highlight
+    { background-color: #ffff00; color: #000000; font-weight: bold; }
+  .org-svg { width: 90%; }
+  /*]]>*/-->
+</style>
+<link rel="stylesheet" type="text/css" href="http://gongzhitaao.org/orgcss/org.css"/>
+<script type="text/javascript">
+/*
+@licstart  The following is the entire license notice for the
+JavaScript code in this tag.
+
+Copyright (C) 2012-2018 Free Software Foundation, Inc.
+
+The JavaScript code in this tag is free software: you can
+redistribute it and/or modify it under the terms of the GNU
+General Public License (GNU GPL) as published by the Free Software
+Foundation, either version 3 of the License, or (at your option)
+any later version.  The code is distributed WITHOUT ANY WARRANTY;
+without even the implied warranty of MERCHANTABILITY or FITNESS
+FOR A PARTICULAR PURPOSE.  See the GNU GPL for more details.
+
+As additional permission under GNU GPL version 3 section 7, you
+may distribute non-source (e.g., minimized or compacted) forms of
+that code without the copy of the GNU GPL normally required by
+section 4, provided you include this license notice and a URL
+through which recipients can access the Corresponding Source.
+
+
+@licend  The above is the entire license notice
+for the JavaScript code in this tag.
+*/
+<!--/*--><![CDATA[/*><!--*/
+ function CodeHighlightOn(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(null != target) {
+     elem.cacheClassElem = elem.className;
+     elem.cacheClassTarget = target.className;
+     target.className = "code-highlighted";
+     elem.className   = "code-highlighted";
+   }
+ }
+ function CodeHighlightOff(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(elem.cacheClassElem)
+     elem.className = elem.cacheClassElem;
+   if(elem.cacheClassTarget)
+     target.className = elem.cacheClassTarget;
+ }
+/*]]>*///-->
+</script>
+</head>
+<body>
+<div id="content">
+<h1 class="title">Internship with Benoit Baudry at KTH
+<br />
+<span class="subtitle">Adaptation of Amplified Unit Tests for Human Comprehension</span>
+</h1>
+<div id="table-of-contents">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#org518b3f6">1. Introduction</a></li>
+<li><a href="#org4f555f9">2. Findings</a>
+<ul>
+<li><a href="#org65f99cb">2.1. Bibliography</a>
+<ul>
+<li><a href="#org1b46fe4">2.1.1. Writing</a></li>
+<li><a href="#org6096572">2.1.2. References</a></li>
+</ul>
+</li>
+<li><a href="#org3c2a8a2">2.2. Contribution</a></li>
+</ul>
+</li>
+<li><a href="#orgf810520">3. Development</a>
+<ul>
+<li><a href="#orgdf93fc6">3.1. <span class="todo TODO">TODO</span> Extract hard-coded amplifications messages</a></li>
+</ul>
+</li>
+<li><a href="#orgce60c47">4. Global Goals <code>[0/2]</code></a>
+<ul>
+<li><a href="#orgcc55943">4.1. <span class="todo TODO">TODO</span> Report <span class="timestamp-wrapper"><span class="timestamp">&lt;2018-06-08 Fri 12:00&gt;</span></span></a></li>
+<li><a href="#orgcccf66c">4.2. <span class="todo TODO">TODO</span> Defense <span class="timestamp-wrapper"><span class="timestamp">&lt;2018-06-25 Mon&gt;</span></span></a>
+<ul>
+<li><a href="#org809ddfa">4.2.1. <span class="todo TODO">TODO</span> Talk @ Workshop Software Engineering Research <span class="timestamp-wrapper"><span class="timestamp">&lt;2018-03-08 Thu 10:00&gt;</span></span></a></li>
+<li><a href="#orge0b0f93">4.2.2. <span class="todo TODO">TODO</span> Defense Rehearsal @ ENS <span class="timestamp-wrapper"><span class="timestamp">&lt;2018-06-22 Fri&gt;</span></span></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#orga2126c0">5. Journal <code>[2/21]</code></a>
+<ul>
+<li><a href="#org37fb420">5.1. <span class="done DONE">DONE</span> Preliminary Bibliographical Work <span class="timestamp-wrapper"><span class="timestamp">&lt;2017-09-18 Mon&gt;&#x2013;&lt;2018-02-07 Wed&gt;</span></span></a>
+<ul>
+<li><a href="#org902cd83">5.1.1. Things Done</a></li>
+<li><a href="#org340ab4f">5.1.2. Blocking Points</a></li>
+<li><a href="#org2ebd7fb">5.1.3. Planned Work <code>[6/6]</code></a></li>
+</ul>
+</li>
+<li><a href="#orgc451aa8">5.2. <span class="done DONE">DONE</span> Week 1 &amp; 2 <span class="timestamp-wrapper"><span class="timestamp">&lt;2018-02-07 Wed&gt;&#x2013;&lt;2018-02-18 Sun&gt;</span></span></a>
+<ul>
+<li><a href="#org4224978">5.2.1. Things Done</a></li>
+<li><a href="#org58b84f4">5.2.2. Blocking Points</a></li>
+<li><a href="#orgef7cd96">5.2.3. Planned Work <code>[6/12]</code></a></li>
+</ul>
+</li>
+<li><a href="#orgf434b10">5.3. <span class="done DONE">DONE</span> Week 3 <span class="timestamp-wrapper"><span class="timestamp">&lt;2018-02-19 Mon&gt;&#x2013;&lt;2018-02-25 Sun&gt;</span></span></a>
+<ul>
+<li><a href="#org61882bb">5.3.1. Things Done</a></li>
+<li><a href="#org27ef28f">5.3.2. Blocking Points</a></li>
+<li><a href="#orgf4c5025">5.3.3. Planned Work <code>[7/12]</code></a></li>
+</ul>
+</li>
+<li><a href="#orgc7937ea">5.4. <span class="todo TODO">TODO</span> Week 4 <span class="timestamp-wrapper"><span class="timestamp">&lt;2018-02-26 Mon&gt;&#x2013;&lt;2018-03-04 Sun&gt;</span></span></a>
+<ul>
+<li><a href="#orgeee35fa">5.4.1. Things Done</a></li>
+<li><a href="#org28a3db4">5.4.2. Blocking Points</a></li>
+<li><a href="#orgf1ec680">5.4.3. Planned Work <code>[0/5]</code></a></li>
+</ul>
+</li>
+<li><a href="#org508c10f">5.5. <span class="todo TODO">TODO</span> Week 5  <span class="timestamp-wrapper"><span class="timestamp">&lt;2018-03-05 Mon&gt;&#x2013;&lt;2018-03-11 Sun&gt;</span></span></a>
+<ul>
+<li><a href="#org46408d7">5.5.1. Things Done</a></li>
+<li><a href="#org51b5ad4">5.5.2. Blocking Points</a></li>
+<li><a href="#orgf4320f7">5.5.3. Planned Work <code>[0/1]</code></a></li>
+</ul>
+</li>
+<li><a href="#org98574c2">5.6. <span class="todo TODO">TODO</span> Week 6  <span class="timestamp-wrapper"><span class="timestamp">&lt;2018-03-12 Mon&gt;&#x2013;&lt;2018-03-18 Sun&gt;</span></span></a>
+<ul>
+<li><a href="#org824e98e">5.6.1. Things Done</a></li>
+<li><a href="#org50b4a08">5.6.2. Blocking Points</a></li>
+<li><a href="#orgc0642c1">5.6.3. Planned Work</a></li>
+</ul>
+</li>
+<li><a href="#org970e4c1">5.7. <span class="todo TODO">TODO</span> Week 7  <span class="timestamp-wrapper"><span class="timestamp">&lt;2018-03-19 Mon&gt;&#x2013;&lt;2018-03-25 Sun&gt;</span></span></a>
+<ul>
+<li><a href="#org021b1ac">5.7.1. Things Done</a></li>
+<li><a href="#org92c0917">5.7.2. Blocking Points</a></li>
+<li><a href="#org51b319c">5.7.3. Planned Work</a></li>
+</ul>
+</li>
+<li><a href="#org32b9ded">5.8. <span class="todo TODO">TODO</span> Week 8  <span class="timestamp-wrapper"><span class="timestamp">&lt;2018-03-26 Mon&gt;&#x2013;&lt;2018-04-01 Sun&gt;</span></span></a>
+<ul>
+<li><a href="#org86d053f">5.8.1. Things Done</a></li>
+<li><a href="#org0672816">5.8.2. Blocking Points</a></li>
+<li><a href="#org68d454b">5.8.3. Planned Work</a></li>
+</ul>
+</li>
+<li><a href="#org32e95c6">5.9. <span class="todo TODO">TODO</span> Week 9  <span class="timestamp-wrapper"><span class="timestamp">&lt;2018-04-02 Mon&gt;&#x2013;&lt;2018-04-08 Sun&gt;</span></span></a>
+<ul>
+<li><a href="#orgd960c5f">5.9.1. Things Done</a></li>
+<li><a href="#orgaedb6e0">5.9.2. Blocking Points</a></li>
+<li><a href="#orge1b4dfb">5.9.3. Planned Work</a></li>
+</ul>
+</li>
+<li><a href="#orgacbb2e7">5.10. <span class="todo TODO">TODO</span> Week 10 <span class="timestamp-wrapper"><span class="timestamp">&lt;2018-04-09 Mon&gt;&#x2013;&lt;2018-04-15 Sun&gt;</span></span></a>
+<ul>
+<li><a href="#org0f7bff8">5.10.1. Things Done</a></li>
+<li><a href="#org41effec">5.10.2. Blocking Points</a></li>
+<li><a href="#org9a030d9">5.10.3. Planned Work</a></li>
+</ul>
+</li>
+<li><a href="#org4812856">5.11. <span class="todo TODO">TODO</span> Week 11 <span class="timestamp-wrapper"><span class="timestamp">&lt;2018-04-16 Mon&gt;&#x2013;&lt;2018-04-22 Sun&gt;</span></span></a>
+<ul>
+<li><a href="#org3531464">5.11.1. Things Done</a></li>
+<li><a href="#orgc99cffe">5.11.2. Blocking Points</a></li>
+<li><a href="#org127ab96">5.11.3. Planned Work</a></li>
+</ul>
+</li>
+<li><a href="#orga1a0b65">5.12. <span class="todo TODO">TODO</span> Week 12 <span class="timestamp-wrapper"><span class="timestamp">&lt;2018-04-23 Mon&gt;&#x2013;&lt;2018-04-29 Sun&gt;</span></span></a>
+<ul>
+<li><a href="#orgf049b26">5.12.1. Things Done</a></li>
+<li><a href="#org7b27058">5.12.2. Blocking Points</a></li>
+<li><a href="#org0e9c5bb">5.12.3. Planned Work</a></li>
+</ul>
+</li>
+<li><a href="#org4abe169">5.13. <span class="todo TODO">TODO</span> Week 13 <span class="timestamp-wrapper"><span class="timestamp">&lt;2018-04-30 Mon&gt;&#x2013;&lt;2018-05-06 Sun&gt;</span></span></a>
+<ul>
+<li><a href="#org04963b6">5.13.1. Things Done</a></li>
+<li><a href="#orge876775">5.13.2. Blocking Points</a></li>
+<li><a href="#orgfcb7632">5.13.3. Planned Work</a></li>
+</ul>
+</li>
+<li><a href="#org2b3b5dd">5.14. <span class="todo TODO">TODO</span> Week 14 <span class="timestamp-wrapper"><span class="timestamp">&lt;2018-05-07 Mon&gt;&#x2013;&lt;2018-05-13 Sun&gt;</span></span></a>
+<ul>
+<li><a href="#org1d09ea2">5.14.1. Things Done</a></li>
+<li><a href="#org6ea4687">5.14.2. Blocking Points</a></li>
+<li><a href="#orgc127f26">5.14.3. Planned Work</a></li>
+</ul>
+</li>
+<li><a href="#orga254e8d">5.15. <span class="todo TODO">TODO</span> Week 15 <span class="timestamp-wrapper"><span class="timestamp">&lt;2018-05-14 Mon&gt;&#x2013;&lt;2018-05-20 Sun&gt;</span></span></a>
+<ul>
+<li><a href="#org0f71ddf">5.15.1. Things Done</a></li>
+<li><a href="#orgdade1a5">5.15.2. Blocking Points</a></li>
+<li><a href="#org1969a1d">5.15.3. Planned Work</a></li>
+</ul>
+</li>
+<li><a href="#org1587af4">5.16. <span class="todo TODO">TODO</span> Week 16 <span class="timestamp-wrapper"><span class="timestamp">&lt;2018-05-21 Mon&gt;&#x2013;&lt;2018-05-27 Sun&gt;</span></span></a>
+<ul>
+<li><a href="#org4da591a">5.16.1. Things Done</a></li>
+<li><a href="#org610051e">5.16.2. Blocking Points</a></li>
+<li><a href="#orge799bea">5.16.3. Planned Work</a></li>
+</ul>
+</li>
+<li><a href="#orgaef020a">5.17. <span class="todo TODO">TODO</span> Week 17 <span class="timestamp-wrapper"><span class="timestamp">&lt;2018-05-28 Mon&gt;&#x2013;&lt;2018-06-03 Sun&gt;</span></span></a>
+<ul>
+<li><a href="#org560e567">5.17.1. Things Done</a></li>
+<li><a href="#org0a18974">5.17.2. Blocking Points</a></li>
+<li><a href="#org77693f4">5.17.3. Planned Work</a></li>
+</ul>
+</li>
+<li><a href="#orgbbc35a0">5.18. <span class="todo TODO">TODO</span> Week 18 <span class="timestamp-wrapper"><span class="timestamp">&lt;2018-06-04 Mon&gt;&#x2013;&lt;2018-06-10 Sun&gt;</span></span></a>
+<ul>
+<li><a href="#orgdced341">5.18.1. Things Done</a></li>
+<li><a href="#org26c69b8">5.18.2. Blocking Points</a></li>
+<li><a href="#org7251863">5.18.3. Planned Work <code>[0/1]</code></a></li>
+</ul>
+</li>
+<li><a href="#org32ffdf7">5.19. <span class="todo TODO">TODO</span> Week 19 <span class="timestamp-wrapper"><span class="timestamp">&lt;2018-06-11 Mon&gt;&#x2013;&lt;2018-06-17 Sun&gt;</span></span></a>
+<ul>
+<li><a href="#org7559575">5.19.1. Things Done</a></li>
+<li><a href="#org4ae6ff1">5.19.2. Blocking Points</a></li>
+<li><a href="#orge20c828">5.19.3. Planned Work</a></li>
+</ul>
+</li>
+<li><a href="#orge7410b2">5.20. <span class="todo TODO">TODO</span> Week 20 <span class="timestamp-wrapper"><span class="timestamp">&lt;2018-06-18 Mon&gt;&#x2013;&lt;2018-06-24 Sun&gt;</span></span></a>
+<ul>
+<li><a href="#org63e82d0">5.20.1. Things Done</a></li>
+<li><a href="#org7a5bade">5.20.2. Blocking Points</a></li>
+<li><a href="#org51f56c3">5.20.3. Planned Work <code>[0/1]</code></a></li>
+</ul>
+</li>
+<li><a href="#org77be99a">5.21. <span class="todo TODO">TODO</span> Week 21 <span class="timestamp-wrapper"><span class="timestamp">&lt;2018-06-25 Mon&gt;&#x2013;&lt;2018-07-01 Sun&gt;</span></span></a>
+<ul>
+<li><a href="#org3928873">5.21.1. Things Done</a></li>
+<li><a href="#org582e9fc">5.21.2. Blocking Points</a></li>
+<li><a href="#orgd598261">5.21.3. Planned Work <code>[0/1]</code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#orgac31706">6. Conclusion</a></li>
+</ul>
+</div>
+</div>
+
+
+<div id="outline-container-org518b3f6" class="outline-2">
+<h2 id="org518b3f6"><span class="section-number-2">1</span> Introduction</h2>
+</div>
+
+
+<div id="outline-container-org4f555f9" class="outline-2">
+<h2 id="org4f555f9"><span class="section-number-2">2</span> Findings</h2>
+<div class="outline-text-2" id="text-2">
+</div>
+<div id="outline-container-org65f99cb" class="outline-3">
+<h3 id="org65f99cb"><span class="section-number-3">2.1</span> Bibliography</h3>
+<div class="outline-text-3" id="text-2-1">
+</div>
+<div id="outline-container-org1b46fe4" class="outline-4">
+<h4 id="org1b46fe4"><span class="section-number-4">2.1.1</span> Writing</h4>
+<div class="outline-text-4" id="text-2-1-1">
+</div>
+<ol class="org-ol">
+<li><a id="org0526497"></a>Context<br /></li>
+
+<li><a id="orgf7f0ec5"></a>Problem statement<br />
+<div class="outline-text-5" id="text-2-1-1-2">
+<p>
+Amplified tests have many new assertions and new inputs and DSpot keeps tests
+depending on the fact that they detect new mutants. What that means is that
+there is no enquiry on the usefulness of each amplification. Because the number
+of new mutants killed is often times significantly lower than the number of
+amplifications &#x2014; especially the number of assertions which are the one to
+effectively detect a mutant &#x2014; we end up with a lot of useless statements. This
+noise is problematic because it makes the review process longer, and because the
+less focused a program is, the harder it is to comprehend. And noise is not the
+only threat to focus as the new mutants can be completely different and from a
+different part of the SUT compared to the ones the original test case could
+detect. The final step towards a human-friendly output would be to add context
+and human-like description of the amplification. To sum-up, the three identified
+problems to tackle are noise reduction, focus confinement, and natural language
+description of the amplification.
+</p>
+</div>
+</li>
+
+<li><a id="org629c0a4"></a>On the usefulness of works from (code maintenance|software artifacts summarization)<br />
+<div class="outline-text-5" id="text-2-1-1-3">
+<p>
+A lot of effort has been put in generating human friendly descriptions for
+various kinds of software artifacts. In particular, there have been works on
+generating documentation (or comments or description or summary) for source
+code, methods, and more interestingly unit test cases. These tools can generate
+natural language description of <i>what</i> the piece of code does and identify to
+most important parts or lines of code. But as for <i>why</i> a code change was done
+or the role a piece of code plays &#x2014; i.e. understand the intentions of the
+developers &#x2014; it is harder and tools need additional information or limit the
+scope by identifying stereotypes (e.g. labelling a commit as Feature Addition).
+</p>
+
+<p>
+But those works are not directly useful for our problem.
+</p>
+</div>
+</li>
+
+<li><a id="org99e8164"></a>On the usefulness of works from test cases minimization<br /></li>
+
+<li><a id="org448a913"></a>What do we then propose as contribution<br /></li>
+</ol>
+</div>
+
+
+<div id="outline-container-org6096572" class="outline-4">
+<h4 id="org6096572"><span class="section-number-4">2.1.2</span> References</h4>
+<div class="outline-text-4" id="text-2-1-2">
+</div>
+<ol class="org-ol">
+<li><a id="org24c1668"></a>Cultural<br />
+<div class="outline-text-5" id="text-2-1-2-1">
+<ul class="org-ul">
+<li><i>Search Based Software Engineering: Techniques, Taxonomy, Tutorial</i>
+(<a href="https://www.researchgate.net/profile/Mark_Harman/publication/221051156_Search_Based_Software_Engineering_Techniques_Taxonomy_Tutorial/links/0046352052592d5c2c000000/Search-Based-Software-Engineering-Techniques-Taxonomy-Tutorial.pdf">harman2012search</a>)
+<ul class="org-ul">
+<li>TODO</li>
+</ul></li>
+<li><i>A Few Billion Lines of Code Later</i>
+(<a href="https://pdfs.semanticscholar.org/295f/4ffa651675b22ae8e2f3f30b400330da0c69.pdf">bessey2010few</a>)
+<ul class="org-ul">
+<li>Great to understand the limits of static analysis but also some of the
+limits of all analysis</li>
+<li>Difficult to analyze code because of the diversity of build automation tools</li>
+<li>"By default, companies refuse to let an external force modify anything."</li>
+<li>"A misunderstood explanation means the error is ignored or, worse,
+transmuted into a false positive."</li>
+<li>Many standards</li>
+<li>Some people don't care about bugs, sometimes improving the tool reveals more
+bugs which is bad for the manager</li>
+</ul></li>
+<li><i>Spoon: A Library for Implementing Analyses and Transformations of Java Source Code</i>
+(<a href="https://hal.archives-ouvertes.fr/hal-01078532v2/document">pawlak2016spoon</a>)
+<ul class="org-ul">
+<li>let's say it's like llvm/clang for now</li>
+</ul></li>
+<li><i>Regression Testing Minimisation, Selection and Prioritisation : A Survey</i>
+(<a href="http://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.169.8696&amp;rep=rep1&amp;type=pdf">yoo2012regression</a>)
+<ul class="org-ul">
+<li>TODO</li>
+</ul></li>
+<li><i>Clustering Test Cases to Achieve Effective &amp; Scalable Prioritisation Incorporating Expert Knowledge</i>
+(<a href="http://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.211.9479&amp;rep=rep1&amp;type=pdf">yoo2009clustering</a>)
+<ul class="org-ul">
+<li>TODO</li>
+</ul></li>
+<li><i>Measuring software redundancy</i>
+(<a href="https://pdfs.semanticscholar.org/0a93/144638ebfc924550798b620835a3fc9785cf.pdf">carzaniga2015measuring</a>) <a id="org8e2236b"></a>
+<ul class="org-ul">
+<li>TODO</li>
+</ul></li>
+<li><i>Automatic Software Diversity in the Light of Test Suites</i>
+(<a href="https://arxiv.org/pdf/1509.00144.pdf">baudry2015automatic</a>)
+<ul class="org-ul">
+<li>analysis of common features (e.g. number of tests covering one statement)</li>
+<li>plastic behavior (have different behaviors while still remaining correct)
+study</li>
+<li>different details compared to <a href="#org2029338">4</a> and <a href="#orgeb09d67">8</a></li>
+</ul></li>
+<li><i>Tailored source code transformations to synthesize computationally diverse program variants</i>
+(<a href="https://arxiv.org/pdf/1401.7635">baudry2014tailored</a>) <a id="orgeb09d67"></a>
+<ul class="org-ul">
+<li>More details than in <a href="#org2029338">4</a></li>
+</ul></li>
+</ul>
+</div>
+</li>
+
+<li><a id="orgfba4b9c"></a>Search-based Software Testing<br />
+<div class="outline-text-5" id="text-2-1-2-2">
+<ul class="org-ul">
+<li><i>Search-based software testing: Past, present and future</i>
+(<a href="http://mcminn.io/publications/c18.pdf">mcminn2011search</a>)
+<ul class="org-ul">
+<li>Already read from previous internship</li>
+</ul></li>
+<li><i>Genetic Improvement of Software: a Comprehensive Survey</i>
+(<a href="http://ieeexplore.ieee.org/stamp/stamp.jsp?arnumber=7911210">petke2017genetic</a>)
+<ul class="org-ul">
+<li>TODO</li>
+<li><a href="http://www.cs.bham.ac.uk/~wbl/biblio/">http://www.cs.bham.ac.uk/~wbl/biblio/</a></li>
+</ul></li>
+<li><i>Evosuite</i> 🌟
+(<a href="http://www.evosuite.org/evosuite/">fraser2011evosuite</a>) (<a href="https://pdfs.semanticscholar.org/df36/d5c8c8ecace7f5b9347a0880daf2c10b3d4b.pdf">fraser2013evosuite</a>)
+<ul class="org-ul">
+<li>State-of-the-art tool</li>
+<li>Very sophisticated, difficult to reproduce experiments because it changes
+fast and a lot of parameters are tweaked</li>
+<li>minimization
+<ul class="org-ul">
+<li>remove unnecessary statements</li>
+<li>careful not to generate long test cases</li>
+</ul></li>
+</ul></li>
+<li><i>An Approach to Test Data Generation for Killing Multiple Mutants</i> 🌟
+(<a href="http://ieeexplore.ieee.org/abstract/document/4021328/">liu2006approach</a>)</li>
+</ul>
+</div>
+</li>
+
+<li><a id="orge212108"></a>Test Amplification<br />
+<div class="outline-text-5" id="text-2-1-2-3">
+<ul class="org-ul">
+<li><i>B-Refactoring: Automatic Test Code Refactoring to Improve Dynamic Analysis</i>
+(<a href="https://hal.archives-ouvertes.fr/hal-01309004/file/banana-refactoring.pdf">xuan2016b</a>)
+<ul class="org-ul">
+<li>Split tests for each fragment to cover a simple part of the control flow.</li>
+<li>Help with respect to fault localization.</li>
+</ul></li>
+<li><i>Test data regeneration: generating new test data from existing test data</i>
+(<a href="http://www0.cs.ucl.ac.uk/staff/mharman/stvr-regeneration.pdf">yoo2012test</a>) <a id="orgb11f7ef"></a></li>
+<li><i>The Emerging Field of Test Amplification: A Survey</i>
+(<a href="https://arxiv.org/pdf/1705.10692.pdf">danglot2017emerging</a>)
+<ul class="org-ul">
+<li>Dense</li>
+<li>Good overview of goals (Table 1) and methods (Table 2)</li>
+</ul></li>
+<li><i>DSpot: Test Amplification for Automatic Assessment of Computational Diversity</i>
+(<a href="https://arxiv.org/pdf/1503.05807.pdf">baudry2015dspot</a>) <a id="org2029338"></a>
+<ul class="org-ul">
+<li>Comparison with TDR <a href="#orgb11f7ef">2</a> and also concurrent to
+<a href="#org8e2236b">6</a>
+<ul class="org-ul">
+<li>"the key differences between DSpot and TDR are: TDR stacks multiple
+transformations together; DSpot has more new transformation operators on
+test cases: DSpot considers a richer observation space based on arbitrary
+data types and sequences of method calls."</li>
+<li>"We count the number of variants that are identified as computationally
+different using DSpot and TDR. "</li>
+</ul></li>
+</ul></li>
+<li><i>A Systematic Literature Review on Test Amplification</i> 🌟
+<ul class="org-ul">
+<li>TODO</li>
+</ul></li>
+<li><i>Genetic-Improvement based Unit Test Amplification for Java</i> 🌟
+<ul class="org-ul">
+<li>TODO</li>
+</ul></li>
+<li><i>Dynamic Analysis can be Improved with Automatic Test Suite Refactoring</i>
+(<a href="https://arxiv.org/pdf/1506.01883.pdf">xuan2015dynamic</a>)
+<ul class="org-ul">
+<li>TODO</li>
+</ul></li>
+<li><i>Automatic Test Case Optimization: A Bacteriologic Algorithm</i>
+(<a href="https://www.researchgate.net/profile/Jean-Marc_Jezequel/publication/3248230_Automatic_Test_Case_Optimization_A_Bacteriologic_Algorithm/links/0912f50ca4c15eb416000000.pdf">baudry2005automatic</a>)
+<ul class="org-ul">
+<li>TODO</li>
+<li>Compared to DSpot, no assertions generation, small programs.</li>
+</ul></li>
+</ul>
+</div>
+</li>
+
+<li><a id="org01187e3"></a>Generating natural language descriptions for software artifacts<br />
+<ol class="org-ol">
+<li><a id="orgdd910ad"></a>Surveys<br />
+<div class="outline-text-6" id="text-2-1-2-4-1">
+<ul class="org-ul">
+<li><i>Survey of Methods to Generate Natural Language from Source Code</i> 🌟
+(<a href="http://www.languageandcode.org/nlse2015/neubig15nlse-survey.pdf">neubig2016survey</a>)
+<ol class="org-ol">
+<li>Survey papers
+<ul class="org-ul">
+<li>recommends <a href="#orgcb5264c">2</a></li>
+</ul></li>
+<li>Generation Methods
+<ol class="org-ol">
+<li>manual rules/templates
+<ul class="org-ul">
+<li>SWUM <a href="#org4490e62">2</a>&amp;<a href="#org411ae1e">6</a>
+<ul class="org-ul">
+<li>test cases <a href="#org38ab862">4</a> &amp; <a href="#orge149dfe">3</a></li>
+<li>changes <a href="#org6e46967">6</a> &amp; <a href="#org786b262">1</a></li>
+<li>exceptions <a href="#org33a5933">5</a></li>
+</ul></li>
+<li>multiple lines description <a href="#org1424c27">5</a>
+<ul class="org-ul">
+<li>not useful, too high level</li>
+</ul></li>
+<li>using execution path information <a href="#org33a5933">5</a> &amp; <a href="#org38ab862">4</a>
+<ul class="org-ul">
+<li>not useful(?)</li>
+</ul></li>
+</ul></li>
+</ol></li>
+<li><del>Content Selection Methods</del></li>
+<li><del>Targeted Software Units</del></li>
+<li><del>Training Data Creation</del></li>
+<li>Evaluation
+<ul class="org-ul">
+<li>TODO later</li>
+</ul></li>
+</ol></li>
+<li><i>Summarizing Software Artifacts: A Literature Review</i> 🌟
+(<a href="https://link.springer.com/content/pdf/10.1007/s11390-016-1671-1.pdf">nazar2016summarizing</a>) <a id="orgcb5264c"></a>
+<ul class="org-ul">
+<li>very complete</li>
+</ul></li>
+</ul>
+</div>
+</li>
+
+<li><a id="org136ca1c"></a>Tools for tests<br />
+<div class="outline-text-6" id="text-2-1-2-4-2">
+<ul class="org-ul">
+<li><i>Automatically Documenting Software Artifacts</i> 🌟
+(<a href="http://www.cs.wm.edu/~denys/pubs/dissertations/Boyang-thesis.pdf">li2018automatically</a>)
+<ul class="org-ul">
+<li>PhD thesis</li>
+<li>Chapter 4 (p. 109) on tag for unit tests</li>
+<li>catalog of 21 stereotypes for methods in unit tests
+<ul class="org-ul">
+<li>14 JUnit API-Based Stereotypes for Methods in Unit Test Cases
+<ul class="org-ul">
+<li>Boolean verifier</li>
+<li>Null verifier</li>
+<li>Equality verifier</li>
+<li>Identity verifier</li>
+<li>Utility verifier</li>
+<li>Exception verifier</li>
+<li>Condition Matcher</li>
+<li>Assumption setter</li>
+<li>Test initializer</li>
+<li>Test cleaner</li>
+<li>Logger</li>
+<li>Ignored method</li>
+<li>Hybrid verifier</li>
+<li>Unclassified</li>
+</ul></li>
+<li>7 C/D-Flow Based Stereotypes for Methods in Unit Test Cases
+<ul class="org-ul">
+<li>Branch verifier</li>
+<li>Iterative verifier</li>
+<li>Public field verifier</li>
+<li>API utility verifier</li>
+<li>Internal call verifier</li>
+<li>Execution tester</li>
+<li>Empty tester</li>
+</ul></li>
+</ul></li>
+</ul></li>
+<li><i>Automatically Documenting Unit Test Cases</i> 🌟
+(<a href="http://www.cs.wm.edu/~denys/pubs/_ICST'16-JUnitTestScribe-CRC.pdf">li2016automatically</a>) (<a href="https://github.com/boyangwm/UnitTestScribe">git</a>)
+<ul class="org-ul">
+<li>Survey with developers and projects mining study to justify automatic
+documentation of unit tests</li>
+<li>uses a SWUM implementation in C#</li>
+<li>example of templates and placeholders</li>
+<li>as with other similar works it may not be useful for us</li>
+</ul></li>
+<li><i>Towards Generating Human-Oriented Summaries of Unit Test Cases</i> 🌟
+(<a href="http://www.cs.ubc.ca/~murphy/papers/summarization/icpc13era-t9-p-16545-preprint.pdf">kamimura2013towards</a>) <a id="orge149dfe"></a></li>
+<li><i>Automated Documentation Inference to Explain Failed Tests</i>
+(<a href="http://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.700.252&amp;rep=rep1&amp;type=pdf">zhang2011automated</a>) <a id="org38ab862"></a>
+<ul class="org-ul">
+<li>could be used to improve the documentation and precision of <code>try/catch</code>
+amplification</li>
+</ul></li>
+<li><i>Automatically Identifying Focal Methods under Test in Unit Test Cases</i>
+(<a href="https://www.researchgate.net/profile/Mohammad_Ghafari3/publication/295918716_Automatically_Identifying_Focal_Methods_Under_Test_in_Unit_Test_Cases/links/57cd3d5f08ae89cd1e87bf9f.pdf">ghafari2015automatically</a>)
+<ul class="org-ul">
+<li>not useful, we are focusing on explaining edge cases</li>
+</ul></li>
+</ul>
+</div>
+</li>
+
+<li><a id="org2f61a66"></a>Commits/Code changes<br />
+<div class="outline-text-6" id="text-2-1-2-4-3">
+<ul class="org-ul">
+<li><i>On Automatically Generating Commit Messages via Summarization of Source Code Changes</i>
+(<a href="https://www.researchgate.net/profile/Luis_Cortes11/publication/267326224_On_Automatically_Generating_Commit_Messages_via_Summarization_of_Source_Code_Changes/links/5583f12208ae4738295bd3ca.pdf">cortes2014automatically</a>) <a id="org786b262"></a>
+<i>ChangeScribe: A Tool for Automatically Generating Commit Messages</i>
+(<a href="http://www.cs.wm.edu/~denys/pubs/ICSE'15-ChangeScribeTool-CRC.pdf">linares2015changescribe</a>)
+<ul class="org-ul">
+<li>Good entry point for the related work</li>
+<li>Classifies commit with stereotypes</li>
+<li>Uses templates for sentences, and fills it with commit stereotypes
+(<a href="#orgbdd276a">2</a>)</li>
+<li>lacks 'why' information</li>
+</ul></li>
+<li><i>Using Stereotypes to Help Characterize Commits</i>
+(<a href="http://www.cs.kent.edu/~jmaletic/papers/ICSM11.pdf">dragan2011using</a>) <a id="orgbdd276a"></a>
+<ul class="org-ul">
+<li>Only categorize based on added or deleted methods</li>
+</ul></li>
+<li><i>Towards Automatic Generation of Short Summaries of Commits</i>
+(<a href="https://arxiv.org/pdf/1703.09603.pdf">jiang2017towards</a>)</li>
+<li><i>Automatically Generating Commit Messages from Diffs using Neural Machine Translation</i>
+(<a href="https://arxiv.org/pdf/1708.09492.pdf">jiang2017automatically</a>)
+<ul class="org-ul">
+<li>trying to be less verbose and add context</li>
+</ul></li>
+<li><i>On Automatic Summarization of What and Why Information in Source Code Changes</i>
+(<a href="http://ieeexplore.ieee.org/stamp/stamp.jsp?tp=&amp;arnumber=7551998">shen2016automatic</a>)
+<ul class="org-ul">
+<li>Better then <i>ChangeScribe</i><a href="#org786b262">1</a></li>
+<li><p>
+Categories of Commits in Terms of Maintenance Task and Corresponding Description
+(based on <a href="#orgd4ef7a3">3</a>) (why information)
+</p>
+<!-- This HTML table template is generated by emacs 27.0.50 -->
+<table border="1">
+  <tr>
+    <td align="left" valign="top">
+      &nbsp;Categories&nbsp;of&nbsp;commits&nbsp;
+    </td>
+    <td align="left" valign="top">
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Description&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    </td>
+  </tr>
+  <tr>
+    <td align="left" valign="top">
+      &nbsp;Implementation&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    </td>
+    <td align="left" valign="top">
+      &nbsp;New&nbsp;requirements&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    </td>
+  </tr>
+  <tr>
+    <td align="left" valign="top">
+      &nbsp;Corrective&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br />
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br />
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    </td>
+    <td align="left" valign="top">
+      &nbsp;Processing&nbsp;failure&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br />
+      &nbsp;Performance&nbsp;failure&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br />
+      &nbsp;Implementation&nbsp;failure&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    </td>
+  </tr>
+  <tr>
+    <td align="left" valign="top">
+      &nbsp;Adaptive&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    </td>
+    <td align="left" valign="top">
+      &nbsp;Change&nbsp;in&nbsp;data&nbsp;environment&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    </td>
+  </tr>
+  <tr>
+    <td align="left" valign="top">
+      &nbsp;Perfective&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br />
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br />
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    </td>
+    <td align="left" valign="top">
+      &nbsp;Processing&nbsp;inefficiency&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br />
+      &nbsp;Performance&nbsp;enhancement&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br />
+      &nbsp;Maintainability&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    </td>
+  </tr>
+  <tr>
+    <td align="left" valign="top">
+      &nbsp;Non&nbsp;functional&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br />
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br />
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    </td>
+    <td align="left" valign="top">
+      &nbsp;Code&nbsp;clean-up&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br />
+      &nbsp;Legal&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br />
+      &nbsp;Source&nbsp;control&nbsp;system&nbsp;management&nbsp;
+    </td>
+  </tr>
+</table></li>
+<li>What information: description (more like diff (ChangeDistiller) dump) of
+changes</li>
+<li>only keep information for methods that are called many times</li>
+<li>boilerplates not interesting</li>
+</ul></li>
+<li><i>Automatically Documenting Program Changes</i>
+(<a href="http://web.eecs.umich.edu/~weimerw/p/weimer-ase2010-deltadoc-preprint.pdf">buse2010automatically</a>) <a id="org6e46967"></a>
+<ul class="org-ul">
+<li>precise description</li>
+<li>nicely written, but not useful for us</li>
+</ul></li>
+</ul>
+</div>
+</li>
+
+<li><a id="org36c1a09"></a>General/Others<br />
+<div class="outline-text-6" id="text-2-1-2-4-4">
+<ul class="org-ul">
+<li><i>Comment Generation for Source Code: State of the Art, Challenges and Opportunities</i>
+(<a href="https://arxiv.org/pdf/1802.02971.pdf">https://arxiv.org/pdf/1802.02971.pdf</a>)
+<ul class="org-ul">
+<li>TODO</li>
+<li>Information Retrieval ("analyze the natural language clues in the source
+code") -&gt; not relevant</li>
+<li>Program Structure Information (summary from important statements) -&gt; not
+relevant(?)</li>
+<li>Software Artifacts Beyond Source Code (using the social interaction
+revolving around development) -&gt; not relevant</li>
+<li>Fundamental NLP Techniques -&gt; not relevant</li>
+<li>Not very useful&#x2026; "current approach only generate descriptive comments"</li>
+</ul></li>
+<li><i>The Emergent Laws of Method and Class Stereotypes in Object Oriented Software</i>
+(<a href="https://etd.ohiolink.edu/!etd.send_file?accession=kent1290570321&amp;disposition=inline">dragan2011emergent</a>)
+<ul class="org-ul">
+<li>Excerpt from PhD Thesis</li>
+<li>Source of the Taxonomy of Method Stereotypes 🌟</li>
+<li>C++</li>
+</ul></li>
+<li><i>The Dimensions of Maintenance</i>
+(<a href="http://www.mit.jyu.fi/ope/kurssit/TIES462/Materiaalit/Swanson.pdf">swanson1976dimensions</a>) <a id="orgd4ef7a3"></a>
+<ul class="org-ul">
+<li>Foundational paper</li>
+</ul></li>
+<li><i>JStereoCode: Automatically Identifying Method and Class Stereotypes in Java Code</i>
+(<a href="https://dl.acm.org/citation.cfm?id=2351747">moreno2012jstereocode</a>)
+<ul class="org-ul">
+<li>Extending Dragan's work <a id="orgf392e8b"></a> for Java</li>
+</ul></li>
+<li><i>Automatic Documentation Inference for Exceptions</i> 🌟
+(<a href="http://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.143.8478&amp;rep=rep1&amp;type=pdf">buse2008automatic</a>) <a id="org33a5933"></a>
+<ul class="org-ul">
+<li>well written</li>
+<li>could be used to improve the documentation and precision of <code>try/catch</code>
+amplification</li>
+</ul></li>
+<li><i>Towards Automatically Generating Summary Comments for Java Methods</i> 🌟
+(<a href="http://servo.cs.wlu.edu/pubs/bitstream/handle/id/200/towards-automatically-generating-summary-comments-for-methods.pdf?sequence=3">sridhara2010towards</a>) <a id="org411ae1e"></a>
+(+ PhD thesis)
+<ul class="org-ul">
+<li>well written</li>
+<li>SWUM, central lines selection, &#x2026;</li>
+<li>again not exactly useful for us</li>
+</ul></li>
+<li><i>Integrating Natural Language and Program Structure Information to Improve Software Search and Exploration</i>
+(<a href="https://search.proquest.com/openview/89d289c5561fc953875cf9d6f223a7cc/1?pq-origsite=gscholar&amp;cbl=18750&amp;diss=y">hill2010integrating</a>)
+<ul class="org-ul">
+<li>PhD thesis</li>
+<li>Source of SWUM</li>
+<li>SWUM implementation as Eclipse plugin</li>
+</ul></li>
+<li><i>Swummary: Self-Documenting Code</i>
+(<a href="https://scholarscompass.vcu.edu/capstone/114/">herbert2016swummary</a>) (<a href="https://github.com/herbertkb/Swummary">git</a>)
+<ul class="org-ul">
+<li>focal method extraction -&gt; Swum.NET</li>
+</ul></li>
+<li><i>Automatic Source Code Summarization of Context for Java Methods</i>
+(<a href="http://ieeexplore.ieee.org/stamp/stamp.jsp?tp=&amp;arnumber=7181703">mcburney2016automatic</a>)
+<ul class="org-ul">
+<li>looks very complete but again not quite useful</li>
+</ul></li>
+</ul>
+</div>
+</li>
+</ol>
+</li>
+
+<li><a id="orgf8c3769"></a>Commits/Code survey<br />
+<div class="outline-text-5" id="text-2-1-2-5">
+<ul class="org-ul">
+<li><i>What’s a Typical Commit? A Characterization of Open Source Software Repositories</i>
+(<a href="https://www.researchgate.net/profile/Huzefa_Kagdi/publication/4349695_What's_a_Typical_Commit_A_Characterization_of_Open_Source_Software_Repositories/links/00b7d528a6e2589336000000.pdf">alali2008s</a>)
+<ul class="org-ul">
+<li>Useful to know what terms to use</li>
+<li>According to <a href="#org786b262">1</a> the most used terms are fix, add,
+test, bug, patch and the most used combinations are file-fix, fix-use,
+add-bug, remove-test, and file-update.</li>
+</ul></li>
+<li><i>On the Nature of Commits</i>
+(<a href="https://sci-hub.tw/10.1109/ASEW.2008.4686322">hattori2008nature</a>)</li>
+<li><i>What do large commits tell us? A taxonomical study of large commits</i>
+(<a href="http://maveric0.uwaterloo.ca/~migod/846/papers/msr08-hindle.pdf">hindle2008large</a>)
+<ul class="org-ul">
+<li>extending <a href="#orgd4ef7a3">3</a></li>
+</ul></li>
+<li><i>Cognitive Processes in Program Comprehension</i>
+(<a href="https://ac.els-cdn.com/016412128790032X/1-s2.0-016412128790032X-main.pdf?_tid=aff39f10-109e-11e8-8c6f-00000aacb360&amp;acdnat=1518513618_e744f6cb72ebf42954fbb25e1eb42220">letovsky1987cognitive</a>)
+<ul class="org-ul">
+<li>Foundational paper</li>
+</ul></li>
+<li><i>On the Naturalness of Software</i>
+(<a href="http://ieeexplore.ieee.org/stamp/stamp.jsp?tp=&amp;arnumber=6227135">hindle2012naturalness</a>)
+<ul class="org-ul">
+<li>Code is repetitive and predictable</li>
+</ul></li>
+</ul>
+</div>
+</li>
+
+<li><a id="orgd4139d8"></a>Natural Language Generator<br />
+<div class="outline-text-5" id="text-2-1-2-6">
+<ul class="org-ul">
+<li><i>SimpleNLG: A realisation engine for practical applications</i>
+(<a href="http://www.aclweb.org/anthology/W09-0613">gatt2009simplenlg</a>)
+<ul class="org-ul">
+<li>TODO</li>
+</ul></li>
+</ul>
+</div>
+</li>
+
+<li><a id="org6df6677"></a>Code Evolution<br />
+<div class="outline-text-5" id="text-2-1-2-7">
+<ul class="org-ul">
+<li><i>Erlang Code Evolution Control</i>
+(<a href="https://arxiv.org/pdf/1709.05291.pdf">arXiv:1709.05291</a>)
+<ul class="org-ul">
+<li>TODO</li>
+</ul></li>
+</ul>
+</div>
+</li>
+
+<li><a id="org91f987d"></a>Not Relevant<br />
+<ol class="org-ol">
+<li><a id="org9d5d4b5"></a>Knowledge<br />
+<div class="outline-text-6" id="text-2-1-2-8-1">
+<ul class="org-ul">
+<li><i>Poster: Construct Bug Knowledge Graph for Bug Resolution</i>
+(<a href="http://ieeexplore.ieee.org/stamp/stamp.jsp?tp=&amp;arnumber=7965299">wang2017construct</a>)</li>
+<li><i>Towards the Visualization of Usage and Decision Knowledge in Continuous Software Engineering</i>
+(<a href="https://wwwbruegge.in.tum.de/lehrstuhl_1/research/paper/johanssen2017visualization.pdf">johanssen2017towards</a>)
+<ul class="org-ul">
+<li>Pretty figures</li>
+<li>Design of a tool to visualize various kinds of knowledge</li>
+</ul></li>
+<li><i>Method Execution Reports: Generating Text and Visualization to Describe Program Behavior</i>
+(<a href="http://bergel.eu/MyPapers/Beck17a-MethodExecutionReports.pdf">beck2017method</a>)</li>
+</ul>
+</div>
+</li>
+
+<li><a id="orgbcdf06a"></a>Others<br />
+<div class="outline-text-6" id="text-2-1-2-8-2">
+<ul class="org-ul">
+<li><i>A Neural Architecture for Generating Natural Language Descriptions from Source Code Changes</i>
+(<a href="https://arxiv.org/pdf/1704.04856.pdf">loyola2017neural</a>)
+<ul class="org-ul">
+<li>Multiple good citation to papers on NL and SE</li>
+</ul></li>
+<li><i>Automatically Capturing Source Code Context of NL-Queries for Software Maintenance and Reuse</i>
+(<a href="http://servo.cs.wlu.edu/pubs/bitstream/handle/id/199/Hill09.pdf?sequence=4">hill2009automatically</a>) <a id="org4490e62"></a></li>
+<li><i>How to effectively use topic models for software engineering tasks? an approach based on genetic algorithms</i>
+(<a href="https://dl.acm.org/citation.cfm?id=2486788.2486857">panichella2013effectively</a>)
+<ul class="org-ul">
+<li>Enhancement that doesn't really interest us</li>
+<li>"in the context of three different SE tasks: (1) traceability link recovery,
+(2) feature location, and (3) software artifact labeling."</li>
+</ul></li>
+<li><i>Software traceability with topic modeling</i>
+(<a href="https://dl.acm.org/citation.cfm?doid=1806799.1806817">asuncion2010software</a>)
+<ul class="org-ul">
+<li>"navigate the software architecture and view semantic topics associated with
+relevant artifacts and architectural components"</li>
+</ul></li>
+<li><i>Automatically Detecting and Describing High Level Actions within Methods</i>
+(<a href="http://servo.cs.wlu.edu/pubs/bitstream/handle/id/204/automatically-detetct-and-describe-high-level-actions-in-methods.pdf?sequence=1">sridhara2011automatically</a>) <a id="org1424c27"></a>
+<ul class="org-ul">
+<li>too high level</li>
+</ul></li>
+<li><i>Automatic Generation of Natural Language Summaries for Java Classes</i>
+(<a href="http://servo.cs.wlu.edu/pubs/bitstream/handle/id/285/icpc13summaries-submitted.pdf?sequence=1">moreno2013automatic</a>)</li>
+<li><i>Using Method Stereotype Distribution as a Signature Descriptor for Software Systems</i>
+(<a href="http://www.cs.kent.edu/~ndragan/ICSM09.pdf">dragan2009using</a>)</li>
+<li><i>Reverse Engineering Method Stereotypes</i>
+(<a href="http://www.cs.kent.edu/~jmaletic/papers/ICSM06.pdf">dragan2006reverse</a>)</li>
+<li><i>Supporting Program Comprehension with Source Code Summarization</i>
+(<a href="https://www.researchgate.net/profile/Jairo_Aponte/publication/215739380_Supporting_program_comprehension_with_source_code_summarization/links/554771110cf2e2031b36b7fd.pdf">haiduc2010supporting</a>)
+<ul class="org-ul">
+<li>motivations</li>
+</ul></li>
+<li><i>Natural Language-based Software Analyses and Tools for Software Maintenance</i>
+(<a href="https://users.drew.edu/ehill1/papers/lncs12.pdf">pollock2009natural</a>)
+<ul class="org-ul">
+<li>more about analysis than generation</li>
+</ul></li>
+</ul>
+</div>
+</li>
+</ol>
+</li>
+</ol>
+</div>
+</div>
+
+<div id="outline-container-org3c2a8a2" class="outline-3">
+<h3 id="org3c2a8a2"><span class="section-number-3">2.2</span> Contribution</h3>
+</div>
+</div>
+
+
+<div id="outline-container-orgf810520" class="outline-2">
+<h2 id="orgf810520"><span class="section-number-2">3</span> Development</h2>
+<div class="outline-text-2" id="text-3">
+</div>
+<div id="outline-container-orgdf93fc6" class="outline-3">
+<h3 id="orgdf93fc6"><span class="section-number-3">3.1</span> <span class="todo TODO">TODO</span> Extract hard-coded amplifications messages</h3>
+</div>
+</div>
+
+
+<div id="outline-container-orgce60c47" class="outline-2">
+<h2 id="orgce60c47"><span class="section-number-2">4</span> Global Goals <code>[0/2]</code></h2>
+<div class="outline-text-2" id="text-4">
+</div>
+<div id="outline-container-orgcc55943" class="outline-3">
+<h3 id="orgcc55943"><span class="section-number-3">4.1</span> <span class="todo TODO">TODO</span> Report <span class="timestamp-wrapper"><span class="timestamp">&lt;2018-06-08 Fri 12:00&gt;</span></span></h3>
+</div>
+<div id="outline-container-orgcccf66c" class="outline-3">
+<h3 id="orgcccf66c"><span class="section-number-3">4.2</span> <span class="todo TODO">TODO</span> Defense <span class="timestamp-wrapper"><span class="timestamp">&lt;2018-06-25 Mon&gt;</span></span></h3>
+<div class="outline-text-3" id="text-4-2">
+</div>
+<div id="outline-container-org809ddfa" class="outline-4">
+<h4 id="org809ddfa"><span class="section-number-4">4.2.1</span> <span class="todo TODO">TODO</span> Talk @ Workshop Software Engineering Research <span class="timestamp-wrapper"><span class="timestamp">&lt;2018-03-08 Thu 10:00&gt;</span></span></h4>
+</div>
+<div id="outline-container-orge0b0f93" class="outline-4">
+<h4 id="orge0b0f93"><span class="section-number-4">4.2.2</span> <span class="todo TODO">TODO</span> Defense Rehearsal @ ENS <span class="timestamp-wrapper"><span class="timestamp">&lt;2018-06-22 Fri&gt;</span></span></h4>
+</div>
+</div>
+</div>
+
+
+<div id="outline-container-orga2126c0" class="outline-2">
+<h2 id="orga2126c0"><span class="section-number-2">5</span> Journal <code>[2/21]</code></h2>
+<div class="outline-text-2" id="text-5">
+</div>
+<div id="outline-container-org37fb420" class="outline-3">
+<h3 id="org37fb420"><span class="section-number-3">5.1</span> <span class="done DONE">DONE</span> Preliminary Bibliographical Work <span class="timestamp-wrapper"><span class="timestamp">&lt;2017-09-18 Mon&gt;&#x2013;&lt;2018-02-07 Wed&gt;</span></span></h3>
+<div class="outline-text-3" id="text-5-1">
+</div>
+<div id="outline-container-org902cd83" class="outline-4">
+<h4 id="org902cd83"><span class="section-number-4">5.1.1</span> Things Done</h4>
+<div class="outline-text-4" id="text-5-1-1">
+<ul class="org-ul">
+<li>Meeting with Benoit <span class="timestamp-wrapper"><span class="timestamp">&lt;2017-09-22 Fri&gt;</span></span>
+<ul class="org-ul">
+<li><a href="https://github.com/STAMP-project/dspot/issues/187">1</a>, <a href="https://github.com/STAMP-project/dspot/issues/129">2</a>, <a href="https://github.com/STAMP-project/dspot/issues/54">3</a> issues for possible work to do</li>
+<li>1 possible work: explain if a mutant isn't killed because of oracle or input</li>
+<li>focus on mutation (e.g. mutation score)</li>
+<li>work will be on <a href="https://github.com/STAMP-project/dspot">Dspot</a> and <a href="https://github.com/STAMP-project/pitest-descartes">PIT</a>.</li>
+</ul></li>
+<li>Read <a href="http://massol.myxwiki.org/xwiki/bin/view/Blog/MutationTestingDescartes">blog on PIT and Descartes</a>
+<ul class="org-ul">
+<li>Sum up PIT/Descartes</li>
+<li>List of wanted features</li>
+</ul></li>
+<li>Meeting with Benoit <span class="timestamp-wrapper"><span class="timestamp">&lt;2017-11-23 Thu&gt;</span></span>
+<ul class="org-ul">
+<li>The purpose of DSpot has shifted right?
+<ul class="org-ul">
+<li>interesting to talk about the history in bibliography? No, there is a new
+paper</li>
+</ul></li>
+<li>Enough space to talk about related work? present a few papers in details and
+cite others</li>
+<li>Current organisation of bibliography
+<ul class="org-ul">
+<li>General techniques
+<ul class="org-ul">
+<li>Definitions</li>
+<li>Mutants</li>
+<li>etc</li>
+</ul></li>
+<li>Useful tools
+<ul class="org-ul">
+<li>DSpot</li>
+</ul></li>
+</ul></li>
+<li>do extensive evaluation (comparison from scratch vs amplification)</li>
+<li>find literals to help tests</li>
+<li>add mutation operator for specific data structures</li>
+<li>stack mutations</li>
+<li>add explanations</li>
+<li>3 big open problems</li>
+</ul></li>
+<li>Meeting with Benoit <span class="timestamp-wrapper"><span class="timestamp">&lt;2017-12-22 Fri&gt;</span></span>
+<ul class="org-ul">
+<li>reduce only the generated tests</li>
+<li>big question: minimal generated tests
+<ul class="org-ul">
+<li>pre or post treatement</li>
+<li>order of presenting PRs</li>
+<li>this is the big question</li>
+<li>we don't want to touch the original suite</li>
+<li>we want the programmer to understand the new tests</li>
+</ul></li>
+<li>add an example of junit test</li>
+<li>talk about the trend of genetic improvement</li>
+<li>don't necesseraly cite <i>Automatic software diversity in the light of test
+suites</i> and <i>Tailored source code transformations to synthesize
+computationally diverse program variants</i></li>
+</ul></li>
+<li>Talk rehearsal <span class="timestamp-wrapper"><span class="timestamp">&lt;2018-01-28 Sun 08:30&gt;</span></span>, notes by Vladislav
+<ul class="org-ul">
+<li>More illustrations (workflow graph?)</li>
+<li>Check the test case example (too complicated for not much, not really java)</li>
+<li>Year and conference acronym in footcite</li>
+<li>Careful with lambdas for TDR (check with supervisor)</li>
+<li>More details on commits/pull requests and emphasize the importance of
+developers reviewing generated tests</li>
+<li>Slide 10 -&gt; ugly (different spacings)</li>
+<li>Stacking operators: explanation too sparse</li>
+<li>4th point in conclusion slide too vague. Not just the goal but also the mean
+to achieve it</li>
+</ul></li>
+<li><a href="https://blog.acolyer.org/2018/01/23/why-is-random-testing-effective-for-partition-tolerance-bugs/">https://blog.acolyer.org/2018/01/23/why-is-random-testing-effective-for-partition-tolerance-bugs/</a></li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-org340ab4f" class="outline-4">
+<h4 id="org340ab4f"><span class="section-number-4">5.1.2</span> Blocking Points</h4>
+</div>
+
+<div id="outline-container-org2ebd7fb" class="outline-4">
+<h4 id="org2ebd7fb"><span class="section-number-4">5.1.3</span> Planned Work <code>[6/6]</code></h4>
+<div class="outline-text-4" id="text-5-1-3">
+<ul class="org-ul">
+<li class="on"><input type='checkbox' checked='checked' /> Read papers</li>
+<li class="on"><input type='checkbox' checked='checked' /> Meeting with Benoit <span class="timestamp-wrapper"><span class="timestamp">&lt;2017-09-22 Fri 15:00&gt;&#x2013;&lt;2017-09-22 Fri 15:30&gt;</span></span></li>
+<li class="on"><input type='checkbox' checked='checked' /> Meeting with Benoit <span class="timestamp-wrapper"><span class="timestamp">&lt;2017-11-23 Thu 15:00&gt;&#x2013;&lt;2017-11-23 Thu 16:00&gt;</span></span></li>
+<li class="on"><input type='checkbox' checked='checked' /> Send link to repo</li>
+<li class="on"><input type='checkbox' checked='checked' /> Ask Maud about plane tickets refund</li>
+<li class="on"><input type='checkbox' checked='checked' /> Meeting with Benoit <span class="timestamp-wrapper"><span class="timestamp">&lt;2017-12-22 Fri 10:30&gt;&#x2013;&lt;2017-12-22 Fri 11:30&gt;</span></span></li>
+</ul>
+</div>
+</div>
+</div>
+
+
+<div id="outline-container-orgc451aa8" class="outline-3">
+<h3 id="orgc451aa8"><span class="section-number-3">5.2</span> <span class="done DONE">DONE</span> Week 1 &amp; 2 <span class="timestamp-wrapper"><span class="timestamp">&lt;2018-02-07 Wed&gt;&#x2013;&lt;2018-02-18 Sun&gt;</span></span></h3>
+<div class="outline-text-3" id="text-5-2">
+</div>
+<div id="outline-container-org4224978" class="outline-4">
+<h4 id="org4224978"><span class="section-number-4">5.2.1</span> Things Done</h4>
+<div class="outline-text-4" id="text-5-2-1">
+<ul class="org-ul">
+<li>Wrote the little example of use of Spoon (I simply added it in <a href="https://github.com/SpoonLabs/spoon-examples">spoon-examples</a>)</li>
+</ul>
+<div class="org-src-container">
+<pre class="src src-java" id="org5e19588"><span class="org-keyword">package</span> fr.inria.gforge.spoon.<span class="org-constant">transformation</span>;
+
+<span class="org-keyword">import</span> <span class="org-constant">spoon</span>.<span class="org-constant">processing</span>.<span class="org-type">AbstractProcessor</span>;
+<span class="org-keyword">import</span> <span class="org-constant">spoon</span>.<span class="org-constant">reflect</span>.<span class="org-constant">code</span>.*;
+
+<span class="org-doc">/**</span>
+<span class="org-doc"> * Removes if when there is no else and if the body consists only of a return</span>
+<span class="org-doc"> *</span>
+<span class="org-doc"> * </span><span class="org-doc"><span class="org-constant">@author</span></span><span class="org-doc"> Simon Bihel</span>
+<span class="org-doc"> */</span>
+<span class="org-keyword">public</span> <span class="org-keyword">class</span> <span class="org-type">RemoveIfReturn</span> <span class="org-keyword">extends</span> <span class="org-type">AbstractProcessor</span>&lt;<span class="org-type">CtIf</span>&gt; {
+
+    <span class="org-c-annotation">@Override</span>
+    <span class="org-keyword">public</span> <span class="org-type">void</span> <span class="org-function-name">process</span>(<span class="org-type">CtIf</span> <span class="org-variable-name">element</span>) {
+        <span class="org-type">CtStatement</span> <span class="org-variable-name">elseStmt</span> = element.getElseStatement();
+        <span class="org-keyword">if</span> (elseStmt == <span class="org-constant">null</span>) { <span class="org-keyword">return</span>; } <span class="org-comment-delimiter">// </span><span class="org-comment">should not be an else</span>
+
+        <span class="org-type">CtStatement</span> <span class="org-variable-name">thenStmt</span> = element.getThenStatement();
+        <span class="org-keyword">if</span> (thenStmt <span class="org-keyword">instanceof</span> CtReturn) { <span class="org-comment-delimiter">// </span><span class="org-comment">simple case with directly a then statement</span>
+            element.replace(thenStmt);
+            <span class="org-keyword">return</span>;
+        }
+        <span class="org-keyword">if</span> (thenStmt <span class="org-keyword">instanceof</span> CtBlock) { <span class="org-comment-delimiter">// </span><span class="org-comment">case with a block which first statement is a return</span>
+            <span class="org-type">CtStatement</span> <span class="org-variable-name">firstStmt</span> = ((<span class="org-type">CtBlock</span>) thenStmt).getStatement(0);
+            <span class="org-keyword">if</span> (firstStmt <span class="org-keyword">instanceof</span> CtReturn) {
+                element.replace(thenStmt);
+            }
+        }
+    }
+}
+</pre>
+</div>
+<div class="org-src-container">
+<pre class="src src-java" id="org7fc6518">
+</pre>
+</div>
+<ul class="org-ul">
+<li><a href="https://clang-analyzer.llvm.org/">Clang static analyzer</a> for windows
+<ul class="org-ul">
+<li>Clang is painful to install on Windows&#x2026; It requires llvm and Microsoft
+Visual Studio. And there is no other choice than building from source. And
+it requires Perl to run.</li>
+<li>Should probably use <a href="http://cppcheck.sourceforge.net/">CPPcheck</a></li>
+<li>Cppcheck has a GUI and an installer for Windows. 👍</li>
+<li>example of bugs <a href="http://courses.cs.vt.edu/~cs1206/Fall00/bugs_CAS.html">http://courses.cs.vt.edu/~cs1206/Fall00/bugs_CAS.html</a></li>
+<li>no bug in the provided code</li>
+</ul></li>
+<li>Software Maintenance seems to be an important keyword/field for the
+documentation of code</li>
+<li>To what extent are documenting source code changes useful for us?
+<ul class="org-ul">
+<li>Only few changes made by DSpot</li>
+<li>The source of the change is a tool, not a human</li>
+<li>Still useful to see how they formulate features in natural language</li>
+<li>DSpot doesn't add new features, we want the purpose of enhanced tests.</li>
+<li>Don't really care about Pyramid method because it compares with human
+written messages</li>
+</ul></li>
+<li>GitHub's <a href="https://help.github.com/articles/creating-a-pull-request-template-for-your-repository/">PR templates</a> are just plain text templates.</li>
+<li>Went through papers that cited ChangeScribe. Went partly through citations by
+ChangeScribe.</li>
+<li>Spent a lot of time on generating natural language from source code</li>
+<li>Submitted a <a href="https://github.com/jceb/vim-orgmode/pull/291">fix</a> for a bug in vim-orgmode</li>
+<li>Natural Language Generators
+<ul class="org-ul">
+<li>found on github, for java
+<ol class="org-ol">
+<li><a href="https://github.com/simplenlg/simplenlg">SimpleNLG</a>
+<ul class="org-ul">
+<li>410 stars, 215 citations</li>
+<li>Seems to be just what we need</li>
+</ul></li>
+<li><a href="https://github.com/kariminf/nalangen">NaLanGen</a>
+<ul class="org-ul">
+<li>2 stars</li>
+</ul></li>
+</ol></li>
+<li>ChangeScribe seems to use a homemade generator</li>
+</ul></li>
+<li>"The Software Word Usage Model (SWUM) is one of the first models of this type,
+and can be used for converting Java method calls into natural language
+statements (Hill et al., 2009)."</li>
+<li>Looking at the code of DSpot to get info on generated tests
+<ul class="org-ul">
+<li>looks like a list of amplified test are generated and you don't know what
+was the amplifier</li>
+</ul></li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-org58b84f4" class="outline-4">
+<h4 id="org58b84f4"><span class="section-number-4">5.2.2</span> Blocking Points</h4>
+<div class="outline-text-4" id="text-5-2-2">
+<ul class="org-ul">
+<li>Is it useful to explore approaches for augmenting the context provided by
+differencing tools?</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-orgef7cd96" class="outline-4">
+<h4 id="orgef7cd96"><span class="section-number-4">5.2.3</span> Planned Work <code>[6/12]</code></h4>
+<div class="outline-text-4" id="text-5-2-3">
+<ul class="org-ul">
+<li class="on"><input type='checkbox' checked='checked' /> Read papers</li>
+<li class="off"><input type='checkbox' /> should I register for ICST? and <del>ICSE</del>? -&gt; Yes, talk/remind Benoit
+<ul class="org-ul">
+<li>Not eligible for <a href="http://www.es.mdh.se/icst2018/kaist-diversity-student-travel-awards/">http://www.es.mdh.se/icst2018/kaist-diversity-student-travel-awards/</a></li>
+</ul></li>
+<li class="on"><input type='checkbox' checked='checked' /> Sign papers grant</li>
+<li class="on"><input type='checkbox' checked='checked' /> Is there a Slack or something?</li>
+<li class="trans"><input type='checkbox' /> Get familiar with Spoon
+<ul class="org-ul">
+<li class="off"><input type='checkbox' /> Read paper</li>
+<li class="trans"><input type='checkbox' /> Little project, remove <code>if</code> when there is no <code>else</code> and the body is
+just a <code>return</code>.
+<ul class="org-ul">
+<li class="on"><input type='checkbox' checked='checked' /> Write the program</li>
+<li class="off"><input type='checkbox' /> Write tests</li>
+</ul></li>
+</ul></li>
+<li class="off"><input type='checkbox' /> Get familiar with Dspot
+<ul class="org-ul">
+<li class="off"><input type='checkbox' /> Running it</li>
+<li class="off"><input type='checkbox' /> Contributing
+<ul class="org-ul">
+<li class="off"><input type='checkbox' /> Pick issues</li>
+<li class="off"><input type='checkbox' /> Fix them</li>
+</ul></li>
+</ul></li>
+<li class="trans"><input type='checkbox' /> See <i>boiler-plates</i> for NLP way of building sentences.
+<ul class="org-ul">
+<li>a.k.a templates, placeholder templates</li>
+<li class="off"><input type='checkbox' /> Search for papers and read them</li>
+<li class="on"><input type='checkbox' checked='checked' /> Search for tools</li>
+</ul></li>
+<li class="on"><input type='checkbox' checked='checked' /> Sign contract with KTH Relocation <span class="timestamp-wrapper"><span class="timestamp">&lt;2018-02-13 Tue 14:00&gt;&#x2013;&lt;2018-02-13 Tue 15:30&gt;</span></span></li>
+<li class="on"><input type='checkbox' checked='checked' /> Categorize papers of preliminaries</li>
+<li class="on"><input type='checkbox' checked='checked' /> Lookup what static analysis is possible with <del>clang</del> Cppcheck <code>[100%]</code>
+<ul class="org-ul">
+<li class="on"><input type='checkbox' checked='checked' /> find tools</li>
+<li>it is for mechatronics students who write small programs for arduinos</li>
+<li>show them what tests are and what's possible to discover bugs</li>
+<li class="on"><input type='checkbox' checked='checked' /> Think of what they could be taught</li>
+<li class="on"><input type='checkbox' checked='checked' /> Test Cppcheck on a windows machine
+<ul class="org-ul">
+<li class="on"><input type='checkbox' checked='checked' /> Install windows on the small computer</li>
+<li class="on"><input type='checkbox' checked='checked' /> Test the code provided in the course</li>
+</ul></li>
+</ul></li>
+<li class="off"><input type='checkbox' /> Go to Entré for badge and PIN code outside working hours</li>
+<li class="off"><input type='checkbox' /> Run tools that I encounter in papers</li>
+</ul>
+</div>
+</div>
+</div>
+
+
+<div id="outline-container-orgf434b10" class="outline-3">
+<h3 id="orgf434b10"><span class="section-number-3">5.3</span> <span class="done DONE">DONE</span> Week 3 <span class="timestamp-wrapper"><span class="timestamp">&lt;2018-02-19 Mon&gt;&#x2013;&lt;2018-02-25 Sun&gt;</span></span></h3>
+<div class="outline-text-3" id="text-5-3">
+</div>
+<div id="outline-container-org61882bb" class="outline-4">
+<h4 id="org61882bb"><span class="section-number-4">5.3.1</span> Things Done</h4>
+<div class="outline-text-4" id="text-5-3-1">
+<ul class="org-ul">
+<li>Work on DSpot documentation</li>
+<li>Read reviews of bibliographic report</li>
+<li>How to remember what amplification has been applied?
+<ul class="org-ul">
+<li><del>Go through logs</del>
+<ul class="org-ul">
+<li>nothing useful in them</li>
+</ul></li>
+<li>Comments directly in the code
+<ul class="org-ul">
+<li>name of the amplifier used in the line before</li>
+<li>could easily be enriched if necessary</li>
+</ul></li>
+<li><del>Enrich test methods with a new parameter</del>
+<ul class="org-ul">
+<li>last resort</li>
+</ul></li>
+</ul></li>
+<li>A <code>json</code> file summarizes killed mutants (with their location)</li>
+<li>Need to keep focus</li>
+</ul>
+<blockquote>
+<p>
+To select the new test case to be proposed as pull request, we look for an
+amplified test that kills mutants which are all located in the same method.
+</p>
+</blockquote>
+<p>
+(this was done manually)
+</p>
+<ul class="org-ul">
+<li>Need for automated minimization</li>
+</ul>
+<blockquote>
+<p>
+A second point in the preparation of the pull request relates to the length of
+the amplified test. Once a test method has been selected as a candidate pull
+request, we analyze it and manually make it clearer and more concise, we call
+this process the manual minimization of the amplified test. We note that
+automated min- imization of amplified tests is an interesting area of future
+work, left out of the scope of this paper.
+</p>
+</blockquote>
+<ul class="org-ul">
+<li>SWUM is really about analysis. Trying to reformulate things without making
+sense of them.</li>
+<li>Possible title: Adaptation of Amplified Unit Tests for Human Comprehension</li>
+<li><a href="https://github.com/abb-iss/Swum.NET">Swum.NET</a></li>
+</ul>
+<blockquote>
+<p>
+UnitTestScribe also uses SWUM.NET to generate a general NL description for each
+unit test case method. SWUM.NET captures both linguistic and structural
+information about a program, and then generates a sentence describing the
+purpose of a source code method.
+</p>
+</blockquote>
+<ul class="org-ul">
+<li>Started writing</li>
+<li>Made a <a href="https://github.com/rhysd/vim-grammarous/pull/59">PR</a> for vim-grammarous</li>
+<li><a href="https://github.com/STAMP-project/dspot/issues/54">Discussion</a> on how to minimize generated tests</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-org27ef28f" class="outline-4">
+<h4 id="org27ef28f"><span class="section-number-4">5.3.2</span> Blocking Points</h4>
+<div class="outline-text-4" id="text-5-3-2">
+<ul class="org-ul">
+<li class="on"><input type='checkbox' checked='checked' /> Where is the `keep test that kills mutants all located in the same
+method'? Seems to be implemented reading the paper, but <a href="https://github.com/STAMP-project/dspot/issues/130">issue</a> still open and
+it proposes a solution that seems different than just looking at the json file
+at then end of the process.
+<ul class="org-ul">
+<li>it was done manually</li>
+</ul></li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-orgf4c5025" class="outline-4">
+<h4 id="orgf4c5025"><span class="section-number-4">5.3.3</span> Planned Work <code>[7/12]</code></h4>
+<div class="outline-text-4" id="text-5-3-3">
+<ul class="org-ul">
+<li class="on"><input type='checkbox' checked='checked' /> Read papers</li>
+<li class="off"><input type='checkbox' /> Register for ICST</li>
+<li class="trans"><input type='checkbox' /> <del>Get familiar with</del> Dspot <code>[1/6]</code>
+<ul class="org-ul">
+<li class="on"><input type='checkbox' checked='checked' /> Running it</li>
+<li class="off"><input type='checkbox' /> Contributing
+<ul class="org-ul">
+<li class="off"><input type='checkbox' /> Pick issues</li>
+<li class="off"><input type='checkbox' /> Fix them</li>
+</ul></li>
+<li class="trans"><input type='checkbox' /> Write documentation <code>[2/4]</code>
+<ul class="org-ul">
+<li class="trans"><input type='checkbox' /> Key methods <code>[3/5]</code>
+<ul class="org-ul">
+<li class="on"><input type='checkbox' checked='checked' /> Assertion generation <code>[2/2]</code>
+<ul class="org-ul">
+<li class="on"><input type='checkbox' checked='checked' /> <code>AssertGenerator</code></li>
+<li class="on"><input type='checkbox' checked='checked' /> <code>MethodsAssertGenerator</code></li>
+</ul></li>
+<li class="trans"><input type='checkbox' /> Input amplification <code>[1/2]</code>
+<ul class="org-ul">
+<li class="on"><input type='checkbox' checked='checked' /> glue</li>
+<li class="off"><input type='checkbox' /> amplifiers</li>
+</ul></li>
+<li class="on"><input type='checkbox' checked='checked' /> Pre-amplification</li>
+<li class="on"><input type='checkbox' checked='checked' /> Amplification</li>
+<li class="trans"><input type='checkbox' /> Compilation &amp; run <code>[2/3]</code>
+<ul class="org-ul">
+<li class="on"><input type='checkbox' checked='checked' /> <code>compileAndRunTests</code></li>
+<li class="on"><input type='checkbox' checked='checked' /> <code>buildClassForSelection</code></li>
+<li class="off"><input type='checkbox' /> <code>TestCompiler</code></li>
+</ul></li>
+</ul></li>
+<li class="on"><input type='checkbox' checked='checked' /> Rename <code>amplifyTests</code> to express the fact that it is only doing input
+amplification</li>
+<li class="off"><input type='checkbox' /> <code>compileAndRunTests</code>
+<ul class="org-ul">
+<li class="off"><input type='checkbox' /> Why return <code>null</code> when not all methods were compilable or some
+tests failed?</li>
+</ul></li>
+<li class="on"><input type='checkbox' checked='checked' /> Renaming plural variables</li>
+</ul></li>
+<li class="off"><input type='checkbox' /> Work on removing all deprecated classes in stamp <code>[0/1]</code>
+<ul class="org-ul">
+<li class="off"><input type='checkbox' /> Remove unused deprecated methods of <code>TestSelector</code></li>
+</ul></li>
+<li class="off"><input type='checkbox' /> More precise <code>try/catch</code>?
+<ul class="org-ul">
+<li>Would that be useful? Feasible?</li>
+</ul></li>
+<li class="off"><input type='checkbox' /> Extract hard-coded amplifications messages</li>
+</ul></li>
+<li class="on"><input type='checkbox' checked='checked' /> Lab access denied outside working hours
+<ul class="org-ul">
+<li class="on"><input type='checkbox' checked='checked' /> Go to Entré</li>
+<li class="on"><input type='checkbox' checked='checked' /> Go again to Entré</li>
+<li class="on"><input type='checkbox' checked='checked' /> Send email to request access to the lab
+<ul class="org-ul">
+<li>resend</li>
+</ul></li>
+<li class="on"><input type='checkbox' checked='checked' /> Resolved</li>
+</ul></li>
+<li class="on"><input type='checkbox' checked='checked' /> Run tools that I encounter in papers
+<ul class="org-ul">
+<li>tools not really useful are they(?)</li>
+<li>closing this for now</li>
+</ul></li>
+<li class="on"><input type='checkbox' checked='checked' /> Find a way to know which amplifications have been applied and/or how to
+implement it</li>
+<li class="on"><input type='checkbox' checked='checked' /> Make DHELL <a href="https://github.com/STAMP-project/dhell/pull/3">PR</a> maven compiler version
+<ul class="org-ul">
+<li><a href="https://github.com/spring-guides/gs-maven/issues/21">https://github.com/spring-guides/gs-maven/issues/21</a></li>
+</ul></li>
+<li class="trans"><input type='checkbox' /> Start writing <code>[0/4]</code>
+<ul class="org-ul">
+<li class="trans"><input type='checkbox' /> Problem statement
+<ul class="org-ul">
+<li class="on"><input type='checkbox' checked='checked' /> scientific
+<ul class="org-ul">
+<li>quite short</li>
+</ul></li>
+<li class="off"><input type='checkbox' /> technical</li>
+</ul></li>
+<li class="trans"><input type='checkbox' /> Comparison with works on description
+<ul class="org-ul">
+<li class="on"><input type='checkbox' checked='checked' /> Explaining what they do
+<ul class="org-ul">
+<li>badly written</li>
+<li>quite short</li>
+</ul></li>
+<li class="off"><input type='checkbox' /> Why we can't apply them for our work</li>
+</ul></li>
+<li class="off"><input type='checkbox' /> Comparison with works on test cases minimization
+<ul class="org-ul">
+<li class="off"><input type='checkbox' /> Explaining what they do</li>
+<li class="off"><input type='checkbox' /> Why we can't apply them for our work</li>
+</ul></li>
+<li class="off"><input type='checkbox' /> Whether using an NLG is useful</li>
+</ul></li>
+<li class="on"><input type='checkbox' checked='checked' /> <del>Start doing a simple NL commit messages generator</del>
+<ul class="org-ul">
+<li>for later, first we need minimization</li>
+</ul></li>
+<li class="on"><input type='checkbox' checked='checked' /> Maybe reorganize the references on descriptions</li>
+<li class="off"><input type='checkbox' /> Read about identify essential parts of a test for killing a specific
+mutant</li>
+<li class="off"><input type='checkbox' /> Search for papers on mutation testing and same location targeting</li>
+</ul>
+</div>
+</div>
+</div>
+
+
+<div id="outline-container-orgc7937ea" class="outline-3">
+<h3 id="orgc7937ea"><span class="section-number-3">5.4</span> <span class="todo TODO">TODO</span> Week 4 <span class="timestamp-wrapper"><span class="timestamp">&lt;2018-02-26 Mon&gt;&#x2013;&lt;2018-03-04 Sun&gt;</span></span></h3>
+<div class="outline-text-3" id="text-5-4">
+</div>
+<div id="outline-container-orgeee35fa" class="outline-4">
+<h4 id="orgeee35fa"><span class="section-number-4">5.4.1</span> Things Done</h4>
+</div>
+
+<div id="outline-container-org28a3db4" class="outline-4">
+<h4 id="org28a3db4"><span class="section-number-4">5.4.2</span> Blocking Points</h4>
+</div>
+
+<div id="outline-container-orgf1ec680" class="outline-4">
+<h4 id="orgf1ec680"><span class="section-number-4">5.4.3</span> Planned Work <code>[0/5]</code></h4>
+<div class="outline-text-4" id="text-5-4-3">
+<ul class="org-ul">
+<li class="off"><input type='checkbox' /> Register for ICST</li>
+<li class="off"><input type='checkbox' /> Dspot <code>[0/5]</code>
+<ul class="org-ul">
+<li class="off"><input type='checkbox' /> Contributing
+<ul class="org-ul">
+<li class="off"><input type='checkbox' /> Pick issues</li>
+<li class="off"><input type='checkbox' /> Fix them</li>
+</ul></li>
+<li class="off"><input type='checkbox' /> Write documentation <code>[0/2]</code>
+<ul class="org-ul">
+<li class="off"><input type='checkbox' /> Key methods <code>[0/2]</code>
+<ul class="org-ul">
+<li class="off"><input type='checkbox' /> Input amplification
+<ul class="org-ul">
+<li class="off"><input type='checkbox' /> amplifiers</li>
+</ul></li>
+<li class="off"><input type='checkbox' /> Compilation &amp; run
+<ul class="org-ul">
+<li class="off"><input type='checkbox' /> <code>TestCompiler</code></li>
+</ul></li>
+</ul></li>
+<li class="off"><input type='checkbox' /> <code>compileAndRunTests</code>
+<ul class="org-ul">
+<li class="off"><input type='checkbox' /> Why return <code>null</code> when not all methods were compilable or some
+tests failed?</li>
+</ul></li>
+</ul></li>
+<li class="off"><input type='checkbox' /> Work on removing all deprecated classes in stamp
+<ul class="org-ul">
+<li class="off"><input type='checkbox' /> Remove unused deprecated methods of <code>TestSelector</code></li>
+</ul></li>
+<li class="off"><input type='checkbox' /> More precise <code>try/catch</code>?
+<ul class="org-ul">
+<li>Would that be useful? Feasible?</li>
+</ul></li>
+<li class="off"><input type='checkbox' /> Extract hard-coded amplifications messages</li>
+</ul></li>
+<li class="off"><input type='checkbox' /> Start writing <code>[0/4]</code>
+<ul class="org-ul">
+<li class="off"><input type='checkbox' /> Problem statement
+<ul class="org-ul">
+<li class="off"><input type='checkbox' /> technical</li>
+</ul></li>
+<li class="off"><input type='checkbox' /> Comparison with works on description
+<ul class="org-ul">
+<li class="off"><input type='checkbox' /> Why we can't apply them for our work</li>
+</ul></li>
+<li class="off"><input type='checkbox' /> Comparison with works on test cases minimization
+<ul class="org-ul">
+<li class="off"><input type='checkbox' /> Explaining what they do</li>
+<li class="off"><input type='checkbox' /> Why we can't apply them for our work</li>
+</ul></li>
+<li class="off"><input type='checkbox' /> Whether using an NLG is useful</li>
+</ul></li>
+<li class="off"><input type='checkbox' /> Read about identify essential parts of a test for killing a specific
+mutant</li>
+<li class="off"><input type='checkbox' /> Search for papers on mutation testing and same location targeting</li>
+</ul>
+</div>
+</div>
+</div>
+
+
+<div id="outline-container-org508c10f" class="outline-3">
+<h3 id="org508c10f"><span class="section-number-3">5.5</span> <span class="todo TODO">TODO</span> Week 5  <span class="timestamp-wrapper"><span class="timestamp">&lt;2018-03-05 Mon&gt;&#x2013;&lt;2018-03-11 Sun&gt;</span></span></h3>
+<div class="outline-text-3" id="text-5-5">
+</div>
+<div id="outline-container-org46408d7" class="outline-4">
+<h4 id="org46408d7"><span class="section-number-4">5.5.1</span> Things Done</h4>
+</div>
+
+<div id="outline-container-org51b5ad4" class="outline-4">
+<h4 id="org51b5ad4"><span class="section-number-4">5.5.2</span> Blocking Points</h4>
+</div>
+
+<div id="outline-container-orgf4320f7" class="outline-4">
+<h4 id="orgf4320f7"><span class="section-number-4">5.5.3</span> Planned Work <code>[0/1]</code></h4>
+<div class="outline-text-4" id="text-5-5-3">
+<ul class="org-ul">
+<li class="off"><input type='checkbox' /> Talk @ Workshop Software Engineering Research <span class="timestamp-wrapper"><span class="timestamp">&lt;2018-03-08 Thu 10:00&gt;</span></span></li>
+</ul>
+</div>
+</div>
+</div>
+
+
+<div id="outline-container-org98574c2" class="outline-3">
+<h3 id="org98574c2"><span class="section-number-3">5.6</span> <span class="todo TODO">TODO</span> Week 6  <span class="timestamp-wrapper"><span class="timestamp">&lt;2018-03-12 Mon&gt;&#x2013;&lt;2018-03-18 Sun&gt;</span></span></h3>
+<div class="outline-text-3" id="text-5-6">
+</div>
+<div id="outline-container-org824e98e" class="outline-4">
+<h4 id="org824e98e"><span class="section-number-4">5.6.1</span> Things Done</h4>
+</div>
+
+<div id="outline-container-org50b4a08" class="outline-4">
+<h4 id="org50b4a08"><span class="section-number-4">5.6.2</span> Blocking Points</h4>
+</div>
+
+<div id="outline-container-orgc0642c1" class="outline-4">
+<h4 id="orgc0642c1"><span class="section-number-4">5.6.3</span> Planned Work</h4>
+</div>
+</div>
+
+
+<div id="outline-container-org970e4c1" class="outline-3">
+<h3 id="org970e4c1"><span class="section-number-3">5.7</span> <span class="todo TODO">TODO</span> Week 7  <span class="timestamp-wrapper"><span class="timestamp">&lt;2018-03-19 Mon&gt;&#x2013;&lt;2018-03-25 Sun&gt;</span></span></h3>
+<div class="outline-text-3" id="text-5-7">
+</div>
+<div id="outline-container-org021b1ac" class="outline-4">
+<h4 id="org021b1ac"><span class="section-number-4">5.7.1</span> Things Done</h4>
+</div>
+
+<div id="outline-container-org92c0917" class="outline-4">
+<h4 id="org92c0917"><span class="section-number-4">5.7.2</span> Blocking Points</h4>
+</div>
+
+<div id="outline-container-org51b319c" class="outline-4">
+<h4 id="org51b319c"><span class="section-number-4">5.7.3</span> Planned Work</h4>
+</div>
+</div>
+
+
+<div id="outline-container-org32b9ded" class="outline-3">
+<h3 id="org32b9ded"><span class="section-number-3">5.8</span> <span class="todo TODO">TODO</span> Week 8  <span class="timestamp-wrapper"><span class="timestamp">&lt;2018-03-26 Mon&gt;&#x2013;&lt;2018-04-01 Sun&gt;</span></span></h3>
+<div class="outline-text-3" id="text-5-8">
+</div>
+<div id="outline-container-org86d053f" class="outline-4">
+<h4 id="org86d053f"><span class="section-number-4">5.8.1</span> Things Done</h4>
+</div>
+
+<div id="outline-container-org0672816" class="outline-4">
+<h4 id="org0672816"><span class="section-number-4">5.8.2</span> Blocking Points</h4>
+</div>
+
+<div id="outline-container-org68d454b" class="outline-4">
+<h4 id="org68d454b"><span class="section-number-4">5.8.3</span> Planned Work</h4>
+</div>
+</div>
+
+
+<div id="outline-container-org32e95c6" class="outline-3">
+<h3 id="org32e95c6"><span class="section-number-3">5.9</span> <span class="todo TODO">TODO</span> Week 9  <span class="timestamp-wrapper"><span class="timestamp">&lt;2018-04-02 Mon&gt;&#x2013;&lt;2018-04-08 Sun&gt;</span></span></h3>
+<div class="outline-text-3" id="text-5-9">
+</div>
+<div id="outline-container-orgd960c5f" class="outline-4">
+<h4 id="orgd960c5f"><span class="section-number-4">5.9.1</span> Things Done</h4>
+</div>
+
+<div id="outline-container-orgaedb6e0" class="outline-4">
+<h4 id="orgaedb6e0"><span class="section-number-4">5.9.2</span> Blocking Points</h4>
+</div>
+
+<div id="outline-container-orge1b4dfb" class="outline-4">
+<h4 id="orge1b4dfb"><span class="section-number-4">5.9.3</span> Planned Work</h4>
+</div>
+</div>
+
+
+<div id="outline-container-orgacbb2e7" class="outline-3">
+<h3 id="orgacbb2e7"><span class="section-number-3">5.10</span> <span class="todo TODO">TODO</span> Week 10 <span class="timestamp-wrapper"><span class="timestamp">&lt;2018-04-09 Mon&gt;&#x2013;&lt;2018-04-15 Sun&gt;</span></span></h3>
+<div class="outline-text-3" id="text-5-10">
+</div>
+<div id="outline-container-org0f7bff8" class="outline-4">
+<h4 id="org0f7bff8"><span class="section-number-4">5.10.1</span> Things Done</h4>
+</div>
+
+<div id="outline-container-org41effec" class="outline-4">
+<h4 id="org41effec"><span class="section-number-4">5.10.2</span> Blocking Points</h4>
+</div>
+
+<div id="outline-container-org9a030d9" class="outline-4">
+<h4 id="org9a030d9"><span class="section-number-4">5.10.3</span> Planned Work</h4>
+</div>
+</div>
+
+
+<div id="outline-container-org4812856" class="outline-3">
+<h3 id="org4812856"><span class="section-number-3">5.11</span> <span class="todo TODO">TODO</span> Week 11 <span class="timestamp-wrapper"><span class="timestamp">&lt;2018-04-16 Mon&gt;&#x2013;&lt;2018-04-22 Sun&gt;</span></span></h3>
+<div class="outline-text-3" id="text-5-11">
+</div>
+<div id="outline-container-org3531464" class="outline-4">
+<h4 id="org3531464"><span class="section-number-4">5.11.1</span> Things Done</h4>
+</div>
+
+<div id="outline-container-orgc99cffe" class="outline-4">
+<h4 id="orgc99cffe"><span class="section-number-4">5.11.2</span> Blocking Points</h4>
+</div>
+
+<div id="outline-container-org127ab96" class="outline-4">
+<h4 id="org127ab96"><span class="section-number-4">5.11.3</span> Planned Work</h4>
+</div>
+</div>
+
+
+<div id="outline-container-orga1a0b65" class="outline-3">
+<h3 id="orga1a0b65"><span class="section-number-3">5.12</span> <span class="todo TODO">TODO</span> Week 12 <span class="timestamp-wrapper"><span class="timestamp">&lt;2018-04-23 Mon&gt;&#x2013;&lt;2018-04-29 Sun&gt;</span></span></h3>
+<div class="outline-text-3" id="text-5-12">
+</div>
+<div id="outline-container-orgf049b26" class="outline-4">
+<h4 id="orgf049b26"><span class="section-number-4">5.12.1</span> Things Done</h4>
+</div>
+
+<div id="outline-container-org7b27058" class="outline-4">
+<h4 id="org7b27058"><span class="section-number-4">5.12.2</span> Blocking Points</h4>
+</div>
+
+<div id="outline-container-org0e9c5bb" class="outline-4">
+<h4 id="org0e9c5bb"><span class="section-number-4">5.12.3</span> Planned Work</h4>
+</div>
+</div>
+
+
+<div id="outline-container-org4abe169" class="outline-3">
+<h3 id="org4abe169"><span class="section-number-3">5.13</span> <span class="todo TODO">TODO</span> Week 13 <span class="timestamp-wrapper"><span class="timestamp">&lt;2018-04-30 Mon&gt;&#x2013;&lt;2018-05-06 Sun&gt;</span></span></h3>
+<div class="outline-text-3" id="text-5-13">
+</div>
+<div id="outline-container-org04963b6" class="outline-4">
+<h4 id="org04963b6"><span class="section-number-4">5.13.1</span> Things Done</h4>
+</div>
+
+<div id="outline-container-orge876775" class="outline-4">
+<h4 id="orge876775"><span class="section-number-4">5.13.2</span> Blocking Points</h4>
+</div>
+
+<div id="outline-container-orgfcb7632" class="outline-4">
+<h4 id="orgfcb7632"><span class="section-number-4">5.13.3</span> Planned Work</h4>
+</div>
+</div>
+
+
+<div id="outline-container-org2b3b5dd" class="outline-3">
+<h3 id="org2b3b5dd"><span class="section-number-3">5.14</span> <span class="todo TODO">TODO</span> Week 14 <span class="timestamp-wrapper"><span class="timestamp">&lt;2018-05-07 Mon&gt;&#x2013;&lt;2018-05-13 Sun&gt;</span></span></h3>
+<div class="outline-text-3" id="text-5-14">
+</div>
+<div id="outline-container-org1d09ea2" class="outline-4">
+<h4 id="org1d09ea2"><span class="section-number-4">5.14.1</span> Things Done</h4>
+</div>
+
+<div id="outline-container-org6ea4687" class="outline-4">
+<h4 id="org6ea4687"><span class="section-number-4">5.14.2</span> Blocking Points</h4>
+</div>
+
+<div id="outline-container-orgc127f26" class="outline-4">
+<h4 id="orgc127f26"><span class="section-number-4">5.14.3</span> Planned Work</h4>
+</div>
+</div>
+
+
+<div id="outline-container-orga254e8d" class="outline-3">
+<h3 id="orga254e8d"><span class="section-number-3">5.15</span> <span class="todo TODO">TODO</span> Week 15 <span class="timestamp-wrapper"><span class="timestamp">&lt;2018-05-14 Mon&gt;&#x2013;&lt;2018-05-20 Sun&gt;</span></span></h3>
+<div class="outline-text-3" id="text-5-15">
+</div>
+<div id="outline-container-org0f71ddf" class="outline-4">
+<h4 id="org0f71ddf"><span class="section-number-4">5.15.1</span> Things Done</h4>
+</div>
+
+<div id="outline-container-orgdade1a5" class="outline-4">
+<h4 id="orgdade1a5"><span class="section-number-4">5.15.2</span> Blocking Points</h4>
+</div>
+
+<div id="outline-container-org1969a1d" class="outline-4">
+<h4 id="org1969a1d"><span class="section-number-4">5.15.3</span> Planned Work</h4>
+</div>
+</div>
+
+
+<div id="outline-container-org1587af4" class="outline-3">
+<h3 id="org1587af4"><span class="section-number-3">5.16</span> <span class="todo TODO">TODO</span> Week 16 <span class="timestamp-wrapper"><span class="timestamp">&lt;2018-05-21 Mon&gt;&#x2013;&lt;2018-05-27 Sun&gt;</span></span></h3>
+<div class="outline-text-3" id="text-5-16">
+</div>
+<div id="outline-container-org4da591a" class="outline-4">
+<h4 id="org4da591a"><span class="section-number-4">5.16.1</span> Things Done</h4>
+</div>
+
+<div id="outline-container-org610051e" class="outline-4">
+<h4 id="org610051e"><span class="section-number-4">5.16.2</span> Blocking Points</h4>
+</div>
+
+<div id="outline-container-orge799bea" class="outline-4">
+<h4 id="orge799bea"><span class="section-number-4">5.16.3</span> Planned Work</h4>
+</div>
+</div>
+
+
+<div id="outline-container-orgaef020a" class="outline-3">
+<h3 id="orgaef020a"><span class="section-number-3">5.17</span> <span class="todo TODO">TODO</span> Week 17 <span class="timestamp-wrapper"><span class="timestamp">&lt;2018-05-28 Mon&gt;&#x2013;&lt;2018-06-03 Sun&gt;</span></span></h3>
+<div class="outline-text-3" id="text-5-17">
+</div>
+<div id="outline-container-org560e567" class="outline-4">
+<h4 id="org560e567"><span class="section-number-4">5.17.1</span> Things Done</h4>
+</div>
+
+<div id="outline-container-org0a18974" class="outline-4">
+<h4 id="org0a18974"><span class="section-number-4">5.17.2</span> Blocking Points</h4>
+</div>
+
+<div id="outline-container-org77693f4" class="outline-4">
+<h4 id="org77693f4"><span class="section-number-4">5.17.3</span> Planned Work</h4>
+</div>
+</div>
+
+
+<div id="outline-container-orgbbc35a0" class="outline-3">
+<h3 id="orgbbc35a0"><span class="section-number-3">5.18</span> <span class="todo TODO">TODO</span> Week 18 <span class="timestamp-wrapper"><span class="timestamp">&lt;2018-06-04 Mon&gt;&#x2013;&lt;2018-06-10 Sun&gt;</span></span></h3>
+<div class="outline-text-3" id="text-5-18">
+</div>
+<div id="outline-container-orgdced341" class="outline-4">
+<h4 id="orgdced341"><span class="section-number-4">5.18.1</span> Things Done</h4>
+</div>
+
+<div id="outline-container-org26c69b8" class="outline-4">
+<h4 id="org26c69b8"><span class="section-number-4">5.18.2</span> Blocking Points</h4>
+</div>
+
+<div id="outline-container-org7251863" class="outline-4">
+<h4 id="org7251863"><span class="section-number-4">5.18.3</span> Planned Work <code>[0/1]</code></h4>
+<div class="outline-text-4" id="text-5-18-3">
+<ul class="org-ul">
+<li class="off"><input type='checkbox' /> Report <span class="timestamp-wrapper"><span class="timestamp">&lt;2018-06-08 Fri 12:00&gt;</span></span></li>
+</ul>
+</div>
+</div>
+</div>
+
+
+<div id="outline-container-org32ffdf7" class="outline-3">
+<h3 id="org32ffdf7"><span class="section-number-3">5.19</span> <span class="todo TODO">TODO</span> Week 19 <span class="timestamp-wrapper"><span class="timestamp">&lt;2018-06-11 Mon&gt;&#x2013;&lt;2018-06-17 Sun&gt;</span></span></h3>
+<div class="outline-text-3" id="text-5-19">
+</div>
+<div id="outline-container-org7559575" class="outline-4">
+<h4 id="org7559575"><span class="section-number-4">5.19.1</span> Things Done</h4>
+</div>
+
+<div id="outline-container-org4ae6ff1" class="outline-4">
+<h4 id="org4ae6ff1"><span class="section-number-4">5.19.2</span> Blocking Points</h4>
+</div>
+
+<div id="outline-container-orge20c828" class="outline-4">
+<h4 id="orge20c828"><span class="section-number-4">5.19.3</span> Planned Work</h4>
+</div>
+</div>
+
+
+<div id="outline-container-orge7410b2" class="outline-3">
+<h3 id="orge7410b2"><span class="section-number-3">5.20</span> <span class="todo TODO">TODO</span> Week 20 <span class="timestamp-wrapper"><span class="timestamp">&lt;2018-06-18 Mon&gt;&#x2013;&lt;2018-06-24 Sun&gt;</span></span></h3>
+<div class="outline-text-3" id="text-5-20">
+</div>
+<div id="outline-container-org63e82d0" class="outline-4">
+<h4 id="org63e82d0"><span class="section-number-4">5.20.1</span> Things Done</h4>
+</div>
+
+<div id="outline-container-org7a5bade" class="outline-4">
+<h4 id="org7a5bade"><span class="section-number-4">5.20.2</span> Blocking Points</h4>
+</div>
+
+<div id="outline-container-org51f56c3" class="outline-4">
+<h4 id="org51f56c3"><span class="section-number-4">5.20.3</span> Planned Work <code>[0/1]</code></h4>
+<div class="outline-text-4" id="text-5-20-3">
+<ul class="org-ul">
+<li class="off"><input type='checkbox' /> Defense Rehearsal @ ENS <span class="timestamp-wrapper"><span class="timestamp">&lt;2018-06-22 Fri&gt;</span></span></li>
+</ul>
+</div>
+</div>
+</div>
+
+
+<div id="outline-container-org77be99a" class="outline-3">
+<h3 id="org77be99a"><span class="section-number-3">5.21</span> <span class="todo TODO">TODO</span> Week 21 <span class="timestamp-wrapper"><span class="timestamp">&lt;2018-06-25 Mon&gt;&#x2013;&lt;2018-07-01 Sun&gt;</span></span></h3>
+<div class="outline-text-3" id="text-5-21">
+</div>
+<div id="outline-container-org3928873" class="outline-4">
+<h4 id="org3928873"><span class="section-number-4">5.21.1</span> Things Done</h4>
+</div>
+
+<div id="outline-container-org582e9fc" class="outline-4">
+<h4 id="org582e9fc"><span class="section-number-4">5.21.2</span> Blocking Points</h4>
+</div>
+
+<div id="outline-container-orgd598261" class="outline-4">
+<h4 id="orgd598261"><span class="section-number-4">5.21.3</span> Planned Work <code>[0/1]</code></h4>
+<div class="outline-text-4" id="text-5-21-3">
+<ul class="org-ul">
+<li class="off"><input type='checkbox' /> Defense <span class="timestamp-wrapper"><span class="timestamp">&lt;2018-06-25 Mon&gt;</span></span></li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+
+
+<div id="outline-container-orgac31706" class="outline-2">
+<h2 id="orgac31706"><span class="section-number-2">6</span> Conclusion</h2>
+</div>
+</div>
+<div id="postamble" class="status">
+<p class="date">Date: 2018-02-07 Wed 00:00</p>
+<p class="author">Author: Simon Bihel</p>
+<p class="date">Created: 2018-02-26 Mon 11:01</p>
+<p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
+</div>
+</body>
+</html>

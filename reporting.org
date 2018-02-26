@@ -701,6 +701,7 @@ purpose of a source code method.
 
 ** TODO Week 4 <2018-02-26 Mon>--<2018-03-04 Sun>
 *** Things Done
+- Added git hook to commit the html version of the reporting
 
 *** Blocking Points
 
