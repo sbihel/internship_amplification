@@ -387,10 +387,19 @@ But those works are not directly useful for our problem.
   + more about analysis than generation
 
 ** Contribution
+*** Minimisation
+*** Focus
+*** Replace original test or keep both
+*** Explanation
+**** Slicing
+**** Natural Description
 
 
 * Development
+[[https://github.com/STAMP-project/dspot/issues/187][Issue]]
 ** TODO Extract hard-coded amplifications messages
+** TODO Automated PR
+** TODO Identify which amplification is involved in which killed mutant
 
 
 * Global Goals [0/2]
@@ -702,24 +711,34 @@ purpose of a source code method.
 ** TODO Week 4 <2018-02-26 Mon>--<2018-03-04 Sun>
 *** Things Done
 - Added git hook to commit the html version of the reporting
+- Explored the use of slicing to detect the cause of new killed mutant
+  + Need observation-based slicing with mutation score(?)
+- Nothing on summarization and mutation testing
+- [[https://github.com/srcML/srcSlice][srcSlice]] not supporting Java ([[http://ieeexplore.ieee.org/stamp/stamp.jsp?tp=&arnumber=7883355&tag=1][paper]])
+- [[http://wala.sourceforge.net/wiki/index.php/Main_Page][WALA]]
+- [[https://github.com/hammacher/javaslicer][JavaSlice]] does not support Java 8
 
 *** Blocking Points
+- NL commit message generator
+  + how to know which amplifications were applied?
+- What is a program/test slice for a mutation score criterion?
 
-*** Planned Work [0/5]
+*** Planned Work [1/8]
 - [ ] Register for ICST
-- [ ] Dspot [0/5]
+- [-] Dspot [1/5]
   + [ ] Contributing
-    - [ ] Pick issues
-    - [ ] Fix them
-  + [ ] Write documentation [0/2]
-    - [ ] Key methods [0/2]
-      + [ ] Input amplification
-        - [ ] amplifiers
-      + [ ] Compilation & run
-        - [ ] ~TestCompiler~
-    - [ ] ~compileAndRunTests~
-      + [ ] Why return ~null~ when not all methods were compilable or some
+  + [X] Write documentation [2/2]
+    - [X] Key methods [2/2]
+      + [X] Input amplification
+        - [X] amplifiers
+      + [X] Compilation & run
+        - [X] ~TestCompiler~
+          + no need
+    - [X] ~compileAndRunTests~
+      + [X] Why return ~null~ when not all methods were compilable or some
         tests failed?
+        - Created an [[https://github.com/STAMP-project/dspot/issues/336][issue]]
+    - [[https://github.com/STAMP-project/dspot/pull/337][PR]]
   + [ ] Work on removing all deprecated classes in stamp
     - [ ] Remove unused deprecated methods of ~TestSelector~
   + [ ] More precise ~try/catch~?
@@ -737,6 +756,16 @@ purpose of a source code method.
 - [ ] Read about identify essential parts of a test for killing a specific
   mutant
 - [ ] Search for papers on mutation testing and same location targeting
+- [-] Start doing a simple NL commit messages generator [0/2]
+  - [ ] DSpot automated PR
+  - [-] Simple PR description [2/3]
+    + [X] Add a field in the killed mutants ~json~ file
+    + [X] Print it
+      - done automatically
+    + [ ] Stupid description
+- [X] Replace ~fr.inria.stamp~ with ~eu.stamp~
+  + [[https://github.com/STAMP-project/dspot/pull/339][PR]]
+- [ ] Thanks all the team in report (Benjamin, Benoit, Martin)
 
 
 ** TODO Week 5  <2018-03-05 Mon>--<2018-03-11 Sun>
