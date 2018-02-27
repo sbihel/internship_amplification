@@ -52,10 +52,12 @@ echo "pre-commit started"
 # exec git diff-index --check --cached $against --
 
 git diff --cached --name-only | if grep --quiet "reporting.org"; then
+    echo "reporting.org was added -> generating and adding html version"
     root_path=`git rev-parse --show-toplevel`
     reporting_path="${root_path}/reporting.org"
     output_path="${root_path}/reporting.html"
-    vim -R -c "OrgExportToHTML" -c q $reporting_path -
+    vim --not-a-term -R "+OrgExportToHTML" +q $reporting_path
+    reset
     git add $output_path
 fi
 
