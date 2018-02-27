@@ -51,11 +51,13 @@ echo "pre-commit started"
 # # If there are whitespace errors, print the offending file names and fail.
 # exec git diff-index --check --cached $against --
 
-root_path=`git rev-parse --show-toplevel`
-reporting_path="${root_path}/reporting.org"
-output_path="${root_path}/reporting.html"
-vim -e -X -R -c "OrgExportToHTML" -c q $reporting_path
-git add $output_path
+git diff --cached --name-only | if grep --quiet "reporting.org"; then
+    root_path=`git rev-parse --show-toplevel`
+    reporting_path="${root_path}/reporting.org"
+    output_path="${root_path}/reporting.html"
+    vim -R -c "OrgExportToHTML" -c q $reporting_path -
+    git add $output_path
+fi
 
 
 echo "pre-commit finished"
