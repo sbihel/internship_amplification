@@ -393,6 +393,7 @@ But those works are not directly useful for our problem.
 *** Explanation
 **** Slicing
 **** Natural Description
+*** Ranking
 
 
 * Development
@@ -404,6 +405,7 @@ But those works are not directly useful for our problem.
 
 * Global Goals [0/2]
 ** TODO Report <2018-06-08 Fri 12:00>
+- [ ] Thanks all the team in report (Benjamin, Benoit, Martin)
 ** TODO Defense <2018-06-25 Mon>
 *** TODO Talk @ Workshop Software Engineering Research <2018-03-08 Thu 10:00>
 *** TODO Defense Rehearsal @ ENS <2018-06-22 Fri>
@@ -714,19 +716,27 @@ purpose of a source code method.
 - Explored the use of slicing to detect the cause of new killed mutant
   + Need observation-based slicing with mutation score(?)
 - Nothing on summarization and mutation testing
+  + You usually think the other way around, what do I need to do in order to
+    kill this new mutant
 - [[https://github.com/srcML/srcSlice][srcSlice]] not supporting Java ([[http://ieeexplore.ieee.org/stamp/stamp.jsp?tp=&arnumber=7883355&tag=1][paper]])
-- [[http://wala.sourceforge.net/wiki/index.php/Main_Page][WALA]]
 - [[https://github.com/hammacher/javaslicer][JavaSlice]] does not support Java 8
+- [[http://wala.sourceforge.net/wiki/index.php/Main_Page][WALA]]
+- Fixed org export and also pull on server
+- Starred every vim plugin I use with Github's API and [[https://github.com/PyGithub/PyGithub][PyGitbub]]
+- Explored end-user description of Pitest mutators
+  + Pitest has user-friendly mutators, now the question is how to use/access
+    them
 
 *** Blocking Points
 - NL commit message generator
   + how to know which amplifications were applied?
 - What is a program/test slice for a mutation score criterion?
+  + dataflow slice starting from the killing assertion
 
-*** Planned Work [1/8]
+*** Planned Work [3/9]
 - [ ] Register for ICST
-- [-] Dspot [1/5]
-  + [ ] Contributing
+- [-] Dspot [2/5]
+  + [X] Contributing
   + [X] Write documentation [2/2]
     - [X] Key methods [2/2]
       + [X] Input amplification
@@ -753,19 +763,31 @@ purpose of a source code method.
     - [ ] Explaining what they do
     - [ ] Why we can't apply them for our work
   + [ ] Whether using an NLG is useful
-- [ ] Read about identify essential parts of a test for killing a specific
+- [X] Read about identify essential parts of a test for killing a specific
   mutant
-- [ ] Search for papers on mutation testing and same location targeting
+- [X] Search for papers on mutation testing and same location targeting
 - [-] Start doing a simple NL commit messages generator [0/2]
   - [ ] DSpot automated PR
-  - [-] Simple PR description [2/3]
+  - [-] Simple PR description [3/4]
     + [X] Add a field in the killed mutants ~json~ file
     + [X] Print it
       - done automatically
-    + [ ] Stupid description
+    + [X] Stupid message
+    + [ ] Long stupid description
+      - [ ] Get what amplifications were applied
+      - [ ] done
 - [X] Replace ~fr.inria.stamp~ with ~eu.stamp~
   + [[https://github.com/STAMP-project/dspot/pull/339][PR]]
-- [ ] Thanks all the team in report (Benjamin, Benoit, Martin)
+- [ ] Classification of mutators
+- [-] Integrate WALA to compute a slice per new mutant [1/4]
+  + [X] Need a more precise location for the mutant location
+    - +column number+
+      + not available
+    - maybe I don't need it
+  + [ ] Need to know the killing assertion
+    - [ ] Add a trace of this when a test is kept
+  + [ ] Adding as dependency
+  + [ ] Use it
 
 
 ** TODO Week 5  <2018-03-05 Mon>--<2018-03-11 Sun>
@@ -773,8 +795,36 @@ purpose of a source code method.
 
 *** Blocking Points
 
-*** Planned Work [0/1]
+*** Planned Work [0/7]
 - [ ] Talk @ Workshop Software Engineering Research <2018-03-08 Thu 10:00>
+- [ ] Register for ICST
+- [ ] Dspot [0/1]
+  + [ ] Extract hard-coded amplifications messages
+- [ ] Start writing [0/4]
+  + [ ] Problem statement
+    - [ ] technical
+  + [ ] Comparison with works on description
+    - [ ] Why we can't apply them for our work
+  + [ ] Comparison with works on test cases minimization
+    - [ ] Explaining what they do
+    - [ ] Why we can't apply them for our work
+  + [ ] Whether using an NLG is useful
+- [ ] Start doing a simple NL commit messages generator
+  + [ ] Long stupid description
+    - [ ] Get what amplifications were applied
+    - [ ] done
+- [ ] Classification of mutators
+- [-] Integrate WALA to compute a slice per new mutant [1/4]
+  + [X] Need a more precise location for the mutant location
+    - +column number+
+      + not available
+    - maybe I don't need it
+  + [ ] Need to know the killing assertion
+    - [ ] Add a trace of this when a test is kept
+  + [ ] Adding as dependency
+  + [ ] Use it
+
+
 
 
 ** TODO Week 6  <2018-03-12 Mon>--<2018-03-18 Sun>
@@ -782,7 +832,8 @@ purpose of a source code method.
 
 *** Blocking Points
 
-*** Planned Work
+*** Planned Work [0/1]
+- [ ] Change apartment <2018-03-15 Thu>
 
 
 ** TODO Week 7  <2018-03-19 Mon>--<2018-03-25 Sun>
@@ -838,7 +889,8 @@ purpose of a source code method.
 
 *** Blocking Points
 
-*** Planned Work
+*** Planned Work [0/1]
+- [ ] Renew SL access card
 
 
 ** TODO Week 14 <2018-05-07 Mon>--<2018-05-13 Sun>
