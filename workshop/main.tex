@@ -9,6 +9,7 @@
 
 \graphicspath{{../img/}}
 \usepackage{svg}
+\svgpath{{../img/}}
 
 \usepackage{appendixnumberbeamer}
 
@@ -20,6 +21,7 @@
 \usepackage[cache=false]{minted}
 \usepackage{inconsolata}
 \setmonofont{Inconsolata}
+\newfontfamily\DejaSans{DejaVu Sans}
 
 \usepackage{textcomp}
 
@@ -56,7 +58,10 @@
         \item delete the body of a method.
       \end{itemize}
       \vfill{}
-      \visible<2->{\textbf{Goal}\quad{} Enhance test suite by detecting new mutants}
+      \metroset{block=fill}
+      \begin{block}<2->{Goal}
+        Enhance test suite by detecting new mutants
+      \end{block}
       \endminipage{}
     \end{column}
     \begin{column}{0.3\textwidth}
@@ -81,7 +86,7 @@
     \end{column}
   \end{columns}
   \vfill{}
-  \visible<+->{Benjamin Danglot, INRIA Lille, France}
+  \visible<+(1)->{Benjamin Danglot, INRIA Lille, France}
 \end{frame}
 
 \begin{frame}[fragile]{Example\footnote{\href{https://github.com/google/guava/blob/ea66419b6aa52678816df77caa304e617255cca5/guava-tests/test/com/google/common/graph/ImmutableGraphTest.java\#L29-L40}{https://github.com/google/guava/blob/master/guava-tests/test/com/google/common/graph/ImmutableGraphTest.java\#L29-L40}}}
@@ -101,7 +106,7 @@ public void immutableGraph() {
   \end{minted}
 \end{frame}
 
-\begin{frame}[fragile]{Example of amplification}
+\begin{frame}[fragile]{Example of Amplification}
   \begin{minted}[linenos,highlightlines={5,9}]{java}
 @Test
 public void immutableGraph() {
@@ -121,32 +126,82 @@ public void immutableGraph() {
 \end{frame}
 
 \begin{frame}{Goal}
-  \begin{itemize}
-    \item Human-friendly, high-level, natural language description
-  \end{itemize}
+  \large{\textbf{\textrightarrow{} Human-friendly, high-level, natural language description}}
+  \pause{}
+
+  First objective: an explanation per mutant kill.
 \end{frame}
 
-\begin{frame}{Minimization}
-  \begin{itemize}
-    \item remove useless assertions
-  \end{itemize}
-\end{frame}
+\begin{frame}{Identify Relevant Statements}
+  Identify the killing assertion.
+  \pause{}
+  \metroset{block=fill}
+  \begin{block}{Simple static slicing:}
+    \begin{itemize}
+      \item starting from the killing assertion;
+      \item control-flow slicing and
+      \item data-flow slicing.
+    \end{itemize}
+  \end{block}
+  \vfill{}
+  \metroset{block=transparent}
+  \begin{block}<+(1)->{Java slicing tool}
+    T.J. Watson Libraries for Analysis (WALA)\footnote<+->{\url{https://github.com/wala/WALA}} %\only<+->{\footnote{\url{https://github.com/wala/WALA}}}
 
-\begin{frame}{Slicing of Unit Tests}
-  Simple static slicing
-  \begin{itemize}
-    \item Control-flow slicing
-    \item Data-flow slicing
-  \end{itemize}
-
-  \begin{block}{Java tool}
-    T.J. Watson Libraries for Analysis (WALA)\footnote{\url{https://github.com/wala/WALA}}
+    Established library with active development.
   \end{block}
 \end{frame}
 
+\begin{frame}{Cleaning the Amplifications}
+  \begin{enumerate}[<+->]
+    \item Remove statements not present in a slice.
+    \item Remove statements with no impact. \textrightarrow{} long process
+  \end{enumerate}
+\end{frame}
+
+\begin{frame}{Related Works --- Software Artifact Summarisation --- Software Maintenance}
+  \metroset{block=fill}
+  \begin{block}{\textit{UnitTestScribe}\footcite{li2016automatically}\footnote{\url{https://github.com/boyangwm/UnitTestScribe}}}
+    \begin{itemize}[<+(1)->]
+      \item[{\includegraphics[width=1em]{Fxemoji_u1F389}}] Empirical study and survey \textrightarrow{} need for automated documentation.
+      \item Summarises actions in natural language (Software Word Usage Model, method stereotypes). %\footcite{hill2010integrating}\footcite{dragan2006reverse} [{\includegraphics[width=1em]{Emoji_u1f44d}}]
+    \end{itemize}
+  \end{block}
+  \vfill{}
+  \pause{}
+  \begin{block}{Code changes summarisation (i.e.\ commit message generation)}
+    Focused on general source code (add feature, fix bug, \dots).
+  \end{block}
+\end{frame}
+
+\begin{frame}{Related Works Limit}
+  \begin{block}{Problem}
+    No ``why'' information. Paraphrasing the code.
+  \end{block}
+  \pause{}
+  \textbf{Reason for amplifications to exist \textrightarrow{} mutant kill.}
+\end{frame}
+
 \begin{frame}{Natural Description}
-  \begin{itemize}
-    \item Mutator categorization
+  \metroset{block=fill}
+  \begin{block}{Better oracle:}
+    \begin{itemize}
+      \item what part of the system was left out;
+      \item avoid using terms as mutant.
+    \end{itemize}
+  \end{block}
+  \pause{}
+  \begin{block}{New kind of behaviour:}
+    \begin{itemize}
+      \item differences in traces.
+    \end{itemize}
+  \end{block}
+\end{frame}
+
+\begin{frame}{Experiment Protocol}
+  \begin{itemize}[<+->]
+    \item Performances.
+    \item Survey with real developers.
   \end{itemize}
 \end{frame}
 
