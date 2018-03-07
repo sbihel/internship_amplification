@@ -201,7 +201,7 @@ But those works are not directly useful for our problem.
       + Internal call verifier
       + Execution tester
       + Empty tester
-- /Automatically Documenting Unit Test Cases/ 🌟
+- /Automatically Documenting Unit Test Cases/ 🌟🌟
   ([[http://www.cs.wm.edu/~denys/pubs/_ICST'16-JUnitTestScribe-CRC.pdf][li2016automatically]]) ([[https://github.com/boyangwm/UnitTestScribe][git]])
   + Survey with developers and projects mining study to justify automatic
     documentation of unit tests
@@ -344,6 +344,11 @@ But those works are not directly useful for our problem.
   ([[https://arxiv.org/pdf/1709.05291.pdf][arXiv:1709.05291]])
   + TODO
 
+**** Test Case Minimisation
+- /Efficient Unit Test Case Minimization/
+  ([[https://www.semanticscholar.org/paper/Efficient-unit-test-case-minimization-Leitner-Oriol/7ea90839a908f8a0b171d93fad72bcace2cdf0ad][leitner2007efficient]])
+  + TODO
+
 **** Not Relevant
 ***** Knowledge
 - /Poster: Construct Bug Knowledge Graph for Bug Resolution/
@@ -354,6 +359,10 @@ But those works are not directly useful for our problem.
   + Design of a tool to visualize various kinds of knowledge
 - /Method Execution Reports: Generating Text and Visualization to Describe Program Behavior/
   ([[http://bergel.eu/MyPapers/Beck17a-MethodExecutionReports.pdf][beck2017method]])
+
+***** Testing Related
+- /SCOTCH: Test-to-Code Traceability using Slicing and Conceptual Coupling/
+  ([[https://pdfs.semanticscholar.org/d38a/88ee65b56c2e3e3efc33c727d0990678683c.pdf][qusef2011scotch]])
 
 ***** Others
 - /A Neural Architecture for Generating Natural Language Descriptions from Source Code Changes/
@@ -407,7 +416,15 @@ But those works are not directly useful for our problem.
 ** TODO Report <2018-06-08 Fri 12:00>
 - [ ] Thanks all the team in report (Benjamin, Benoit, Martin)
 ** TODO Defense <2018-06-25 Mon>
-*** TODO Talk @ Workshop Software Engineering Research <2018-03-08 Thu 10:00>
+*** TODO Talk @ Workshop Software Engineering Research <2018-03-08 Thu 10:00>--<2018-03-08 Thu 10:20>
+- Room 4523
+- 10 minutes talk
+- /Mandatory/ slides [4/4]
+  + [X] Problem statement
+  + [X] Experiment protocol
+  + [X] Experiment results
+    - no results yet 😞
+  + [X] Related works
 *** TODO Defense Rehearsal @ ENS <2018-06-22 Fri>
 
 
@@ -710,7 +727,7 @@ purpose of a source code method.
 - [ ] Search for papers on mutation testing and same location targeting
 
 
-** TODO Week 4 <2018-02-26 Mon>--<2018-03-04 Sun>
+** DONE Week 4 <2018-02-26 Mon>--<2018-03-04 Sun>
 *** Things Done
 - Added git hook to commit the html version of the reporting
 - Explored the use of slicing to detect the cause of new killed mutant
@@ -720,12 +737,18 @@ purpose of a source code method.
     kill this new mutant
 - [[https://github.com/srcML/srcSlice][srcSlice]] not supporting Java ([[http://ieeexplore.ieee.org/stamp/stamp.jsp?tp=&arnumber=7883355&tag=1][paper]])
 - [[https://github.com/hammacher/javaslicer][JavaSlice]] does not support Java 8
+- [[http://indus.projects.cs.ksu.edu/projects/kaveri.shtml][Kaveri]] (Indus Java Program Slicer) old and eclipse plugin
+- [[http://ieeexplore.ieee.org/stamp/stamp.jsp?tp=&arnumber=8080067<Paste>][JavaBST]] not available ? paper badly written
 - [[http://wala.sourceforge.net/wiki/index.php/Main_Page][WALA]]
 - Fixed org export and also pull on server
 - Starred every vim plugin I use with Github's API and [[https://github.com/PyGithub/PyGithub][PyGitbub]]
 - Explored end-user description of Pitest mutators
   + Pitest has user-friendly mutators, now the question is how to use/access
     them
+-
+#+BEGIN_SRC sh
+cd .. && mvn clean package -DskipTests && cd dhell && mvn clean package && java -jar ../dspot/target/dspot-1.0.6-SNAPSHOT-jar-with-dependencies.jar -p ./dspot.properties -i 1 -t eu.stamp.examples.dhell.HelloAppTest -a MethodAdd --verbose && vim dspot-out/eu.stamp.examples.dhell.HelloAppTest_mutants_killed.json
+#+END_SRC
 
 *** Blocking Points
 - NL commit message generator
@@ -792,11 +815,35 @@ purpose of a source code method.
 
 ** TODO Week 5  <2018-03-05 Mon>--<2018-03-11 Sun>
 *** Things Done
+- Tried to use Sourcetrail
+  + Needed to run ~mvn install -DskipTests -Djacoco.skip=true~
+  + displayed no references or class
+- Worked on presentation for the workshop
+- Proposed mutators taxonomy
+  + Literal change
+  + Object change
+  + New assertion
+- Meeting with Benoit
+  + in commit message, talk about bugs instead of mutants
+  + 3 steps
+    - oracle enhancement only
+    - new input
+    - combination
+  + write why the problem is difficult
+  + write different kinds of message with each a specific focus
+  + maybe compare trace of amplified test vs original
+  + study commit messages related to tests
+- ~git log --grep "^Tested"~
+  +
 
 *** Blocking Points
+- [ ] What will the *scientific* contribution be?
+- [ ] What kind of evaluation?
 
-*** Planned Work [0/7]
-- [ ] Talk @ Workshop Software Engineering Research <2018-03-08 Thu 10:00>
+*** Planned Work [1/8]
+- [ ] Talk @ Workshop Software Engineering Research <2018-03-08 Thu 10:00>--<2018-03-08 Thu 10:20>
+  + Workshop <2018-03-08 Thu 09:30>--<2018-03-08 Thu 12:30>
+  + Room 4523
 - [ ] Register for ICST
 - [ ] Dspot [0/1]
   + [ ] Extract hard-coded amplifications messages
@@ -823,6 +870,10 @@ purpose of a source code method.
     - [ ] Add a trace of this when a test is kept
   + [ ] Adding as dependency
   + [ ] Use it
+- [X] Fix [[https://github.com/STAMP-project/dspot/issues/336]]
+  + [[https://github.com/STAMP-project/dspot/pull/350][PR]]
+- [ ] Study commit messages related to tests
+- [ ] More precise ~try/catch~ would actually be useful for slicing
 
 
 
