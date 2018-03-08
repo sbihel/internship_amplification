@@ -33,7 +33,7 @@
 
 \title{Adaptating Amplified Unit Tests for Human Comprehension}
 
-\date{\displaydate{talkdate}}
+\date{\displaydate{talkdate} @ KTH}
 \author{%
   Simon Bihel\hfill\href{mailto:simon.bihel@ens-rennes.fr}{\nolinkurl{simon.bihel@ens-rennes.fr}}\\
 }
@@ -52,14 +52,14 @@
       \minipage[c][0.7\textheight][s]{\columnwidth}
       Evaluating the quality of a test suite by injecting bugs
       \vfill{}
-      Example of \emph{mutators}:
+      \visible<+(1)->{Examples of \emph{mutators}:
       \begin{itemize}
         \item change a \texttt{>} condition with \texttt{<};
         \item delete the body of a method.
-      \end{itemize}
+      \end{itemize}}
       \vfill{}
       \metroset{block=fill}
-      \begin{block}<2->{Goal}
+      \begin{block}<+(1)->{Goal}
         Enhance test suite by detecting new mutants
       \end{block}
       \endminipage{}
@@ -153,10 +153,20 @@ public void immutableGraph() {
 \end{frame}
 
 \begin{frame}{Cleaning the Amplifications}
-  \begin{enumerate}[<+->]
+  Minimisation phase \textrightarrow{} less explanation to generate.
+  \begin{enumerate}[<+(1)->]
+    \item Remove assertions that never fail.
     \item Remove statements not present in a slice.
     \item Remove statements with no impact. \textrightarrow{} long process
   \end{enumerate}
+  \pause{}
+  \metroset{block=fill}
+  \begin{block}{Minimizing only amplifications}
+    \begin{itemize}
+      \item Less time consuming.
+      \item Keep the original part intact \textrightarrow{} better for understanding.
+    \end{itemize}
+  \end{block}
 \end{frame}
 
 \begin{frame}{Related Works --- Software Artifact Summarisation --- Software Maintenance}
@@ -193,13 +203,15 @@ public void immutableGraph() {
   \pause{}
   \begin{block}{New kind of behaviour:}
     \begin{itemize}
-      \item differences in traces.
+      \item differences in traces to explain how a bug is triggered;
+      \item use mutators stereotypes to explain how the inputs are modified.
     \end{itemize}
   \end{block}
 \end{frame}
 
 \begin{frame}{Experiment Protocol}
   \begin{itemize}[<+->]
+    \item Study repos with strong commit message guidelines (e.g.\ Google).
     \item Performances.
     \item Survey with real developers.
   \end{itemize}
