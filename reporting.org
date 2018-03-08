@@ -39,6 +39,29 @@ and human-like description of the amplification. To sum-up, the three identified
 problems to tackle are noise reduction, focus confinement, and natural language
 description of the amplification.
 
+**** Technical Difficulties
+In order to describe a mutant, you need information about it. You could give the
+mutator "category" but you only have its class name. You could give the column
+to the statement it was applied to to highlight it, maybe, but you do not have
+access to that. You could use the position in the AST, but you do not know that.
+
+Knowing the which assertion killed what mutant is essential. Be it to start a
+program slice from that assertion, or simply paraphrasing the assertion to
+explain what bug is detected. But you do not know that. And you barely know, with
+ugly comments, what assertions are the result of amplifications. Identifying,
+afterwards, the role that assertions play is cumbersome. You can run the test
+case with every mutants. But first, you do not have directly access to mutants.
+And what do you want to do with them? Instrument, by adding a probe after each
+assertion? How do you automate elegantly such stream of test execution? Maybe
+you can remove assertions, one by one, and see if mutants keep getting killed? I
+know we are in SBSE but that is quite ugly.
+
+As said before we have no direct information on the position of amplifications
+in the new test case. Makes it harder to generate descriptions or apply
+minimization on them. But what data structure would you use? Bookkeeping of the
+position in the AST? How would you keep it up-to-date with multiple rounds of
+amplifications?
+
 **** On the usefulness of works from (code maintenance|software artifacts summarization)
 A lot of effort has been put in generating human friendly descriptions for
 various kinds of software artifacts. In particular, there have been works on
@@ -50,9 +73,23 @@ or the role a piece of code plays --- i.e. understand the intentions of the
 developers --- it is harder and tools need additional information or limit the
 scope by identifying stereotypes (e.g. labelling a commit as Feature Addition).
 
-But those works are not directly useful for our problem.
+But those works are not directly useful for our problem. First, we know why an
+amplified test was kept, it is because it can detect a new bug.
 
 **** On the usefulness of works from test cases minimization
+Using delta-diff we can identify useless statement and then remove them. But
+more powerful program minimisation tools are available. While we could predict
+that the more minimisation is applied, the less code there is left to describe
+thus the description is easier to generate, it is not obvious and others details
+have to be taken into account.
+
+First we might not want to modify the original part, as the developer might
+already be familiar with it and it might be less overwhelming to grasp the
+purpose of the test case. And even if the developer has never seen this test
+before, a hand-written program is probably easier to understand than a compact
+version.
+
+And tools probably cannot be told not to touch certain parts.
 
 **** What do we then propose as contribution
 
@@ -348,6 +385,9 @@ But those works are not directly useful for our problem.
 - /Efficient Unit Test Case Minimization/
   ([[https://www.semanticscholar.org/paper/Efficient-unit-test-case-minimization-Leitner-Oriol/7ea90839a908f8a0b171d93fad72bcace2cdf0ad][leitner2007efficient]])
   + TODO
+- /Yesterday, my program worked. Today, it does not. Why?/
+  ([[https://dl.acm.org/citation.cfm?id=318946][zeller1999yesterday]])
+  + TODO
 
 **** Not Relevant
 ***** Knowledge
@@ -359,6 +399,12 @@ But those works are not directly useful for our problem.
   + Design of a tool to visualize various kinds of knowledge
 - /Method Execution Reports: Generating Text and Visualization to Describe Program Behavior/
   ([[http://bergel.eu/MyPapers/Beck17a-MethodExecutionReports.pdf][beck2017method]])
+
+***** Mutation Testing
+- /Is Mutation Testing Ready to be Adopted Industry-Wide?/
+  ([[https://www.researchgate.net/profile/Bruno_Rossi2/publication/309709540_Is_Mutation_Testing_Ready_to_Be_Adopted_Industry-Wide/links/59fb9709458515d07061a124/Is-Mutation-Testing-Ready-to-Be-Adopted-Industry-Wide.pdf][movzucha2016mutation]])
+- /Investigating the Correlation between Mutation Score and Coverage Score/
+  ([[http://ieeexplore.ieee.org/stamp/stamp.jsp?tp=&arnumber=6527442&tag=1][assylbekov2013investigating]])
 
 ***** Testing Related
 - /SCOTCH: Test-to-Code Traceability using Slicing and Conceptual Coupling/
@@ -414,17 +460,19 @@ But those works are not directly useful for our problem.
 
 * Global Goals [0/2]
 ** TODO Report <2018-06-08 Fri 12:00>
-- [ ] Thanks all the team in report (Benjamin, Benoit, Martin)
+- [X] Thanks all the team in report (Benjamin, Benoit, Martin)
 ** TODO Defense <2018-06-25 Mon>
-*** TODO Talk @ Workshop Software Engineering Research <2018-03-08 Thu 10:00>--<2018-03-08 Thu 10:20>
+*** DONE Talk @ Workshop Software Engineering Research <2018-03-08 Thu 10:00>--<2018-03-08 Thu 10:20>
 - Room 4523
 - 10 minutes talk
+- [[https://docs.google.com/document/d/1NL3FGr_ruYRTY4824mHitkjwitKyBVcaddZLJpbtztA/edit]]
 - /Mandatory/ slides [4/4]
   + [X] Problem statement
   + [X] Experiment protocol
   + [X] Experiment results
     - no results yet 😞
   + [X] Related works
+*** TODO Talk @ Workshop Software Engineering Research <2018-05-10 Thu>
 *** TODO Defense Rehearsal @ ENS <2018-06-22 Fri>
 
 
@@ -834,27 +882,27 @@ cd .. && mvn clean package -DskipTests && cd dhell && mvn clean package && java 
   + maybe compare trace of amplified test vs original
   + study commit messages related to tests
 - ~git log --grep "^Tested"~
-  +
 
 *** Blocking Points
 - [ ] What will the *scientific* contribution be?
 - [ ] What kind of evaluation?
 
-*** Planned Work [1/8]
-- [ ] Talk @ Workshop Software Engineering Research <2018-03-08 Thu 10:00>--<2018-03-08 Thu 10:20>
+*** Planned Work [2/10]
+- [X] Talk @ Workshop Software Engineering Research <2018-03-08 Thu 10:00>--<2018-03-08 Thu 10:20>
   + Workshop <2018-03-08 Thu 09:30>--<2018-03-08 Thu 12:30>
   + Room 4523
 - [ ] Register for ICST
 - [ ] Dspot [0/1]
   + [ ] Extract hard-coded amplifications messages
-- [ ] Start writing [0/4]
-  + [ ] Problem statement
-    - [ ] technical
-  + [ ] Comparison with works on description
-    - [ ] Why we can't apply them for our work
-  + [ ] Comparison with works on test cases minimization
-    - [ ] Explaining what they do
-    - [ ] Why we can't apply them for our work
+- [-] Start writing [3/4]
+  + [X] Problem statement
+    - [X] technical
+  + [X] Comparison with works on description
+    - [X] Why we can't apply them for our work
+  + [X] Comparison with works on test cases minimization
+    - [X] +Explaining what they do+
+      + rephrase a description from a survey or something
+    - [X] Why we can't apply them for our work
   + [ ] Whether using an NLG is useful
 - [ ] Start doing a simple NL commit messages generator
   + [ ] Long stupid description
@@ -949,7 +997,8 @@ cd .. && mvn clean package -DskipTests && cd dhell && mvn clean package && java 
 
 *** Blocking Points
 
-*** Planned Work
+*** Planned Work [0/1]
+- [ ] Workshop <2018-05-10 Thu>
 
 
 ** TODO Week 15 <2018-05-14 Mon>--<2018-05-20 Sun>
@@ -1011,4 +1060,4 @@ cd .. && mvn clean package -DskipTests && cd dhell && mvn clean package && java 
 - [ ] Defense <2018-06-25 Mon>
 
 
-* Conclusion
+]]* Conclusion
