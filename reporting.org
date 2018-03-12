@@ -91,6 +91,10 @@ version.
 
 And tools probably cannot be told not to touch certain parts.
 
+**** On the usefulness of an NLG
+The sentences should always be the same, follow the same structure, built with
+the same template as humans do.
+
 **** What do we then propose as contribution
 
 
@@ -131,6 +135,9 @@ And tools probably cannot be told not to touch certain parts.
 - /Tailored source code transformations to synthesize computationally diverse program variants/
   ([[https://arxiv.org/pdf/1401.7635][baudry2014tailored]]) <<baudry2014tailored>>
   + More details than in [[baudry2015dspot]]
+- /An Analysis and Survey of the Development of Mutation Testing/
+  ([[https://pdfs.semanticscholar.org/3277/8a2eb4c74cd437e922ac1eb6a1477dfcb925.pdf][jia2011analysis]])
+  + TODO
 
 **** Search-based Software Testing
 - /Search-based software testing: Past, present and future/
@@ -861,7 +868,7 @@ cd .. && mvn clean package -DskipTests && cd dhell && mvn clean package && java 
   + [ ] Use it
 
 
-** TODO Week 5  <2018-03-05 Mon>--<2018-03-11 Sun>
+** DONE Week 5  <2018-03-05 Mon>--<2018-03-11 Sun>
 *** Things Done
 - Tried to use Sourcetrail
   + Needed to run ~mvn install -DskipTests -Djacoco.skip=true~
@@ -884,17 +891,25 @@ cd .. && mvn clean package -DskipTests && cd dhell && mvn clean package && java 
 - ~git log --grep "^Tested"~
 
 *** Blocking Points
-- [ ] What will the *scientific* contribution be?
-- [ ] What kind of evaluation?
+- [X] What will the *scientific* contribution be?
+  + Software Engineering is often at the border.
+  + We tackle complex problem, that the industry is not particularly interested
+    in, at least directly.
+  + applying existing methods and see if they scale or just that they can be
+    implemented, is a contribution in itself
+- [X] What kind of evaluation?
+  + survey
+  + performance
+  + comparison with study of repos
 
-*** Planned Work [2/10]
+*** Planned Work [3/10]
 - [X] Talk @ Workshop Software Engineering Research <2018-03-08 Thu 10:00>--<2018-03-08 Thu 10:20>
   + Workshop <2018-03-08 Thu 09:30>--<2018-03-08 Thu 12:30>
   + Room 4523
 - [ ] Register for ICST
 - [ ] Dspot [0/1]
   + [ ] Extract hard-coded amplifications messages
-- [-] Start writing [3/4]
+- [X] Start writing [4/4]
   + [X] Problem statement
     - [X] technical
   + [X] Comparison with works on description
@@ -903,7 +918,7 @@ cd .. && mvn clean package -DskipTests && cd dhell && mvn clean package && java 
     - [X] +Explaining what they do+
       + rephrase a description from a survey or something
     - [X] Why we can't apply them for our work
-  + [ ] Whether using an NLG is useful
+  + [X] Whether using an NLG is useful
 - [ ] Start doing a simple NL commit messages generator
   + [ ] Long stupid description
     - [ ] Get what amplifications were applied
@@ -924,15 +939,32 @@ cd .. && mvn clean package -DskipTests && cd dhell && mvn clean package && java 
 - [ ] More precise ~try/catch~ would actually be useful for slicing
 
 
-
-
 ** TODO Week 6  <2018-03-12 Mon>--<2018-03-18 Sun>
 *** Things Done
 
 *** Blocking Points
 
-*** Planned Work [0/1]
+*** Planned Work [0/8]
 - [ ] Change apartment <2018-03-15 Thu>
+- [ ] Register for ICST
+- [ ] Dspot [0/1]
+  + [ ] Extract hard-coded amplifications messages
+- [ ] Start doing a simple NL commit messages generator
+  + [ ] Long stupid description
+    - [ ] Get what amplifications were applied
+    - [ ] done
+- [ ] Classification of mutators
+- [-] Integrate WALA to compute a slice per new mutant [1/4]
+  + [X] Need a more precise location for the mutant location
+    - +column number+
+      + not available
+    - maybe I don't need it
+  + [ ] Need to know the killing assertion
+    - [ ] Add a trace of this when a test is kept
+  + [ ] Adding as dependency
+  + [ ] Use it
+- [ ] Study commit messages related to tests
+- [ ] More precise ~try/catch~ would actually be useful for slicing
 
 
 ** TODO Week 7  <2018-03-19 Mon>--<2018-03-25 Sun>
@@ -1060,4 +1092,4 @@ cd .. && mvn clean package -DskipTests && cd dhell && mvn clean package && java 
 - [ ] Defense <2018-06-25 Mon>
 
 
-]]* Conclusion
+* Conclusion
