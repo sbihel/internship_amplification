@@ -135,8 +135,27 @@ the same template as humans do.
 - /Tailored source code transformations to synthesize computationally diverse program variants/
   ([[https://arxiv.org/pdf/1401.7635][baudry2014tailored]]) <<baudry2014tailored>>
   + More details than in [[baudry2015dspot]]
-- /An Analysis and Survey of the Development of Mutation Testing/
+- /Selecting a Software Engineering Tool: Lessons Learnt from Mutation Analysis/
+  ([[http://onlinelibrary.wiley.com/doi/10.1002/spe.2312/epdf][delahaye2015selecting]]) <<delahaye2015selecting>>
+  + TODO
+
+**** Mutation Testing
+- /Is Mutation Testing Ready to be Adopted Industry-Wide?/
+  ([[https://www.researchgate.net/profile/Bruno_Rossi2/publication/309709540_Is_Mutation_Testing_Ready_to_Be_Adopted_Industry-Wide/links/59fb9709458515d07061a124/Is-Mutation-Testing-Ready-to-Be-Adopted-Industry-Wide.pdf][movzucha2016mutation]])
+- /Investigating the Correlation between Mutation Score and Coverage Score/
+  ([[http://ieeexplore.ieee.org/stamp/stamp.jsp?tp=&arnumber=6527442&tag=1][assylbekov2013investigating]])
+- /An Analysis and Survey of the Development of Mutation Testing/ 🌟
   ([[https://pdfs.semanticscholar.org/3277/8a2eb4c74cd437e922ac1eb6a1477dfcb925.pdf][jia2011analysis]])
+  + TODO
+- /PIT: A Practical Mutation Testing Tool for Java (Demo)/ 🌟
+  ([[https://dl.acm.org/citation.cfm?id=2948707][coles2016pit]])
+  + Well written
+  + PIT is fast (manipulate bytecode), which is one of the reasons it can be
+    used in real life
+  + test selection
+  + robust, easy to use, well integrated (cites [[delahaye2015selecting]])
+- /Resolving the Equivalent Mutant Problem in the Presence of Non-determinism and Coincidental Correctness/
+  ([[https://pdfs.semanticscholar.org/eab1/f4c6259b0adc3a65ecd563380e5375a54e96.pdf][patel2016resolving]])
   + TODO
 
 **** Search-based Software Testing
@@ -407,12 +426,6 @@ the same template as humans do.
 - /Method Execution Reports: Generating Text and Visualization to Describe Program Behavior/
   ([[http://bergel.eu/MyPapers/Beck17a-MethodExecutionReports.pdf][beck2017method]])
 
-***** Mutation Testing
-- /Is Mutation Testing Ready to be Adopted Industry-Wide?/
-  ([[https://www.researchgate.net/profile/Bruno_Rossi2/publication/309709540_Is_Mutation_Testing_Ready_to_Be_Adopted_Industry-Wide/links/59fb9709458515d07061a124/Is-Mutation-Testing-Ready-to-Be-Adopted-Industry-Wide.pdf][movzucha2016mutation]])
-- /Investigating the Correlation between Mutation Score and Coverage Score/
-  ([[http://ieeexplore.ieee.org/stamp/stamp.jsp?tp=&arnumber=6527442&tag=1][assylbekov2013investigating]])
-
 ***** Testing Related
 - /SCOTCH: Test-to-Code Traceability using Slicing and Conceptual Coupling/
   ([[https://pdfs.semanticscholar.org/d38a/88ee65b56c2e3e3efc33c727d0990678683c.pdf][qusef2011scotch]])
@@ -460,9 +473,7 @@ the same template as humans do.
 
 * Development
 [[https://github.com/STAMP-project/dspot/issues/187][Issue]]
-** TODO Extract hard-coded amplifications messages
-** TODO Automated PR
-** TODO Identify which amplification is involved in which killed mutant
+[[https://github.com/STAMP-project/dspot/issues/362][Issue]]
 
 
 * Global Goals [0/2]
@@ -941,30 +952,61 @@ cd .. && mvn clean package -DskipTests && cd dhell && mvn clean package && java 
 
 ** TODO Week 6  <2018-03-12 Mon>--<2018-03-18 Sun>
 *** Things Done
+- Mutation score is deterministic
+  + [[https://groups.google.com/forum/#!topic/pitusers/McG9vipiB-A]]
+  + couple of caveat
+    - timeouts
+    - test order dependencies
+    - non deterministic code
 
 *** Blocking Points
+- [ ] How to detect an amplification that modifies a statement?
 
-*** Planned Work [0/8]
+*** Planned Work [3/15]
 - [ ] Change apartment <2018-03-15 Thu>
 - [ ] Register for ICST
-- [ ] Dspot [0/1]
-  + [ ] Extract hard-coded amplifications messages
-- [ ] Start doing a simple NL commit messages generator
-  + [ ] Long stupid description
-    - [ ] Get what amplifications were applied
-    - [ ] done
+  + [[http://www.es.mdh.se/icst2018/registration/]]
+- [ ] Simple NL commit messages generator
 - [ ] Classification of mutators
-- [-] Integrate WALA to compute a slice per new mutant [1/4]
-  + [X] Need a more precise location for the mutant location
-    - +column number+
-      + not available
-    - maybe I don't need it
-  + [ ] Need to know the killing assertion
-    - [ ] Add a trace of this when a test is kept
+- [ ] Integrate WALA to compute a slice per new mutant
   + [ ] Adding as dependency
   + [ ] Use it
 - [ ] Study commit messages related to tests
 - [ ] More precise ~try/catch~ would actually be useful for slicing
+- [-] Retrieve amplifications [0/2]
+  + [[https://github.com/STAMP-project/dspot/issues/362#issuecomment-372384168]]
+    - it is possible to explore the AST and get the amplifications
+  + [-] documentation [0/4]
+    - [ ] ~reduce~
+    - [ ] ~ampTestToParent~
+    - [-] ~tmpAmpTestToParent~ [2/5]
+      + [X] is it a buffer to add new relations after applying mutators?
+        - yes, to have rounds
+      + [ ] why isn't it used everywhere?
+        - ~ampTestToParent~ is directly modified
+      + [ ] returns the input without modification, need refactor
+      + [X] +when it is used somewhere, amplification counter not incremented+
+        - I was wrong
+      + [ ] document it
+    - [ ] ~StatementAdd~ doesn't increment amplification counter
+  + [ ] explore trees to find amplifications
+- [ ] [[https://github.com/STAMP-project/dspot/issues/364][Clean amplification code]] [0/4]
+  + [ ] amplification counter increment during cloning
+    - [ ] two methods
+    - [ ] remove original public method and make sure everything work
+    - [ ] clean imports
+  + [ ] update parenting link during cloning
+  + [ ] prevent direct parenting link modification
+  + [ ] rename ~Amplifier~ to ~InputAmplifier~
+- [ ] Retrieve mutants
+  + The [[https://github.com/STAMP-project/dspot/issues/122][issue]] on runtime info from PIT
+- [X] Ask for access outside working hours
+- [X] Respond to [[https://github.com/STAMP-project/dspot/issues/54]]
+- [X] Understand [[https://github.com/STAMP-project/dspot/pull/360]]
+- [ ] Work on report
+  + [ ] use explicit definitions
+  + [ ] work on background sections
+- [ ] Read papers
 
 
 ** TODO Week 7  <2018-03-19 Mon>--<2018-03-25 Sun>
