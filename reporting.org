@@ -138,6 +138,9 @@ the same template as humans do.
 - /Selecting a Software Engineering Tool: Lessons Learnt from Mutation Analysis/
   ([[http://onlinelibrary.wiley.com/doi/10.1002/spe.2312/epdf][delahaye2015selecting]]) <<delahaye2015selecting>>
   + TODO
+- /The Oracle Problem in Software Testing: A Survey/
+  ([[http://ieeexplore.ieee.org/stamp/stamp.jsp?arnumber=6963470][barr2015oracle]])
+  + TODO
 
 **** Mutation Testing
 - /Is Mutation Testing Ready to be Adopted Industry-Wide?/
@@ -958,12 +961,26 @@ cd .. && mvn clean package -DskipTests && cd dhell && mvn clean package && java 
     - timeouts
     - test order dependencies
     - non deterministic code
+- Code maintenance
+- Identifying amplifications
 
 *** Blocking Points
 - [ ] How to detect an amplification that modifies a statement?
+  + added amplification -> easy
+  + modifying amplification -> ?
+    - maybe they have tags/annotations?
+      + maybe I could implement that
+- [X] What about a change listener to detect amplifications? and easier
+  amplification counter
+  + it is silly because /we/ are applying amplifications
+  + and big overhead
+  + No, use annotations
 
-*** Planned Work [3/15]
-- [ ] Change apartment <2018-03-15 Thu>
+*** Planned Work [8/17]
+- [X] Change apartment <2018-03-15 Thu>
+  + [X] move out, hotel -> university
+  + [X] retrieve keys <2018-03-15 Thu 12:00>--<2018-03-15 Thu 16:30>
+  + [X] move in
 - [ ] Register for ICST
   + [[http://www.es.mdh.se/icst2018/registration/]]
 - [ ] Simple NL commit messages generator
@@ -973,31 +990,51 @@ cd .. && mvn clean package -DskipTests && cd dhell && mvn clean package && java 
   + [ ] Use it
 - [ ] Study commit messages related to tests
 - [ ] More precise ~try/catch~ would actually be useful for slicing
-- [-] Retrieve amplifications [0/2]
+- [-] Retrieve amplifications [1/2]
   + [[https://github.com/STAMP-project/dspot/issues/362#issuecomment-372384168]]
     - it is possible to explore the AST and get the amplifications
-  + [-] documentation [0/4]
-    - [ ] ~reduce~
-    - [ ] ~ampTestToParent~
-    - [-] ~tmpAmpTestToParent~ [2/5]
+  + [X] documentation [4/4]
+    - [X] ~reduce~
+    - [X] ~ampTestToParent~
+    - [X] ~tmpAmpTestToParent~ [5/5]
       + [X] is it a buffer to add new relations after applying mutators?
         - yes, to have rounds
-      + [ ] why isn't it used everywhere?
+      + [X] why isn't it used everywhere?
         - ~ampTestToParent~ is directly modified
-      + [ ] returns the input without modification, need refactor
+      + [X] returns the input without modification, need refactor
       + [X] +when it is used somewhere, amplification counter not incremented+
         - I was wrong
-      + [ ] document it
-    - [ ] ~StatementAdd~ doesn't increment amplification counter
+      + [X] document it
+    - [X] ~StatementAdd~ doesn't increment amplification counter
+    - these issues were resolved
+  + [ ] implement annotations
   + [ ] explore trees to find amplifications
-- [ ] [[https://github.com/STAMP-project/dspot/issues/364][Clean amplification code]] [0/4]
-  + [ ] amplification counter increment during cloning
-    - [ ] two methods
-    - [ ] remove original public method and make sure everything work
-    - [ ] clean imports
-  + [ ] update parenting link during cloning
-  + [ ] prevent direct parenting link modification
-  + [ ] rename ~Amplifier~ to ~InputAmplifier~
+- [X] [[https://github.com/STAMP-project/dspot/issues/364][Clean amplification code]] [8/8]
+  + [X] amplification counter increment during cloning
+    - [X] two methods
+      - [X] refactor i-amp
+      - [X] refactor a-amp
+    - [X] remove original public method and make sure everything work
+    - [X] clean imports
+  + [X] rework assertion counter because 1 clone can mean many a-amplifications
+    - don't increment counter in during cloning
+  + [X] removing an assertion means =+1= for the counter?
+    - no
+  + [X] parenting link
+    - [X] update parenting link during cloning
+    - [X] remove updating outside
+    - [X] remove plain getter
+    - [X] load buffer before starting
+  + [X] parenting map loading is ugly
+    - yeah, well...
+  + [X] documentation
+  + [X] tests for verifying counter?
+    - with report
+  + [X] close issue in message
+- [X] +rename ~Amplifier~ to ~InputAmplifier~+
+  + too much conflicts
+- [X] +add up amplifications of parents?+
+  + no if a parent has amplifications it is reported
 - [ ] Retrieve mutants
   + The [[https://github.com/STAMP-project/dspot/issues/122][issue]] on runtime info from PIT
 - [X] Ask for access outside working hours
@@ -1006,7 +1043,18 @@ cd .. && mvn clean package -DskipTests && cd dhell && mvn clean package && java 
 - [ ] Work on report
   + [ ] use explicit definitions
   + [ ] work on background sections
-- [ ] Read papers
+  + [ ] add Java examples
+  + [ ] insist on the distinction between what and why information
+  + [ ] describe thoroughly the oracle problem
+- [X] Read papers
+- Meeting with Benoit <2018-03-16 Fri>
+  + Make a formal proposal of natural language description
+  + Ask people what they think about it
+  + Ask (Simon Urli, Spoon) (, XWiki) (, SAT4J) what they think of my proposal
+  + Difficulties to evaluate because there isn't a lot of material (DSpot isn't
+    an established tool).
+- [ ] formal description of the NL description
+- [ ] ask for opinions
 
 
 ** TODO Week 7  <2018-03-19 Mon>--<2018-03-25 Sun>
