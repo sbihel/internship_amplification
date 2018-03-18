@@ -953,7 +953,7 @@ cd .. && mvn clean package -DskipTests && cd dhell && mvn clean package && java 
 - [ ] More precise ~try/catch~ would actually be useful for slicing
 
 
-** TODO Week 6  <2018-03-12 Mon>--<2018-03-18 Sun>
+** DONE Week 6  <2018-03-12 Mon>--<2018-03-18 Sun>
 *** Things Done
 - Mutation score is deterministic
   + [[https://groups.google.com/forum/#!topic/pitusers/McG9vipiB-A]]
@@ -965,11 +965,12 @@ cd .. && mvn clean package -DskipTests && cd dhell && mvn clean package && java 
 - Identifying amplifications
 
 *** Blocking Points
-- [ ] How to detect an amplification that modifies a statement?
+- [X] How to detect an amplification that modifies a statement?
   + added amplification -> easy
   + modifying amplification -> ?
     - maybe they have tags/annotations?
       + maybe I could implement that
+  + use annotations during amplification process to `tag' amplified statements
 - [X] What about a change listener to detect amplifications? and easier
   amplification counter
   + it is silly because /we/ are applying amplifications
@@ -1062,7 +1063,30 @@ cd .. && mvn clean package -DskipTests && cd dhell && mvn clean package && java 
 
 *** Blocking Points
 
-*** Planned Work
+*** Planned Work [0/12]
+- [ ] Register for ICST
+  + [[http://www.es.mdh.se/icst2018/registration/]]
+- [ ] Simple NL commit messages generator
+- [ ] Classification of mutators
+- [ ] Integrate WALA to compute a slice per new mutant
+  + [ ] Adding as dependency
+  + [ ] Use it
+- [ ] Study commit messages related to tests
+- [ ] More precise ~try/catch~ would actually be useful for slicing
+- [ ] Retrieve amplifications [0/2]
+  + [ ] implement annotations
+  + [ ] explore trees to report amplifications
+- [ ] Retrieve mutants
+  + The [[https://github.com/STAMP-project/dspot/issues/122][issue]] on runtime info from PIT
+- [ ] Work on report
+  + [ ] use explicit definitions
+  + [ ] work on background sections
+  + [ ] add Java examples
+  + [ ] insist on the distinction between what and why information
+  + [ ] describe thoroughly the oracle problem
+- [ ] Read papers
+- [ ] formal description of the NL description
+- [ ] ask for opinions (e.g. Simon Urli, XWiki, SAT4J)
 
 
 ** TODO Week 8  <2018-03-26 Mon>--<2018-04-01 Sun>
