@@ -1,6 +1,6 @@
 # -*- mode: org -*-
 # -*- coding: utf-8 -*-
-#+STARTUP: overview indent inlineimages logdrawer hidestars
+#+STARTUP: overview indent inlineimages logdrawer hidestars entitiespretty
 #+HTML_HEAD: <link rel="stylesheet" type="text/css" href="https://gongzhitaao.org/orgcss/org.css"/>
 # #+INFOJS_OPT: view:info toc:nil
 
@@ -159,6 +159,12 @@ the same template as humans do.
   + robust, easy to use, well integrated (cites [[delahaye2015selecting]])
 - /Resolving the Equivalent Mutant Problem in the Presence of Non-determinism and Coincidental Correctness/
   ([[https://pdfs.semanticscholar.org/eab1/f4c6259b0adc3a65ecd563380e5375a54e96.pdf][patel2016resolving]])
+  + TODO
+- /An Experimental Evaluation of PIT’s Mutation Operators/
+  ([[http://www.diva-portal.org/smash/get/diva2:1161760/FULLTEXT01.pdf][andersson2017experimental]])
+  + TODO
+- /Are Mutation Scores Correlated with Real Fault Detection?/
+  ([[http://orbilu.uni.lu/bitstream/10993/34950/1/ICSE-main18b%20%281%29.pdf][papadakis2018mutation]])
   + TODO
 
 **** Search-based Software Testing
@@ -722,8 +728,8 @@ purpose of a source code method.
 - [[https://github.com/STAMP-project/dspot/issues/54][Discussion]] on how to minimize generated tests
 
 *** Blocking Points
-- [X] Where is the `keep test that kills mutants all located in the same
-  method'? Seems to be implemented reading the paper, but [[https://github.com/STAMP-project/dspot/issues/130][issue]] still open and
+- [X] Where is the "keep test that kills mutants all located in the same
+  method"? Seems to be implemented reading the paper, but [[https://github.com/STAMP-project/dspot/issues/130][issue]] still open and
   it proposes a solution that seems different than just looking at the json file
   at then end of the process.
   + it was done manually
@@ -970,7 +976,7 @@ cd .. && mvn clean package -DskipTests && cd dhell && mvn clean package && java 
   + modifying amplification -> ?
     - maybe they have tags/annotations?
       + maybe I could implement that
-  + use annotations during amplification process to `tag' amplified statements
+  + use annotations during amplification process to "tag" amplified statements
 - [X] What about a change listener to detect amplifications? and easier
   amplification counter
   + it is silly because /we/ are applying amplifications
@@ -1058,10 +1064,75 @@ cd .. && mvn clean package -DskipTests && cd dhell && mvn clean package && java 
 - [ ] ask for opinions
 
 
-** TODO Week 7  <2018-03-19 Mon>--<2018-03-25 Sun>
+** DONE Week 7  <2018-03-19 Mon>--<2018-03-25 Sun>
 *** Things Done
+- [[https://stackoverflow.com/questions/14040/developer-testing-vs-qa-team-testing-what-is-the-right-division-of-work]]
+- Precise description of NL amplification description
+  1. High level description:
+    - Enhancement or rework
+      1.
+        #+BEGIN_QUOTE
+        [TEST] Enhancement of <original test's name>.
+        #+END_QUOTE
+      2.
+        #+BEGIN_QUOTE
+        [TEST] New test.
+        #+END_QUOTE
+    - Part of the system where mutants are
+      #+BEGIN_QUOTE
+      Target <method with mutants>.
+      #+END_QUOTE
+  2. Slice for each new mutant killed, starting from the killing assertion
+    1. New oracle
+      + NL paraphrase of the assertion
+        #+BEGIN_QUOTE
+        The <checked property> is checked.
+        #+END_QUOTE
+      + NL description of the /impact/ of the mutant
+        - variables with different values
+          #+BEGIN_QUOTE
+          If <changed variables> have different values,
+          #+END_QUOTE
+        - branches differences
+          #+BEGIN_QUOTE
+          and <different branches> are explored, the test can detect them.
+          #+END_QUOTE
+    2. New behaviour
+      1. Enhancement (Old mutants are still detected)
+        + new interactions with objects
+          #+BEGIN_QUOTE
+          New interactions with <object> using <methods>.
+          #+END_QUOTE
+        + if also new oracle enhancement
+          - new branches during execution
+            #+BEGIN_QUOTE
+
+            #+END_QUOTE
+      2. Rework
+        + unit test documentation
+          #+BEGIN_QUOTE
+          <methods> are called on <object>.
+          #+END_QUOTE
+- Learned about the visitor pattern. That name is regrettably confusing.
+- Mutant description
+  + Whole method removal
+    - "this method was previously not tested in a scenario where it is useful"
+  + change of condition
+    - "these branches were previously not tested in a scenario where they are
+      useful"
+  + change to value of variable
+    - "this variable was previously not tested in a scenario where it is useful"
+  + DON'T DESCRIBE MUTANTS
+    - too complicated, huge repercussions, little insights
+    - starting to question the relevance of focus on mutants in the same method
+      + should see it the other way, check properties for this method
+- Got a cold 🤧
 
 *** Blocking Points
+- [ ] Assertion count
+  + Is the process: remove *all* assertions and generate all possible assertions?
+  + if so then all assertions are counted as amplifications
+- [ ] Assertion log, can there be REMOVE+ADD instead of MODIFY?
 
 *** Planned Work [0/12]
 - [ ] Register for ICST
@@ -1073,9 +1144,23 @@ cd .. && mvn clean package -DskipTests && cd dhell && mvn clean package && java 
   + [ ] Use it
 - [ ] Study commit messages related to tests
 - [ ] More precise ~try/catch~ would actually be useful for slicing
-- [ ] Retrieve amplifications [0/2]
-  + [ ] implement annotations
-  + [ ] explore trees to report amplifications
+- [-] Retrieve amplifications [6/9]
+  + [X] +implement annotations+
+  + [X] +explore trees to report amplifications+
+  + [X] call counter in `inputAmplification`
+    - [[https://github.com/STAMP-project/dspot/pull/374]]
+  + [X] +call counter in assert generator calling method+
+    - it is already simple enough in generator
+  + [X] use another counter to keep the pointer to AST nodes of amplifications
+    - use [[http://spoon.gforge.inria.fr/mvnsites/spoon-core/apidocs/spoon/experimental/modelobs/ActionBasedChangeListenerImpl.html]]
+  + [ ] add categories of amplifiers
+    - ADD
+    - MODIFY LITERALS
+    - MODIFY INTERACTIONS
+    - REMOVE
+  + [X] +Collect them when calling counter+
+  + [ ] write test to make sure every amplifier includes the counter update
+  + [ ] write test to make sure every amplifier logs the amplifications
 - [ ] Retrieve mutants
   + The [[https://github.com/STAMP-project/dspot/issues/122][issue]] on runtime info from PIT
 - [ ] Work on report
@@ -1093,8 +1178,42 @@ cd .. && mvn clean package -DskipTests && cd dhell && mvn clean package && java 
 *** Things Done
 
 *** Blocking Points
+- [ ] Assertion count
+  + Is the process: remove *all* assertions and generate all possible assertions?
+  + if so then all assertions are counted as amplifications
+- [ ] Assertion log, can there be REMOVE+ADD instead of MODIFY?
 
-*** Planned Work
+*** Planned Work [0/12]
+- [ ] Register for ICST
+  + [[http://www.es.mdh.se/icst2018/registration/]]
+- [ ] Simple NL commit messages generator
+- [ ] Classification of mutators
+- [ ] Integrate WALA to compute a slice per new mutant
+  + [ ] Adding as dependency
+  + [ ] Use it
+- [ ] Study commit messages related to tests
+- [ ] More precise ~try/catch~ would actually be useful for slicing
+- [-] Retrieve amplifications [1/4]
+  + [X] use another counter to keep the pointer to AST nodes of amplifications
+    - use [[http://spoon.gforge.inria.fr/mvnsites/spoon-core/apidocs/spoon/experimental/modelobs/ActionBasedChangeListenerImpl.html]]
+  + [ ] add categories of amplifiers
+    - ADD
+    - MODIFY LITERALS
+    - MODIFY INTERACTIONS
+    - REMOVE
+  + [ ] write test to make sure every amplifier includes the counter update
+  + [ ] write test to make sure every amplifier logs the amplifications
+- [ ] Retrieve mutants
+  + The [[https://github.com/STAMP-project/dspot/issues/122][issue]] on runtime info from PIT
+- [ ] Work on report
+  + [ ] use explicit definitions
+  + [ ] work on background sections
+  + [ ] add Java examples
+  + [ ] insist on the distinction between what and why information
+  + [ ] describe thoroughly the oracle problem
+- [ ] Read papers
+- [ ] formal description of the NL description
+- [ ] ask for opinions (e.g. Simon Urli, XWiki, SAT4J)
 
 
 ** TODO Week 9  <2018-04-02 Mon>--<2018-04-08 Sun>
