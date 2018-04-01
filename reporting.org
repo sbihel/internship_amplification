@@ -142,6 +142,34 @@ the same template as humans do.
   ([[http://ieeexplore.ieee.org/stamp/stamp.jsp?arnumber=6963470][barr2015oracle]])
   + TODO
 
+**** Unit Testing
+- /A Survey of Unit Testing Practices/
+  ([[http://ansymore.uantwerpen.be/system/files/uploads/courses/SE3BAC/p_05_01RunesonUnitTestPractices.pdf][runeson2006survey]])
+  + TODO
+- /WAP: Cognitive aspects in unit testing: The hunting game and the hunter's perspective/ 🌟🌟
+  ([[http://chisel.cs.uvic.ca/pubs/prado-ISSRE2015.pdf][prado2015wap]])
+  + TODO
+  + 1st in Prado's trilogy
+- /Advances in the Characterization of Cognitive Support for Unit Testing: The Bug-Hunting Game and the Visualization Arsenal/ 🌟🌟
+  ([[http://ieeexplore.ieee.org/abstract/document/7789403/][prado2016advances]])
+  + TODO
+  + 2nd in Prado's trilogy
+- /Towards cognitive support for unit testing: a qualitative study with practitioners/ 🌟🌟🌟
+  ([[https://www.sciencedirect.com/science/article/pii/S0164121218300529][prado2018towards]])
+  + 3rd in Prado's trilogy
+  + nicely written
+  + why didn't I hear about this research before...
+  + 2 previous works already by Prado
+  +
+  + cites google blog post on flaky tests
+    - [[https://testing.googleblog.com/2016/05/flaky-tests-at-google-and-how-we.html]]
+  + Jasmine (testing framework for javascript includes directly NL description)
+    - [[https://jasmine.github.io/2.0/introduction.html]]
+  + TODO
+- /A Survey on Unit Testing Practices and Problems/
+  ([[https://pdfs.semanticscholar.org/f193/e68ce6f3200b1f801e64bf49e56f668fd3ef.pdf][daka2014survey]])
+  + TODO
+
 **** Mutation Testing
 - /Is Mutation Testing Ready to be Adopted Industry-Wide?/
   ([[https://www.researchgate.net/profile/Bruno_Rossi2/publication/309709540_Is_Mutation_Testing_Ready_to_Be_Adopted_Industry-Wide/links/59fb9709458515d07061a124/Is-Mutation-Testing-Ready-to-Be-Adopted-Industry-Wide.pdf][movzucha2016mutation]])
@@ -1174,7 +1202,57 @@ cd .. && mvn clean package -DskipTests && cd dhell && mvn clean package && java 
 - [ ] ask for opinions (e.g. Simon Urli, XWiki, SAT4J)
 
 
-** TODO Week 8  <2018-03-26 Mon>--<2018-04-01 Sun>
+** DONE Week 8  <2018-03-26 Mon>--<2018-04-01 Sun>
+*** Things Done
+- I did so much crap in the PR to refactor parent map 😣
+- Discovered the field of cognitive support for unit test comprehension
+  + why didn't I hear about that before???
+- ID of mutator [[https://github.com/STAMP-project/dspot/commit/c0f7231db083144efd1921521eedffa466a2b167][now]] available in report
+- Worked on the report
+
+*** Blocking Points
+- [ ] Assertion count
+  + Is the process: remove *all* assertions and generate all possible assertions?
+  + if so then all assertions are counted as amplifications
+- [ ] Assertion log, can there be REMOVE+ADD instead of MODIFY?
+- [ ] Should I focus solely on mutants description, amplifications descriptions
+  or test case as a whole?
+- [ ] Need to identify the main object that is interacted with
+
+*** Planned Work [2/12]
+- [X] Register for ICST
+  + [[http://www.es.mdh.se/icst2018/registration/]]
+- [ ] Simple NL commit messages generator
+- [ ] Classification of mutators
+- [ ] Integrate WALA to compute a slice per new mutant
+  + [ ] Adding as dependency
+  + [ ] Use it
+- [ ] Study commit messages related to tests
+- [ ] More precise ~try/catch~ would actually be useful for slicing
+- [-] Retrieve amplifications [1/4]
+  + [X] use another counter to keep the pointer to AST nodes of amplifications
+    - use [[http://spoon.gforge.inria.fr/mvnsites/spoon-core/apidocs/spoon/experimental/modelobs/ActionBasedChangeListenerImpl.html]]
+  + [ ] add categories of amplifiers
+    - ADD
+    - MODIFY LITERALS
+    - MODIFY INTERACTIONS
+    - REMOVE
+  + [ ] write test to make sure every amplifier includes the counter update
+  + [ ] write test to make sure every amplifier logs the amplifications
+- [ ] Retrieve mutants
+  + The [[https://github.com/STAMP-project/dspot/issues/122][issue]] on runtime info from PIT
+- [ ] Work on report
+  + [ ] use explicit definitions
+  + [ ] work on background sections
+  + [ ] add Java examples
+  + [ ] insist on the distinction between what and why information
+  + [ ] describe thoroughly the oracle problem
+- [X] Read papers
+- [ ] formal description of the NL description
+- [ ] ask for opinions (e.g. Simon Urli, XWiki, SAT4J)
+
+
+** TODO Week 9  <2018-04-02 Mon>--<2018-04-08 Sun>
 *** Things Done
 
 *** Blocking Points
@@ -1182,10 +1260,15 @@ cd .. && mvn clean package -DskipTests && cd dhell && mvn clean package && java 
   + Is the process: remove *all* assertions and generate all possible assertions?
   + if so then all assertions are counted as amplifications
 - [ ] Assertion log, can there be REMOVE+ADD instead of MODIFY?
+- [ ] Should I focus solely on mutants description, amplifications descriptions
+  or test case as a whole?
+- [ ] Need to identify the main object that is interacted with
 
-*** Planned Work [0/12]
-- [ ] Register for ICST
-  + [[http://www.es.mdh.se/icst2018/registration/]]
+*** Planned Work [0/13]
+- [ ] Plan ICST trip
+  + [ ] hotel
+  + [ ] train
+- [ ] Get reimbursed for ICST
 - [ ] Simple NL commit messages generator
 - [ ] Classification of mutators
 - [ ] Integrate WALA to compute a slice per new mutant
@@ -1216,20 +1299,13 @@ cd .. && mvn clean package -DskipTests && cd dhell && mvn clean package && java 
 - [ ] ask for opinions (e.g. Simon Urli, XWiki, SAT4J)
 
 
-** TODO Week 9  <2018-04-02 Mon>--<2018-04-08 Sun>
-*** Things Done
-
-*** Blocking Points
-
-*** Planned Work
-
-
 ** TODO Week 10 <2018-04-09 Mon>--<2018-04-15 Sun>
 *** Things Done
 
 *** Blocking Points
 
 *** Planned Work
+- [ ] ICST <2018-04-10 Tue>--<2018-04-12 Thu>
 
 
 ** TODO Week 11 <2018-04-16 Mon>--<2018-04-22 Sun>
@@ -1254,7 +1330,7 @@ cd .. && mvn clean package -DskipTests && cd dhell && mvn clean package && java 
 *** Blocking Points
 
 *** Planned Work [0/1]
-- [ ] Renew SL access card
+- [ ] Renew SL access card (expires on <2018-05-08 Tue>)
 
 
 ** TODO Week 14 <2018-05-07 Mon>--<2018-05-13 Sun>
