@@ -8,6 +8,9 @@
 \usepackage{comment}
 \usepackage{wrapfig}
 \usepackage{sidecap}
+\usepackage{amsfonts}
+\usepackage{textcomp}
+
 \pagestyle{plain}
 
 \usepackage{hyperref}
@@ -83,6 +86,7 @@ In this section we give a definition for the test activities and their actors, t
 \subsubsection{Test Activities}%
 \label{sssec:test_activities}
 \todo{}
+\todo{the text is too close to the oracle survey}
 
 Testing is about verifying that a system, for a certain scenario, follows a certain behaviour that was previously defined.
 The \emph{System-Under-Test} (SUT), in our domain a software system, has a set of components $C$.
@@ -97,22 +101,39 @@ From~\cite{barr2015oracle}, we have the following definition for test activities
   Test activities form the set $A = S\uplusR$.
 \end{definition}
 
-\begin{wrapfigure}{r}{25em}
+% \begin{definition}[Test Input]
+%   \todo{}
+% \end{definition}
+
+\begin{wrapfigure}[13]{r}{25em}
   \centering
   \includegraphics[width=25em]{stim_and_obs}
-  \caption{Space representation of a test.}%
+  \caption{Stimuli and observations: $S$ is anything that can change the observable behaviour of the SUT $f$; $R$ is anything that can be observed about the system's behaviour; $I$ includes $f$'s explicit inputs; $O$ is its explicit outputs; everything not in $S \cup R$ neither affects nor is affected by $f$.}%
   \label{fig:test_activity}
 \end{wrapfigure}
 
-\figurename~\ref{fig:test_activity}
+The use of the terms ``stimulus'' and ``observations'' fit various test scenarios, functional and non-functional.
+\figurename~\ref{fig:test_activity} depicts the fact that a stimulus can be either an explicit input from the tester, or an environmental factor that can affect the SUT\@.
+\todo{}
+
+\begin{definition}[Test Case]
+  \todo{}
+\end{definition}
+
+\begin{definition}[Test Suite]
+  A test suite is a collection of tests cases.
+\end{definition}
 
 \begin{definition}[Test Oracle]
-  \todo{}
+  A test oracle $D : T_A \mapsto \mathbb{B}$ is a partial function from a test activity sequence to true or false.
 \end{definition}
 
+Another concept that we will use when talking about software evolution is regression testing~\cite{yoo2012regression}:
 \begin{definition}[Regression Testing]
-  \todo{}
+  Regression testing is performed between two different versions of the SUT in order to provide confidence that newly introduced features do not interfere with the existing features.
 \end{definition}
+
+\todo{give some clues to each concept to tell why it is a field of research?}
 
 % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 \subsubsection{Levels of Testing}%
@@ -146,8 +167,10 @@ In between the two testing practices are the integration tests, which aim at ens
 \subsubsection{Unit Testing}%
 \label{sssec:unit_testing}
 
-\todo{not clear what a unit is\cite{runeson2006survey}}
-\begin{figure}
+A unit test is test for a precise component of the SUT, but defining the level of granularity is not trivial, even for experienced programmers~\cite{runeson2006survey}.
+\todo{}
+
+\begin{figure}[h]
   \centering
   \begin{minted}[linenos]{java}
 testIterationOrder() {
@@ -163,59 +186,85 @@ testIterationOrder() {
   }
 }
   \end{minted}
-  \caption{Example of a unit test.}%
+  \caption{Example of a unit test: it consists of test inputs that manipulate the SUT\@; and assertions (line number 10).}%
 \label{fig:test_example}
 \end{figure}
 
-\begin{definition}[Test Suite]
-  \todo{}
-\end{definition}
+An example of unit test is given in \figurename~\ref{fig:test_example}.
+
+\todo{why we sometimes speak about test methods}
 
 % --------------------------------------------------------------------------------
 \subsection{Elementary Metrics}%
 \label{ssec:elementary_metrics}
-\todo{used to measure how thoroughly tested is a system}
+Metrics have been developed to help developers automatically assess the quality of their code.
+Each metric measures one specific characteristic, such as the need for refactoring, the size of the program, or --- and we are particularly interested in this one --- the likelihood of bugs.
 
-\todo{What are the basic metrics}
+\todo{give examples for other metrics?}
+
+The most basic metrics to measure how thoroughly tested a system is, are coverage based metrics.
+For example, during the test suite execution, one can keep track of all statements that were executed.
+At the end, you have a percentage of executed statements for the total number of statements.
+Instead of statements, one can also keep track of control flow branches explored.
+
+It is generally acknowledged that a system with high coverage means that the system is less likely to have bugs.
+But it is not foolproof.
 
 \todo{What are their limits}
+\begin{itemize}
+  \item doesn't mean corner cases are avoided
+  \item can't have 100\% branch coverage so it's confusing
+\end{itemize}
 
 % --------------------------------------------------------------------------------
 \subsection{Mutation Testing}%
 \label{ssec:mutation_testing}
-\begin{wrapfigure}{l}{9em}
+\begin{wrapfigure}[18]{l}{9em}
   \centering
   \includegraphics[width=9em]{mutation_testing_report}
   \caption{Mutation testing process.}%
 \label{fig:mutation_testing}
 \end{wrapfigure}
 % Introduction
-Mutation testing is a method used to assess the quality of a test suite, grading it with a metric called \textit{mutation score}.
+Mutation testing is a method used to assess the quality of a test suite, giving it a grade called \textit{mutation score}.
 The idea is to insert bugs in the software and see if these faulty versions still pass the tests or not.
 We call the derived versions \textit{mutants}, hence the name mutation testing.
+When a mutant goes through the test suite without making a single test fail, it is considered \emph{live}, and the opposite case it is considered \emph{dead}.
 The global process is depicted in~\figurename~\ref{fig:spaces}.
-\todo{enrich}
+The main appeal is that, a test suite with a good mutation score, in addition to ensure the well behaviour of the SUT in useful scenarios, it can detect bad behaviours --- which is particularly useful for regression testing.
+\todo{rework that sentence}
+There is a correlation between mutation score and coverage score as test suites with high mutation score tend to have good coverage~\cite{assylbekov2013investigating}.
+It has been found that correlations between mutation scores and real fault detection are weak~\cite{papadakis2018mutation}.
+
 \addref{fundational papers}
 
 % Mutators
-\todo{examples of mutators}
+Mutants are obtained by applying \emph{mutators} on the original version.
+These operators can be varied: change a condition (e.g.\ substituting $\leq$ with $>$), delete the body of a method \addref{descartes}, etc.
 
 % Difficulties
-\todo{why is it not widespread in the industry}
-\begin{itemize}
-  \item slow
-  \item not understood (difficult to know what the improvements to the tests should be)
-  \item useless mutants
-  \item equivalent mutant problem
-\end{itemize}
-\cite{jia2011analysis}
+Mutation testing suffers from drawbacks that have limited its use outside of the research world even though it has been an active research domain for many years~\cite{jia2011analysis}.
+The first obvious flaw is that it is slow.
+For compiled languages, all mutants have to be compiled, and that process often takes a lot of time for large programs.
+Then the whole test suite has to be executed for each mutant, which again is a long process.
+However, given certain trade-offs in terms of quality of the mutation analysis process, the computational complexity can be dodged~\cite{movzucha2016mutation}.
+Optimized techniques for regression testing also exist~\cite{yoo2012regression}, including minimisation, selection and prioritisation.
+The mutant generation is also full of traps.
+The major pitfall that cannot be avoided is the equivalent mutant problem.
+Some mutants, although they have a different program than the original, have the same semantics.
+Which means that they will always pass the test suite and will not bring any insight on the SUT\@.
+
+Another difficulty for mutation testing to take on in the industry is the lack of understanding by practitioners.\todo{rework that sentence}
+The process of mutation and elimination can be confusing.
+But also, when a mutant is live, it is not always clear what actions should be taken in order to kill it.
+\todo{maybe add more}
 
 % Pitest
 PIT\footnote{\url{http://pitest.org/}}~\cite{coles2016pit} is a mutation testing tool for Java.
 
 \todo{what is great about it}
 
-\todo{maybe quick comparison}
+\todo{maybe quick comparison with other tools}
 
 \todo{it is deterministic}
 
@@ -229,11 +278,14 @@ PIT\footnote{\url{http://pitest.org/}}~\cite{coles2016pit} is a mutation testing
 \label{ssec:need_easy}
 \todo{easy to understand}
 \todo{useful for surveys}
+\cite{delahaye2015selecting}
 
 % --------------------------------------------------------------------------------
 \subsection{Cognitive Support Tool Development}%
 \label{ssec:cognitive_support}
 \todo{}
+\cite{oviatt2006human}
+\cite{stol2016grounded}
 
 
 % ================================================================================
@@ -243,14 +295,19 @@ In this Section, we provide more context for this thesis' contribution.
 \todo{}
 
 % --------------------------------------------------------------------------------
-\subsection{Related Works}%
-\label{ssec:dspot_related_works}
-\todo{}
-
-% --------------------------------------------------------------------------------
 \subsection{Genetic Improvement}%
 \label{ssec:genetic_improvement}
 \todo{}
+\cite{petke2017genetic}
+\addref{fundational papers}
+
+\addref{the surprising creativity of digital evolution?}
+
+% --------------------------------------------------------------------------------
+\subsection{Test Amplification}%
+\label{ssec:test_amplification}
+\todo{}
+\cite{danglot2017emerging}
 
 % --------------------------------------------------------------------------------
 \subsection{\dspot{}}%
@@ -262,25 +319,39 @@ In this Section, we provide more context for this thesis' contribution.
 \label{fig:spaces}
 \end{SCfigure}
 \todo{}
-\footnote{\url{https://github.com/STAMP-project/dspot}}\addref{dspot papers}
+\footnote{\url{https://github.com/STAMP-project/dspot}}\addref{dspot papers}\cite{baudry2015automatic,baudry2014tailored,baudry2015dspot}
+
+\cite{pawlak2016spoon}
 
 
 % ================================================================================
 \section{Problem Statement}%
 \label{sec:problem_statement}
+This thesis aim at helping developers understand amplified tests.
+There are two sides for this problem: supporting the developer understand the test (Section~\ref{ssec:need_doc}) and cleaning the tests from the noise injected during the amplification process (Section~\ref{ssec:random_noise}).
 
 % --------------------------------------------------------------------------------
 \subsection{The Need for Unit Test Cases Documentation}%
 \label{ssec:need_doc}
 \todo{}
-\cite{li2016automatically}
+Several works have highlighted the need for test documentation~\cite{prado2015wap,prado2016advances,prado2018towards,li2016automatically,daka2014survey,panichella2016impact}.\addref{}
+
+\todo{tests are complex}
+
+\todo{lack of why information}
+
+\todo{the code the test interacts with; what the code does; what is expected}
+
+\todo{programmers like short textual description}
+
+\todo{explain what li2016automatically has done}
+
+\todo{talk about the field of software maintenance}
 
 % --------------------------------------------------------------------------------
 \subsection{The Generated Random Noise}%
 \label{ssec:random_noise}
 \todo{}
-
-\todo{lack of why information}
 
 
 % ================================================================================
@@ -293,15 +364,24 @@ In this Section, we provide more context for this thesis' contribution.
 \label{ssec:test_doc}
 \todo{}
 
+\todo{paraphrasing the code; lack of why information}
+
+\todo{stereotypes are for general purpose code}
+
+\cite{neubig2016survey,nazar2016summarizing,li2016automatically,li2018automatically,kamimura2013towards,ghafari2015automatically}
+
+\todo{there are also works on documenting code changes (i.e.\ commits)}
+\cite{cortes2014automatically,linares2015changescribe,dragan2011using,jiang2017towards,jiang2017automatically,shen2016automatic,buse2010automatically}
+
 % --------------------------------------------------------------------------------
 \subsection{Cognitive Support for Unit Testing Review}%
 \label{ssec:cognitive_support_unit_test}
 \todo{}
 
 % --------------------------------------------------------------------------------
-\subsection{Source Code Change Documentation}%
-\label{ssec:commit_generation}
-\todo{}
+% \subsection{Source Code Change Documentation}%
+% \label{ssec:commit_generation}
+% \todo{}
 
 
 % ================================================================================
@@ -320,6 +400,10 @@ In this Section, we provide more context for this thesis' contribution.
 \todo{}
 \todo{put slicing before?}
 
+\todo{removing useless assertions}
+
+\todo{cannot use general purpose techniques\cite{leitner2007efficient,zeller1999yesterday} because we want the original part intact?}
+
 % --------------------------------------------------------------------------------
 \subsection{Replace or Keep}%
 \label{ssec:replace_keep}
@@ -334,6 +418,7 @@ In this Section, we provide more context for this thesis' contribution.
 \subsection{Slicing}%
 \label{ssec:slicing}
 \todo{}
+\cite{dolby2015tj}\footnote{\url{http://wala.sourceforge.net/}}
 
 % --------------------------------------------------------------------------------
 \subsection{Natural Language Description}%
@@ -344,6 +429,17 @@ In this Section, we provide more context for this thesis' contribution.
 
 \todo{avoid talking about mutants}
 \todo{How to describe a mutant}
+
+\cite{alali2008s,hattori2008nature,letovsky1987cognitive}
+
+List of possible information:
+\begin{itemize}
+  \item control flow branches
+  \item name of mutant
+  \item code under test~\cite{qusef2011scotch}
+\end{itemize}
+
+\todo{on the usefulness of nlg}
 
 % --------------------------------------------------------------------------------
 \subsection{Ranking}%
