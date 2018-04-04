@@ -98,7 +98,7 @@ From~\cite{barr2015oracle}, we have the following definition for test activities
 \begin{definition}[Test Activities]
   For the SUT $p$, $S$ is the set of stimuli that trigger or constrain $p$'s computation and $R$ is the set of observable responses to a stimulus of $p$.
   $S$ and $R$ are disjoint.
-  Test activities form the set $A = S\uplusR$.
+  Test activities form the set $A = S\uplus{}R$.
 \end{definition}
 
 % \begin{definition}[Test Input]
@@ -152,14 +152,19 @@ Or one could test individual functions, having a more control over the behaviour
 These levels of test abstraction can be visualised with a test pyramid, as shown in \figurename~\ref{fig:test_pyramid}.
 Tests are generally separated into three distinct categories.
 The top category is for the End-to-End tests, which means testing the program as a whole.
+It can mean interacting with the UI and evaluating the visual responses.
 Whilst it allows for directly evaluating the well behaviour of the program, each test is costly in time and resources because the whole program has to be run.
 Not only will each component be run, whether or not it requires testing, but time will also be spent on call to libraries that are already tested.
 At the other end of the test spectrum are the unit tests.
 The goal is to test each and every component of the program (e.g.\ every function), as an individual and isolated from the rest of the program.
 Running a single component is faster than running the whole program, but require much more work from the person writing tests, as every component needs its set of tests.
-In between the two testing practices are the integration tests, which aim at ensuring the well collaboration of components.
+In between the two testing practices are the integration tests, which aim at ensuring the well collaboration of components, like verifying that gears rotate in the right way.
+Examples of integration tests include API testing, or simply the fact of calling a function using the result from another function call.
+This last example gives an intuition on how fuzzy the distinctions between all kinds of tests are.
+More details about the loose definition of unit tests are given Section~\ref{sssec:unit_testing}.
 
-\todo{metaphor about rotating gears?}
+\todo{why we use a pyramid}
+Practitioners often recommend putting an emphasis on unit test, with a distribution of 70\% unit tests, 20\% integration tests, and 10\% end-to-end tests for example\footnote{\url{https://testing.googleblog.com/2015/04/just-say-no-to-more-end-to-end-tests.html}}.
 
 \todo{how tests are automated}
 
@@ -167,32 +172,42 @@ In between the two testing practices are the integration tests, which aim at ens
 \subsubsection{Unit Testing}%
 \label{sssec:unit_testing}
 
-A unit test is test for a precise component of the SUT, but defining the level of granularity is not trivial, even for experienced programmers~\cite{runeson2006survey}.
+A unit test is test for a precise component of the SUT, but defining the level of granularity is not trivial, even for experienced programmers\footnote{\url{https://martinfowler.com/bliki/TestPyramid.html}}\footnote{\url{https://martinfowler.com/bliki/UnitTest.html}}~\cite{runeson2006survey}.
 \todo{}
 
 \begin{figure}[h]
   \centering
-  \begin{minted}[linenos]{java}
+  \begin{minted}[linenos,frame=topline,breaklines,highlightlines={2,4,6},highlightcolor=YellowOrange!20]{java}
 testIterationOrder() {
   TreeList tl = new TreeList(10);
   for (int i = 0; i < size; i++) {
     tl.add(i);
   }
-  int i = 0;
   ListIterator it = tl.listIterator();
+  \end{minted}
+  \begin{minted}[linenos,frame=bottomline,breaklines,firstnumber=last,highlightlines={10},highlightcolor=YellowGreen!20]{java}
+  int i = 0;
   while (it.hasNext()) {
     Integer val = it.next();
     assertEquals(i++, val.intValue());
   }
 }
   \end{minted}
-  \caption{Example of a unit test: it consists of test inputs that manipulate the SUT\@; and assertions (line number 10).}%
+  \caption{Example of a unit test: it consists of test inputs (lines 2--6) that manipulate the SUT\@; and assertions (line number 10).}%
 \label{fig:test_example}
 \end{figure}
 
 An example of unit test is given in \figurename~\ref{fig:test_example}.
 
 \todo{why we sometimes speak about test methods}
+
+\todo{can we link blog post from google and martin fowler to say that it's a difficult engineering problem}
+
+\todo{evoke `software artifact'}
+
+\todo{problems with OO, private methods, composition design patterns~\cite{wolfgang1994design}}
+
+\todo{it's a program (and thus it carries pros and cons on comprehension and ease of use) (and it's a internal DSL~\cite{fowler2010domain})}
 
 % --------------------------------------------------------------------------------
 \subsection{Elementary Metrics}%
@@ -219,7 +234,7 @@ But it is not foolproof.
 % --------------------------------------------------------------------------------
 \subsection{Mutation Testing}%
 \label{ssec:mutation_testing}
-\begin{wrapfigure}[18]{l}{9em}
+\begin{wrapfigure}[22]{l}{9em}
   \centering
   \includegraphics[width=9em]{mutation_testing_report}
   \caption{Mutation testing process.}%
@@ -241,18 +256,23 @@ It has been found that correlations between mutation scores and real fault detec
 % Mutators
 Mutants are obtained by applying \emph{mutators} on the original version.
 These operators can be varied: change a condition (e.g.\ substituting $\leq$ with $>$), delete the body of a method \addref{descartes}, etc.
+Most of the time, we generate 1-\emph{order} mutants, that means that a mutant is the result of a mutator applied once.
+A mutator will usually generate several mutants.
+For example, a mutator that replaces a \texttt{while} statement into a \texttt{do-while} statement will generate a mutant for each \texttt{while} in the artifact.
+In the case of $k$-order mutants, which can be thought of as the result of $k$ succesive 1-order mutants\cite{wah2000theoretical}, the number of derived programs starts to blow up.
 
 % Difficulties
 Mutation testing suffers from drawbacks that have limited its use outside of the research world even though it has been an active research domain for many years~\cite{jia2011analysis}.
 The first obvious flaw is that it is slow.
 For compiled languages, all mutants have to be compiled, and that process often takes a lot of time for large programs.
 Then the whole test suite has to be executed for each mutant, which again is a long process.
-However, given certain trade-offs in terms of quality of the mutation analysis process, the computational complexity can be dodged~\cite{movzucha2016mutation}.
-Optimized techniques for regression testing also exist~\cite{yoo2012regression}, including minimisation, selection and prioritisation.
+However, given certain trade-offs in terms of quality of the mutation analysis process (e.g.\ not generating all possible mutants), the computational complexity can be dodged~\cite{offutt1993experimental,movzucha2016mutation}.
+Optimized techniques for regression testing also exist~\cite{yoo2012regression}, including minimisation, selection and prioritisation, which can reduce the execution time of the test suite.
 The mutant generation is also full of traps.
 The major pitfall that cannot be avoided is the equivalent mutant problem.
 Some mutants, although they have a different program than the original, have the same semantics.
 Which means that they will always pass the test suite and will not bring any insight on the SUT\@.
+The generation of mutants that are simply syntactically valid is also a non-trivial problem that requires pattern replacement instead of simple text replacement~\cite{simao2009transformational}.
 
 Another difficulty for mutation testing to take on in the industry is the lack of understanding by practitioners.\todo{rework that sentence}
 The process of mutation and elimination can be confusing.
@@ -301,13 +321,16 @@ In this Section, we provide more context for this thesis' contribution.
 \cite{petke2017genetic}
 \addref{fundational papers}
 
+\todo{part of SBSE~\cite{mcminn2011search}}
+
 \addref{the surprising creativity of digital evolution?}
 
 % --------------------------------------------------------------------------------
 \subsection{Test Amplification}%
 \label{ssec:test_amplification}
 \todo{}
-\cite{danglot2017emerging}
+\cite{danglot2017emerging}\addref{A Systematic Literature Review on Test Amplification}
+\cite{yoo2012test,xuan2016b,xuan2015dynamic,baudry2005automatic}
 
 % --------------------------------------------------------------------------------
 \subsection{\dspot{}}%
@@ -319,9 +342,11 @@ In this Section, we provide more context for this thesis' contribution.
 \label{fig:spaces}
 \end{SCfigure}
 \todo{}
-\footnote{\url{https://github.com/STAMP-project/dspot}}\addref{dspot papers}\cite{baudry2015automatic,baudry2014tailored,baudry2015dspot}
+\footnote{\url{https://github.com/STAMP-project/dspot}}\addref{Genetic-Improvement based Unit Test Amplification for Java}\cite{baudry2015automatic,baudry2014tailored,baudry2015dspot}
 
 \cite{pawlak2016spoon}
+
+\todo{only produces 1-order mutants}\todo{that's confusing to say mutants for amplified tests}
 
 
 % ================================================================================
@@ -334,7 +359,7 @@ There are two sides for this problem: supporting the developer understand the te
 \subsection{The Need for Unit Test Cases Documentation}%
 \label{ssec:need_doc}
 \todo{}
-Several works have highlighted the need for test documentation~\cite{prado2015wap,prado2016advances,prado2018towards,li2016automatically,daka2014survey,panichella2016impact}.\addref{}
+Several works have highlighted the need for test documentation~\cite{prado2015wap,prado2016advances,prado2018towards,li2016automatically,daka2014survey,panichella2016impact}.
 
 \todo{tests are complex}
 
@@ -346,7 +371,9 @@ Several works have highlighted the need for test documentation~\cite{prado2015wa
 
 \todo{explain what li2016automatically has done}
 
-\todo{talk about the field of software maintenance}
+\todo{talk about the field of software maintenance~\cite{swanson1976dimensions}}
+
+\todo{lack of work on generating human friendly descriptions for mutation testing}
 
 % --------------------------------------------------------------------------------
 \subsection{The Generated Random Noise}%
@@ -372,6 +399,10 @@ Several works have highlighted the need for test documentation~\cite{prado2015wa
 
 \todo{there are also works on documenting code changes (i.e.\ commits)}
 \cite{cortes2014automatically,linares2015changescribe,dragan2011using,jiang2017towards,jiang2017automatically,shen2016automatic,buse2010automatically}
+
+\todo{works on describing code written by humans~\cite{wang2018comment,dragan2006reverse,dragan2011emergent,moreno2012jstereocode,buse2008automatic,sridhara2010towards,herbert2016swummary,mcburney2016automatic,sridhara2011automatically,moreno2013automatic} (e.g.\ mining comments, method and class stereotypes (too general purpose), summary, simple (syntactic) context, nl paraphrasing)}
+
+\todo{Automatic summarization of natural language documents has been attempted by researchers for more than half a century~\cite{jones2007automatic}}
 
 % --------------------------------------------------------------------------------
 \subsection{Cognitive Support for Unit Testing Review}%
@@ -413,6 +444,7 @@ Several works have highlighted the need for test documentation~\cite{prado2015wa
 \subsection{Focus}%
 \label{ssec:focus}
 \todo{}
+\cite{liu2006approach}
 
 % --------------------------------------------------------------------------------
 \subsection{Slicing}%
@@ -430,6 +462,7 @@ Several works have highlighted the need for test documentation~\cite{prado2015wa
 \todo{avoid talking about mutants}
 \todo{How to describe a mutant}
 
+\todo{SWUM~\cite{hill2010integrating}}
 \cite{alali2008s,hattori2008nature,letovsky1987cognitive}
 
 List of possible information:
@@ -437,6 +470,8 @@ List of possible information:
   \item control flow branches
   \item name of mutant
   \item code under test~\cite{qusef2011scotch}
+  \item traceability link
+  \item label/stereotype
 \end{itemize}
 
 \todo{on the usefulness of nlg}
