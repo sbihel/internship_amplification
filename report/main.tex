@@ -1,13 +1,14 @@
 \documentclass[11pt]{sdm_internship}
+\usepackage[british]{babel}
 
 \usepackage{graphicx}
 \graphicspath{{../img/}}
 
+\usepackage{caption}
 \usepackage{subcaption}
 \usepackage{cleveref}
 \usepackage{comment}
 \usepackage{wrapfig}
-\usepackage{sidecap}
 \usepackage{amsfonts}
 \usepackage{textcomp}
 
@@ -27,7 +28,7 @@
 
 \newcommand{\dspot}{DSpot\xspace}
 
-\usepackage{minted}
+\usepackage[newfloat]{minted}
 % \usepackage{inconsolata}
 % \setmonofont{Inconsolatazi4}
 
@@ -85,60 +86,85 @@ In this section we give a definition for the test activities and their actors, t
 % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 \subsubsection{Test Activities}%
 \label{sssec:test_activities}
-\todo{}
 \todo{the text is too close to the oracle survey}
 
-Testing is about verifying that a system, for a certain scenario, follows a certain behaviour that was previously defined.
+Testing is about verifying that a system, for a given scenario, follows a certain behaviour that was previously defined.
 The \emph{System-Under-Test} (SUT), in our domain a software system, has a set of components $C$.
-A scenario is sequence of stimuli that target a subset of components, and trigger both responses from the SUT and changes in the state of its components.
-From~\cite{barr2015oracle}, we have the following definition for test activities:
-
-\todo{can you add a subjective judgement here? like ``here is a well written definition''}
+A scenario is sequence of stimuli that target a subset of $C$, and trigger responses: (i) feedbacks from the SUT\@; and (ii) changes in the state of its components.
+From~\cite{barr2015oracle}, we have the following definition for to combination of stimuli and responses:
 
 \begin{definition}[Test Activities]
   For the SUT $p$, $S$ is the set of stimuli that trigger or constrain $p$'s computation and $R$ is the set of observable responses to a stimulus of $p$.
   $S$ and $R$ are disjoint.
   Test activities form the set $A = S\uplus{}R$.
+  The disjoint union is used to label the elements of $A$.
 \end{definition}
 
-% \begin{definition}[Test Input]
-%   \todo{}
-% \end{definition}
-
-\begin{wrapfigure}[13]{r}{25em}
+\begin{wrapfigure}[15]{R}{22em}
   \centering
-  \includegraphics[width=25em]{stim_and_obs}
+  \includegraphics[width=22em]{stim_and_obs}
   \caption{Stimuli and observations: $S$ is anything that can change the observable behaviour of the SUT $f$; $R$ is anything that can be observed about the system's behaviour; $I$ includes $f$'s explicit inputs; $O$ is its explicit outputs; everything not in $S \cup R$ neither affects nor is affected by $f$.}%
   \label{fig:test_activity}
 \end{wrapfigure}
 
-The use of the terms ``stimulus'' and ``observations'' fit various test scenarios, functional and non-functional.
-\figurename~\ref{fig:test_activity} depicts the fact that a stimulus can be either an explicit input from the tester, or an environmental factor that can affect the SUT\@.
-\todo{}
+The use of the terms ``stimulus'' and ``observations'' fits various test scenarios, functional and non-functional.
+As depicted in \figurename~\ref{fig:test_activity}, a stimulus can be either an explicit \emph{input} from the tester, or an environmental factor that can affect the SUT\@.
+Stimuli include, among others, the platform, the language version, the resources available, interaction with an interface, etc.
+Observations encompass anything that can be discerned and measured like the content of a database, the visual responses on a computer screen, the time passed during the execution, etc.
 
-\begin{definition}[Test Case]
-  \todo{}
-\end{definition}
-
-\begin{definition}[Test Suite]
-  A test suite is a collection of tests cases.
-\end{definition}
+Testing is about stimulation and observation so we talk about \emph{test activity sequences} that are comprised of at least one stimulus and one observation.
+But testing is also about verifying that the observed responses, the behaviour, match to ones that were previously defined.
+This checking part is done by another actor:
 
 \begin{definition}[Test Oracle]
   A test oracle $D : T_A \mapsto \mathbb{B}$ is a partial function from a test activity sequence to true or false.
 \end{definition}
 
+An oracle can be defined using different methods: a set of specifications an expected value for a variable after the execution of a particular test activity sequence, the expectation of a lack of crash, etc.
+
+A test oracle is a partial function because it can leave certain elements of the SUT's behaviour unspecified.
+This part of uncertainty is fundamental in the real world because systems have grown to be so complex that humans cannot anticipate all the reactions of the SUT in all environments.
+It is useful nonetheless to have a name for a theoretical oracle that would have an answer for every possible question:
+
+\begin{definition}[Ground Truth]
+  The ground truth oracle, $G$, is a total test oracle that always gives an answer.
+\end{definition}
+
+This allows us to define two properties for all oracles:
+
+\begin{definition}[Soundness]
+  The test oracle $D$ is sound for test activity $a$ iff $D(a) \rightarrow G(a)$
+\end{definition}
+\begin{definition}[Completeness]
+  The test oracle $D$ is complete for test activity $a$ iff $G(a) \rightarrow D(a)$
+\end{definition}
+
+A test oracle cannot, in general, be complete as it would require handling every possible test activity sequence.
+It is not rare for an oracle to be unsound as humans can make errors writting specifications.
+
+In practice, following pattern designs of modularity, the act of testing is composed of multiple test activity sequences that target specific elements of the SUT's behaviour:
+
+\begin{definition}[Test Case]
+  A test case $T_C$ is a test activities sequence that contains at least one stimulus and one observation with a test oracle that verifies each observation.
+\end{definition}
+\begin{definition}[Test Suite]
+  A test suite is a collection of tests cases.
+\end{definition}
+
 Another concept that we will use when talking about software evolution is regression testing~\cite{yoo2012regression}:
+
 \begin{definition}[Regression Testing]
   Regression testing is performed between two different versions of the SUT in order to provide confidence that newly introduced features do not interfere with the existing features.
 \end{definition}
+
+It is a way to avoid having a human write formal specification but the problem remains of trying every possible scenario and observing any useful response.
 
 \todo{give some clues to each concept to tell why it is a field of research?}
 
 % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 \subsubsection{Levels of Testing}%
 \label{sssec:levels_testing}
-\begin{wrapfigure}{l}{25em}
+\begin{wrapfigure}{L}{25em}
   \centering
   \includegraphics[width=25em]{test_pyramid}
   \caption{A view of the test pyramid.}%
@@ -160,7 +186,7 @@ The goal is to test each and every component of the program (e.g.\ every functio
 Running a single component is faster than running the whole program, but require much more work from the person writing tests, as every component needs its set of tests.
 In between the two testing practices are the integration tests, which aim at ensuring the well collaboration of components, like verifying that gears rotate in the right way.
 Examples of integration tests include API testing, or simply the fact of calling a function using the result from another function call.
-This last example gives an intuition on how fuzzy the distinctions between all kinds of tests are.
+This last example gives an intuition on how fuzzy the distinctions between all kinds of tests are, with definitions often relying on personal opinions\footnote{\url{https://testing.googleblog.com/2009/07/software-testing-categorization.html}}.
 More details about the loose definition of unit tests are given Section~\ref{sssec:unit_testing}.
 
 \todo{why we use a pyramid}
@@ -175,12 +201,12 @@ Practitioners often recommend putting an emphasis on unit test, with a distribut
 A unit test is test for a precise component of the SUT, but defining the level of granularity is not trivial, even for experienced programmers\footnote{\url{https://martinfowler.com/bliki/TestPyramid.html}}\footnote{\url{https://martinfowler.com/bliki/UnitTest.html}}~\cite{runeson2006survey}.
 \todo{}
 
-\begin{figure}[h]
+\begin{listing}[H]
   \centering
   \begin{minted}[linenos,frame=topline,breaklines,highlightlines={2,4,6},highlightcolor=YellowOrange!20]{java}
 testIterationOrder() {
   TreeList tl = new TreeList(10);
-  for (int i = 0; i < size; i++) {
+  for (int i = 0; i < 10; i++) {
     tl.add(i);
   }
   ListIterator it = tl.listIterator();
@@ -193,11 +219,11 @@ testIterationOrder() {
   }
 }
   \end{minted}
-  \caption{Example of a unit test: it consists of test inputs (lines 2--6) that manipulate the SUT\@; and assertions (line number 10).}%
-\label{fig:test_example}
-\end{figure}
+  \caption{Example of an object-oriented unit test (taken from the Apache Commons Collections, in the class TreeListTest, line 270): it consists of test inputs (lines 2--6) that manipulate the SUT\@; and assertions (line number 10).\todo{what about lines 8 \& 9}}%
+\label{lst:test_example}
+\end{listing}
 
-An example of unit test is given in \figurename~\ref{fig:test_example}.
+An example of unit test is given in \listingname~\ref{lst:test_example}.
 
 \todo{why we sometimes speak about test methods}
 
@@ -208,6 +234,10 @@ An example of unit test is given in \figurename~\ref{fig:test_example}.
 \todo{problems with OO, private methods, composition design patterns~\cite{wolfgang1994design}}
 
 \todo{it's a program (and thus it carries pros and cons on comprehension and ease of use) (and it's a internal DSL~\cite{fowler2010domain})}
+
+\todo{having small focused tests also reduce the likelihood of having a flaky test\footnote{\url{https://testing.googleblog.com/2017/04/where-do-our-flaky-tests-come-from.html}}}
+
+\todo{dependencies\footnote{\url{https://martinfowler.com/bliki/UnitTest.html}}}
 
 % --------------------------------------------------------------------------------
 \subsection{Elementary Metrics}%
@@ -222,8 +252,7 @@ For example, during the test suite execution, one can keep track of all statemen
 At the end, you have a percentage of executed statements for the total number of statements.
 Instead of statements, one can also keep track of control flow branches explored.
 
-It is generally acknowledged that a system with high coverage means that the system is less likely to have bugs.
-But it is not foolproof.
+It is generally acknowledged that a system with high coverage means that the system is less likely to have bugs ---  but it is not foolproof.
 
 \todo{What are their limits}
 \begin{itemize}
@@ -231,10 +260,12 @@ But it is not foolproof.
   \item can't have 100\% branch coverage so it's confusing
 \end{itemize}
 
+\todo{\footnote{\url{https://testing.googleblog.com/2009/09/7th-plague-and-beyond.html}}Metrics change behavior and once a tester knows how the measurement works, they test to make themselves look good or say what they want it to say ignoring other more important factors. The metric becomes the goal instead of measuring progress.}
+
 % --------------------------------------------------------------------------------
 \subsection{Mutation Testing}%
 \label{ssec:mutation_testing}
-\begin{wrapfigure}[22]{l}{9em}
+\begin{wrapfigure}[23]{L}{9em}
   \centering
   \includegraphics[width=9em]{mutation_testing_report}
   \caption{Mutation testing process.}%
@@ -250,6 +281,8 @@ The main appeal is that, a test suite with a good mutation score, in addition to
 \todo{rework that sentence}
 There is a correlation between mutation score and coverage score as test suites with high mutation score tend to have good coverage~\cite{assylbekov2013investigating}.
 It has been found that correlations between mutation scores and real fault detection are weak~\cite{papadakis2018mutation}.
+
+\todo{a mutation covered line is stronger than a regular covered line}
 
 \addref{fundational papers}
 
@@ -300,12 +333,20 @@ PIT\footnote{\url{http://pitest.org/}}~\cite{coles2016pit} is a mutation testing
 \todo{useful for surveys}
 \cite{delahaye2015selecting}
 
+\todo{tests are written by regular developers, even though there are engineers specialised in testing\footnote{\url{https://testing.googleblog.com/2016/03/from-qa-to-engineering-productivity.html}}}
+\todo{hard to move the industry forward}
+\todo{we share similar experience with static analysis tool researchers}
+\todo{avoid false positives, angry developers, must feel they benefit from the tool, enjoy using it~\cite{bessey2010few,sadowski2018lessons}}
+\todo{\emph{effective false positives}~\cite{sadowski2015tricorder}}
+
 % --------------------------------------------------------------------------------
 \subsection{Cognitive Support Tool Development}%
 \label{ssec:cognitive_support}
 \todo{}
 \cite{oviatt2006human}
 \cite{stol2016grounded}
+
+\todo{case studies~\cite{flyvbjerg2006five}}
 
 
 % ================================================================================
@@ -332,15 +373,19 @@ In this Section, we provide more context for this thesis' contribution.
 \cite{danglot2017emerging}\addref{A Systematic Literature Review on Test Amplification}
 \cite{yoo2012test,xuan2016b,xuan2015dynamic,baudry2005automatic}
 
+\todo{avoid overfitting}
+
+\todo{often only partial coverage\footnote{\url{https://testing.googleblog.com/2014/07/measuring-coverage-at-google.html}}}
+
 % --------------------------------------------------------------------------------
 \subsection{\dspot{}}%
 \label{ssec:dspot}
-\begin{SCfigure}
+\begin{figure}
   \centering
-  \includegraphics[width=25em]{spaces_report}
+  \includegraphics[width=35em]{spaces_report}
   \caption{On the left, the testing input space is composed by specified input points (orange diamonds) and unspecified input points (black diamonds). On the right, the observation space over a given program state depicts the assertions of tests. The green circles are values that are already asserted in the existing test suite, the newly added assertions are shown as black circles.}%
 \label{fig:spaces}
-\end{SCfigure}
+\end{figure}
 \todo{}
 \footnote{\url{https://github.com/STAMP-project/dspot}}\addref{Genetic-Improvement based Unit Test Amplification for Java}\cite{baudry2015automatic,baudry2014tailored,baudry2015dspot}
 
@@ -348,12 +393,16 @@ In this Section, we provide more context for this thesis' contribution.
 
 \todo{only produces 1-order mutants}\todo{that's confusing to say mutants for amplified tests}
 
+\todo{finding bugs is easy~\cite{hovemeyer2004finding}}
+
 
 % ================================================================================
 \section{Problem Statement}%
 \label{sec:problem_statement}
 This thesis aim at helping developers understand amplified tests.
 There are two sides for this problem: supporting the developer understand the test (Section~\ref{ssec:need_doc}) and cleaning the tests from the noise injected during the amplification process (Section~\ref{ssec:random_noise}).
+
+\todo{understanding the test is essential~\cite{bessey2010few,sadowski2018lessons}}
 
 % --------------------------------------------------------------------------------
 \subsection{The Need for Unit Test Cases Documentation}%
