@@ -114,9 +114,20 @@ the same template as humans do.
   + Many standards
   + Some people don't care about bugs, sometimes improving the tool reveals more
     bugs which is bad for the manager
+- /Lessons from Building Static Analysis Tools at Google/
+  ([[https://dl.acm.org/citation.cfm?id=3188720][sadowski2018lessons]])
+  /Tricorder: Building a Program Analysis Ecosystem/
+  ([[https://dl.acm.org/citation.cfm?id=2818828][sadowski2015tricorder]])
+  + Great to understand the challenges in pushing an analysis tool in the real
+    world
+  + notes on the printed paper
+  + such tool need to be
+    1. Integrated/Easy to use
+    2. Free of false positive
+    3. Easy to understand
 - /Spoon: A Library for Implementing Analyses and Transformations of Java Source Code/
   ([[https://hal.archives-ouvertes.fr/hal-01078532v2/document][pawlak2016spoon]])
-  + let's say it's like llvm/clang for now
+  + let's say it's like llvm/clang
 - /Regression Testing Minimisation, Selection and Prioritisation : A Survey/
   ([[http://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.169.8696&rep=rep1&type=pdf][yoo2012regression]])
   + TODO
@@ -140,6 +151,15 @@ the same template as humans do.
   + TODO
 - /The Oracle Problem in Software Testing: A Survey/
   ([[http://ieeexplore.ieee.org/stamp/stamp.jsp?arnumber=6963470][barr2015oracle]])
+  + TODO
+- /Human-Centered Design Meets Cognitive Load Theory: Designing Interfaces that Help People Think/
+  ([[http://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.501.6467&rep=rep1&type=pdf][oviatt2006human]])
+  + TODO
+- /Grounded Theory in Software Engineering Research: A Critical Review and Guidelines/
+  ([[https://ulir.ul.ie/bitstream/handle/10344/5396/Stol_2016_grounded.pdf?sequence=2][stol2016grounded]])
+  + TODO
+- /Five Misunderstandings about Case-study Research/
+  ([[http://journals.sagepub.com/doi/pdf/10.1177/1077800405284363][flyvbjerg2006five]])
   + TODO
 
 **** Unit Testing
@@ -169,6 +189,9 @@ the same template as humans do.
 - /A Survey on Unit Testing Practices and Problems/
   ([[https://pdfs.semanticscholar.org/f193/e68ce6f3200b1f801e64bf49e56f668fd3ef.pdf][daka2014survey]])
   + TODO
+- /The Impact of Test Case Summaries on Bug Fixing Performance: An Empirical Investigation/
+  ([[http://ieeexplore.ieee.org/abstract/document/7886933/][panichella2016impact]])
+  + TODO
 
 **** Mutation Testing
 - /Is Mutation Testing Ready to be Adopted Industry-Wide?/
@@ -194,6 +217,16 @@ the same template as humans do.
 - /Are Mutation Scores Correlated with Real Fault Detection?/
   ([[http://orbilu.uni.lu/bitstream/10993/34950/1/ICSE-main18b%20%281%29.pdf][papadakis2018mutation]])
   + TODO
+- /A Transformational Language for Mutant Description/
+  ([[https://www.sciencedirect.com/science/article/pii/S1477842408000420][simao2009transformational]])
+  + TODO
+  + unfortunately it doesn't give clues on how to describe mutants as they see
+    mutation simply as a match-and-replace process.
+  + kind of look like a formal description of the design of a DSL
+- /An Experimental Evaluation of Selective Mutation/
+  ([[https://dl.acm.org/citation.cfm?id=257597][offutt1993experimental]])
+- /A theoretical study of fault coupling/
+  ([[https://onlinelibrary.wiley.com/doi/abs/10.1002/(SICI)1099-1689(200003)10:1%3C3::AID-STVR196%3E3.0.CO;2-P][wah2000theoretical]])
 
 **** Search-based Software Testing
 - /Search-based software testing: Past, present and future/
@@ -271,6 +304,8 @@ the same template as humans do.
 - /Summarizing Software Artifacts: A Literature Review/ 🌟
   ([[https://link.springer.com/content/pdf/10.1007%2Fs11390-016-1671-1.pdf][nazar2016summarizing]]) <<nazar2016summarizing>>
   + very complete
+- /Automatic Summarising: The State of the Art/
+  ([[https://www.sciencedirect.com/science/article/pii/S0306457307000878][jones2007automatic]])
 
 ***** Tools for tests
 - /Automatically Documenting Software Artifacts/ 🌟
@@ -527,7 +562,7 @@ the same template as humans do.
   + [X] Experiment results
     - no results yet 😞
   + [X] Related works
-*** TODO Talk @ Workshop Software Engineering Research <2018-05-10 Thu>
+*** TODO Talk @ Workshop Software Engineering Research <2018-05-08 Tue>
 *** TODO Defense Rehearsal @ ENS <2018-06-22 Fri>
 
 
@@ -1252,8 +1287,9 @@ cd .. && mvn clean package -DskipTests && cd dhell && mvn clean package && java 
 - [ ] ask for opinions (e.g. Simon Urli, XWiki, SAT4J)
 
 
-** TODO Week 9  <2018-04-02 Mon>--<2018-04-08 Sun>
+** DONE Week 9  <2018-04-02 Mon>--<2018-04-08 Sun>
 *** Things Done
+- Spent time on UCL PhD application and IELTS
 
 *** Blocking Points
 - [ ] Assertion count
@@ -1264,10 +1300,11 @@ cd .. && mvn clean package -DskipTests && cd dhell && mvn clean package && java 
   or test case as a whole?
 - [ ] Need to identify the main object that is interacted with
 
-*** Planned Work [0/13]
-- [ ] Plan ICST trip
-  + [ ] hotel
-  + [ ] train
+*** Planned Work [5/17]
+- [X] Plan ICST trip
+  + [X] +hotel+
+    - going to take the train everyday (the train alone is 1h, one way)
+  + [X] train
 - [ ] Get reimbursed for ICST
 - [ ] Simple NL commit messages generator
 - [ ] Classification of mutators
@@ -1288,7 +1325,88 @@ cd .. && mvn clean package -DskipTests && cd dhell && mvn clean package && java 
   + [ ] write test to make sure every amplifier logs the amplifications
 - [ ] Retrieve mutants
   + The [[https://github.com/STAMP-project/dspot/issues/122][issue]] on runtime info from PIT
-- [ ] Work on report
+- [-] Work on report [1/6]
+  + [ ] use explicit definitions
+  + [ ] work on background sections
+  + [ ] add Java examples
+  + [ ] insist on the distinction between what and why information
+  + [ ] describe thoroughly the oracle problem
+  + [X] add papers from 'General/Others'
+- [X] Read papers
+- [ ] formal description of the NL description
+- [ ] ask for opinions (e.g. Simon Urli, XWiki, SAT4J)
+- [ ] SCOTCH might actually be useful
+  + check other 'Not Relevant' papers
+- [X] Meeting with Benoit <2018-04-03 Tue>
+  + +Preparation for ICST+
+    - hotel or train everyday?
+      + don't know
+  + +my future+
+    - Interesting PhD at UCL but already 3 internships that went badly
+      + have to be *motivated*, ask questions
+  + +citing blog posts+
+    - yes
+  + no subjective comment
+  + a test is a subset of observable responses that are equal to specification
+  + a program is complete but not specifications
+  + good introduction to talk about abstract definition of verification
+  + need to select subset of R (in def of test activities)
+  + encapsulation principle hides stuff which means you can't observe them
+    - if something is private you can't test it
+  + delegations is difficult to test
+  + extremely difficult to define levels of tests
+  + how do you know you have a good oracle
+  + fig 3, test inputs are only lines 2-5 & 7
+  + be clear about what infos we have about the amplified test, how it is
+    collected, etc.
+  + speak about coverage more than mutants
+  + decide between coverage enhancement, slicing/minimization, text/casual
+    relationships
+  + need a good use case throughout the thesis
+- [X] Questions about the PhD position at UCL
+- [X] Why is KTH blocking my ens-rennes mails
+  + grey listed
+  + [X] send email to support
+  + [X] warn benoit and madeleine
+
+
+** TODO Week 10 <2018-04-09 Mon>--<2018-04-15 Sun>
+*** Things Done
+
+*** Blocking Points
+- [ ] Assertion count
+  + Is the process: remove *all* assertions and generate all possible assertions?
+  + if so then all assertions are counted as amplifications
+- [ ] Assertion log, can there be REMOVE+ADD instead of MODIFY?
+- [ ] Should I focus solely on mutants description, amplifications descriptions
+  or test case as a whole?
+- [ ] Need to identify the main object that is interacted with
+
+*** Planned Work [0/16]
+- [ ] ICST <2018-04-10 Tue>--<2018-04-12 Thu>
+- [ ] Apply to the PhD position
+- [ ] Check advices from last week meeting with Benoit
+- [ ] Get reimbursed for ICST
+- [ ] Simple NL commit messages generator
+- [ ] Classification of mutators
+- [ ] Integrate WALA to compute a slice per new mutant
+  + [ ] Adding as dependency
+  + [ ] Use it
+- [ ] Study commit messages related to tests
+- [ ] More precise ~try/catch~ would actually be useful for slicing
+- [-] Retrieve amplifications [1/4]
+  + [X] use another counter to keep the pointer to AST nodes of amplifications
+    - use [[http://spoon.gforge.inria.fr/mvnsites/spoon-core/apidocs/spoon/experimental/modelobs/ActionBasedChangeListenerImpl.html]]
+  + [ ] add categories of amplifiers
+    - ADD
+    - MODIFY LITERALS
+    - MODIFY INTERACTIONS
+    - REMOVE
+  + [ ] write test to make sure every amplifier includes the counter update
+  + [ ] write test to make sure every amplifier logs the amplifications
+- [ ] Retrieve mutants
+  + The [[https://github.com/STAMP-project/dspot/issues/122][issue]] on runtime info from PIT
+- [ ] Work on report [0/5]
   + [ ] use explicit definitions
   + [ ] work on background sections
   + [ ] add Java examples
@@ -1297,15 +1415,8 @@ cd .. && mvn clean package -DskipTests && cd dhell && mvn clean package && java 
 - [ ] Read papers
 - [ ] formal description of the NL description
 - [ ] ask for opinions (e.g. Simon Urli, XWiki, SAT4J)
-
-
-** TODO Week 10 <2018-04-09 Mon>--<2018-04-15 Sun>
-*** Things Done
-
-*** Blocking Points
-
-*** Planned Work
-- [ ] ICST <2018-04-10 Tue>--<2018-04-12 Thu>
+- [ ] SCOTCH might actually be useful
+  + check other 'Not Relevant' papers
 
 
 ** TODO Week 11 <2018-04-16 Mon>--<2018-04-22 Sun>
@@ -1339,7 +1450,8 @@ cd .. && mvn clean package -DskipTests && cd dhell && mvn clean package && java 
 *** Blocking Points
 
 *** Planned Work [0/1]
-- [ ] Workshop <2018-05-10 Thu>
+- [ ] Workshop <2018-05-08 Tue>
+  + Room 4423
 
 
 ** TODO Week 15 <2018-05-14 Mon>--<2018-05-20 Sun>
@@ -1347,7 +1459,8 @@ cd .. && mvn clean package -DskipTests && cd dhell && mvn clean package && java 
 
 *** Blocking Points
 
-*** Planned Work
+*** Planned Work [0/1]
+- [ ] IELTS <2018-05-19 Sat>
 
 
 ** TODO Week 16 <2018-05-21 Mon>--<2018-05-27 Sun>
