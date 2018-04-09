@@ -11,6 +11,7 @@
 \usepackage{wrapfig}
 \usepackage{amsfonts}
 \usepackage{textcomp}
+\usepackage{cprotect}
 
 \pagestyle{plain}
 
@@ -270,8 +271,8 @@ They exist because they enforce the separation of the public interface and the i
 But when one want to test a private method to make sure it does the right thing, it is not possible.
 The alternative is to extensively test the public methods, making sure they trigger all sorts of behaviour in the private part of the class.
 In this situation, we end testing a component that interacts with other components, as depicted in \figurename~\ref{fig:component_dependency}, but then it becomes a small integration test\footnote{\url{https://martinfowler.com/bliki/UnitTest.html}}.
-The granularity of tests does not only depends on the needs and desires of the developer, but also on the limitations of the language.
-Object-Oriented are particularly victim to this, as they are suited for composition design patterns~\cite{wolfgang1994design}, leaving no other option to the developer to try and limit interactions.
+The granularity of tests does not only depend on the needs and desires of the developer, but also on the limitations of the language.
+Object-Oriented are particularly victim to this, as they are suited for composition design patterns~\cite{wolfgang1994design}, leaving no other option to the developer to try to limit interactions.
 Ways to avoid writing test that trigger a long chain of reactions is to use doubles (or mocks) which are hand written clones of classes instances.\rephrase{}
 
 Another common problem with testing are flaky tests.
@@ -280,30 +281,38 @@ There can be various causes for a flaky test, e.g.\ a direct usage of RNG functi
 The advantage of small tests with controlled interaction with the environment is that they are less likely to be flaky.
 This a hard problem\footnote{\url{https://testing.googleblog.com/2017/04/where-do-our-flaky-tests-come-from.html}} as flaky tests can be (i) hard to identify, (ii) hard to refactor, and (iii) hard to avoid in the first place.
 
+\todo{unit tests also make up for examples in OSS}
+
 % --------------------------------------------------------------------------------
 \subsection{Elementary Metrics}%
 \label{ssec:elementary_metrics}
 Metrics have been developed to help developers automatically assess the quality of their code.
 Each metric measures one specific characteristic, such as the need for refactoring, the size of the program, or --- and we are particularly interested in this one --- the likelihood of bugs.
 
-\todo{give examples for other metrics?}
+\begin{figure}
+  \centering
+  \fbox{\includegraphics[scale=0.80, trim=5.1cm 4.3cm 1.5cm 3.7cm, clip]{screenshot_coverage}}
+  \cprotect\caption{Example of coverage reporting from the Coveralls\protect\footnotemark{} tool. We can see that the statements in the first \texttt{else} branch have not been executed a single time}%
+  \label{fig:screenshot_coverage}
+\end{figure}
+\footnotetext{\url{https://coveralls.io/}}
 
 The most basic metrics to measure how thoroughly tested a system is, are coverage based metrics.
 For example, during the test suite execution, one can keep track of all statements that were executed.
 At the end, you have a percentage of executed statements for the total number of statements.
 Instead of statements, one can also keep track of control flow branches explored.
+\todo{give examples for other metrics?}
+These metrics, especially the statement coverage, are wide spread in the industry --- with coverage tools integrated out-of-the-box with source code hosting services and continuous integration services.
+An example of coverage visual report is shown in \figurename~\ref{fig:screenshot_coverage}.
 
-It is generally acknowledged that a system with high coverage means that the system is less likely to have bugs ---  but it is not foolproof.
-
+It is generally acknowledged that a system with high coverage means that the system is less likely to have bugs --- but it is not foolproof.
+Such simple metrics are not good at pointing out corner cases.
+If we take the following example \texttt{if ($C_1$ AND ($C_2$ OR $C_3$))} and $C_3$ makes the program crash, then it is possible the explore both branches without executing $C_3$.
 \todo{What are their limits}
-\begin{itemize}
-  \item doesn't mean corner cases are avoided
-  \item can't have 100\% branch coverage so it's confusing
-\end{itemize}
 
-\todo{\footnote{\url{https://testing.googleblog.com/2009/09/7th-plague-and-beyond.html}}Metrics change behavior and once a tester knows how the measurement works, they test to make themselves look good or say what they want it to say ignoring other more important factors. The metric becomes the goal instead of measuring progress.}
-
-\todo{simple metrics do not reward diversity and efficiency\footnote{\url{https://testing.googleblog.com/2009/06/by-james.html}}~\cite{baudry2014diversify,baudry2015multiple}}
+A drawback of metrics is that in practice, testers will change behaviour once they know how the measurement works\footnote{\url{https://testing.googleblog.com/2009/09/7th-plague-and-beyond.html}}.
+They will write tests that will perform well for a given metric and ignoring other important factors (e.g.\ diversity\footnote{\url{https://testing.googleblog.com/2009/06/by-james.html}}~\cite{baudry2014diversify,baudry2015multiple}).
+In these cases the metric has become the goal instead of a progress measurement.
 
 % --------------------------------------------------------------------------------
 \subsection{Mutation Testing}%
@@ -363,6 +372,17 @@ PIT\footnote{\url{http://pitest.org/}}~\cite{coles2016pit} is a mutation testing
 \todo{maybe quick comparison with other tools}
 
 \todo{it is deterministic}
+
+\todo{example of visual report}
+\todo{lightest green is equivalent to statement coverage}
+\begin{figure}
+  \centering
+  \fbox{\includegraphics[scale=0.75,trim=0cm 1.4cm 6.7cm 8.6cm, clip]{screenshot_mutation_coverage}}
+  \caption{Example of mutation coverage reporting from Code Defenders\protect\footnotemark{}. Shades of green are used to denote the amount of testing for a line.}%
+  \label{fig:screenshot_mutation_coverage}
+\end{figure}
+\footnotetext{\url{http://code-defenders.org/}}
+An example of mutation coverage visual report is shown in \figurename~\ref{fig:screenshot_mutation_coverage}.
 
 % --------------------------------------------------------------------------------
 % \subsection{Software Diversification}%
