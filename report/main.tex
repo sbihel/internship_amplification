@@ -23,6 +23,7 @@
 \usepackage[dvipsnames]{xcolor}
 \newcommand{\addref}[1]{\colorbox{TealBlue!100}{\textcolor{white}{\textbf{$[$\ifx&#1&\ \else#1\fi$]$}}}}
 \newcommand{\todo}[1]{\colorbox{Red!75}{\textcolor{white}{\textbf{TODO\ifx&#1&\else: #1\fi}}}}
+\newcommand{\rephrase}[1]{\colorbox{BlueViolet!60}{\textcolor{white}{\textbf{$\sim$#1}}}}
 \newcommand{\done}{\colorbox{YellowGreen!100}{\textcolor{white}{\textbf{DONE}}}}
 \newcommand{\review}{\colorbox{YellowOrange!100}{\textcolor{white}{\textbf{REVIEW}}}}
 
@@ -79,6 +80,8 @@ In particular, to understand the needs of practitioners, we present how they ass
 \label{ssec:software_testing}
 In this section we give a definition for the test activities and their actors, the different abstraction levels of tests, and our precise object of study, unit tests.
 
+\todo{say the Section~\ref{sssec:test_activities} is a list of definitions to which the reader can refer to later on?}
+
 \todo{Why are we testing software and how do we do it}
 
 \todo{Say that the formal definitions aren't totally necessary}
@@ -112,7 +115,7 @@ As depicted in \figurename~\ref{fig:test_activity}, a stimulus can be either an 
 Stimuli include, among others, the platform, the language version, the resources available, interaction with an interface, etc.
 Observations encompass anything that can be discerned and measured like the content of a database, the visual responses on a computer screen, the time passed during the execution, etc.
 
-Testing is about stimulation and observation so we talk about \emph{test activity sequences} that are comprised of at least one stimulus and one observation.
+Testing is about stimulation and observation, so we talk about \emph{test activity sequences} that are comprised of at least one stimulus and one observation.
 But testing is also about verifying that the observed responses, the behaviour, match to ones that were previously defined.
 This checking part is done by another actor:
 
@@ -120,7 +123,7 @@ This checking part is done by another actor:
   A test oracle $D : T_A \mapsto \mathbb{B}$ is a partial function from a test activity sequence to true or false.
 \end{definition}
 
-An oracle can be defined using different methods: a set of specifications an expected value for a variable after the execution of a particular test activity sequence, the expectation of a lack of crash, etc.
+An oracle can be defined using different methods: a set of specifications an expected value for a variable after the execution of a particular test activity sequence, the expectation of an absence of crash, etc.
 
 A test oracle is a partial function because it can leave certain elements of the SUT's behaviour unspecified.
 This part of uncertainty is fundamental in the real world because systems have grown to be so complex that humans cannot anticipate all the reactions of the SUT in all environments.
@@ -173,71 +176,109 @@ It is a way to avoid having a human write formal specification but the problem r
 
 In the case of software testing, the SUT can be different elements of a program, i.e.\ it can belong to different levels of abstraction.
 One can decide to test a whole program, by manually giving inputs and verifying that the output is correct.
-Or one could test individual functions, having a more control over the behaviour of each elements.
+Or one could test individual functions, having a more control over the behaviour of each element.
 
 These levels of test abstraction can be visualised with a test pyramid, as shown in \figurename~\ref{fig:test_pyramid}.
 Tests are generally separated into three distinct categories.
 The top category is for the End-to-End tests, which means testing the program as a whole.
 It can mean interacting with the UI and evaluating the visual responses.
 Whilst it allows for directly evaluating the well behaviour of the program, each test is costly in time and resources because the whole program has to be run.
-Not only will each component be run, whether or not it requires testing, but time will also be spent on call to libraries that are already tested.
+Not only will each component be run, whether or not it requires testing, but time will also be spent on call to external libraries that are already tested.
 At the other end of the test spectrum are the unit tests.
 The goal is to test each and every component of the program (e.g.\ every function), as an individual and isolated from the rest of the program.
 Running a single component is faster than running the whole program, but require much more work from the person writing tests, as every component needs its set of tests.
-In between the two testing practices are the integration tests, which aim at ensuring the well collaboration of components, like verifying that gears rotate in the right way.
+In between the two testing practices are the integration tests, which aim at ensuring the well collaboration of components \rephrase{work together as expected}, like verifying that gears rotate in the right way.
 Examples of integration tests include API testing, or simply the fact of calling a function using the result from another function call.
-This last example gives an intuition on how fuzzy the distinctions between all kinds of tests are, with definitions often relying on personal opinions\footnote{\url{https://testing.googleblog.com/2009/07/software-testing-categorization.html}}.
+This last example gives an intuition on how fuzzy the distinctions between all kinds of tests are, with definitions often relying on personal opinions\footnote{\url{https://testing.googleblog.com/2009/07/software-testing-categorization.html}}\footnote{\url{https://martinfowler.com/bliki/IntegrationTest.html}}.
 More details about the loose definition of unit tests are given Section~\ref{sssec:unit_testing}.
 
-\todo{why we use a pyramid}
+The test hierarchy is often represented by a pyramid because it is generally advised to have many more unit tests than end-to-end tests.
 Practitioners often recommend putting an emphasis on unit test, with a distribution of 70\% unit tests, 20\% integration tests, and 10\% end-to-end tests for example\footnote{\url{https://testing.googleblog.com/2015/04/just-say-no-to-more-end-to-end-tests.html}}.
+More details on the strengths and weaknesses of unit tests are given in the next section, but we can convey some general truths here.
+End-to-end tests require more maintenance as the software evolves, because test cases rely on many modules and their behaviour eventually change with time.
+Also, with a broad coverage, it is difficult to identify components at fault in the case of a failing test.
+Having unit tests for each component gives confidence that they behave accordingly and that if an integration test fails, the error lies in the interactions between the components.
+Again, the broader the test, the greater the number of interactions which makes it difficult identifying the one at fault.
+Because of this, the number of test levels has to increase alongside the software's growth --- e.g.\ grouping components into modules, modules into services, and services as the system.
 
-\todo{how tests are automated}
+Programs can be tested manually by a human (e.g.\ by interacting with the UI), but tests are generally automated to save time.
+Automation often mean to programmatically describe a scenario, observations and their associated specifications.
+Different levels can require different tools and frameworks\footnote{\url{https://martinfowler.com/articles/practical-test-pyramid.html}}.
+For example, unit tests can be written in the same language as the main program, interacting with it like any other module (more details in the next section).
+But to test a graphical user interface, one might need to run a window system and control the cursor's movements and clicks.
 
 % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 \subsubsection{Unit Testing}%
 \label{sssec:unit_testing}
 
-A unit test is test for a precise component of the SUT, but defining the level of granularity is not trivial, even for experienced programmers\footnote{\url{https://martinfowler.com/bliki/TestPyramid.html}}\footnote{\url{https://martinfowler.com/bliki/UnitTest.html}}~\cite{runeson2006survey}.
-\todo{}
+A unit test is supposed to target a precise component of the SUT, but defining the level of granularity is not trivial, even for experienced programmers\footnote{\url{https://martinfowler.com/bliki/TestPyramid.html}}\footnote{\url{https://martinfowler.com/bliki/UnitTest.html}}~\cite{runeson2006survey}.
+In the case of a program written with an Object-Oriented language, such as Java --- we will put our focus on Java for the rest of this thesis --- the targeted component can be a class or just a method of a class.
 
 \begin{listing}[H]
   \centering
-  \begin{minted}[linenos,frame=topline,breaklines,highlightlines={2,4,6},highlightcolor=YellowOrange!20]{java}
-testIterationOrder() {
-  TreeList tl = new TreeList(10);
-  for (int i = 0; i < 10; i++) {
-    tl.add(i);
-  }
-  ListIterator it = tl.listIterator();
+  \begin{minted}[linenos,frame=topline,breaklines,highlightlines={3,5,7},highlightcolor=YellowOrange!20]{java}
+public class TreeListTest {
+    public void testIterationOrder() {
+        TreeList tl = new TreeList(10);
+        for (int i = 0; i < 10; i++) {
+            tl.add(i);
+        }
+        ListIterator it = tl.listIterator();
   \end{minted}
-  \begin{minted}[linenos,frame=bottomline,breaklines,firstnumber=last,highlightlines={10},highlightcolor=YellowGreen!20]{java}
-  int i = 0;
-  while (it.hasNext()) {
-    Integer val = it.next();
-    assertEquals(i++, val.intValue());
-  }
+  \begin{minted}[linenos,frame=bottomline,breaklines,firstnumber=last,highlightlines={11},highlightcolor=YellowGreen!20]{java}
+        int i = 0;
+        while (it.hasNext()) {
+            Integer val = it.next();
+            assertEquals(i++, val.intValue());
+        }
+    }
 }
   \end{minted}
-  \caption{Example of an object-oriented unit test (taken from the Apache Commons Collections, in the class TreeListTest, line 270): it consists of test inputs (lines 2--6) that manipulate the SUT\@; and assertions (line number 10).\todo{what about lines 8 \& 9}}%
+  \caption{Example of an object-oriented unit test (taken, and adapted for readability, from the Apache Commons Collections, in the class TreeListTest, line 270\protect\footnotemark): it consists of test inputs (lines 3--7) that manipulate the SUT\@; and assertions (line 11).\todo{what about lines 9 \& 10}}%
 \label{lst:test_example}
 \end{listing}
+\footnotetext{\url{https://commons.apache.org/proper/commons-collections/xref-test/org/apache/commons/collections4/list/TreeListTest.html\#L271}}
+\todo{the link might break in the future}
+\todo{kinda assumes that \texttt{.hasNext()} and \texttt{.next()} are working properly}
 
 An example of unit test is given in \listingname~\ref{lst:test_example}.
+Tests are usually sorted in classes, and each test case corresponds to a method (which is why test cases are sometimes refered to as test methods, as we will encounter later on).
+Specifications of expected values for observations are written using \emph{assertions}.
+When the condition of an assertion is not met, we call it an assertion \emph{failure}, it raises an exception\rephrase{} and causes the test case to fail.
+Assertions are a feature of test frameworks (i.e.\ internal DSL~\cite{fowler2010domain}), and allow test cases to be regular pieces of code.
+This has advantages and disadvantages, it is easy to write test cases but might not be the most friendly\rephrase{} way to express a property on the software artifact targeted.
+Test methods often rely on naming conventions to help the reader understand what is the target, and what behaviour it is checking.
+Another pitfall to avoid is to test properties for the programming language used.
 
-\todo{why we sometimes speak about test methods}
+Unit tests are usually written by software engineers, as they are the one with the knowledge of the expected behaviour for the piece of software they have produced.
+Large companies will also have test engineers, focusing on broader tests and commercially important features, as well as software engineers working on test infrastructure and tooling\footnote{\url{https://testing.googleblog.com/2016/03/from-qa-to-engineering-productivity.html}}.
+Unit testing has becoming an integral part of modern software development with practices such as Test-driven Development (TDD)\footnote{\url{https://en.wikipedia.org/wiki/Test-driven_development}}~\cite{beck2003test} that consists in writing test cases first, and then writing code that complies.
+Test automation in general is also a pillar of modern software delivery cycles like DevOps\footnote{\url{https://en.wikipedia.org/wiki/DevOps}}.
+Tests can then be refined using exploratory testing~\cite{kaner2000testing}, by trying to manually find flaws while documenting the process to then implement the results as test cases.
+Manual testing is particularly useful to rapidly detect issues like slow response time, misleading error messages and other design concerns.
 
-\todo{can we link blog post from google and martin fowler to say that it's a difficult engineering problem}
+\begin{wrapfigure}[23]{R}{17em}
+  \centering
+  \includegraphics[width=17em]{component_dependency}
+  \caption{Test target's dependencies.}%
+  \label{fig:component_dependency}
+\end{wrapfigure}
 
-\todo{evoke `software artifact'}
+Because unit test are written with the same programming language as their target, certain features of the language --- that are supposed to help developers write clean code --- can become a hindrance.
+A perfect example with Java are the private methods.
+They exist because they enforce the separation of the public interface and the inner workings of a class.
+But when one want to test a private method to make sure it does the right thing, it is not possible.
+The alternative is to extensively test the public methods, making sure they trigger all sorts of behaviour in the private part of the class.
+In this situation, we end testing a component that interacts with other components, as depicted in \figurename~\ref{fig:component_dependency}, but then it becomes a small integration test\footnote{\url{https://martinfowler.com/bliki/UnitTest.html}}.
+The granularity of tests does not only depends on the needs and desires of the developer, but also on the limitations of the language.
+Object-Oriented are particularly victim to this, as they are suited for composition design patterns~\cite{wolfgang1994design}, leaving no other option to the developer to try and limit interactions.
+Ways to avoid writing test that trigger a long chain of reactions is to use doubles (or mocks) which are hand written clones of classes instances.\rephrase{}
 
-\todo{problems with OO, private methods, composition design patterns~\cite{wolfgang1994design}}
-
-\todo{it's a program (and thus it carries pros and cons on comprehension and ease of use) (and it's a internal DSL~\cite{fowler2010domain})}
-
-\todo{having small focused tests also reduce the likelihood of having a flaky test\footnote{\url{https://testing.googleblog.com/2017/04/where-do-our-flaky-tests-come-from.html}}}
-
-\todo{dependencies\footnote{\url{https://martinfowler.com/bliki/UnitTest.html}}}
+Another common problem with testing are flaky tests.
+A flaky test is a test which result is not deterministic.
+There can be various causes for a flaky test, e.g.\ a direct usage of RNG function, or a crash happening only in scenario with a certain scheduling in the case of parallel applications.
+The advantage of small tests with controlled interaction with the environment is that they are less likely to be flaky.
+This a hard problem\footnote{\url{https://testing.googleblog.com/2017/04/where-do-our-flaky-tests-come-from.html}} as flaky tests can be (i) hard to identify, (ii) hard to refactor, and (iii) hard to avoid in the first place.
 
 % --------------------------------------------------------------------------------
 \subsection{Elementary Metrics}%
@@ -261,6 +302,8 @@ It is generally acknowledged that a system with high coverage means that the sys
 \end{itemize}
 
 \todo{\footnote{\url{https://testing.googleblog.com/2009/09/7th-plague-and-beyond.html}}Metrics change behavior and once a tester knows how the measurement works, they test to make themselves look good or say what they want it to say ignoring other more important factors. The metric becomes the goal instead of measuring progress.}
+
+\todo{simple metrics do not reward diversity and efficiency\footnote{\url{https://testing.googleblog.com/2009/06/by-james.html}}~\cite{baudry2014diversify,baudry2015multiple}}
 
 % --------------------------------------------------------------------------------
 \subsection{Mutation Testing}%
@@ -382,7 +425,7 @@ In this Section, we provide more context for this thesis' contribution.
 \label{ssec:dspot}
 \begin{figure}
   \centering
-  \includegraphics[width=35em]{spaces_report}
+  \includegraphics[width=36em]{spaces_report}
   \caption{On the left, the testing input space is composed by specified input points (orange diamonds) and unspecified input points (black diamonds). On the right, the observation space over a given program state depicts the assertions of tests. The green circles are values that are already asserted in the existing test suite, the newly added assertions are shown as black circles.}%
 \label{fig:spaces}
 \end{figure}
@@ -514,6 +557,8 @@ Several works have highlighted the need for test documentation~\cite{prado2015wa
 \todo{SWUM~\cite{hill2010integrating}}
 \cite{alali2008s,hattori2008nature,letovsky1987cognitive}
 
+\todo{what informations we have at our disposal: original test, amplified test, tagged amplified nodes}
+
 List of possible information:
 \begin{itemize}
   \item control flow branches
@@ -541,7 +586,7 @@ List of possible information:
 \label{ssec:threat_to_validity}
 \todo{}
 
-\todo{DSpot is not yet established and recognized in the community. It's is difficult to have input data (valid amplified tests)}
+\todo{DSpot is not yet established and recognized in the community. It is is difficult to have input data (valid amplified tests)}
 
 
 % ================================================================================
