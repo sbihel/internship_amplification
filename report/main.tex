@@ -284,8 +284,6 @@ There can be various causes for a flaky test, e.g.\ a direct usage of RNG functi
 The advantage of small tests with controlled interaction with the environment is that they are less likely to be flaky.
 This a hard problem\footnote{\url{https://testing.googleblog.com/2017/04/where-do-our-flaky-tests-come-from.html}} as flaky tests can be (i) hard to identify, (ii) hard to refactor, and (iii) hard to avoid in the first place.
 
-\todo{unit tests also make up for examples in OSS}
-
 \todo{how do you know you have a good oracle}
 
 % --------------------------------------------------------------------------------
@@ -334,8 +332,7 @@ The idea is to insert bugs in the software and see if these faulty versions stil
 We call the derived versions \textit{mutants}, hence the name mutation testing.
 When a mutant goes through the test suite without making a single test fail, it is considered \emph{live}, and the opposite case it is considered \emph{dead}.
 The global process is depicted in~\figurename~\ref{fig:spaces}.
-The main appeal is that, a test suite with a good mutation score, in addition to ensure the well behaviour of the SUT in useful scenarios, it can detect bad behaviours --- which is particularly useful for regression testing.
-\todo{rework that sentence}
+The main appeal is that, a test suite with a good mutation score, in addition to ensure the well behaviour of the SUT in useful scenarios, it can detect bad behaviours --- which is particularly useful for regression testing.\rephrase{}
 There is a correlation between mutation score and coverage score as test suites with high mutation score tend to have good coverage~\cite{assylbekov2013investigating}.
 It has been found that correlations between mutation scores and real fault detection are weak~\cite{papadakis2018mutation,just2014mutants}.
 
@@ -368,7 +365,7 @@ Some mutants, although they have a different program than the original, have the
 Which means that they will always pass the test suite and will not bring any insight on the SUT\@.
 The generation of mutants that are simply syntactically valid is also a non-trivial problem that requires pattern replacement instead of simple text replacement~\cite{simao2009transformational}.
 
-Another difficulty for mutation testing to take on in the industry is the lack of understanding by practitioners.\todo{rework that sentence}
+Another difficulty for mutation testing to take on in the industry is the lack of understanding by practitioners.\rephrase{}
 The process of mutation and elimination can be confusing.
 But also, when a mutant is live, it is not always clear what actions should be taken in order to kill it.
 \todo{maybe add more}
@@ -400,24 +397,38 @@ An example of mutation coverage visual report is shown in \figurename~\ref{fig:s
 % --------------------------------------------------------------------------------
 \subsection{The Need for Easy-to-use Tools}%
 \label{ssec:need_easy}
-\todo{easy to understand}
-\todo{useful for surveys}
-\cite{delahaye2015selecting}
+Software Engineering, as a research field, being tightly coupled with practices in the industry, it is important to understand the attempts at transfering research knowledge to the industry.
+There are many reasons to help the industry, for example: reducing the risks of bugs in critical systems, automating the development process, etc.
+One way researcher often go, is to develop a tool and then try to introduce it in the workflow of practictioners.
+But even with good intentions, the process of acceptance by practitioners for a research product is often complicated~\cite{delahaye2015selecting}.
 
-\todo{tests are written by regular developers, even though there are engineers specialised in testing\footnote{\url{https://testing.googleblog.com/2016/03/from-qa-to-engineering-productivity.html}}}
-\todo{hard to move the industry forward}
-\todo{we share similar experience with static analysis tool researchers}
-\todo{avoid false positives, angry developers, must feel they benefit from the tool, enjoy using it~\cite{bessey2010few,sadowski2018lessons}}
-\todo{\emph{effective false positives}~\cite{sadowski2015tricorder}}
+An issue that is often faced, is the difficulty for practitioners to understand the usage of the tool, or even its purpose.
+Thus, not only should a researcher consider the amount of bugs their tool can detect, they should also make sure it is accessible and easy to understand.
+Having an easy-to-use tool can also open new paths for research, reveiling new problems, and making studies with professional developers easy.
+
+Valuable experience has been earned from static analysis researchers' attempts at integrating their tools in the workflow of their engineer colleagues~\cite{bessey2010few,sadowski2015tricorder,sadowski2018lessons}.
+Each false positive undermines the trust developers have in the tool.
+Each misunderstood error make developers angry.
+And each warning that do not \emph{feel} relevant to the developer raise the likelihood that future warnings will be ignored.
+As humans, we avoid change unless it is necessary or is directly beneficial to us.
+Developers do not want to be slowed down by additional actors in their workflow, and companies do not want additional cost with little return.
+
+The field of software testing, in which this thesis is set, is no stranger to this problem.
+Tests are, in most cases, written and maintained by general software engineers.
+Thus we must aim at producing tools with little overhead and fully integrated with popular test frameworks --- making it easy for developers to try and see if the tool fits their need or not, and if they incorporate it in their workflow, it brings important data to demonstrate the scientific value of the tool.
 
 % --------------------------------------------------------------------------------
 \subsection{Cognitive Support Tool Development}%
 \label{ssec:cognitive_support}
 \todo{}
-\cite{oviatt2006human}
-\cite{stol2016grounded}
+Acceptance of a tool, outside of the research world, depends on many parameters, including its accessibility.
+In this section we describe how a tool can be designed to fit this requirement.
 
-\todo{case studies~\cite{flyvbjerg2006five}}
+Research has been done on designing tool that do not overwhelm users (e.g.\ designing interfaces~\cite{oviatt2006human}) and theories on design processes have been developped.
+The grounded theory~\cite{stol2016grounded}, for example, argues for an iterative design process, by refining the product based on data and feedback from users.
+
+Another method of evaluation that should not be dismissed are case studies~\cite{flyvbjerg2006five}.
+\todo{}
 
 
 % ================================================================================
@@ -434,7 +445,7 @@ Section~\ref{ssec:dspot} introduces~\dspot{}, a tool that enhances tests for a b
 \todo{}
 
 Genetic improvement (GI)~\cite{petke2017genetic} uses automated search \todo{explain what automated search is} to find improved versions of existing software.
-Applying search-based techniques for software engineering problems is not new~\cite{mcminn2011search} as is the field of genetic programming (GP)~\cite{koza1994genetic}.
+Applying search-based techniques for software engineering problems is not new~\cite{mcminn2011search} as is the field of genetic programming (GP)~\cite{koza1994genetic} (with, at the time of writing this thesis, is comprised of 12000 references\footnote{\url{http://www.cs.bham.ac.uk/~wbl/biblio/}}).
 But since\rephrase{} the name of GI has been coined in 2012~\cite{harman2012gismoe}, the level of computing power reached has allowed research to achieve impressive results.
 
 \addref{fundational papers}
@@ -443,6 +454,8 @@ But since\rephrase{} the name of GI has been coined in 2012~\cite{harman2012gism
 
 Search operators are most frequently \emph{delete}, \emph{copy} and \emph{replace}~\cite{petke2017new}.
 \todo{}
+
+\todo{complex search techniques are not always the most efficient, and OO, again, pose certain challenges and limitations~\cite{shamshiri2017random}}
 
 % --------------------------------------------------------------------------------
 \subsection{Test Amplification}%
@@ -486,9 +499,13 @@ Because the random amplification can create flaky tests, they are executed three
 As for the amplification of observations (A-Amplification), focus is put on checking more properties to kill more mutants.
 Assertions are generated as follows: the state of program is collected after execution of the test case to know the actual values and use these values as oracle.
 
+Using mutation score as the target metric allows us to see the problem of amplification as a problem of finding bugs.
+In other words~\cite{shamshiri2015automatically}, the amplification process consists of improving the code coverage to execute faulty statements, and improving the propagation of faulty program states to an observable output.
+
 \dspot{} is different from traditional test generator like EvoSuite~\cite{fraser2011evosuite} for multiple reasons.
 It is more than just using the existing test suite as a good starting population.
 \todo{}
+\cite{rojas2017detailed}
 
 The result of \dspot{} is a set of amplified tests but it should not stop there.
 Building incrementally on top of humans work is valuable.
@@ -497,84 +514,101 @@ First, is the review process.
 Developers have to review changes before it is accepted in the main code.
 During the review process developers can tweak the assertions, rearrange the inputs, etc.
 In that sense, \dspot{} fits as a software development bot, integrated in the workflow~\cite{urli2018design}, that could be run on code changes, after making sure the tests suite is passing.
+The amplified tests would then be submitted as a Pull Request (or Merge Request) in the code version control platform used.
 Secondly, it is more efficient.\todo{}
 
 
 % ================================================================================
 \section{Problem Statement}%
 \label{sec:problem_statement}
-This thesis aim at helping developers understand amplified tests.
+This thesis aim at helping developers understand amplified unit tests.
 There are two sides for this problem: supporting the developer understand the test (Section~\ref{ssec:need_doc}) and cleaning the tests from the noise injected during the amplification process (Section~\ref{ssec:random_noise}).
-
-\todo{understanding the test is essential~\cite{bessey2010few,sadowski2018lessons}}
-\todo{important for maintenance when a test comes to fails, to build trust in the tool, etc.}
-
-\addref{How Do Automatically Generated Unit Tests Influence Software Maintenance?}
 
 % --------------------------------------------------------------------------------
 \subsection{The Need for Unit Test Cases Documentation}%
 \label{ssec:need_doc}
-\todo{}
-Several works have highlighted the need for test documentation~\cite{prado2015wap,prado2016advances,prado2018towards,li2016automatically,daka2014survey,panichella2016impact}.
+The first challenge in rendering generated tests comprehensible, is to bundle them with explanations, like we do by documenting the code we write.
+Several works have already highlighted the need for test documentation, with developers surveys~\cite{daka2014survey,prado2015wap,prado2016advances,prado2018towards,li2016automatically} and experiments~\cite{panichella2016impact} to measure the added value of documentation.
+Even when they are short, tests can be complex and hard to understand.
+In all cases, having documentation --- which include documentation comments like JavaDoc, but also the naming of the tests and variable --- has many advantages~\cite{daka2017generating}\addref{How Do Automatically Generated Unit Tests Influence Software Maintenance?}:
+\begin{itemize}
+  \item faster to get familiar with the test;
+  \item faster fault localisation (e.g.\ figuring out if there is a bug in the test or the SUT) when the test fails; and
+  \item helps building trust in a test generator if it can offer a proof for its result.
+\end{itemize}
 
-\todo{tests are complex}
+Information to understand can be divided into four categories: (i) the component targeted; (ii) the context of the test method; (iii) the actual piece of code (i.e.\ the logic) that is the test method; and (iv) the properties checked.
+And we can split them again in two groups: the \emph{what} and \emph{why} informations.
+As we will see in Section~\ref{sec:related_works}, extensive works have been produced to generate automatic documention of the what information.
+As for the why information, it is difficult to automatically extract the motivation of the developper that wrote the test.
+But in the case of generated test, we have the reason why they were kept: they bring something to the metric.
+Thus, if we focus on amplification for mutation score, we would need to explain this score and what new mutants are killed.
+A lack of works on assisting humans to get the grasp of a mutation score makes a good case for us to tackle the problem of explain a killed mutant.
 
-\todo{lack of why information}
-
-\todo{the code the test interacts with; what the code does; what is expected}
-
-\todo{programmers like short textual description}
-
-\todo{explain what li2016automatically has done}
-
-\todo{talk about the field of software maintenance~\cite{swanson1976dimensions}}
-
-\todo{lack of work on generating human friendly descriptions for mutation testing}
+In source code management platforms, pull requests (through which amplified are submitted for review and merge in the main branch) are accompanied by textual descriptions.
+Given that amplified tests should, in most cases, extend an existing test --- that we can suppose have documentation already --- the explanation of the added value of the amplification would fit in the pull request description.
+It is important to restrict the scope to simple text, as it would not require a change in developers workflow.
 
 % --------------------------------------------------------------------------------
 \subsection{The Generated Random Noise}%
 \label{ssec:random_noise}
-\todo{}
+Through the search process, noise is injected in the test case.
+This problem of ugly generated tests code is a shared problem between all kinds of generators~\cite{rojas2017search}.
+Because documentation is not sufficient to understand and review the code, it needs to be clean and logical to help the comprehension.
 
-\todo{One problem shared with test generation from scratch is that it's hard to understand the test, it's messy}
+On a side note, in many modest projects, unit test are used as examples of the program's usage, and sometimes they replace traditional documentation.
+In those cases, developers put a lot of efforts in making tests easy to understand.
+Doing part of that chore automatically would remove part of the burden for humans.
 
 
 % ================================================================================
 \section{Related Works}%
 \label{sec:related_works}
-\todo{}
+In this section we review the large body of related works from the domain of software maintenance~\cite{swanson1976dimensions}.
+They range from documenting general purpose source code (Section~\ref{ssec:doc_generation}), to commit message generation (Section~\ref{ssec:commit_generation}), and documenting test cases (Section~\ref{ssec:test_doc}).
 
 % --------------------------------------------------------------------------------
-\subsection{Automatic Test Case Documentation}%
-\label{ssec:test_doc}
-\todo{}
+\subsection{Source Code Documentation}%
+\label{ssec:doc_generation}
+Works on source code documentation --- also called software artifact summarization --- often consist of retrieving information from the source code to then arrange this information in a way that is easier and quicker to grasp for a human.
+This section does not aim at providing a survey of the field (for which there are already~\cite{jones2007automatic,nazar2016summarizing,neubig2016survey,wang2018comment}), but to present the general techniques used as well as the kind of results those tools produce.
 
-\todo{paraphrasing the code; lack of why information}
+As said above, such tools will rearrange information, stripping irrelevant pieces, summarizing chucks on code, and put central information on the front.
+In other words, they render the what information in a human comprehensible way --- they \emph{paraphrase} the code.
+This is the main reason why, even automatic summarization of natural language documents has been attempted by researchers for more than half a century~\cite{jones2007automatic}, finding a link with our problem of explaining the why information is not trivial.
 
-\todo{stereotypes are for general purpose code}
+\todo{works on describing code written by humans~\cite{wang2018comment,dragan2006reverse,dragan2011emergent,moreno2012jstereocode,buse2008automatic,sridhara2010towards,herbert2016swummary,mcburney2016automatic,sridhara2011automatically,moreno2013automatic} (e.g.\ mining comments, method and class stereotypes (too general purpose), summary, simple (syntactic) context, nl paraphrasing)}
 
-\cite{neubig2016survey,nazar2016summarizing,li2016automatically,li2018automatically,kamimura2013towards,ghafari2015automatically}
+\todo{make a table?}
 
-\todo{there are also works on documenting code changes (i.e.\ commits)}
+% --------------------------------------------------------------------------------
+\subsection{Source Code Change Documentation}%
+\label{ssec:commit_generation}
+Software evolves, iteratively, line by line, commit by commit.\rephrase{}
+Past the phase of assimilation when a developer first start to work a on project, a significant part of the job consists of managing the growth of the project, making small changes to the code base without unwanted side effects, and reviewing commits.
+Commits bundle a cohesive set of changes with a textual description, in which it is customary to provide some context, the motivation and possibly a digest of the changes --- part what and part why information.
+Although developers view accurate and concise descriptions as useful, few put the efforts in writing such comments.
+In consequence, researchers have written tools to automatically generate commit messages.
+
 \cite{cortes2014automatically,linares2015changescribe,dragan2011using,jiang2017towards,jiang2017automatically,shen2016automatic,buse2010automatically}
 \todo{machine learning neural network~\cite{loyola2017neural}}
 \todo{purely what information, characterizing the mechanisms of change~\cite{buckley2005towards}}
 
-\todo{works on describing code written by humans~\cite{wang2018comment,dragan2006reverse,dragan2011emergent,moreno2012jstereocode,buse2008automatic,sridhara2010towards,herbert2016swummary,mcburney2016automatic,sridhara2011automatically,moreno2013automatic} (e.g.\ mining comments, method and class stereotypes (too general purpose), summary, simple (syntactic) context, nl paraphrasing)}
+% --------------------------------------------------------------------------------
+\subsection{Automatic Test Case Documentation}%
+\label{ssec:test_doc}
+Finally, the piece of work that is most related to this thesis is about documentation for test cases.
+Because of test cases are one precise kind of software artefact, the works that we have covered in the previous two sections can be cumbersome here (e.g.\ stereotypes are not suited).
 
-\todo{Automatic summarization of natural language documents has been attempted by researchers for more than half a century~\cite{jones2007automatic}}
-
+\cite{neubig2016survey,nazar2016summarizing,li2016automatically,li2018automatically,kamimura2013towards,ghafari2015automatically}
 
 \todo{fully fledged GUI on method execution report~\cite{beck2017method} fully fledged GUI for mutants~\cite{delamaro2001proteum} providing information on mutant and test case}
 
-% --------------------------------------------------------------------------------
-\subsection{Cognitive Support for Unit Testing Review}%
-\label{ssec:cognitive_support_unit_test}
-\todo{}
+\todo{code defenders to explain mutation testing}
 
 % --------------------------------------------------------------------------------
-% \subsection{Source Code Change Documentation}%
-% \label{ssec:commit_generation}
+% \subsection{Cognitive Support for Unit Testing Review}%
+% \label{ssec:cognitive_support_unit_test}
 % \todo{}
 
 
@@ -613,7 +647,7 @@ Several works have highlighted the need for test documentation~\cite{prado2015wa
 \subsection{Slicing}%
 \label{ssec:slicing}
 \todo{}
-\cite{dolby2015tj}\footnote{\url{http://wala.sourceforge.net/}}
+\footnote{\url{http://wala.sourceforge.net/}}~\cite{dolby2015tj}
 
 % --------------------------------------------------------------------------------
 \subsection{Natural Language Description}%
@@ -628,7 +662,13 @@ Several works have highlighted the need for test documentation~\cite{prado2015wa
 \todo{SWUM~\cite{hill2010integrating}}
 \cite{alali2008s,hattori2008nature,letovsky1987cognitive}
 
-\todo{what informations we have at our disposal: original test, amplified test, tagged amplified nodes}
+\todo{}
+Elements at our disposal:
+\begin{enumerate}
+  \item the original test;
+  \item the amplified test (its AST representation, with annotated amplified nodes); and
+  \item the newly killed mutants.
+\end{enumerate}
 
 List of possible information:
 \begin{itemize}
@@ -689,8 +729,8 @@ Many thanks to KTH for hosting me.
 
 
 % ================================================================================
+\addcontentsline{toc}{section}{References}
 \bibliographystyle{ieeetr}%
 \bibliography{../bibl}
-\addcontentsline{toc}{section}{References}
 
 \end{document}
