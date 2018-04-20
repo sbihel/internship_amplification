@@ -13,6 +13,9 @@
 \usepackage{textcomp}
 \usepackage{cprotect}
 
+\usepackage{enumitem}
+\setlist{nolistsep}
+
 \pagestyle{plain}
 
 \usepackage{hyperref}
@@ -286,6 +289,8 @@ This a hard problem\footnote{\url{https://testing.googleblog.com/2017/04/where-d
 
 \todo{how do you know you have a good oracle}
 
+\todo{jUnit~\footnote{\url{https://junit.org/}}}
+
 % --------------------------------------------------------------------------------
 \subsection{Elementary Metrics}%
 \label{ssec:elementary_metrics}
@@ -378,7 +383,8 @@ One of these tools is PIT\footnote{\url{http://pitest.org/}}~\cite{coles2016pit}
 The research version (i.e.\ state-of-the-art) of PIT is known to perform better than its competitors overall~\cite{kintis2017effective}.
 Two technical details are interesting for us.
 The first one is the way it stores the mutants generated.
-\todo{}
+The location of a mutant is specified by (i) the name of the method and class, (ii) the method signature and (iii) the instruction on which the mutation occurs.
+This little information is sufficient to recreate each mutant while having a small storage footprint.
 The other important detail is that PIT is deterministic.
 That is, for the same program, the same mutants will always be generated, and thus the mutation score will always be the same.
 
@@ -445,7 +451,7 @@ Section~\ref{ssec:dspot} introduces~\dspot{}, a tool that enhances tests for a b
 \todo{}
 
 Genetic improvement (GI)~\cite{petke2017genetic} uses automated search \todo{explain what automated search is} to find improved versions of existing software.
-Applying search-based techniques for software engineering problems is not new~\cite{mcminn2011search} as is the field of genetic programming (GP)~\cite{koza1994genetic} (with, at the time of writing this thesis, is comprised of 12000 references\footnote{\url{http://www.cs.bham.ac.uk/~wbl/biblio/}}).
+Applying search-based techniques for software engineering problems is not new~\cite{mcminn2011search} as is the field of genetic programming (GP)~\cite{koza1994genetic} (with, at the time of writing this thesis, is comprised of over 12000 references\footnote{\url{http://www.cs.bham.ac.uk/~wbl/biblio/}}).
 But since\rephrase{} the name of GI has been coined in 2012~\cite{harman2012gismoe}, the level of computing power reached has allowed research to achieve impressive results.
 
 \addref{fundational papers}
@@ -565,13 +571,14 @@ Doing part of that chore automatically would remove part of the burden for human
 \section{Related Works}%
 \label{sec:related_works}
 In this section we review the large body of related works from the domain of software maintenance~\cite{swanson1976dimensions}.
+We are interested in tools that automatically generate documentation --- and there are many of them, as it is well known that software documentation is important~\cite{de2005study} (even for modern agile methods) but it is time-consuming, often times poor and incomplete~\cite{briand2003software}, and is hard to maintain~\cite{forward2002relevance}.
 They range from documenting general purpose source code (Section~\ref{ssec:doc_generation}), to commit message generation (Section~\ref{ssec:commit_generation}), and documenting test cases (Section~\ref{ssec:test_doc}).
 
 % --------------------------------------------------------------------------------
 \subsection{Source Code Documentation}%
 \label{ssec:doc_generation}
 Works on source code documentation --- also called software artifact summarization --- often consist of retrieving information from the source code to then arrange this information in a way that is easier and quicker to grasp for a human.
-This section does not aim at providing a survey of the field (for which there are already~\cite{jones2007automatic,nazar2016summarizing,neubig2016survey,wang2018comment}), but to present the general techniques used as well as the kind of results those tools produce.
+This section does not aim at providing a survey of the field (for which there are already~\cite{jones2007automatic,nazar2016summarizing,neubig2016survey,wang2018comment} \todo{give some info on what is the focus of each survey}), but to present the general techniques used as well as the kind of results those tools produce.
 
 As said above, such tools will rearrange information, stripping irrelevant pieces, summarizing chucks on code, and put central information on the front.
 In other words, they render the what information in a human comprehensible way --- they \emph{paraphrase} the code.
@@ -580,6 +587,15 @@ This is the main reason why, even automatic summarization of natural language do
 \todo{works on describing code written by humans~\cite{wang2018comment,dragan2006reverse,dragan2011emergent,moreno2012jstereocode,buse2008automatic,sridhara2010towards,herbert2016swummary,mcburney2016automatic,sridhara2011automatically,moreno2013automatic} (e.g.\ mining comments, method and class stereotypes (too general purpose), summary, simple (syntactic) context, nl paraphrasing)}
 
 \todo{make a table?}
+
+\todo{SWUM~\cite{hill2009automatically,hill2010integrating}}
+\todo{programmers tend to choose descriptive and meaningful names for code units~\cite{liblit2006cognitive}}
+They usually contain well structured phrases that can be used to construct NL descriptions of code units without having to understand the code.
+
+Rastkar et al.~\cite{rastkar2010summarizing} worked on summarizing bug reports.
+Works related to bug reports are important for us as a killed mutant is a bug in a certain way --- but the knowledge we can extract from these works is not obvious because part of the job of a bug report is to help localise the bug, and in the case of mutation testing we already know the source.
+Nevertheless, we can learn from these works how to explain the repercussions of a mutant.
+\todo{}
 
 % --------------------------------------------------------------------------------
 \subsection{Source Code Change Documentation}%
@@ -594,22 +610,73 @@ In consequence, researchers have written tools to automatically generate commit 
 \todo{machine learning neural network~\cite{loyola2017neural}}
 \todo{purely what information, characterizing the mechanisms of change~\cite{buckley2005towards}}
 
+Rastkar et al.~\cite{rastkar2011generating} produced a generator of feature summary for Java projects, to help programmers be aware of, and understand, the ramifications of a feature.
+A summary provides the number of methods implementing the feature, objects supported, dependencies, and names of methods involved.
+NL sentences are generated with templates.
+
 % --------------------------------------------------------------------------------
 \subsection{Automatic Test Case Documentation}%
 \label{ssec:test_doc}
 Finally, the piece of work that is most related to this thesis is about documentation for test cases.
 Because of test cases are one precise kind of software artefact, the works that we have covered in the previous two sections can be cumbersome here (e.g.\ stereotypes are not suited).
 
-\cite{neubig2016survey,nazar2016summarizing,li2016automatically,li2018automatically,kamimura2013towards,ghafari2015automatically}
+As unit tests validate a specific component, in object-oriented languages like Java, they often consist in calling a few methods, multiple times, that will affect the sate of an object and then verify that the object is in the right state.
+This kind of method is called a \emph{focal} method, and Ghafari et al.~\cite{ghafari2015automatically} have developed a way to automatically identify them.
+\todo{}
+\todo{not particularly interested in it as we want to explain a corner case (i.e.\ a mutant)}
+\todo{can use stereotypes to put more confidence that the right focal method was identified}
 
-\todo{fully fledged GUI on method execution report~\cite{beck2017method} fully fledged GUI for mutants~\cite{delamaro2001proteum} providing information on mutant and test case}
+Cornelissen et al.~\cite{cornelissen2007visualizing} propose the use of sequence diagrams\footnote{\url{https://en.wikipedia.org/wiki/Sequence_diagram}} to visualize Java test cases.
+Because test suites are sometimes the entry points for new contributors to understand the scope and the inner workings of a project, visualizing the actors and their interactions can be more useful than a simple class diagram.
+Diagrams can be used for complex test cases as they hide certain call (e.g.\ constructors) and have limited call stack depth.
 
-\todo{code defenders to explain mutation testing}
+\todo{A unit test case typically has fous phases: setup, exercise, verify and teardown~\cite{meszaros2007xunit}.}
 
-% --------------------------------------------------------------------------------
-% \subsection{Cognitive Support for Unit Testing Review}%
-% \label{ssec:cognitive_support_unit_test}
-% \todo{}
+Kamimura et al.~\cite{kamimura2013towards} have developed a generator of textual summaries for Java test cases.
+A summary is composed of NL paraphrases of the most unique method invocations and the assertions.
+There are some interesting details, for example, when a variable's name is too short (e.g.\ ``a1'') they make-up a new name with the variable's type.
+Sentences are built using pre-defined templates.
+
+Li et al.~\cite{li2016automatically} have written a C\# tool that generates descriptions for test methods.
+The output, a GUI window, is comprised of 4 pieces of information:
+\begin{enumerate}
+  \item a general sentence describing the purpose of the test method (based on class, method and arguments signatures using the SWUM approach);
+  \item descriptions of the focal methods (i.e.\ the line number and the assertion it is linked to);
+  \item descriptions of the assertions (i.e.\ natural language (NL) paraphrasing); and
+  \item the slicing paths (backward slicing~\cite{jhala2005path}) for the variables validated with an assertions (i.e.\ NL paraphrasing of each step).
+\end{enumerate}
+NL sentences are generated with templates.
+% boilerplates\footnote{\url{https://en.wikipedia.org/wiki/Boilerplate_text}} and keywords.
+
+Li~\cite{li2018automatically} also proposed 21 stereotypes for methods in Java unit tests, based on the jUnit\footnote{\url{https://junit.org/}} API (14 stereotypes) but also using the data and control flow (7 stereotypes).
+The API-based stereotypes allows to extract fine grained what information --- for example, with \mintline{java}{}\todo{}
+On the other hand, data/control flow analyses can capture the context of the API calls.\todo{}
+
+Beck et al.~\cite{beck2017method} wrote a framework that generates method execution reports, mostly textual but with a few embedded visualisations.
+The report includes a summary (number of calls, recursion), summaries for each method calls (number of calls, recursion depth), time consumption tear down, and the code.
+Embedded visualisations consists of fills bars for relative quantities and histograms for recursion stack.
+The text generation involves sentence templates and decision graphs (e.g.\ if there is recursion then present recursion information).
+All data are collected dynamically.
+
+Delamaro and Maldonado~\cite{delamaro2001proteum} developed a fully fledged GUI for mutation testing, providing test cases execution and management, mutants creation and management, and mutation score reports.
+A report includes general information like the test cases and the killed mutant's names, the compilation command used, etc.
+
+\textsc{Code Defenders}\footnote{\url{http://code-defenders.org/}}~\cite{rojas2017code} is a game\footnote{\url{https://en.wikipedia.org/wiki/Gamification_of_learning}} that aims at teaching~\cite{clegg2017teaching} software testing concepts, especially mutation testing.
+In this game, players are either attackers or defenders.
+Attackers write mutants, and defenders write tests cases.
+If there are more killed mutants than live ones the defenders are the winner, and conversely if there are more live mutants.
+The way a mutant is presented is with a simple \texttt{diff} (i.e.\ the modified statement is highlighted).
+This representation makes sense in a GUI with mutants on one side and the tests on the other side.
+Another motivation is that the game aims at teaching the current state of mutation testing.
+Because of these two choices, it is hard for us to draw inspiration.
+
+% \todo{SCOTCH, but maybe it's not useful because we already know the part of the code we are interested in: the mutant. But maybe it's not the case as we try to inform the dev without involving mutants}
+Qusef et al.~\cite{qusef2011scotch} worked on keeping track of traceability between Java unit tests and tested class, to maintain consistency in test classes and give some hints on the target of a test case.
+They use dynamic slicing~\cite{korel1988dynamic} to identify all the classes that affect the result of the last assert statement in each unit-test method.
+And, because the slicing is an overestimate, they use conceptual coupling~\cite{poshyvanyk2009using} (analysing names and comments) to filter out superfluous classes (e.g.\ mock objects).
+This problem of traceability is useful for us as we would like the amplified tests to remain in the same scope as the original, aiming for a more through coverage of the target instead of just random mutants.
+
+Except for Proteum/IM 2.0~\cite{delamaro2001proteum} that uses a case study, all the papers related to human assistance reviewed here were evaluated with developers surveys.
 
 
 % ================================================================================
@@ -649,6 +716,8 @@ Because of test cases are one precise kind of software artefact, the works that 
 \todo{}
 \footnote{\url{http://wala.sourceforge.net/}}~\cite{dolby2015tj}
 
+\todo{srcSlice\footnote{\url{https://github.com/srcML/srcSlice}}~\cite{newman2016srcslice} does not support Java (yet)}
+
 % --------------------------------------------------------------------------------
 \subsection{Natural Language Description}%
 \label{ssec:nl_description}
@@ -659,7 +728,6 @@ Because of test cases are one precise kind of software artefact, the works that 
 \todo{avoid talking about mutants}
 \todo{How to describe a mutant}
 
-\todo{SWUM~\cite{hill2010integrating}}
 \cite{alali2008s,hattori2008nature,letovsky1987cognitive}
 
 \todo{}
@@ -680,6 +748,9 @@ List of possible information:
 \end{itemize}
 
 \todo{on the usefulness of nlg}
+
+\todo{what can we draw from the related works}
+\todo{assuming knowledge of original test or not}
 
 % --------------------------------------------------------------------------------
 \subsection{Ranking}%
