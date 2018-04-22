@@ -154,13 +154,19 @@ the same template as humans do.
   + TODO
 - /Human-Centered Design Meets Cognitive Load Theory: Designing Interfaces that Help People Think/
   ([[http://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.501.6467&rep=rep1&type=pdf][oviatt2006human]])
-  + TODO
 - /Grounded Theory in Software Engineering Research: A Critical Review and Guidelines/
   ([[https://ulir.ul.ie/bitstream/handle/10344/5396/Stol_2016_grounded.pdf?sequence=2][stol2016grounded]])
-  + TODO
 - /Five Misunderstandings about Case-study Research/
   ([[http://journals.sagepub.com/doi/pdf/10.1177/1077800405284363][flyvbjerg2006five]])
   + TODO
+- /Is Search-based Unit Test Generation Research Stuck in a Local Optimum?/ 🌟🌟
+  ([[https://dl.acm.org/citation.cfm?id=3105439][rojas2017search]])
+  + list of challenges
+    1. Searching Flat Fitness Landscapes
+    2. Achieving High Code Coverage
+    3. Tests Without Oracles
+    4. Ugly Generated Test Code
+    5. Research Papers Instead of Usable Tools
 
 **** Unit Testing
 - /A Survey of Unit Testing Practices/
@@ -227,6 +233,9 @@ the same template as humans do.
   ([[https://dl.acm.org/citation.cfm?id=257597][offutt1993experimental]])
 - /A theoretical study of fault coupling/
   ([[https://onlinelibrary.wiley.com/doi/abs/10.1002/(SICI)1099-1689(200003)10:1%3C3::AID-STVR196%3E3.0.CO;2-P][wah2000theoretical]])
+- /Proteum IM 2.0: An Integrated Mutation Testing Environment/ 🌟🌟
+  ([[https://link.springer.com/chapter/10.1007/978-1-4757-5939-6_17][delamaro2001proteum]])
+  + TODO
 
 **** Search-based Software Testing
 - /Search-based software testing: Past, present and future/
@@ -283,6 +292,9 @@ the same template as humans do.
 **** Automated Test Generation
 - /How Do Automatically Generated Unit Tests Influence Software Maintenance?/ 🌟🌟
   ([[http://conferences.computer.org/icst/2018/#!/toc/0][shamshiri2018how]])
+  + TODO
+- /Generating Unit Tests with Descriptive Names Or: Would You Name Your Children Thing1 and Thing2?/ 🌟🌟
+  ([[https://dl.acm.org/citation.cfm?id=3092727][daka2017generating]])
   + TODO
 
 **** Generating natural language descriptions for software artifacts
@@ -378,7 +390,7 @@ the same template as humans do.
   + trying to be less verbose and add context
 - /On Automatic Summarization of What and Why Information in Source Code Changes/
   ([[http://ieeexplore.ieee.org/stamp/stamp.jsp?tp=&arnumber=7551998][shen2016automatic]])
-  + Better then /ChangeScribe/[[cortes2014automatically]]
+  + Better than /ChangeScribe/[[cortes2014automatically]]
   + Categories of Commits in Terms of Maintenance Task and Corresponding Description
     (based on [[swanson1976dimensions]]) (why information)
     +-----------------------+----------------------------------+
@@ -408,6 +420,10 @@ the same template as humans do.
   ([[http://web.eecs.umich.edu/~weimerw/p/weimer-ase2010-deltadoc-preprint.pdf][buse2010automatically]]) <<buse2010automatically>>
   + precise description
   + nicely written, but not useful for us
+- /Towards a taxonomy of software change/ 🌟
+  ([[http://ulsites.ul.ie/csis/sites/default/files/csis_towards_a_taxonomy_of_software_change.pdf][buckley2005towards]])
+  + purely about what information
+  + nice charts or table to display all possible informations
 
 ***** General/Others
 - /Comment Generation for Source Code: State of the Art, Challenges and Opportunities/
@@ -454,6 +470,10 @@ the same template as humans do.
 - /Automatic Source Code Summarization of Context for Java Methods/
   ([[http://ieeexplore.ieee.org/stamp/stamp.jsp?tp=&arnumber=7181703][mcburney2016automatic]])
   + looks very complete but again not quite useful
+- /Method Execution Reports: Generating Text and Visualization to Describe Program Behavior/ 🌟🌟
+  ([[http://bergel.eu/MyPapers/Beck17a-MethodExecutionReports.pdf][beck2017method]])
+  + good list of possible information
+  + TODO
 
 **** Commits/Code survey
 - /What’s a Typical Commit? A Characterization of Open Source Software Repositories/
@@ -506,6 +526,8 @@ the same template as humans do.
 ***** Testing Related
 - /SCOTCH: Test-to-Code Traceability using Slicing and Conceptual Coupling/
   ([[https://pdfs.semanticscholar.org/d38a/88ee65b56c2e3e3efc33c727d0990678683c.pdf][qusef2011scotch]])
+- /ComTest: A Tool to Impart TDD and Unit Testing to Introductory Level Programming/
+  ([[http://ims.mii.lt/ims/konferenciju_medziaga/ITiCSE'10/docs/p63.pdf][lappalainen2010comtest]])
 
 ***** Others
 - /A Neural Architecture for Generating Natural Language Descriptions from Source Code Changes/
@@ -1454,7 +1476,7 @@ cd .. && mvn clean package -DskipTests && cd dhell && mvn clean package && java 
 - [ ] Read José Rojas's ICST paper
 
 
-** TODO Week 11 <2018-04-16 Mon>--<2018-04-22 Sun>
+** DONE Week 11 <2018-04-16 Mon>--<2018-04-22 Sun>
 *** Things Done
 
 *** Blocking Points
@@ -1466,8 +1488,8 @@ cd .. && mvn clean package -DskipTests && cd dhell && mvn clean package && java 
   or test case as a whole?
 - [ ] Need to identify the main object that is interacted with
 
-*** Planned Work [0/21]
-- [ ] Change top mattress <2018-04-16 Mon 13:00>
+*** Planned Work [8/21]
+- [X] Change top mattress <2018-04-16 Mon 13:00>
 - [ ] Apply to the PhD position
 - [ ] Get reimbursed for ICST
 - [ ] Simple NL commit messages generator
@@ -1489,32 +1511,72 @@ cd .. && mvn clean package -DskipTests && cd dhell && mvn clean package && java 
   + [ ] write test to make sure every amplifier logs the amplifications
 - [ ] Retrieve mutants
   + The [[https://github.com/STAMP-project/dspot/issues/122][issue]] on runtime info from PIT
-- [ ] Work on report [0/5]
-  + [ ] work on background sections
+- [-] Work on report [2/6]
+  + [X] work on background sections
   + [ ] add Java examples
-  + [ ] insist on the distinction between what and why information
+  + [X] insist on the distinction between what and why information
   + [ ] describe thoroughly the oracle problem
   + [ ] over fitting
-- [ ] Read papers
+  + [ ] ugly C#
+- [X] Read papers
 - [ ] formal description of the NL description
 - [ ] ask for opinions (e.g. Simon Urli, XWiki, SAT4J)
-- [ ] SCOTCH might actually be useful
+- [X] SCOTCH might actually be useful
   + check other 'Not Relevant' papers
 - [ ] read code defenders papers
-- [ ] check Repairnator paper
-- [ ] Tests as specifications, or something like that, a paper that gives formal
+- [X] check Repairnator paper
+  + example of software development bot
+- [X] Tests as specifications, or something like that, a paper that gives formal
   definitions of tests
-- [ ] Use cases instead of evaluation
-- [ ] Check mutant assumption
-- [ ] Read José Rojas's ICST paper
+- [X] Use cases instead of evaluation
+- [X] Check mutant assumption
+  + it's mutation applied at the software design level
+- [X] Read José Rojas's ICST paper
 
 
 ** TODO Week 12 <2018-04-23 Mon>--<2018-04-29 Sun>
 *** Things Done
 
 *** Blocking Points
+- [ ] Assertion count
+  + Is the process: remove *all* assertions and generate all possible assertions?
+  + if so then all assertions are counted as amplifications
+- [ ] Assertion log, can there be REMOVE+ADD instead of MODIFY?
+- [ ] Should I focus solely on mutants description, amplifications descriptions
+  or test case as a whole?
+- [ ] Need to identify the main object that is interacted with
 
-*** Planned Work
+*** Planned Work [0/14]
+- [ ] Apply to the PhD position
+- [ ] Get reimbursed for ICST
+- [ ] Simple NL commit messages generator
+- [ ] Classification of mutators
+- [ ] Integrate WALA to compute a slice per new mutant
+  + [ ] Adding as dependency
+  + [ ] Use it
+- [ ] Study commit messages related to tests
+- [ ] More precise ~try/catch~ would actually be useful for slicing
+- [-] Retrieve amplifications [1/4]
+  + [X] use another counter to keep the pointer to AST nodes of amplifications
+    - use [[http://spoon.gforge.inria.fr/mvnsites/spoon-core/apidocs/spoon/experimental/modelobs/ActionBasedChangeListenerImpl.html]]
+  + [ ] add categories of amplifiers
+    - ADD
+    - MODIFY LITERALS
+    - MODIFY INTERACTIONS
+    - REMOVE
+  + [ ] write test to make sure every amplifier includes the counter update
+  + [ ] write test to make sure every amplifier logs the amplifications
+- [ ] Retrieve mutants
+  + The [[https://github.com/STAMP-project/dspot/issues/122][issue]] on runtime info from PIT
+- [ ] Work on report [0/4]
+  + [ ] add Java examples
+  + [ ] describe thoroughly the oracle problem
+  + [ ] over fitting
+  + [ ] ugly C#
+- [ ] formal description of the NL description
+- [ ] ask for opinions (e.g. Simon Urli, XWiki, SAT4J)
+- [ ] check other 'Not Relevant' papers
+- [ ] read code defenders papers
 
 
 ** TODO Week 13 <2018-04-30 Mon>--<2018-05-06 Sun>
