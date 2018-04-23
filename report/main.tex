@@ -12,9 +12,15 @@
 \usepackage{amsfonts}
 \usepackage{textcomp}
 \usepackage{cprotect}
+\usepackage{booktabs}
+\usepackage{dirtytalk}
 
 \usepackage{enumitem}
 \setlist{nolistsep}
+
+\usepackage{relsize}
+\newcommand\CC{C\nolinebreak[4]\hspace{-.05em}\raisebox{.4ex}{\relsize{-3}{\textbf{++}}}}
+\newcommand{\CS}{C\nolinebreak\hspace{-.05em}\raisebox{.6ex}{\scriptsize\bf \#}}
 
 \pagestyle{plain}
 
@@ -470,7 +476,7 @@ As unit tests are program artefacts like others, GI can be applied on test suite
 It is relatively recent compared to works tackling the problem of Test Data Generation (i.e.\ generating tests from scratch for a piece of software), but it is only recent that we can expect software projects, large or modest, to come with strong test suites.
 Various goals can be pursued to improve a test suite, from automated refactoring to improve a specific metric, to enhancement of existing tests to fill the often partial coverage\footnote{\url{https://testing.googleblog.com/2014/07/measuring-coverage-at-google.html}}.
 The term of test \emph{amplification} is used to denote the process of processing and extending tests to reach further targets.
-Baudry et al.~\cite{baudry2005automatic} wrote a tool for C\#\rephrase{} to explore more of the input space and improve the mutation score.
+Baudry et al.~\cite{baudry2005automatic} wrote a tool for \CS{}\rephrase{} to explore more of the input space and improve the mutation score.
 Yoo et al.~\cite{yoo2012test} proposed the Test Data Regeneration (TDR) method for creating equivalent tests with different inputs --- particularly useful for fault detection and avoiding overfitting\todo{explain overfitting}.
 Xuan et al.~\cite{xuan2015dynamic,xuan2016b} created a tool to refactor test suite to improve dynamic analysis and fault detection.
 
@@ -577,25 +583,67 @@ They range from documenting general purpose source code (Section~\ref{ssec:doc_g
 % --------------------------------------------------------------------------------
 \subsection{Source Code Documentation}%
 \label{ssec:doc_generation}
+\todo{these works are useless, why describe them?}
+
 Works on source code documentation --- also called software artifact summarization --- often consist of retrieving information from the source code to then arrange this information in a way that is easier and quicker to grasp for a human.
-This section does not aim at providing a survey of the field (for which there are already~\cite{jones2007automatic,nazar2016summarizing,neubig2016survey,wang2018comment} \todo{give some info on what is the focus of each survey}), but to present the general techniques used as well as the kind of results those tools produce.
+This section does not aim at providing a survey of the field (for which there are already, including automatic summarization~\cite{jones2007automatic,nazar2016summarizing}, natural language paraphrasing~\cite{neubig2016survey} and automatic comment generation~\cite{wang2018comment}), but to present the general techniques used as well as the kind of results those tools produce.
 
 As said above, such tools will rearrange information, stripping irrelevant pieces, summarizing chucks on code, and put central information on the front.
 In other words, they render the what information in a human comprehensible way --- they \emph{paraphrase} the code.
 This is the main reason why, even automatic summarization of natural language documents has been attempted by researchers for more than half a century~\cite{jones2007automatic}, finding a link with our problem of explaining the why information is not trivial.
 
-\todo{works on describing code written by humans~\cite{wang2018comment,dragan2006reverse,dragan2011emergent,moreno2012jstereocode,buse2008automatic,sridhara2010towards,herbert2016swummary,mcburney2016automatic,sridhara2011automatically,moreno2013automatic} (e.g.\ mining comments, method and class stereotypes (too general purpose), summary, simple (syntactic) context, nl paraphrasing)}
+\begin{table}
+  \centering
+  \begin{tabular}{llll}
+    \toprule
+    \multicolumn{2}{c}{Structural} & \multicolumn{1}{c}{Collaborational} & \multicolumn{1}{c}{Creational} \\
+    \multicolumn{1}{c}{Accessor} & \multicolumn{1}{c}{Mutator} & & \\
+    \midrule
+    Get & Set & Collaborator-Accessor & Constructor \\
+    Predicate & Command & Collaborator-Mutator & Copy-Constructor \\
+    Property & & & Destructor \\
+     & & & Factory \\
+    \bottomrule
+  \end{tabular}
+  \caption{A taxonomy of method stereotypes.}%
+  \label{tab:dragan_taxonomy}
+\end{table}
 
-\todo{make a table?}
+One of the most influential works was produced by Dragan et al.~\cite{dragan2006reverse,dragan2011emergent}, which is about method stereotypes.
+They proposed a taxonomy of \CC{} methods, given in \tablename~\ref{tab:dragan_taxonomy}, and a way to automatically assign stereotypes.
+This way of annotating methods lead to other works --- using stereotype distribution as a signature descriptor for systems~\cite{dragan2009using}, extending the taxonomy for Java methods and classes~\cite{moreno2012jstereocode}.
 
-\todo{SWUM~\cite{hill2009automatically,hill2010integrating}}
-\todo{programmers tend to choose descriptive and meaningful names for code units~\cite{liblit2006cognitive}}
-They usually contain well structured phrases that can be used to construct NL descriptions of code units without having to understand the code.
+Buse and Weimer~\cite{buse2008automatic} wrote a tool to automatically document the exceptions a method can raise.
+Exceptions are dugged up from the call stack and the conditions for them to be raised are translated in natural language.
+They compared their generated documentation with hand-written documention in a survey with developers.
 
-Rastkar et al.~\cite{rastkar2010summarizing} worked on summarizing bug reports.
+Hill~\cite{hill2009automatically,hill2010integrating} has developed a model, the Software Word Usage Model (SWUM), that captures the occurrences of words in code, and also their linguistic and structural relationships.
+\say{SWUM captures the conceptual knowledge of a programmer expressed through both natural language information and programming language structure and semantics, in the form of phrasal concepts. In contrast to existing lexical approaches, we take a transformative step in automatic analysis for software engineering tools by accounting for how words occur together in code, rather than just counting their frequencies.}
+Because programmers tend to choose descriptive and meaning names for code units~\cite{liblit2006cognitive}, natural language descriptions of code artefacts can be made, without necessarily having to understand the code.
+
+Sridhara et al.~\cite{sridhara2010towards,sridhara2012automatic} worked on automatically generating summary comments for Java methods.
+For that they wrote an algorithm to extract important code statements and used SWUM to paraphrase those statements.
+They did a survey with developers to evaluate the accuracy and usefulness of their contribution.
+
+McBurney and McMillan~\cite{mcburney2016automatic} wrote a tool to generate natural language descriptions of the context of Java methods.
+What they call context is how the methods are invoked.
+They use the SWUM to describe the method, describe the method's caller, what the return value is used for, what methods it calls, and how the return value can be used.
+They did two user studies.
+
+Sridhara et al.~\cite{sridhara2011automatically} worked on describing methods from a high level point of view.
+They detect high level actions (i.e.\ statements grouped by a loop or a condition) and use the SWUM to describe them.
+They did a survey with developers to judge the descriptions synthesised.
+
+Moreno et al.~\cite{moreno2013automatic} developed a tool to automatically generate summaries of Java classes.
+A summary is composed of the class' stereotype~\cite{moreno2012jstereocode}, a description of its interface, structure and behaviour (by enumerating the most important methods).
+Summaries are in natural language and generated using templates.
+They did a survey with developers to judge how readable and understandable the summaries are.
+
+Rastkar et al.~\cite{rastkar2010summarizing} worked on summarizing bug reports, including involved discussions.
+They label sentences and extract individual information.
 Works related to bug reports are important for us as a killed mutant is a bug in a certain way --- but the knowledge we can extract from these works is not obvious because part of the job of a bug report is to help localise the bug, and in the case of mutation testing we already know the source.
 Nevertheless, we can learn from these works how to explain the repercussions of a mutant.
-\todo{}
+Except that in this case, it is focused on summarizing a discussion.\rephrase{}
 
 % --------------------------------------------------------------------------------
 \subsection{Source Code Change Documentation}%
@@ -606,13 +654,60 @@ Commits bundle a cohesive set of changes with a textual description, in which it
 Although developers view accurate and concise descriptions as useful, few put the efforts in writing such comments.
 In consequence, researchers have written tools to automatically generate commit messages.
 
-\cite{cortes2014automatically,linares2015changescribe,dragan2011using,jiang2017towards,jiang2017automatically,shen2016automatic,buse2010automatically}
-\todo{machine learning neural network~\cite{loyola2017neural}}
-\todo{purely what information, characterizing the mechanisms of change~\cite{buckley2005towards}}
+Dragan et al.~\cite{dragan2011using} proposed commit stereotypes.
+Those stereotypes are composed of the modified classes and methods' stereotypes.
+For example, a commit where 75\% of the added/deleted methods are factory methods denotes an ``object creation modifier''.
+
+Cort\'es-Coy et al.~\cite{cortes2014automatically,linares2015changescribe} developed \textit{ChangeScribe}, a commit message generator.
+From Git\footnote{\url{https://git-scm.com/}} changes they identify the responsibilities of the modified classes and methods, attribute stereotypes to changes~\cite{dragan2011using}, keep the most impactful (i.e.\ the most called modified methods or classes) changes, and generate natural language descriptions.
+Messages are generated using templates.
+The evaluated their tool with survey, comparing real-life commit messages and generated messages, asking the developers which one they prefered.
+They also provide a table listing many approaches for generating descriptions of source code changes and software artifacts, providing more references than this section.
+
+Jiang and McMillan~\cite{jiang2017towards} worked on generating one-phrase summaries of commits.
+They used a classifier trained on real commits to label a commit with a verb (e.g.\ add, fix), identify the most important words occurring in the \texttt{diff}, and then use common phrase structure to combine the verb and the subject.
+
+Jiang et al.~\cite{jiang2017automatically} used neural machine translation to generate a commit message from a \texttt{diff}.
+Neural networks were also used by Loyola et al.~\cite{loyola2017neural}.
+
+\begin{table}
+  \centering
+  \begin{tabular}{rl}
+    \toprule
+    \multicolumn{1}{c}{\textbf{Categories of commits}} & \multicolumn{1}{c}{\textbf{Description}} \\
+    \midrule
+    Implementation & New requirements \\
+    Corrective & Processing failure; performance failure; implementation failure \\
+    Adaptive & Change in data environment \\
+    Perfective & Processing inefficiency; performance enhancement; maintainability \\
+    Non-functional & Code clean-up; legal; source control system management \\
+    \bottomrule
+  \end{tabular}
+  \caption{Categories of commits in terms of maintenance task and corresponding description.}%
+  \label{tab:commit_categories}
+\end{table}
+
+Shen et al.~\cite{shen2016automatic} worked on summarization of what and why information.
+The what information is generated by paraphrasing the \texttt{diff}, dropping some information or adding some depending of how important the modified unit is.
+The why information is generated using categories proposed by Swanson~\cite{swanson1976dimensions}, given in \tablename~\ref{tab:commit_categories}, and classify commits using the rules proposed by Moreno et al.~\cite{moreno2012jstereocode}.
+The sentences were generated using templates.
+
+Buse and Weimer~\cite{buse2010automatically} produced a technique for documenting program changes, using symbolic execution
+They use a minimalist programmatic syntax to express changes (e.g.\ change in condition) and paraphrase changes at the statement level, instead of line granularity.
+Messages are generated as a pattern-matching and replace.
+They also studied some open-source projects and showed that what information 12\% more common than why information in commit messages.
+They conducted a human study to compare their tool against existing human-written messages.
+
+Buckley et al.~\cite{buckley2005towards} also proposed a taxonomy of software changes.
+Their taxonomy focuses exclusively on the what information of a change, the mechanisms of change and the factors that influence these mechanisms.
+Mechanisms include, for example, the change type or the change history, while the influencing factors include, for example, the change frequency, the granularity or the change propagation.
+In other words, they focus on the \textit{when}, \textit{where}, \textit{what}, and \textit{how} aspects.
 
 Rastkar et al.~\cite{rastkar2011generating} produced a generator of feature summary for Java projects, to help programmers be aware of, and understand, the ramifications of a feature.
 A summary provides the number of methods implementing the feature, objects supported, dependencies, and names of methods involved.
+Relationships between code elements are extracted, including calls between methods, field declarations, class extensions, etc.
 NL sentences are generated with templates.
+They evaluated their tool with a lab study, asking developers to modify or add a feature using the summaries, observing their usage and surveyed the developers at the end.
 
 % --------------------------------------------------------------------------------
 \subsection{Automatic Test Case Documentation}%
@@ -622,25 +717,29 @@ Because of test cases are one precise kind of software artefact, the works that 
 
 As unit tests validate a specific component, in object-oriented languages like Java, they often consist in calling a few methods, multiple times, that will affect the sate of an object and then verify that the object is in the right state.
 This kind of method is called a \emph{focal} method, and Ghafari et al.~\cite{ghafari2015automatically} have developed a way to automatically identify them.
-\todo{}
-\todo{not particularly interested in it as we want to explain a corner case (i.e.\ a mutant)}
-\todo{can use stereotypes to put more confidence that the right focal method was identified}
+They use static data-flow analysis to examine the call graph and extract the last method that has a side-effect on the assertion.
+This work is particularly useful to summarise test cases, helping to identify the key stimulus, but it is not directly useful for us as we want to explain a corner case (i.e.\ an amplification that kills a new mutant).\rephrase{}
 
 Cornelissen et al.~\cite{cornelissen2007visualizing} propose the use of sequence diagrams\footnote{\url{https://en.wikipedia.org/wiki/Sequence_diagram}} to visualize Java test cases.
 Because test suites are sometimes the entry points for new contributors to understand the scope and the inner workings of a project, visualizing the actors and their interactions can be more useful than a simple class diagram.
 Diagrams can be used for complex test cases as they hide certain call (e.g.\ constructors) and have limited call stack depth.
 
-\todo{A unit test case typically has fous phases: setup, exercise, verify and teardown~\cite{meszaros2007xunit}.}
+According to Meszaros~\cite{meszaros2007xunit}, a unit test case typically has four phases: setup, exercise, verify and teardown.
+The setup phase instantiates the classes that the test uses.
+The exercise phase is the stimulation.
+The verify phase is the use of the oracle with assertions.
+The teardown phase is for the cleanup.\rephrase{}
+\todo{move that elsewhere}
 
 Kamimura et al.~\cite{kamimura2013towards} have developed a generator of textual summaries for Java test cases.
 A summary is composed of NL paraphrases of the most unique method invocations and the assertions.
 There are some interesting details, for example, when a variable's name is too short (e.g.\ ``a1'') they make-up a new name with the variable's type.
 Sentences are built using pre-defined templates.
 
-Li et al.~\cite{li2016automatically} have written a C\# tool that generates descriptions for test methods.
+Li et al.~\cite{li2016automatically} have written a \CS{} tool that generates descriptions for test methods.
 The output, a GUI window, is comprised of 4 pieces of information:
 \begin{enumerate}
-  \item a general sentence describing the purpose of the test method (based on class, method and arguments signatures using the SWUM approach);
+  \item a general sentence describing the purpose of the test method (based on class, method and arguments signatures using the SWUM approach~\cite{herbert2016swummary});
   \item descriptions of the focal methods (i.e.\ the line number and the assertion it is linked to);
   \item descriptions of the assertions (i.e.\ natural language (NL) paraphrasing); and
   \item the slicing paths (backward slicing~\cite{jhala2005path}) for the variables validated with an assertions (i.e.\ NL paraphrasing of each step).
@@ -649,8 +748,10 @@ NL sentences are generated with templates.
 % boilerplates\footnote{\url{https://en.wikipedia.org/wiki/Boilerplate_text}} and keywords.
 
 Li~\cite{li2018automatically} also proposed 21 stereotypes for methods in Java unit tests, based on the jUnit\footnote{\url{https://junit.org/}} API (14 stereotypes) but also using the data and control flow (7 stereotypes).
-The API-based stereotypes allows to extract fine grained what information --- for example, with \mintline{java}{}\todo{}
-On the other hand, data/control flow analyses can capture the context of the API calls.\todo{}
+The API-based stereotypes allow the extraction of fine grained what information --- for example, with \mintinline{java}{fail} (which raises a failure if the test cases reaches that statement) you can deduce that the test is a ``utility verifier'' or that a method with the annotation \mintinline{java}{@Before} is a ``test initializer''.
+On the other hand, data/control flow analyses can capture the context of the API calls.
+The purpose of the test can be deduced, for example, if the number of assertions within branch conditions is greater than 0, it means that the test is a ``branch verifier''.
+It is also possible to get insights in the context of the test case in relation to the test class, for example, a test case is a ``public field verifier'' if values in assertions are from public field accesses.
 
 Beck et al.~\cite{beck2017method} wrote a framework that generates method execution reports, mostly textual but with a few embedded visualisations.
 The report includes a summary (number of calls, recursion), summaries for each method calls (number of calls, recursion depth), time consumption tear down, and the code.
@@ -676,7 +777,8 @@ They use dynamic slicing~\cite{korel1988dynamic} to identify all the classes tha
 And, because the slicing is an overestimate, they use conceptual coupling~\cite{poshyvanyk2009using} (analysing names and comments) to filter out superfluous classes (e.g.\ mock objects).
 This problem of traceability is useful for us as we would like the amplified tests to remain in the same scope as the original, aiming for a more through coverage of the target instead of just random mutants.
 
-Except for Proteum/IM 2.0~\cite{delamaro2001proteum} that uses a case study, all the papers related to human assistance reviewed here were evaluated with developers surveys.
+Most of the papers related to human assistance reviewed here were evaluated with developers surveys.
+Proteum/IM 2.0~\cite{delamaro2001proteum} used a case study, and \textsc{Code Defenders} conducted a lab study.
 
 
 % ================================================================================
