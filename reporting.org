@@ -453,6 +453,8 @@ the same template as humans do.
   + well written
   + could be used to improve the documentation and precision of ~try/catch~
     amplification
+  + nice study of percentage of what and why information in open-source
+    projects' commit messages
 - /Towards Automatically Generating Summary Comments for Java Methods/ 🌟
   ([[http://servo.cs.wlu.edu/pubs/bitstream/handle/id/200/towards-automatically-generating-summary-comments-for-methods.pdf?sequence=3][sridhara2010towards]]) <<sridhara2010towards>>
   (+ PhD thesis)
@@ -1534,21 +1536,25 @@ cd .. && mvn clean package -DskipTests && cd dhell && mvn clean package && java 
 - [X] Read José Rojas's ICST paper
 
 
-** TODO Week 12 <2018-04-23 Mon>--<2018-04-29 Sun>
+** DONE Week 12 <2018-04-23 Mon>--<2018-04-29 Sun>
 *** Things Done
+- Proofread Long's paper
+- Mattias' presentation
 
 *** Blocking Points
 - [ ] Assertion count
   + Is the process: remove *all* assertions and generate all possible assertions?
   + if so then all assertions are counted as amplifications
-- [ ] Assertion log, can there be REMOVE+ADD instead of MODIFY?
+- [X] Assertion log, can there be REMOVE+ADD instead of MODIFY?
+  + there seems to be a lot of MODIFY
 - [ ] Should I focus solely on mutants description, amplifications descriptions
   or test case as a whole?
 - [ ] Need to identify the main object that is interacted with
+- [ ] Ugly to pass the ~AmplificationListener~ around
 
-*** Planned Work [0/14]
-- [ ] Apply to the PhD position
-- [ ] Get reimbursed for ICST
+*** Planned Work [3/17]
+- [X] Apply to the PhD position
+- [X] Get reimbursed for ICST
 - [ ] Simple NL commit messages generator
 - [ ] Classification of mutators
 - [ ] Integrate WALA to compute a slice per new mutant
@@ -1556,36 +1562,101 @@ cd .. && mvn clean package -DskipTests && cd dhell && mvn clean package && java 
   + [ ] Use it
 - [ ] Study commit messages related to tests
 - [ ] More precise ~try/catch~ would actually be useful for slicing
-- [-] Retrieve amplifications [1/4]
+- [-] Retrieve amplifications [1/5]
   + [X] use another counter to keep the pointer to AST nodes of amplifications
     - use [[http://spoon.gforge.inria.fr/mvnsites/spoon-core/apidocs/spoon/experimental/modelobs/ActionBasedChangeListenerImpl.html]]
-  + [ ] add categories of amplifiers
-    - ADD
+      + nooooooooooooooo.........
+      + if just a literal is changed then you are passed the literal itself, not
+        an AST node
+      + no it's all good, don't panic, check the context
+      + and then later we can use ~getRoleInParent()~
+  + [ ] add categories of modifying amplifiers
     - MODIFY LITERALS
     - MODIFY INTERACTIONS
-    - REMOVE
   + [ ] write test to make sure every amplifier includes the counter update
   + [ ] write test to make sure every amplifier logs the amplifications
+  + [ ] identify amplification when writing the JSON report for the test case
 - [ ] Retrieve mutants
   + The [[https://github.com/STAMP-project/dspot/issues/122][issue]] on runtime info from PIT
-- [ ] Work on report [0/4]
+- [-] Work on report [1/6]
   + [ ] add Java examples
   + [ ] describe thoroughly the oracle problem
   + [ ] over fitting
-  + [ ] ugly C#
+  + [ ] overspecification
+    - [[http://jasonrudolph.com/blog/2008/07/01/testing-anti-patterns-overspecification/]]
+  + [X] ugly C#
+  + [ ] make a table for related works?
 - [ ] formal description of the NL description
 - [ ] ask for opinions (e.g. Simon Urli, XWiki, SAT4J)
 - [ ] check other 'Not Relevant' papers
 - [ ] read code defenders papers
+- [ ] concurrent map in amplification listener
+- [X] +upgrade jacoco version+
+  + not my job, and PIT is probably also not supporting java10
+- [-] unspecify tests [4/5]
+  + use a Set to avoid failing tests due to the ordering of assertions
+  + [X] ~testBuildNewAssertWithComment(fr.inria.diversify.dspot.assertGenerator.MethodsAssertGeneratorTest): expected:<....junit.Assert.assert[True(((fr.inria.sample.ClassWithBoolean)cl).getTrue());(..)~
+  + [X] ~testBuildNewAssert(fr.inria.diversify.dspot.assertGenerator.MethodsAssertGeneratorTest): expected:<....junit.Assert.assert[True(((fr.inria.sample.ClassWithBoolean)cl).getTrue());(..)~
+  + [X] ~testNoInstrumentationOnGeneratedObject(fr.inria.diversify.dspot.assertGenerator.AssertGeneratorHelperTest): expected:<..."test_sd6__1");(..)~
+  + [X] ~testWithLoop(fr.inria.diversify.dspot.amplifier.StatementAddTest): expected:<...compute(0);(..)~
+  + [ ] find others that could fail
+  + problem of readability when it fails
 
 
 ** TODO Week 13 <2018-04-30 Mon>--<2018-05-06 Sun>
 *** Things Done
 
 *** Blocking Points
+- [ ] Assertion count
+  + Is the process: remove *all* assertions and generate all possible assertions?
+  + if so then all assertions are counted as amplifications
+- [X] Assertion log, can there be REMOVE+ADD instead of MODIFY?
+  + there seems to be a lot of MODIFY
+- [ ] Should I focus solely on mutants description, amplifications descriptions
+  or test case as a whole?
+- [ ] Need to identify the main object that is interacted with
+- [ ] Ugly to pass the ~AmplificationListener~ around
 
-*** Planned Work [0/1]
+*** Planned Work [0/16]
 - [ ] Renew SL access card (expires on <2018-05-08 Tue>)
+- [ ] Meeting Benoit <2018-05-02 Wed 17:00>--<2018-05-02 Wed 18:00>
+- [ ] Simple NL commit messages generator
+- [ ] Classification of mutators
+- [ ] Integrate WALA to compute a slice per new mutant
+  + [ ] Adding as dependency
+  + [ ] Use it
+- [ ] Study commit messages related to tests
+- [ ] More precise ~try/catch~ would actually be useful for slicing
+- [ ] Retrieve amplifications [0/4]
+  + [ ] add categories of modifying amplifiers
+    - MODIFY LITERALS
+    - MODIFY INTERACTIONS
+  + [ ] write test to make sure every amplifier includes the counter update
+  + [ ] write test to make sure every amplifier logs the amplifications
+  + [ ] identify amplification when writing the JSON report for the test case
+- [ ] Retrieve mutants
+  + The [[https://github.com/STAMP-project/dspot/issues/122][issue]] on runtime info from PIT
+- [ ] Work on report [0/5]
+  + [ ] add Java examples
+  + [ ] describe thoroughly the oracle problem
+  + [ ] over fitting
+  + [ ] overspecification
+    - [[http://jasonrudolph.com/blog/2008/07/01/testing-anti-patterns-overspecification/]]
+  + [ ] make a table for related works?
+- [ ] formal description of the NL description
+- [ ] ask for opinions (e.g. Simon Urli, XWiki, SAT4J)
+- [ ] check other 'Not Relevant' papers
+- [ ] read code defenders papers
+- [ ] concurrent map in amplification listener
+- [-] unspecify tests [4/5]
+  + use a Set to avoid failing tests due to the ordering of assertions
+  + [X] ~testBuildNewAssertWithComment(fr.inria.diversify.dspot.assertGenerator.MethodsAssertGeneratorTest): expected:<....junit.Assert.assert[True(((fr.inria.sample.ClassWithBoolean)cl).getTrue());(..)~
+  + [X] ~testBuildNewAssert(fr.inria.diversify.dspot.assertGenerator.MethodsAssertGeneratorTest): expected:<....junit.Assert.assert[True(((fr.inria.sample.ClassWithBoolean)cl).getTrue());(..)~
+  + [X] ~testNoInstrumentationOnGeneratedObject(fr.inria.diversify.dspot.assertGenerator.AssertGeneratorHelperTest): expected:<..."test_sd6__1");(..)~
+  + [X] ~testWithLoop(fr.inria.diversify.dspot.amplifier.StatementAddTest): expected:<...compute(0);(..)~
+  + [ ] find others that could fail
+  + problem of readability when it fails
+  + [[https://github.com/STAMP-project/dspot/pull/413]]
 
 
 ** TODO Week 14 <2018-05-07 Mon>--<2018-05-13 Sun>
