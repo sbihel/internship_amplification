@@ -6,7 +6,6 @@
 
 \usepackage{caption}
 \usepackage{subcaption}
-\usepackage{cleveref}
 \usepackage{comment}
 \usepackage{wrapfig}
 \usepackage{amsfonts}
@@ -27,6 +26,8 @@
 \usepackage{hyperref}
 \usepackage{url} \urlstyle{sf}
 \newcommand{\email}[1]{\href{mailto:#1}{#1}}
+\usepackage{float}
+\usepackage{cleveref}
 
 \usepackage{xspace}
 
@@ -77,13 +78,15 @@
 \addcontentsline{toc}{section}{\nameref{sec:intro}}
 \todo{}
 
+\todo{\footnote{\url{https://www.infoq.com/articles/architecturally-aligned-testing}}}
+
 
 % ================================================================================
 \section{Background}%
 \label{sec:background}
 In this section, we present the landscape this thesis fits into.
 We define testing (Section~\ref{ssec:software_testing}) as well as go over its use in the industry.
-In particular, to understand the needs of practitioners, we present how they assess the quality of their code (Sections~\ref{ssec:elementary_metrics} and~\ref{ssec:mutation_testing}) and what it takes for a new tool to be incorporated in their workflow (Sections~\ref{ssec:need_easy} and~\ref{ssec:cognitive_support_unit_test}).
+In particular, to understand the needs of practitioners, we present how they assess the quality of their code (Sections~\ref{ssec:elementary_metrics} and~\ref{ssec:mutation_testing}) and what it takes for a new tool to be incorporated in their workflow (Sections~\ref{ssec:need_easy} and~\ref{ssec:cognitive_support}).
 
 % --------------------------------------------------------------------------------
 \subsection{Software Testing}%
@@ -250,8 +253,7 @@ public class TreeListTest {
 \label{lst:test_example}
 \end{listing}
 \footnotetext{\url{https://commons.apache.org/proper/commons-collections/xref-test/org/apache/commons/collections4/list/TreeListTest.html\#L271}}
-\todo{the link might break in the future}
-\todo{kinda assumes that \texttt{.hasNext()} and \texttt{.next()} are working properly}
+\todo{assumes that \texttt{.hasNext()} and \texttt{.next()} are working properly}
 
 An example of unit test is given in \listingname~\ref{lst:test_example}.
 Tests are usually sorted in classes, and each test case corresponds to a method (which is why test cases are sometimes refered to as test methods, as we will encounter later on).
@@ -297,6 +299,8 @@ This a hard problem\footnote{\url{https://testing.googleblog.com/2017/04/where-d
 
 \todo{jUnit~\footnote{\url{https://junit.org/}}}
 
+\todo{\footnote{\url{http://blog.codepipes.com/testing/software-testing-antipatterns.html}}}
+
 % --------------------------------------------------------------------------------
 \subsection{Elementary Metrics}%
 \label{ssec:elementary_metrics}
@@ -305,7 +309,7 @@ Each metric measures one specific characteristic, such as the need for refactori
 
 \begin{figure}
   \centering
-  \fbox{\includegraphics[scale=0.80, trim=5.1cm 4.3cm 1.5cm 3.7cm, clip]{screenshot_coverage}}
+  \fbox{\includegraphics[scale=0.80, trim=5.1cm 7cm 1.5cm 3.7cm, clip]{screenshot_coverage}}
   \cprotect\caption{Example of coverage reporting from the Coveralls\protect\footnotemark{} tool. We can see that the statements in the first \texttt{else} branch have not been executed a single time}%
   \label{fig:screenshot_coverage}
 \end{figure}
@@ -536,6 +540,8 @@ Secondly, it is more efficient.\todo{}
 This thesis aim at helping developers understand amplified unit tests.
 There are two sides for this problem: supporting the developer understand the test (Section~\ref{ssec:need_doc}) and cleaning the tests from the noise injected during the amplification process (Section~\ref{ssec:random_noise}).
 
+\todo{\cite{marculescu2017transferring}}
+
 % --------------------------------------------------------------------------------
 \subsection{The Need for Unit Test Cases Documentation}%
 \label{ssec:need_doc}
@@ -561,6 +567,8 @@ In source code management platforms, pull requests (through which amplified are 
 Given that amplified tests should, in most cases, extend an existing test --- that we can suppose have documentation already --- the explanation of the added value of the amplification would fit in the pull request description.
 It is important to restrict the scope to simple text, as it would not require a change in developers workflow.
 
+\todo{\footnote{\url{https://testing.googleblog.com/2014/10/testing-on-toilet-writing-descriptive.html}}}
+
 % --------------------------------------------------------------------------------
 \subsection{The Generated Random Noise}%
 \label{ssec:random_noise}
@@ -571,6 +579,8 @@ Because documentation is not sufficient to understand and review the code, it ne
 On a side note, in many modest projects, unit test are used as examples of the program's usage, and sometimes they replace traditional documentation.
 In those cases, developers put a lot of efforts in making tests easy to understand.
 Doing part of that chore automatically would remove part of the burden for humans.
+
+\todo{the amount of time needed by developers to locate and understand code is frequently greater than the amount of time that they spend making modifications~\cite{ko2006exploratory}}
 
 
 % ================================================================================
@@ -776,6 +786,45 @@ Qusef et al.~\cite{qusef2011scotch} worked on keeping track of traceability betw
 They use dynamic slicing~\cite{korel1988dynamic} to identify all the classes that affect the result of the last assert statement in each unit-test method.
 And, because the slicing is an overestimate, they use conceptual coupling~\cite{poshyvanyk2009using} (analysing names and comments) to filter out superfluous classes (e.g.\ mock objects).
 This problem of traceability is useful for us as we would like the amplified tests to remain in the same scope as the original, aiming for a more through coverage of the target instead of just random mutants.
+
+\begin{listing}[H]
+  \centering
+  \begin{minted}[linenos,frame=lines,breaklines]{java}
+public void test() {
+  servlet = new BarcodeServlet();
+  params.put("height", "200");
+  params.put("width", "3");
+  params.put("resolution", "72");
+  req.setParameters(params);
+  servlet.doGet(req, res);
+  Barcode barcode = servlet.getBarcode();
+  assertEquals(barcode.getResolution(), 72);
+}
+  \end{minted}
+  \begin{description}[align=right,labelwidth=2.1cm]
+    \item[small] \texttt{testDoGet}
+    \item[medium] \texttt{testDoGetResolutionIs72}
+    \item[full] \texttt{testDoGetResolutionIs72WhenParamsResolutionIs72AndSettingParameters}
+  \end{description}
+  \caption{Example~\cite{zhang2016towards} of a unit test and the generated names.}%
+\label{lst:zhang2016towards_example}
+\end{listing}
+Zhang et al.~\cite{zhang2016towards} wrote NameAssist, a tool that generates names for JUnit test cases.
+They differentiate three different pieces of information contained in the body of a test method: the action, the expected outcome, and the scenario under test.
+The generated names are made up using these but only the action part, or the action and expected outcome, can be used to make up shorter names.
+The action consists of the class under test, or the method under test.\todo{give more details}
+The expected outcome is a paraphrase of the assertion (they only consider tests with a single assertion), so it consists of the name of a getter and the expected value.
+Finally, the scenario (the part that set-ups the environment) is put into words using the action dependency graph and indicate that parameters are set or that a method is used.
+An example is given in \listingname~\ref{lst:zhang2016towards_example}.
+The text is generated using test name templates~\cite{zhang2015automatically} filled with custom translations of specific expressions (e.g.\ translating an \texttt{assertTrue} as ``is true'').
+
+Daka et al.~\cite{daka2017generating} proposed a technique to generate descriptive names for automatically generated unit tests.
+Their work is based on EvoSuite~\cite{fraser2011evosuite}, a test suite generator (from scratch) that produces test methods with names with the only characteristic of being unique (\texttt{test0}, \texttt{test1}, \texttt{test2}, etc.).
+Their naming approach is valuable for us as they consider the fitness function guiding the generation: code coverage.
+The consider coarse grained coverage with (i) method coverage; (ii) exception coverage; and (iii) output coverage.
+For each test they collect the goals reached (methods called, inputs and outputs used in an assertion, and exceptions caught), and then rank them to keep only the most important goals.
+The tests names are then generated by concatenating (almost as is) the goals kept (the names of the methods, exception, etc.).
+\todo{example}
 
 Most of the papers related to human assistance reviewed here were evaluated with developers surveys.
 Proteum/IM 2.0~\cite{delamaro2001proteum} used a case study, and \textsc{Code Defenders} conducted a lab study.
