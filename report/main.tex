@@ -67,7 +67,7 @@
 }
 
 
-% Ought to be between 30 and 50 pages
+% Advised to be between 30 and 50 pages
 
 \begin{document}
 \maketitle
@@ -249,11 +249,10 @@ public class TreeListTest {
     }
 }
   \end{minted}
-  \caption{Example of an object-oriented unit test (taken, and adapted for readability, from the Apache Commons Collections, in the class TreeListTest, line 270\protect\footnotemark): it consists of test inputs (lines 3--7) that manipulate the SUT\@; and assertions (line 11).\todo{what about lines 9 \& 10}}%
+  \caption{Example of an object-oriented unit test (taken, and adapted for readability, from the Apache Commons Collections, in the class TreeListTest, line 270\protect\footnotemark): it consists of test inputs (lines 3--7) that manipulate the SUT\@; and assertions (line 11). Methods \texttt{.hasNext()} and \texttt{.next()} (lines 9 \& 10) are expected, implicitly, to behave correctly.}%
 \label{lst:test_example}
 \end{listing}
 \footnotetext{\url{https://commons.apache.org/proper/commons-collections/xref-test/org/apache/commons/collections4/list/TreeListTest.html\#L271}}
-\todo{assumes that \texttt{.hasNext()} and \texttt{.next()} are working properly}
 
 An example of unit test is given in \listingname~\ref{lst:test_example}.
 Tests are usually sorted in classes, and each test case corresponds to a method (which is why test cases are sometimes refered to as test methods, as we will encounter later on).
@@ -288,6 +287,7 @@ In this situation, we end testing a component that interacts with other componen
 The granularity of tests does not only depend on the needs and desires of the developer, but also on the limitations of the language.
 Object-Oriented are particularly victim to this, as they are suited for composition design patterns~\cite{wolfgang1994design}, leaving no other option to the developer to try to limit interactions.
 Ways to avoid writing test that trigger a long chain of reactions is to use doubles (or mocks) which are hand written clones of classes instances.\rephrase{}
+Dependencies are also present in the test's code, as seen in \listingname~\ref{lst:test_example} with the lines 9 and 10, as other methods from the class under test can be used for the set-up or to retrieve certain observations.
 
 Another common problem with testing are flaky tests.
 A flaky test is a test which result is not deterministic.
@@ -297,7 +297,25 @@ This a hard problem\footnote{\url{https://testing.googleblog.com/2017/04/where-d
 
 \todo{how do you know you have a good oracle}
 
-\todo{jUnit~\footnote{\url{https://junit.org/}}}
+\begin{listing}
+  \centering
+  \begin{minted}[linenos,frame=lines,breaklines]{java}
+import org.junit.Test;
+import static org.junit.Assert.assertEquals;
+
+public class MyTests {
+    @Test
+    public void multiplicationOfZeroIntegersShouldReturnZero() {
+        MyClass tester = new MyClass();
+        assertEquals(0, tester.multiply(10, 0), "10 x 0 must be 0");
+    }
+}
+  \end{minted}
+  \caption{Example of a JUnit test class. A test class is simply a group of test methods (i.e.\ test cases). Each test case is identified by the annotation \mintinline{java}{@Test}.}%
+\label{lst:junit_example}
+\end{listing}
+An example of test framework, for Java, is JUnit~\footnote{\url{https://junit.org/}}.
+The basic structure of a JUnit test class is given in \listingname~\ref{lst:junit_example}.
 
 \todo{\footnote{\url{http://blog.codepipes.com/testing/software-testing-antipatterns.html}}}
 
@@ -309,8 +327,8 @@ Each metric measures one specific characteristic, such as the need for refactori
 
 \begin{figure}
   \centering
-  \fbox{\includegraphics[scale=0.80, trim=5.1cm 7cm 1.5cm 3.7cm, clip]{screenshot_coverage}}
-  \cprotect\caption{Example of coverage reporting from the Coveralls\protect\footnotemark{} tool. We can see that the statements in the first \texttt{else} branch have not been executed a single time}%
+  \fbox{\includegraphics[scale=0.80, trim=5.1cm 10.2cm 1.5cm 3.7cm, clip]{screenshot_coverage}}
+  \cprotect\caption{Example of coverage reporting from the Coveralls\protect\footnotemark{} tool. We can see that the statements in the first \texttt{else} branch have not been executed a single time. The numbers on the right represent the number of times each line has been executed.}%
   \label{fig:screenshot_coverage}
 \end{figure}
 \footnotetext{\url{https://coveralls.io/}}
@@ -325,7 +343,7 @@ An example of coverage visual report is shown in \figurename~\ref{fig:screenshot
 
 It is generally acknowledged that a system with high coverage means that the system is less likely to have bugs --- but it is not foolproof~\cite{hovemeyer2004finding,inozemtseva2014coverage}.
 Such simple metrics are not good at pointing out corner cases.
-If we take the following example \texttt{if ($C_1$ AND ($C_2$ OR $C_3$))} and $C_3$ makes the program crash, then it is possible the explore both branches without executing $C_3$.
+If we take the following example \texttt{if ($C_1$ AND ($C_2$ OR $C_3$))} and $C_3$ makes the program crash, then it is possible to explore both branches without executing $C_3$.
 \todo{What are their limits}
 
 A drawback of metrics is that in practice, testers will change behaviour once they know how the measurement works\footnote{\url{https://testing.googleblog.com/2009/09/7th-plague-and-beyond.html}}.
@@ -349,17 +367,17 @@ When a mutant goes through the test suite without making a single test fail, it 
 The global process is depicted in~\figurename~\ref{fig:spaces}.
 The main appeal is that, a test suite with a good mutation score, in addition to ensure the well behaviour of the SUT in useful scenarios, it can detect bad behaviours --- which is particularly useful for regression testing.\rephrase{}
 There is a correlation between mutation score and coverage score as test suites with high mutation score tend to have good coverage~\cite{assylbekov2013investigating}.
+In general, mutation coverage can be seen as a line coverage with levels of coverage depending on the number of mutants present in this line, similarly to the number of times the line is executed.
 It has been found that correlations between mutation scores and real fault detection are weak~\cite{papadakis2018mutation,just2014mutants}.
-
-\todo{a mutation covered line is stronger than a regular covered line}
+Mutation testing has been extended in various directions (e.g.\ specification mutation) but we are focusing on the primary usage, the evaluation of a test suite for a given implementation.
 
 \addref{fundational papers}
 
-\todo{mutation testing has been extended in various directions, e.g.\ specification mutation, but we are focusing on the primary usage, the evaluation of test suites and the implementation}
+% \todo{applying the mutation on the source code instead of modifying the runtime makes it easier to detect~\cite{danglot2017correctness}}
 
 % Mutators
 Mutants are obtained by applying \emph{mutators} on the original version.
-These operators can be varied, from fine grained like changing a condition (e.g.\ substituting $\leq$ with $>$), to the granularity of classes~\cite{segura2011mutation} (e.g.\ delete the body of a method \addref{descartes}).
+These operators can be varied, from fine-grained like changing a condition (e.g.\ substituting $\leq$ with $>$), to the granularity of classes~\cite{segura2011mutation} (e.g.\ delete the body of a method \addref{descartes}).
 Running first mutation testing with large operators allows to rapidly detect gaps in the coverage of the test suite for unit testing but also for integration testing.
 Fine grained mutation can then be employed to meticulously evaluate the functional testing capabilities of the test suite~\cite{howden1982weak}.
 Most of the time, we generate 1-\emph{order} mutants, that means that a mutant is the result of a mutator applied once.
@@ -384,7 +402,6 @@ Another difficulty for mutation testing to take on in the industry is the lack o
 The process of mutation and elimination can be confusing.
 But also, when a mutant is live, it is not always clear what actions should be taken in order to kill it.
 \todo{maybe add more}
-\todo{teaching mutation testing using gamification}
 
 % Pitest
 Multiple mutation tools exist, with differences on the level of abstraction they handle, different performances and different correlation with real fault detection.
@@ -398,15 +415,15 @@ This little information is sufficient to recreate each mutant while having a sma
 The other important detail is that PIT is deterministic.
 That is, for the same program, the same mutants will always be generated, and thus the mutation score will always be the same.
 
-\begin{figure}
+\begin{wrapfigure}[14]{R}{23em}
   \centering
-  \fbox{\includegraphics[scale=0.75,trim=0cm 1.4cm 6.7cm 8.6cm, clip]{screenshot_mutation_coverage}}
+  \fbox{\includegraphics[scale=0.75,trim=1.8cm 1.4cm 6.9cm 8.6cm, clip]{screenshot_mutation_coverage}}
   \caption{Example of mutation coverage reporting from Code Defenders\protect\footnotemark{}~\cite{rojas2017code}. Shades of green are used to denote the amount of testing for a line.}%
   \label{fig:screenshot_mutation_coverage}
-\end{figure}
+\end{wrapfigure}
 \footnotetext{\url{http://code-defenders.org/}}
 The way mutation testing tool report their result is interesting.
-Instead of trying to shown each statement that has been mutated, and inspired by reports of line coverage, they usually display a regular line coverage report with shades of colour.
+Instead of trying to show each statement that has been mutated, and inspired by reports of line coverage, they usually display a regular line coverage report with shades of colour.
 The lightest means that the line has been executed, and the darker it gets, the higher the number of mutants located in this line.
 An example of mutation coverage visual report is shown in \figurename~\ref{fig:screenshot_mutation_coverage}.
 
@@ -431,17 +448,20 @@ Developers do not want to be slowed down by additional actors in their workflow,
 
 The field of software testing, in which this thesis is set, is no stranger to this problem.
 Tests are, in most cases, written and maintained by general software engineers.
-Thus we must aim at producing tools with little overhead and fully integrated with popular test frameworks --- making it easy for developers to try and see if the tool fits their need or not, and if they incorporate it in their workflow, it brings important data to demonstrate the scientific value of the tool.
+Thus, we must aim at producing tools with little overhead and fully integrated with popular test frameworks --- making it easy for developers to try the tool to see if it fits their needs, and, if they incorporate it in their workflow, it brings important data to demonstrate the scientific value of the tool.
 
 % --------------------------------------------------------------------------------
 \subsection{Cognitive Support Tool Development}%
 \label{ssec:cognitive_support}
 \todo{}
+
 Acceptance of a tool, outside of the research world, depends on many parameters, including its accessibility.
 In this section we describe how a tool can be designed to fit this requirement.
 
 Research has been done on designing tool that do not overwhelm users (e.g.\ designing interfaces~\cite{oviatt2006human}) and theories on design processes have been developped.
 The grounded theory~\cite{stol2016grounded}, for example, argues for an iterative design process, by refining the product based on data and feedback from users.
+
+Tools, including SBST, need a high level on interactivity with the developers, to guide the search process (to inject domain knowledge, to select useful objectives, etc.)~\cite{marculescu2017transferring}
 
 Another method of evaluation that should not be dismissed are case studies~\cite{flyvbjerg2006five}.
 \todo{}
@@ -460,18 +480,22 @@ Section~\ref{ssec:dspot} introduces~\dspot{}, a tool that enhances tests for a b
 \label{ssec:genetic_improvement}
 \todo{}
 
-Genetic improvement (GI)~\cite{petke2017genetic} uses automated search \todo{explain what automated search is} to find improved versions of existing software.
-Applying search-based techniques for software engineering problems is not new~\cite{mcminn2011search} as is the field of genetic programming (GP)~\cite{koza1994genetic} (with, at the time of writing this thesis, is comprised of over 12000 references\footnote{\url{http://www.cs.bham.ac.uk/~wbl/biblio/}}).
-But since\rephrase{} the name of GI has been coined in 2012~\cite{harman2012gismoe}, the level of computing power reached has allowed research to achieve impressive results.
+Genetic improvement (GI)~\cite{petke2017genetic} uses automated search to find improved versions of existing software.
+Automated search encompasses optimisation methods that approximate optimums (e.g.\ genetic algorithms, simulated annealing).
+Applying search-based techniques for software engineering problems is not new~\cite{mcminn2011search} as is the field of genetic programming (GP)~\cite{koza1994genetic} (with, at the time of writing this thesis, comprises over 12000 references\footnote{\url{http://www.cs.bham.ac.uk/~wbl/biblio/}}).
+But from around 2012, when the name of GI has been coined~\cite{harman2012gismoe}, the reached level of computing power that one can easily have access to has allowed research to achieve impressive results (e.g.\ transplanting a feature from one program to another~\cite{barr2015automated}).
 
 \addref{fundational papers}
 
-\addref{the surprising creativity of digital evolution?}
+Evolutionary methods are known to come up with creative solution for problems with complex search space~\cite{lehman2018surprising}, and programming tasks often require creativity and knowledge that only human can master.
 
 Search operators are most frequently \emph{delete}, \emph{copy} and \emph{replace}~\cite{petke2017new}.
-\todo{}
+For example, duplicate a line of code, or delete a method call, or replace an integer by another number.
 
-\todo{complex search techniques are not always the most efficient, and OO, again, pose certain challenges and limitations~\cite{shamshiri2017random}}
+One thing to remember, is that complex search techniques are not always the most efficient~\cite{shamshiri2017random}, as a simple random search can sometimes produce sufficient results.
+This is especially true for object-oriented test generator, as they consist of sequences of object constructor and method calls, and it can be hard to know how to combine them to pursue a certain coverage goal.
+Synergy between method calls is hard to predict because classes are interlinked, methods have side effects, and there are goals that cannot be reached.
+In addition, having a specific goal in mind can be at the expense of a wider coverage.
 
 % --------------------------------------------------------------------------------
 \subsection{Test Amplification}%
@@ -481,7 +505,7 @@ It is relatively recent compared to works tackling the problem of Test Data Gene
 Various goals can be pursued to improve a test suite, from automated refactoring to improve a specific metric, to enhancement of existing tests to fill the often partial coverage\footnote{\url{https://testing.googleblog.com/2014/07/measuring-coverage-at-google.html}}.
 The term of test \emph{amplification} is used to denote the process of processing and extending tests to reach further targets.
 Baudry et al.~\cite{baudry2005automatic} wrote a tool for \CS{}\rephrase{} to explore more of the input space and improve the mutation score.
-Yoo et al.~\cite{yoo2012test} proposed the Test Data Regeneration (TDR) method for creating equivalent tests with different inputs --- particularly useful for fault detection and avoiding overfitting\todo{explain overfitting}.
+Yoo et al.~\cite{yoo2012test} proposed the Test Data Regeneration (TDR) method for creating equivalent tests with different inputs --- particularly useful for fault detection and avoiding overfitting (when the SUT passes the tests but does not behave correctly in the general case).
 Xuan et al.~\cite{xuan2015dynamic,xuan2016b} created a tool to refactor test suite to improve dynamic analysis and fault detection.
 
 % --------------------------------------------------------------------------------
@@ -529,7 +553,7 @@ Adding the generated tests in the main test suite has multiple advantages.
 First, is the review process.
 Developers have to review changes before it is accepted in the main code.
 During the review process developers can tweak the assertions, rearrange the inputs, etc.
-In that sense, \dspot{} fits as a software development bot, integrated in the workflow~\cite{urli2018design}, that could be run on code changes, after making sure the tests suite is passing.
+In that sense, \dspot{} fits as a software development bot, integrated in the workflow~\cite{urli2018design}, that could be run on code changes, after making sure the test suite is passing.
 The amplified tests would then be submitted as a Pull Request (or Merge Request) in the code version control platform used.
 Secondly, it is more efficient.\todo{}
 
@@ -540,19 +564,17 @@ Secondly, it is more efficient.\todo{}
 This thesis aim at helping developers understand amplified unit tests.
 There are two sides for this problem: supporting the developer understand the test (Section~\ref{ssec:need_doc}) and cleaning the tests from the noise injected during the amplification process (Section~\ref{ssec:random_noise}).
 
-\todo{\cite{marculescu2017transferring}}
-
 % --------------------------------------------------------------------------------
 \subsection{The Need for Unit Test Cases Documentation}%
 \label{ssec:need_doc}
 The first challenge in rendering generated tests comprehensible, is to bundle them with explanations, like we do by documenting the code we write.
 Several works have already highlighted the need for test documentation, with developers surveys~\cite{daka2014survey,prado2015wap,prado2016advances,prado2018towards,li2016automatically} and experiments~\cite{panichella2016impact} to measure the added value of documentation.
 Even when they are short, tests can be complex and hard to understand.
-In all cases, having documentation --- which include documentation comments like JavaDoc, but also the naming of the tests and variable --- has many advantages~\cite{daka2017generating}\addref{How Do Automatically Generated Unit Tests Influence Software Maintenance?}:
+In all cases, having documentation --- which include documentation comments like JavaDoc, but also the naming of the tests and variable --- has many advantages\footnote{\url{https://testing.googleblog.com/2014/10/testing-on-toilet-writing-descriptive.html}}~\cite{daka2017generating}, especially for generated tests~\cite{rojas2017search,shamshiri2018how}:
 \begin{itemize}
   \item faster to get familiar with the test;
   \item faster fault localisation (e.g.\ figuring out if there is a bug in the test or the SUT) when the test fails; and
-  \item helps building trust in a test generator if it can offer a proof for its result.
+  \item helps to build trust in a test generator if it can provide a proof for its result.
 \end{itemize}
 
 Information to understand can be divided into four categories: (i) the component targeted; (ii) the context of the test method; (iii) the actual piece of code (i.e.\ the logic) that is the test method; and (iv) the properties checked.
@@ -567,27 +589,25 @@ In source code management platforms, pull requests (through which amplified are 
 Given that amplified tests should, in most cases, extend an existing test --- that we can suppose have documentation already --- the explanation of the added value of the amplification would fit in the pull request description.
 It is important to restrict the scope to simple text, as it would not require a change in developers workflow.
 
-\todo{\footnote{\url{https://testing.googleblog.com/2014/10/testing-on-toilet-writing-descriptive.html}}}
-
 % --------------------------------------------------------------------------------
 \subsection{The Generated Random Noise}%
 \label{ssec:random_noise}
 Through the search process, noise is injected in the test case.
 This problem of ugly generated tests code is a shared problem between all kinds of generators~\cite{rojas2017search}.
-Because documentation is not sufficient to understand and review the code, it needs to be clean and logical to help the comprehension.
+Generated tests are equally helpful than hand-written tests (with randomized names) for software maintenance tasks~\cite{shamshiri2018how}, but don't seem to find more bugs~\cite{fraser2015does}, based on the limited data available.
+So the goal is to make a similar job than humans, and because documentation is not sufficient to understand and review the code, tests need to be clean and logical to speedup the comprehension process.
+Even though it has been known for a long time that the amount of time needed by developers to locate and understand code is frequently greater than the amount of time that they spend making modifications~\cite{ko2006exploratory}, existing works have largely focused on best efforts.
 
 On a side note, in many modest projects, unit test are used as examples of the program's usage, and sometimes they replace traditional documentation.
 In those cases, developers put a lot of efforts in making tests easy to understand.
 Doing part of that chore automatically would remove part of the burden for humans.
-
-\todo{the amount of time needed by developers to locate and understand code is frequently greater than the amount of time that they spend making modifications~\cite{ko2006exploratory}}
 
 
 % ================================================================================
 \section{Related Works}%
 \label{sec:related_works}
 In this section we review the large body of related works from the domain of software maintenance~\cite{swanson1976dimensions}.
-We are interested in tools that automatically generate documentation --- and there are many of them, as it is well known that software documentation is important~\cite{de2005study} (even for modern agile methods) but it is time-consuming, often times poor and incomplete~\cite{briand2003software}, and is hard to maintain~\cite{forward2002relevance}.
+We are interested in tools that automatically generate documentation --- and there are many of them, as it is well-known that software documentation is important~\cite{de2005study} (even for modern agile methods) but it is time-consuming, often times poor and incomplete~\cite{briand2003software}, and is hard to maintain~\cite{forward2002relevance}.
 They range from documenting general purpose source code (Section~\ref{ssec:doc_generation}), to commit message generation (Section~\ref{ssec:commit_generation}), and documenting test cases (Section~\ref{ssec:test_doc}).
 
 % --------------------------------------------------------------------------------
@@ -595,12 +615,12 @@ They range from documenting general purpose source code (Section~\ref{ssec:doc_g
 \label{ssec:doc_generation}
 \todo{these works are useless, why describe them?}
 
-Works on source code documentation --- also called software artifact summarization --- often consist of retrieving information from the source code to then arrange this information in a way that is easier and quicker to grasp for a human.
-This section does not aim at providing a survey of the field (for which there are already, including automatic summarization~\cite{jones2007automatic,nazar2016summarizing}, natural language paraphrasing~\cite{neubig2016survey} and automatic comment generation~\cite{wang2018comment}), but to present the general techniques used as well as the kind of results those tools produce.
+Works on source code documentation --- also called software artifact summarisation --- often consist of retrieving information from the source code to then arrange this information in a way that is easier and quicker to grasp for a human.
+This section does not aim at providing a survey of the field (for which there are already, including automatic summarisation~\cite{jones2007automatic,nazar2016summarizing}, natural language paraphrasing~\cite{neubig2016survey} and automatic comment generation~\cite{wang2018comment}), but to present the general techniques used as well as the kind of results those tools produce.
 
-As said above, such tools will rearrange information, stripping irrelevant pieces, summarizing chucks on code, and put central information on the front.
+As said above, such tools will rearrange information, stripping irrelevant pieces, summarising chucks on code, and put central information on the front.
 In other words, they render the what information in a human comprehensible way --- they \emph{paraphrase} the code.
-This is the main reason why, even automatic summarization of natural language documents has been attempted by researchers for more than half a century~\cite{jones2007automatic}, finding a link with our problem of explaining the why information is not trivial.
+This is the main reason why, even automatic summarisation of natural language documents has been attempted by researchers for more than half a century~\cite{jones2007automatic}, finding a link with our problem of explaining the why information is not trivial.
 
 \begin{table}
   \centering
@@ -649,17 +669,17 @@ A summary is composed of the class' stereotype~\cite{moreno2012jstereocode}, a d
 Summaries are in natural language and generated using templates.
 They did a survey with developers to judge how readable and understandable the summaries are.
 
-Rastkar et al.~\cite{rastkar2010summarizing} worked on summarizing bug reports, including involved discussions.
+Rastkar et al.~\cite{rastkar2010summarizing} worked on summarising bug reports, including involved discussions.
 They label sentences and extract individual information.
 Works related to bug reports are important for us as a killed mutant is a bug in a certain way --- but the knowledge we can extract from these works is not obvious because part of the job of a bug report is to help localise the bug, and in the case of mutation testing we already know the source.
 Nevertheless, we can learn from these works how to explain the repercussions of a mutant.
-Except that in this case, it is focused on summarizing a discussion.\rephrase{}
+Except that in this case, it is focused on summarising a discussion.\rephrase{}
 
 % --------------------------------------------------------------------------------
 \subsection{Source Code Change Documentation}%
 \label{ssec:commit_generation}
 Software evolves, iteratively, line by line, commit by commit.\rephrase{}
-Past the phase of assimilation when a developer first start to work a on project, a significant part of the job consists of managing the growth of the project, making small changes to the code base without unwanted side effects, and reviewing commits.
+Past the phase of assimilation when a developer first start to work on a project, a significant part of the job consists of managing the growth of the project, making small changes to the code base without unwanted side effects, and reviewing commits.
 Commits bundle a cohesive set of changes with a textual description, in which it is customary to provide some context, the motivation and possibly a digest of the changes --- part what and part why information.
 Although developers view accurate and concise descriptions as useful, few put the efforts in writing such comments.
 In consequence, researchers have written tools to automatically generate commit messages.
@@ -697,8 +717,8 @@ Neural networks were also used by Loyola et al.~\cite{loyola2017neural}.
   \label{tab:commit_categories}
 \end{table}
 
-Shen et al.~\cite{shen2016automatic} worked on summarization of what and why information.
-The what information is generated by paraphrasing the \texttt{diff}, dropping some information or adding some depending of how important the modified unit is.
+Shen et al.~\cite{shen2016automatic} worked on summarisation of what and why information.
+The what information is generated by paraphrasing the \texttt{diff}, dropping some information or adding some depending on how important the modified unit is.
 The why information is generated using categories proposed by Swanson~\cite{swanson1976dimensions}, given in \tablename~\ref{tab:commit_categories}, and classify commits using the rules proposed by Moreno et al.~\cite{moreno2012jstereocode}.
 The sentences were generated using templates.
 
@@ -725,13 +745,13 @@ They evaluated their tool with a lab study, asking developers to modify or add a
 Finally, the piece of work that is most related to this thesis is about documentation for test cases.
 Because of test cases are one precise kind of software artefact, the works that we have covered in the previous two sections can be cumbersome here (e.g.\ stereotypes are not suited).
 
-As unit tests validate a specific component, in object-oriented languages like Java, they often consist in calling a few methods, multiple times, that will affect the sate of an object and then verify that the object is in the right state.
+As unit tests validate a specific component, in object-oriented languages like Java, they often consist in calling a few methods, multiple times, that will affect the state of an object and then verify that the object is in the right state.
 This kind of method is called a \emph{focal} method, and Ghafari et al.~\cite{ghafari2015automatically} have developed a way to automatically identify them.
-They use static data-flow analysis to examine the call graph and extract the last method that has a side-effect on the assertion.
+They use static data-flow analysis to examine the call graph and extract the last method that has a side effect on the assertion.
 This work is particularly useful to summarise test cases, helping to identify the key stimulus, but it is not directly useful for us as we want to explain a corner case (i.e.\ an amplification that kills a new mutant).\rephrase{}
 
-Cornelissen et al.~\cite{cornelissen2007visualizing} propose the use of sequence diagrams\footnote{\url{https://en.wikipedia.org/wiki/Sequence_diagram}} to visualize Java test cases.
-Because test suites are sometimes the entry points for new contributors to understand the scope and the inner workings of a project, visualizing the actors and their interactions can be more useful than a simple class diagram.
+Cornelissen et al.~\cite{cornelissen2007visualizing} propose the use of sequence diagrams\footnote{\url{https://en.wikipedia.org/wiki/Sequence_diagram}} to visualise Java test cases.
+Because test suites are sometimes the entry points for new contributors to understand the scope and the inner workings of a project, visualising the actors and their interactions can be more useful than a simple class diagram.
 Diagrams can be used for complex test cases as they hide certain call (e.g.\ constructors) and have limited call stack depth.
 
 According to Meszaros~\cite{meszaros2007xunit}, a unit test case typically has four phases: setup, exercise, verify and teardown.
@@ -742,23 +762,23 @@ The teardown phase is for the cleanup.\rephrase{}
 \todo{move that elsewhere}
 
 Kamimura et al.~\cite{kamimura2013towards} have developed a generator of textual summaries for Java test cases.
-A summary is composed of NL paraphrases of the most unique method invocations and the assertions.
+A summary is composed of NL paraphrases of unique method invocations and the assertions.
 There are some interesting details, for example, when a variable's name is too short (e.g.\ ``a1'') they make-up a new name with the variable's type.
 Sentences are built using pre-defined templates.
 
 Li et al.~\cite{li2016automatically} have written a \CS{} tool that generates descriptions for test methods.
-The output, a GUI window, is comprised of 4 pieces of information:
+The output, a GUI window, is composed of 4 pieces of information:
 \begin{enumerate}
   \item a general sentence describing the purpose of the test method (based on class, method and arguments signatures using the SWUM approach~\cite{herbert2016swummary});
   \item descriptions of the focal methods (i.e.\ the line number and the assertion it is linked to);
   \item descriptions of the assertions (i.e.\ natural language (NL) paraphrasing); and
-  \item the slicing paths (backward slicing~\cite{jhala2005path}) for the variables validated with an assertions (i.e.\ NL paraphrasing of each step).
+  \item the slicing paths (backward slicing~\cite{jhala2005path}) for the variables validated with assertions (i.e.\ NL paraphrasing of each step).
 \end{enumerate}
 NL sentences are generated with templates.
 % boilerplates\footnote{\url{https://en.wikipedia.org/wiki/Boilerplate_text}} and keywords.
 
-Li~\cite{li2018automatically} also proposed 21 stereotypes for methods in Java unit tests, based on the jUnit\footnote{\url{https://junit.org/}} API (14 stereotypes) but also using the data and control flow (7 stereotypes).
-The API-based stereotypes allow the extraction of fine grained what information --- for example, with \mintinline{java}{fail} (which raises a failure if the test cases reaches that statement) you can deduce that the test is a ``utility verifier'' or that a method with the annotation \mintinline{java}{@Before} is a ``test initializer''.
+Li~\cite{li2018automatically} also proposed 21 stereotypes for methods in Java unit tests, based on the JUnit API (14 stereotypes) but also using the data and control flow (7 stereotypes).
+The API-based stereotypes allow the extraction of fine-grained what information --- for example, with \mintinline{java}{fail} (which raises a failure if the test cases reaches that statement) you can deduce that the test is a ``utility verifier'' or that a method with the annotation \mintinline{java}{@Before} is a ``test initializer''.
 On the other hand, data/control flow analyses can capture the context of the API calls.
 The purpose of the test can be deduced, for example, if the number of assertions within branch conditions is greater than 0, it means that the test is a ``branch verifier''.
 It is also possible to get insights in the context of the test case in relation to the test class, for example, a test case is a ``public field verifier'' if values in assertions are from public field accesses.
@@ -787,7 +807,7 @@ They use dynamic slicing~\cite{korel1988dynamic} to identify all the classes tha
 And, because the slicing is an overestimate, they use conceptual coupling~\cite{poshyvanyk2009using} (analysing names and comments) to filter out superfluous classes (e.g.\ mock objects).
 This problem of traceability is useful for us as we would like the amplified tests to remain in the same scope as the original, aiming for a more through coverage of the target instead of just random mutants.
 
-\begin{listing}[H]
+\begin{listing}
   \centering
   \begin{minted}[linenos,frame=lines,breaklines]{java}
 public void test() {
@@ -812,19 +832,38 @@ public void test() {
 Zhang et al.~\cite{zhang2016towards} wrote NameAssist, a tool that generates names for JUnit test cases.
 They differentiate three different pieces of information contained in the body of a test method: the action, the expected outcome, and the scenario under test.
 The generated names are made up using these but only the action part, or the action and expected outcome, can be used to make up shorter names.
-The action consists of the class under test, or the method under test.\todo{give more details}
+The action consists of the invocation of the method under test --- identifying the action requires an extensive set of rules to account for cases where the standard naming convention is not followed, 7 different patterns to identify the class under test, 2 conditions to consider only expressions related to the class under test, and then 5 rules to choose the action.
 The expected outcome is a paraphrase of the assertion (they only consider tests with a single assertion), so it consists of the name of a getter and the expected value.
 Finally, the scenario (the part that set-ups the environment) is put into words using the action dependency graph and indicate that parameters are set or that a method is used.
 An example is given in \listingname~\ref{lst:zhang2016towards_example}.
-The text is generated using test name templates~\cite{zhang2015automatically} filled with custom translations of specific expressions (e.g.\ translating an \texttt{assertTrue} as ``is true'').
+The text is generated using test name templates~\cite{zhang2015automatically} (from a high level, test names often consist of an action phrase and a predicate phrase) filled with custom translations of specific expressions (e.g.\ translating an \texttt{assertTrue} as ``is true'').
 
+\begin{listing}
+  \centering
+  \begin{minted}[linenos,frame=lines,breaklines,escapeinside=||]{java}
+public void |\colorbox{Melon}{test0}| / |\colorbox{LimeGreen}{testAddPriceReturningFalse}|() {
+  ShoppingCart cart0 = new ShoppingCart();
+  boolean boolean0 = cart0.addPrice(2298);
+  assertEquals(0, cart0.getTotal());
+  assertFalse(boolean0);
+}
+  \end{minted}
+  \begin{description}[align=right,labelwidth=5.5cm]
+    \item[test0] Method createsShoppingCart
+    \item[] Method addPrice
+    \item[] \hspace*{-\fboxsep}\colorbox{Goldenrod}{Output addPriceReturningFalse}
+    \item[] Input addPriceWithPositive
+  \end{description}
+  \caption{Example~\cite{daka2017generating} of a unit test, its coverage goals, and a generated test.}%
+\label{lst:daka2017generating_example}
+\end{listing}
 Daka et al.~\cite{daka2017generating} proposed a technique to generate descriptive names for automatically generated unit tests.
 Their work is based on EvoSuite~\cite{fraser2011evosuite}, a test suite generator (from scratch) that produces test methods with names with the only characteristic of being unique (\texttt{test0}, \texttt{test1}, \texttt{test2}, etc.).
 Their naming approach is valuable for us as they consider the fitness function guiding the generation: code coverage.
-The consider coarse grained coverage with (i) method coverage; (ii) exception coverage; and (iii) output coverage.
+They consider coarse-grained coverage with (i) method coverage; (ii) exception coverage; and (iii) output coverage.
 For each test they collect the goals reached (methods called, inputs and outputs used in an assertion, and exceptions caught), and then rank them to keep only the most important goals.
 The tests names are then generated by concatenating (almost as is) the goals kept (the names of the methods, exception, etc.).
-\todo{example}
+An example is given in \listingname~\ref{lst:daka2017generating_example}.
 
 Most of the papers related to human assistance reviewed here were evaluated with developers surveys.
 Proteum/IM 2.0~\cite{delamaro2001proteum} used a case study, and \textsc{Code Defenders} conducted a lab study.
@@ -881,13 +920,22 @@ Proteum/IM 2.0~\cite{delamaro2001proteum} used a case study, and \textsc{Code De
 
 \cite{alali2008s,hattori2008nature,letovsky1987cognitive}
 
-\todo{}
 Elements at our disposal:
 \begin{enumerate}
   \item the original test;
-  \item the amplified test (its AST representation, with annotated amplified nodes); and
+  \item the amplified test (with the list of amplified nodes); and
   \item the newly killed mutants.
 \end{enumerate}
+
+Information available about mutants:
+\begin{description}
+  \item[\texttt{state}] Indicates whether the mutant is live, killed, or has not been executed, but can also give reasons in case of an error (time-out, ran out of memory).
+  \item[\texttt{mutatedClass}] The class that contains the mutation.
+  \item[\texttt{mutantOperator}] The mutator applied.
+  \item[\texttt{mutatedMethod}] The method that contains the mutation.
+  \item[\texttt{lineNumber}] Line number where the mutation is.
+  \item[\texttt{killer}] The test method that killed the mutant.
+\end{description}
 
 List of possible information:
 \begin{itemize}
@@ -901,6 +949,7 @@ List of possible information:
 \todo{on the usefulness of nlg}
 
 \todo{what can we draw from the related works}
+
 \todo{assuming knowledge of original test or not}
 
 % --------------------------------------------------------------------------------
@@ -919,7 +968,7 @@ List of possible information:
 \label{ssec:threat_to_validity}
 \todo{}
 
-\todo{DSpot is not yet established and recognized in the community. It is is difficult to have input data (valid amplified tests)}
+\todo{DSpot is not yet established and recognized in the community. It is difficult to have input data (valid amplified tests)}
 
 % --------------------------------------------------------------------------------
 \subsection{Case Studies}%
