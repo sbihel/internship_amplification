@@ -76,10 +76,9 @@ def describe_test_class(test_class_report_path,
     Natural language description of an amplified test class.
     """
     if not os.path.exists(test_class_report_path + '_mutants_killed.json'):
-        return
-    print(
-        "========== Class: " + test_class_report_path.split('.')[-1] +
-        " ==========")
+        return ''
+    res = "========== Class: " + test_class_report_path.split('.')[-1] + \
+        " ==========\n"
     with open(test_class_report_path+'_mutants_killed.json', 'r') as json_file:
         mutation_score = json.load(json_file)
     with open(test_class_report_path+'_amp_log.json', 'r') as json_file:
@@ -93,28 +92,48 @@ def describe_test_class(test_class_report_path,
             amplification_log.pop(amplified_test, None)
         else:
             if i:
-                print()
-            print('===== Generated test `' + amplified_test + '` based on `' +
-                  mutation_score["testCases"][i]["parentName"] + '` =====')
+                res += '\n'
+            res += '===== Generated test `' + amplified_test + \
+                '` based on `' + \
+                mutation_score["testCases"][i]["parentName"] + '` =====\n'
             new_asserts = [
                 amplification
                 for amplification in amplification_log[amplified_test]
                 if amplification["ampCategory"] == "ASSERT"]
             for amplification in amplification_log[amplified_test]:
                 if amplification not in new_asserts:
-                    print(describe_amplification(amplification))
+                    res += describe_amplification(amplification) + '\n'
             if new_asserts:
-                print(describe_asserts(new_asserts))
+                res += describe_asserts(new_asserts) + '\n'
 
             mutants = mutation_score["testCases"][i]["mutantsKilled"]
-            print("=== " + str(len(mutants)) + " new detectable bug" +
-                  ("s" if len(mutants) > 1 else "") + " ===")
-            print(describe_mutants(
+            res += "=== " + str(len(mutants)) + " new detectable bug" + \
+                ("s" if len(mutants) > 1 else "") + " ===\n"
+            res += describe_mutants(
                 mutants,
                 project_root_path,
                 module_path,
-                src_path))
+                src_path) + '\n'
         i += 1
+    return res
+
+
+def describe_test_classes(report_dir, project_root_path,
+                          module_path, src_path, test_path):
+    """
+    Natural language description of a set of amplified test classes.
+    """
+    i = 0
+    for file in os.listdir(report_dir):
+        if file.endswith('_mutants_killed.json'):
+            test_class_description = describe_test_class(
+                report_dir + os.sep + file[: -len('_mutants_killed.json')],
+                project_root_path, module_path, src_path, test_path)
+            if test_class_description.count('\n') > 1:
+                if i:
+                    print()
+                print(test_class_description)
+                i += 1
 
 
 def main():
@@ -175,11 +194,12 @@ def main():
             project_root,
             module_path,
             output_directory)
-        for file in os.listdir(report_dir):
-            if file.endswith('_mutants_killed.json'):
-                describe_test_class(
-                    report_dir + os.sep + file[: -len('_mutants_killed.json')],
-                    project_root_path, module_path, src_path, test_path)
+        describe_test_classes(
+            report_dir,
+            project_root_path,
+            module_path,
+            src_path,
+            test_path)
 
 
 if __name__ == '__main__':
