@@ -13,7 +13,7 @@ def create_url_file_line(project_root, file_relative_path, line_number):
     url = ''
     repo = git.Repo(project_root)
     url += next(repo.remote().urls).rstrip('/')
-    url += '/blob/' + str(repo.active_branch.commit.binsha.hex())
+    url += '/blob/' + repo.head.commit.hexsha
     url += '/' + file_relative_path
     url += '#L' + str(line_number)
     return url

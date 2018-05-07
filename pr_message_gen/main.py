@@ -3,10 +3,11 @@
 """ PR_MESSAGE_GEN
 """
 import argparse
-import git_link
 import json
 import os
 from collections import Counter
+
+import git_link
 
 
 def describe_amplification(amplification):
@@ -43,16 +44,23 @@ def describe_asserts(new_asserts):
     return res[:-1]
 
 
-def describe_mutant(mutant):
+def describe_mutant(mutant, project_root_path, module_path, src_path):
     """
     Natural language description of a mutant.
     """
-    return "Bug introduced in `" + mutant["locationClass"].split('.')[-1] + \
-        '#' + mutant["locationMethod"] + "` at line " + \
-        str(mutant["lineNumber"]) + ", using " + mutant["ID"].split('.')[-1]
+    file_class = mutant['locationClass']
+    line_number = mutant['lineNumber']
+    class_path = file_class.replace('.', '/') + '.java'
+    link = git_link.create_url_file_line(
+        project_root_path, os.path.join(
+            module_path, src_path, class_path), line_number)
+    return "Bug introduced in `" + file_class.split('.')[-1] + '#' + \
+        mutant["locationMethod"] + "` at [line " + str(line_number) + \
+        "](" + link + "), using " + mutant["ID"].split('.')[-1]
 
 
-def describe_test_class(test_class_report_path):
+def describe_test_class(test_class_report_path,
+                        project_root_path, module_path, src_path, test_path):
     """
     Natural language description of an amplified test class.
     """
@@ -89,7 +97,12 @@ def describe_test_class(test_class_report_path):
 
             print("\tKilled mutants")
             for mutant in mutation_score["testCases"][i]["mutantsKilled"]:
-                print(describe_mutant(mutant))
+                print(
+                    describe_mutant(
+                        mutant,
+                        project_root_path,
+                        module_path,
+                        src_path))
         i += 1
 
 
@@ -100,8 +113,10 @@ def main():
     command_parser = argparse.ArgumentParser()
     command_parser.add_argument('-p', '--properties_file', type=str,
                                 help='dspot.properties file.')
-    command_parser.add_argument('-t', '--test', type=str,
-                                help='Name of a particular test class.')
+    command_parser.add_argument(
+        '-t', '--test', type=str,
+        help='Name of a particular test class.'
+             'E.g. fr.inria.diversify.dspot.DSpotTest')
 
     opts, _ = command_parser.parse_known_args()
 
@@ -127,6 +142,7 @@ def main():
                 test_path = line[len('testSrc='):]
             elif line.startswith('outputDirectory='):
                 output_directory = line[len('outputDirectory='):]
+    project_root_path = os.path.join(dir_prop, project_root)
 
     if opts.test:
         test_class_report_path = os.path.join(dir_prop,
@@ -136,14 +152,23 @@ def main():
                                               opts.test)
         if not os.path.exists(test_class_report_path+"_mutants_killed.json"):
             raise ValueError("Test class report not found.")
-        describe_test_class(test_class_report_path)
+        describe_test_class(
+            test_class_report_path,
+            project_root_path,
+            module_path,
+            src_path,
+            test_path)
     else:  # describe every amplified test class
-        report_dir = os.path.join(dir_prop, project_root,
-                                  module_path, output_directory)
+        report_dir = os.path.join(
+            dir_prop,
+            project_root,
+            module_path,
+            output_directory)
         for file in os.listdir(report_dir):
             if file.endswith('_mutants_killed.json'):
                 describe_test_class(
-                    report_dir + os.sep + file[: -len('_mutants_killed.json')])
+                    report_dir + os.sep + file[: -len('_mutants_killed.json')],
+                    project_root_path, module_path, src_path, test_path)
 
 
 if __name__ == '__main__':
