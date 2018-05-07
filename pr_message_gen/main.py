@@ -35,29 +35,39 @@ def describe_asserts(new_asserts):
     Natural language description of a set of assertions.
     """
     new_asserts_shortname = [assertion["newValue"].split(
-        '=')[-1] for assertion in new_asserts]
+        '=')[-1].lstrip() for assertion in new_asserts]
     count_asserts = Counter(new_asserts_shortname)
     res = ""
     for shortname in count_asserts:
         nb_asserts = count_asserts[shortname]
-        res += str(nb_asserts) + " assertion" + ("s" if nb_asserts else "") + \
-            " for the return value of `" + shortname + "`\n"
+        res += "Generated " + str(nb_asserts) + " assertion" + \
+            ("s" if nb_asserts > 1 else "") + " for the return value of `" + \
+            shortname + "`.\n"
     return res[:-1]
 
 
-def describe_mutant(mutant, project_root_path, module_path, src_path):
+def describe_mutants(mutants, project_root_path, module_path, src_path):
     """
-    Natural language description of a mutant.
+    Natural language description of a set of mutants.
     """
-    file_class = mutant['locationClass']
-    line_number = mutant['lineNumber']
-    class_path = file_class.replace('.', '/') + '.java'
-    link = git_link.create_url_file_line(
-        project_root_path, os.path.join(
-            module_path, src_path, class_path), line_number)
-    return "Bug introduced in `" + file_class.split('.')[-1] + '#' + \
-        mutant["locationMethod"] + "` at [line " + str(line_number) + \
-        "](" + link + "), using " + mutant["ID"].split('.')[-1]
+    res = ''
+    mutants_line = [
+        (mutant["lineNumber"],
+         mutant['locationClass'],
+         mutant["locationMethod"]) for mutant in mutants]
+    count_lines = Counter(mutants_line)
+    for mutant in count_lines:
+        line_number, class_mutated, method_mutated = mutant
+        nb_mutants = count_lines[mutant]
+        class_path = class_mutated.replace('.', '/') + '.java'
+        link = git_link.create_url_file_line(
+            project_root_path, os.path.join(
+                module_path, src_path, class_path), line_number)
+        res += "The new test can detect " + str(nb_mutants) + " new bug" + \
+            ('s' if nb_mutants > 1 else '') + " arising from `" + \
+            class_mutated.split('.')[-1] + '#' + method_mutated + \
+            "`, [line " + str(line_number) + "](" + link + ").\n"
+    return res[:-1]
 
 
 def describe_test_class(test_class_report_path,
@@ -84,7 +94,7 @@ def describe_test_class(test_class_report_path,
         else:
             if i:
                 print()
-            print('===== Generated test: `' + amplified_test + '` from `' +
+            print('===== Generated test `' + amplified_test + '` based on `' +
                   mutation_score["testCases"][i]["parentName"] + '` =====')
             new_asserts = [
                 amplification
@@ -96,14 +106,14 @@ def describe_test_class(test_class_report_path,
             if new_asserts:
                 print(describe_asserts(new_asserts))
 
-            print("\tKilled mutants")
-            for mutant in mutation_score["testCases"][i]["mutantsKilled"]:
-                print(
-                    describe_mutant(
-                        mutant,
-                        project_root_path,
-                        module_path,
-                        src_path))
+            mutants = mutation_score["testCases"][i]["mutantsKilled"]
+            print("=== " + str(len(mutants)) + " new detectable bug" +
+                  ("s" if len(mutants) > 1 else "") + " ===")
+            print(describe_mutants(
+                mutants,
+                project_root_path,
+                module_path,
+                src_path))
         i += 1
 
 
