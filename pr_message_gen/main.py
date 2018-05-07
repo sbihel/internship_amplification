@@ -3,6 +3,7 @@
 """ PR_MESSAGE_GEN
 """
 import argparse
+import git_link
 import json
 import os
 from collections import Counter
