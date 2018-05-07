@@ -16,7 +16,7 @@ def create_url_file_line(project_root, file_relative_path, line_number):
     url += '/blob/' + repo.head.commit.hexsha
     url += '/' + file_relative_path
     url += '#L' + str(line_number)
-    return url
+    return url.replace('/./', '/')
 
 
 if __name__ == '__main__':

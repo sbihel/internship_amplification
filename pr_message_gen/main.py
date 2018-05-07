@@ -66,7 +66,7 @@ def describe_mutants(mutants, project_root_path, module_path, src_path):
         res += "The new test can detect " + str(nb_mutants) + " new bug" + \
             ('s' if nb_mutants > 1 else '') + " arising from `" + \
             class_mutated.split('.')[-1] + '#' + method_mutated + \
-            "`, [line " + str(line_number) + "](" + link + ").\n"
+            "`, line " + str(line_number) + ". " + link + "\n"
     return res[:-1]
 
 
@@ -153,6 +153,7 @@ def main():
     if not opts.properties_file:
         raise ValueError("Need properties file")
 
+    # Parse the properties file
     dir_prop = os.path.join(*(opts.properties_file.split(os.sep)[:-1]))
     project_root = None
     module_path = None
@@ -174,7 +175,8 @@ def main():
                 output_directory = line[len('outputDirectory='):]
     project_root_path = os.path.join(dir_prop, project_root)
 
-    if opts.test:
+    # Message generation
+    if opts.test:  # describe only the provided test class
         test_class_report_path = os.path.join(dir_prop,
                                               project_root,
                                               module_path,
