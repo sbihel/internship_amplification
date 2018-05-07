@@ -39,8 +39,9 @@ def describe_asserts(new_asserts):
     count_asserts = Counter(new_asserts_shortname)
     res = ""
     for shortname in count_asserts:
-        res += str(count_asserts[shortname]) + \
-            " assertions for the return value of `" + shortname + "`\n"
+        nb_asserts = count_asserts[shortname]
+        res += str(nb_asserts) + " assertion" + ("s" if nb_asserts else "") + \
+            " for the return value of `" + shortname + "`\n"
     return res[:-1]
 
 
