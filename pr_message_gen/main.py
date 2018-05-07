@@ -4,7 +4,7 @@
 """
 import argparse
 import json
-from os import path, listdir, sep
+import os
 from collections import Counter
 
 
@@ -55,7 +55,7 @@ def describe_test_class(test_class_report_path):
     """
     Natural language description of an amplified test class.
     """
-    if not path.exists(test_class_report_path + '_mutants_killed.json'):
+    if not os.path.exists(test_class_report_path + '_mutants_killed.json'):
         return
     print(
         "========== Class: " + test_class_report_path.split('.')[-1] +
@@ -107,7 +107,7 @@ def main():
     if not opts.properties_file:
         raise ValueError("Need properties file")
 
-    dir_prop = path.join(*(opts.properties_file.split(sep)[:-1]))
+    dir_prop = os.path.join(*(opts.properties_file.split(os.sep)[:-1]))
     project_root = None
     module_path = None
     src_path = None
@@ -128,21 +128,21 @@ def main():
                 output_directory = line[len('outputDirectory='):]
 
     if opts.test:
-        test_class_report_path = path.join(dir_prop,
-                                           project_root,
-                                           module_path,
-                                           output_directory,
-                                           opts.test)
-        if not path.exists(test_class_report_path+"_mutants_killed.json"):
+        test_class_report_path = os.path.join(dir_prop,
+                                              project_root,
+                                              module_path,
+                                              output_directory,
+                                              opts.test)
+        if not os.path.exists(test_class_report_path+"_mutants_killed.json"):
             raise ValueError("Test class report not found.")
         describe_test_class(test_class_report_path)
     else:  # describe every amplified test class
-        report_dir = path.join(dir_prop, project_root,
-                                module_path, output_directory)
-        for file in listdir(report_dir):
+        report_dir = os.path.join(dir_prop, project_root,
+                                  module_path, output_directory)
+        for file in os.listdir(report_dir):
             if file.endswith('_mutants_killed.json'):
                 describe_test_class(
-                    report_dir + sep + file[: -len('_mutants_killed.json')])
+                    report_dir + os.sep + file[: -len('_mutants_killed.json')])
 
 
 if __name__ == '__main__':
