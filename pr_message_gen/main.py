@@ -77,8 +77,7 @@ def describe_test_class(test_class_report_path,
     """
     if not os.path.exists(test_class_report_path + '_mutants_killed.json'):
         return ''
-    res = "========== Class: " + test_class_report_path.split('.')[-1] + \
-        " ==========\n"
+    res = "# Class: " + test_class_report_path.split('.')[-1] + "\n"
     with open(test_class_report_path+'_mutants_killed.json', 'r') as json_file:
         mutation_score = json.load(json_file)
     with open(test_class_report_path+'_amp_log.json', 'r') as json_file:
@@ -93,9 +92,8 @@ def describe_test_class(test_class_report_path,
         else:
             if i:
                 res += '\n'
-            res += '===== Generated test `' + amplified_test + \
-                '` based on `' + \
-                mutation_score["testCases"][i]["parentName"] + '` =====\n'
+            res += '## Generated test `' + amplified_test + '` based on `' + \
+                mutation_score["testCases"][i]["parentName"] + '`\n'
             new_asserts = [
                 amplification
                 for amplification in amplification_log[amplified_test]
@@ -107,8 +105,8 @@ def describe_test_class(test_class_report_path,
                 res += describe_asserts(new_asserts) + '\n'
 
             mutants = mutation_score["testCases"][i]["mutantsKilled"]
-            res += "=== " + str(len(mutants)) + " new detectable bug" + \
-                ("s" if len(mutants) > 1 else "") + " ===\n"
+            res += "### " + str(len(mutants)) + " new detectable bug" + \
+                ("s" if len(mutants) > 1 else "") + "\n"
             res += describe_mutants(
                 mutants,
                 project_root_path,
