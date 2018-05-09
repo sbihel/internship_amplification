@@ -40,20 +40,23 @@ def get_assert_target(assertion):
     """
     Extract the variable/method tested by an assertion.
     """
-    if '=' in assertion["newValue"]:
-        return assertion["newValue"].split('=')[-1].lstrip()
+    assert_stmt = assertion["newValue"]
+    if '=' in assert_stmt:
+        return assert_stmt.split('=')[-1].lstrip()
     else:  # assert statement
-        tokens = javalang.tokenizer.tokenize(assertion["newValue"] + ';')
+        # javalang is taking a *long* time
+        tokens = javalang.tokenizer.tokenize(assert_stmt + ';')
         parser = javalang.parser.Parser(tokens)
         stmt_tree = parser.parse_expression()
+        # this part is ugly but maybe soon enough javalang will be able to pretty print
         position = 0
-        for char in assertion["newValue"]:
+        for char in assert_stmt:
             position += 1  # position of the arguments of the assert
             if char == '(':
                 break
         if len(stmt_tree.arguments) == 2:
             looking_for = [',']
-            for char in assertion["newValue"][position:]:
+            for char in assert_stmt[position:]:
                 position += 1
                 if char == looking_for[0]:
                     looking_for.pop(0)
@@ -63,7 +66,7 @@ def get_assert_target(assertion):
                     looking_for = ['"'] + looking_for
                 elif char == '(':
                     looking_for = [')'] + looking_for
-        return assertion["newValue"][position:-1].strip()
+        return assert_stmt[position:-1].strip()
 
 
 def describe_asserts(new_asserts):
@@ -134,8 +137,12 @@ def describe_test_class(test_class_report_path,
         else:
             if i:
                 res += '\n'
-            res += '## Generated test `' + amplified_test + '` based on `' + \
-                mutation_score["testCases"][i]["parentName"] + '`\n'
+            parent_name = mutation_score["testCases"][i]["parentName"]
+            if amplified_test != parent_name:
+                res += '## Generated test `' + amplified_test + \
+                    '` based on `' + parent_name + '`\n'
+            else:
+                res += '## Original test `' + amplified_test + '`\n'
             new_asserts = [
                 amplification
                 for amplification in amplification_log[amplified_test]
