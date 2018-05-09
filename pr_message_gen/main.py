@@ -6,6 +6,7 @@ import argparse
 import json
 import os
 from collections import Counter
+import javalang
 
 import git_link
 
@@ -18,24 +19,61 @@ def describe_amplification(amplification):
     if categ == "ASSERT":
         raise ValueError("Not for assertions.")
     elif categ == "ADD":
-        return "Added new " + \
-            amplification["role"] + " `" + amplification["newValue"] + "`"
+        diff = "```diff\n+ " + amplification["newValue"] + "\n```\n"
+        return "Added new " + amplification["role"] + " `" + \
+            amplification["newValue"] + "`.\n" + diff
     elif categ == "REMOVE":
-        return "Remove " + amplification["role"] + \
-            " from " + amplification["parent"]
+        diff = "```diff\n- " + amplification["oldValue"] + "\n```\n"
+        return "Remove " + amplification["role"] + " from `" + \
+            amplification["parent"] + "`.\n" + diff
     elif categ == "MODIFY":
-        return "Modified " + amplification["role"] + ", from " + \
-            amplification["oldValue"] + " to " + amplification["newValue"]
+        diff = "```diff\n- " + amplification["oldValue"] + "\n+ " + \
+            amplification["newValue"] + "\n```\n"
+        return "Modified " + amplification["role"] + ", from `" + \
+            amplification["oldValue"] + "` to `" + \
+            amplification["newValue"] + "`.\n" + diff
     else:
         raise ValueError("Unknown category.")
+
+
+def get_assert_target(assertion):
+    """
+    Extract the variable/method tested by an assertion.
+    """
+    if '=' in assertion["newValue"]:
+        return assertion["newValue"].split('=')[-1].lstrip()
+    else:  # assert statement
+        tokens = javalang.tokenizer.tokenize(assertion["newValue"] + ';')
+        parser = javalang.parser.Parser(tokens)
+        stmt_tree = parser.parse_expression()
+        position = 0
+        for char in assertion["newValue"]:
+            position += 1  # position of the arguments of the assert
+            if char == '(':
+                break
+        if len(stmt_tree.arguments) == 2:
+            looking_for = [',']
+            for char in assertion["newValue"][position:]:
+                position += 1
+                if char == looking_for[0]:
+                    looking_for.pop(0)
+                    if looking_for == []:
+                        break
+                elif char == '"':
+                    looking_for = ['"'] + looking_for
+                elif char == '(':
+                    looking_for = [')'] + looking_for
+        return assertion["newValue"][position:-1].strip()
 
 
 def describe_asserts(new_asserts):
     """
     Natural language description of a set of assertions.
     """
-    new_asserts_shortname = [assertion["newValue"].split(
-        '=')[-1].lstrip() for assertion in new_asserts]
+    new_asserts_shortname = []
+    for assertion in new_asserts:
+        new_asserts_shortname += [get_assert_target(assertion)]
+
     count_asserts = Counter(new_asserts_shortname)
     res = ""
     for shortname in count_asserts:
@@ -43,6 +81,10 @@ def describe_asserts(new_asserts):
         res += "Generated " + str(nb_asserts) + " assertion" + \
             ("s" if nb_asserts > 1 else "") + " for the return value of `" + \
             shortname + "`.\n"
+        if len(new_asserts) < 10:
+            for assertion in new_asserts:
+                if assertion["newValue"].split('=')[-1].lstrip() == shortname:
+                    res += "```diff\n+ " + assertion["newValue"] + "\n```\n"
     return res[:-1]
 
 
@@ -98,11 +140,25 @@ def describe_test_class(test_class_report_path,
                 amplification
                 for amplification in amplification_log[amplified_test]
                 if amplification["ampCategory"] == "ASSERT"]
+
+            input_res = ''
             for amplification in amplification_log[amplified_test]:
                 if amplification not in new_asserts:
-                    res += describe_amplification(amplification) + '\n'
+                    input_res += describe_amplification(amplification) + '\n'
+            if input_res:
+                res += '### ' + \
+                    str(mutation_score["testCases"][i]["nbInputAdded"]) + \
+                    ' generated inputs.\n'
+                res += input_res
+
+            assert_res = ''
             if new_asserts:
-                res += describe_asserts(new_asserts) + '\n'
+                assert_res += describe_asserts(new_asserts) + '\n'
+            if assert_res:
+                res += '### ' + \
+                    str(mutation_score["testCases"][i]["nbAssertionAdded"]) + \
+                    ' generated assertions.\n'
+                res += assert_res
 
             mutants = mutation_score["testCases"][i]["mutantsKilled"]
             res += "### " + str(len(mutants)) + " new detectable bug" + \
@@ -113,7 +169,7 @@ def describe_test_class(test_class_report_path,
                 module_path,
                 src_path) + '\n'
         i += 1
-    return res
+    return res[:-1]
 
 
 def describe_test_classes(report_dir, project_root_path,
@@ -153,6 +209,8 @@ def main():
 
     # Parse the properties file
     dir_prop = os.path.join(*(opts.properties_file.split(os.sep)[:-1]))
+    if opts.properties_file[0] == os.sep:
+        dir_prop = os.path.join(os.sep, dir_prop)
     project_root = None
     module_path = None
     src_path = None

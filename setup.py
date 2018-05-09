@@ -10,5 +10,6 @@ setup(name='pr_message_gen',
       packages=['pr_message_gen'],
       install_requires=[
           'gitpython',
+          'javalang',
       ],
       zip_safe=False)
