@@ -6,9 +6,11 @@ import argparse
 import json
 import os
 from collections import Counter
-import javalang
 
 import git_link
+
+
+MAX_NB_ASSERTS = 10
 
 
 def describe_amplification(amplification):
@@ -44,28 +46,29 @@ def get_assert_target(assertion):
     if '=' in assert_stmt:
         return assert_stmt.split('=')[-1].lstrip()
     else:  # assert statement
-        # javalang is taking a *long* time
-        tokens = javalang.tokenizer.tokenize(assert_stmt + ';')
-        parser = javalang.parser.Parser(tokens)
-        stmt_tree = parser.parse_expression()
-        # this part is ugly but maybe soon enough javalang will be able to pretty print
-        position = 0
+        # parse the line, extracting the target of the assert
+        # javalang was taking a long time, and could not pretty print
+        position = 0  # position of the arguments of the assert
         for char in assert_stmt:
-            position += 1  # position of the arguments of the assert
+            position += 1
             if char == '(':
                 break
-        if len(stmt_tree.arguments) == 2:
-            looking_for = [',']
-            for char in assert_stmt[position:]:
-                position += 1
-                if char == looking_for[0]:
-                    looking_for.pop(0)
-                    if looking_for == []:
-                        break
-                elif char == '"':
-                    looking_for = ['"'] + looking_for
-                elif char == '(':
-                    looking_for = [')'] + looking_for
+        position_1st = position
+
+        looking_for = [',']
+        for char in assert_stmt[position:]:
+            position += 1
+            if char == looking_for[0]:
+                looking_for.pop(0)
+                if looking_for == []:
+                    break
+            elif char == '"':
+                looking_for = ['"'] + looking_for
+            elif char == '(':
+                looking_for = [')'] + looking_for
+
+        if looking_for:  # only 1 argument, go back to beginning
+            position = position_1st
         return assert_stmt[position:-1].strip()
 
 
@@ -84,7 +87,7 @@ def describe_asserts(new_asserts):
         res += "Generated " + str(nb_asserts) + " assertion" + \
             ("s" if nb_asserts > 1 else "") + " for the return value of `" + \
             shortname + "`.\n"
-        if len(new_asserts) < 10:
+        if len(new_asserts) < MAX_NB_ASSERTS:
             for assertion in new_asserts:
                 if assertion["newValue"].split('=')[-1].lstrip() == shortname:
                     res += "```diff\n+ " + assertion["newValue"] + "\n```\n"
@@ -168,8 +171,8 @@ def describe_test_class(test_class_report_path,
                 res += assert_res
 
             mutants = mutation_score["testCases"][i]["mutantsKilled"]
-            res += "### " + str(len(mutants)) + " new detectable bug" + \
-                ("s" if len(mutants) > 1 else "") + "\n"
+            res += "### " + str(len(mutants)) + " new behavior" + \
+                ("s" if len(mutants) > 1 else "") + " covered.\n"
             res += describe_mutants(
                 mutants,
                 project_root_path,
