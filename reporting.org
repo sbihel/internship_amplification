@@ -296,6 +296,9 @@ the same template as humans do.
 - /Generating Unit Tests with Descriptive Names Or: Would You Name Your Children Thing1 and Thing2?/ 🌟🌟🌟
   ([[https://dl.acm.org/citation.cfm?id=3092727][daka2017generating]])
   + TODO
+- /An Empirical Investigation on the Readability of Manual and Generated Test Cases/ 🌟🌟🌟
+  ([[https://giograno.me/assets/pdf/conf/icpc18short.pdf][grano2018empirical]])
+  + TODO
 
 **** Generating natural language descriptions for software artifacts
 ***** Surveys
@@ -598,7 +601,7 @@ the same template as humans do.
 *** TODO Defense Rehearsal @ ENS <2018-06-22 Fri>
 
 
-* Journal [2/21]
+* Journal [14/21]
 ** DONE Preliminary Bibliographical Work <2017-09-18 Mon>--<2018-02-07 Wed>
 *** Things Done
 - Meeting with Benoit <2017-09-22 Fri>
@@ -1152,7 +1155,7 @@ cd .. && mvn clean package -DskipTests && cd dhell && mvn clean package && java 
 - Meeting with Benoit <2018-03-16 Fri>
   + Make a formal proposal of natural language description
   + Ask people what they think about it
-  + Ask (Simon Urli, Spoon) (, XWiki) (, SAT4J) what they think of my proposal
+  + Ask (Simon U, Spoon) (, XWiki) (, SAT4J) what they think of my proposal
   + Difficulties to evaluate because there isn't a lot of material (DSpot isn't
     an established tool).
 - [ ] formal description of the NL description
@@ -1266,7 +1269,7 @@ cd .. && mvn clean package -DskipTests && cd dhell && mvn clean package && java 
   + [ ] describe thoroughly the oracle problem
 - [ ] Read papers
 - [ ] formal description of the NL description
-- [ ] ask for opinions (e.g. Simon Urli, XWiki, SAT4J)
+- [ ] ask for opinions (e.g. Simon U, XWiki, SAT4J)
 
 
 ** DONE Week 8  <2018-03-26 Mon>--<2018-04-01 Sun>
@@ -1316,7 +1319,7 @@ cd .. && mvn clean package -DskipTests && cd dhell && mvn clean package && java 
   + [ ] describe thoroughly the oracle problem
 - [X] Read papers
 - [ ] formal description of the NL description
-- [ ] ask for opinions (e.g. Simon Urli, XWiki, SAT4J)
+- [ ] ask for opinions (e.g. Simon U, XWiki, SAT4J)
 
 
 ** DONE Week 9  <2018-04-02 Mon>--<2018-04-08 Sun>
@@ -1366,7 +1369,7 @@ cd .. && mvn clean package -DskipTests && cd dhell && mvn clean package && java 
   + [X] add papers from 'General/Others'
 - [X] Read papers
 - [ ] formal description of the NL description
-- [ ] ask for opinions (e.g. Simon Urli, XWiki, SAT4J)
+- [ ] ask for opinions (e.g. Simon U, XWiki, SAT4J)
 - [ ] SCOTCH might actually be useful
   + check other 'Not Relevant' papers
 - [X] Meeting with Benoit <2018-04-03 Tue>
@@ -1469,7 +1472,7 @@ cd .. && mvn clean package -DskipTests && cd dhell && mvn clean package && java 
   + [ ] over fitting
 - [X] Read papers
 - [ ] formal description of the NL description
-- [ ] ask for opinions (e.g. Simon Urli, XWiki, SAT4J)
+- [ ] ask for opinions (e.g. Simon U, XWiki, SAT4J)
 - [ ] SCOTCH might actually be useful
   + check other 'Not Relevant' papers
 - [ ] read code defenders papers
@@ -1525,7 +1528,7 @@ cd .. && mvn clean package -DskipTests && cd dhell && mvn clean package && java 
   + [ ] ugly C#
 - [X] Read papers
 - [ ] formal description of the NL description
-- [ ] ask for opinions (e.g. Simon Urli, XWiki, SAT4J)
+- [ ] ask for opinions (e.g. Simon U, XWiki, SAT4J)
 - [X] SCOTCH might actually be useful
   + check other 'Not Relevant' papers
 - [ ] read code defenders papers
@@ -1590,7 +1593,7 @@ cd .. && mvn clean package -DskipTests && cd dhell && mvn clean package && java 
   + [X] ugly C#
   + [ ] make a table for related works?
 - [ ] formal description of the NL description
-- [ ] ask for opinions (e.g. Simon Urli, XWiki, SAT4J)
+- [ ] ask for opinions (e.g. Simon U, XWiki, SAT4J)
 - [ ] check other 'Not Relevant' papers
 - [ ] read code defenders papers
 - [ ] concurrent map in amplification listener
@@ -1668,7 +1671,7 @@ for filename in ../dspot/javapoet/dspot-out/*_amp_log.json; do; python3 main.py 
     - [[http://jasonrudolph.com/blog/2008/07/01/testing-anti-patterns-overspecification/]]
   + [ ] make a table for related works?
 - [X] +formal description of the NL description+
-- [ ] ask for opinions (e.g. Simon Urli, XWiki, SAT4J)
+- [ ] ask for opinions (e.g. Simon U, XWiki, SAT4J)
 - [X] +check other 'Not Relevant' papers+
 - [X] read code defenders papers
 - [X] concurrent map in amplification listener
@@ -1715,18 +1718,52 @@ for filename in ../dspot/javapoet/dspot-out/*_amp_log.json; do; python3 main.py 
 - [X] remove discarded test from the amplification log
 
 
-** TODO Week 14 <2018-05-07 Mon>--<2018-05-13 Sun>
+** DONE Week 14 <2018-05-07 Mon>--<2018-05-13 Sun>
 *** Things Done
+- New command line usage ~python3 main.py -p ../dspot/javapoet/dspot.properties -t com.squareup.javapoet.JavaFileTest~
+- for link previews to work on github
+  + can't be inside a md link
+  + can't have =/./=
+- Using distance metric for mutants to express how indirect the mutants
+  detection is?
+  + that's not a clear and confusing metric
+- run DSpot on jsoup
+  + very long
+  + NPE on minimisation
+- run DSpot on twilio
+  + way too big
+- running DSpot on dhell doesn't yield anything
+- Pierre Laperdrix talk on browser fingerprinting
+- run DSpot on scribejava-core, no i-amplified test
+- tried on jodatime but JUnit too old
+- socketio test suite not passing
+- javacpp test suite not passing
+- google-java-format seems to be way too long
+- nothing for fb-contrib
+- fess is too slow
+- run on xwiki-commons-core
+  + [[http://massol.myxwiki.org/xwiki/bin/view/Blog/TestGenerationDspot]]
+  + didn't work, NPE, PIT problems, ...
+- didn't work on jabref
+- didn't work on webdrivermanager
 
 *** Blocking Points
 - [ ] Need to identify the main object that is interacted with
+- [X] What does it mean to have only a-amp, when the original tests are already
+  a-amplified?
+  + nah, must be a problem, I don't collect all a-amps
 
-*** Planned Work [0/10]
-- [ ] Renew SL access card <2018-05-08 Tue>
-- [ ] Workshop <2018-05-08 Tue>
+*** Planned Work [6/15]
+- [X] Renew SL access card <2018-05-08 Tue>
+- [X] Workshop <2018-05-08 Tue>
   + Room 4423
-- [ ] Study for IELTS
-- [ ] Withdraw UCL application
+- [X] Study for IELTS
+- [X] Withdraw UCL application
+  + [X] withdraw online application
+  + [X] people to apologise to
+    - [X] Justyna
+    - [X] Shin
+    - [X] ENS profs
 - [ ] Integrate WALA to compute a slice per new mutant
   + [ ] Adding as dependency
   + [ ] Use it
@@ -1742,7 +1779,7 @@ for filename in ../dspot/javapoet/dspot-out/*_amp_log.json; do; python3 main.py 
   + [ ] overspecification
     - [[http://jasonrudolph.com/blog/2008/07/01/testing-anti-patterns-overspecification/]]
   + [ ] make a table for related works?
-- [ ] ask for opinions (e.g. Simon Urli, XWiki, SAT4J)
+- [ ] ask for opinions (e.g. Simon U, XWiki, SAT4J)
 - [-] unspecify tests [4/5]
   + use a Set to avoid failing tests due to the ordering of assertions
   + [X] ~testBuildNewAssertWithComment(fr.inria.diversify.dspot.assertGenerator.MethodsAssertGeneratorTest): expected:<....junit.Assert.assert[True(((fr.inria.sample.ClassWithBoolean)cl).getTrue());(..)~
@@ -1752,16 +1789,89 @@ for filename in ../dspot/javapoet/dspot-out/*_amp_log.json; do; python3 main.py 
   + [ ] find others that could fail
   + problem of readability when it fails
   + [[https://github.com/STAMP-project/dspot/pull/413]]
+- [-] improvements [4/10]
+  + [X] group assertions
+  + [X] Add links in report
+    - from [[https://github.com/mazubieta/gitlink-vim]]
+  + [ ] "The new test can detect if toBuilder returns XXX instead of the regular
+    value. The original test 'toto' could not detect this fault"
+    where XXX is the value injected by the mutation
+    - isn't really suitable for other kinds of mutants, and even for
+      return-related mutants as what might be interesting is that they change
+      the state of the SUT, but don't have a direct relation with the test case
+  + [ ] also consider when mutation modifies the state and is detected later
+  + [ ] Don't name mutators, only explain the transformation instance
+    (i.e. mutator category?)
+  + [X] Group mutants that are on the same line
+  + [X] show the generated test with a =diff=
+    - don't put diff for assertions when there are too much (more than 10)
+  + [ ] don't talk about 'new detectable bugs' but about 'assess more behavior
+    than original' and/or 'reach more paths than original'
+  + [ ] For example, "this new test assesses more behavior as the original: it
+    can detect 5 changes in the source code that the original test could not
+    detect:" and then show the changes (diffs)
+  + [ ] handle ~try/catch~
+- [X] Read =dspot.properties= and read various info like the path
+- [X] Measure the overhead of the amplification logging
+  + javapoet
+    - DSpot(=master=): 47m22s
+    - DSpot(=collect_amp=): 45m52s 45m50s 52m3s
+- [ ] Make better names for generated tests
+- [ ] Don't add ~try/catch~ when src_java[:exports code]{@Test(expected = IllegalArgumentException.class)}
 
 
 ** TODO Week 15 <2018-05-14 Mon>--<2018-05-20 Sun>
 *** Things Done
 
 *** Blocking Points
+- [ ] Need to identify the main object that is interacted with
 
-*** Planned Work [0/2]
+*** Planned Work [0/11]
 - [ ] IELTS Speaking <2018-05-18 Fri 10:00>
-- [ ] IELTS <2018-05-19 Sat>
+- [ ] IELTS <2018-05-19 Sat 08:30>
+- [ ] Integrate WALA to compute a slice per new mutant
+  + [ ] Adding as dependency
+  + [ ] Use it
+- [ ] Retrieve amplifications [0/1]
+  + [ ] add categories of modifying amplifiers
+    - MODIFY LITERALS
+    - MODIFY INTERACTIONS
+- [ ] Retrieve mutants
+  + The [[https://github.com/STAMP-project/dspot/issues/122][issue]] on runtime info from PIT
+- [ ] Work on report [0/4]
+  + [ ] add Java examples
+  + [ ] describe thoroughly the oracle problem
+  + [ ] overspecification
+    - [[http://jasonrudolph.com/blog/2008/07/01/testing-anti-patterns-overspecification/]]
+  + [ ] make a table for related works?
+- [ ] ask for opinions (e.g. Simon U, XWiki, SAT4J)
+- [-] unspecify tests [4/5]
+  + use a Set to avoid failing tests due to the ordering of assertions
+  + [X] ~testBuildNewAssertWithComment(fr.inria.diversify.dspot.assertGenerator.MethodsAssertGeneratorTest): expected:<....junit.Assert.assert[True(((fr.inria.sample.ClassWithBoolean)cl).getTrue());(..)~
+  + [X] ~testBuildNewAssert(fr.inria.diversify.dspot.assertGenerator.MethodsAssertGeneratorTest): expected:<....junit.Assert.assert[True(((fr.inria.sample.ClassWithBoolean)cl).getTrue());(..)~
+  + [X] ~testNoInstrumentationOnGeneratedObject(fr.inria.diversify.dspot.assertGenerator.AssertGeneratorHelperTest): expected:<..."test_sd6__1");(..)~
+  + [X] ~testWithLoop(fr.inria.diversify.dspot.amplifier.StatementAddTest): expected:<...compute(0);(..)~
+  + [ ] find others that could fail
+  + problem of readability when it fails
+  + [[https://github.com/STAMP-project/dspot/pull/413]]
+- [ ] improvements [0/6]
+  + [ ] "The new test can detect if toBuilder returns XXX instead of the regular
+    value. The original test 'toto' could not detect this fault"
+    where XXX is the value injected by the mutation
+    - isn't really suitable for other kinds of mutants, and even for
+      return-related mutants as what might be interesting is that they change
+      the state of the SUT, but don't have a direct relation with the test case
+  + [ ] also consider when mutation modifies the state and is detected later
+  + [ ] Don't name mutators, only explain the transformation instance
+    (i.e. mutator category?)
+  + [ ] don't talk about 'new detectable bugs' but about 'assess more behavior
+    than original' and/or 'reach more paths than original'
+  + [ ] For example, "this new test assesses more behavior as the original: it
+    can detect 5 changes in the source code that the original test could not
+    detect:" and then show the changes (diffs)
+  + [ ] handle ~try/catch~
+- [ ] Make better names for generated tests
+- [ ] Don't add ~try/catch~ when src_java[:exports code]{@Test(expected = IllegalArgumentException.class)}
 
 
 ** TODO Week 16 <2018-05-21 Mon>--<2018-05-27 Sun>
@@ -1785,8 +1895,9 @@ for filename in ../dspot/javapoet/dspot-out/*_amp_log.json; do; python3 main.py 
 
 *** Blocking Points
 
-*** Planned Work [0/1]
+*** Planned Work [0/2]
 - [ ] Report <2018-06-08 Fri 12:00>
+- [ ] Renew SL access card <2018-06-07 Thu>
 
 
 ** TODO Week 19 <2018-06-11 Mon>--<2018-06-17 Sun>
