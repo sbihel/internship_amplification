@@ -43,7 +43,10 @@ def get_assert_target(assertion):
     Extract the variable/method tested by an assertion.
     """
     assert_stmt = assertion["newValue"]
-    if '=' in assert_stmt:
+    if assert_stmt[:3] == 'try':
+        return assert_stmt.split('} catch (')[-1].split(' ')[0]
+    elif ('=' in assert_stmt and
+          not assert_stmt.lstrip().startswith('org.junit.Assert.assert')):
         return assert_stmt.split('=')[-1].lstrip()
     else:  # assert statement
         # parse the line, extracting the target of the assert
@@ -56,18 +59,26 @@ def get_assert_target(assertion):
         position_1st = position
 
         looking_for = [',']
-        for char in assert_stmt[position:]:
+        skip_next = False
+        for char in assert_stmt[position_1st:]:
             position += 1
+            if skip_next:
+                skip_next = False
+                continue
+
             if char == looking_for[0]:
                 looking_for.pop(0)
                 if looking_for == []:
                     break
-            elif char == '"':
-                looking_for = ['"'] + looking_for
+            elif char == '\"':
+                looking_for = ['\"'] + looking_for
             elif char == '(':
                 looking_for = [')'] + looking_for
+            elif char == '\\':
+                skip_next = True
+                continue
 
-        if looking_for:  # only 1 argument, go back to beginning
+        if looking_for != []:  # only 1 argument, go back to beginning
             position = position_1st
         return assert_stmt[position:-1].strip()
 
