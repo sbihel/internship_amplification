@@ -21,19 +21,22 @@ def describe_amplification(amplification):
     if categ == "ASSERT":
         raise ValueError("Not for assertions.")
     elif categ == "ADD":
-        diff = "```diff\n+ " + amplification["newValue"] + "\n```\n"
-        return "Added new " + amplification["role"] + " `" + \
-            amplification["newValue"] + "`.\n" + diff
+        new_value_diff = amplification["newValue"].replace('\n', '\n+ ')
+        diff = "```diff\n+ " + new_value_diff + "\n```\n"
+        return "Added new " + amplification["role"] + " to `" + \
+            amplification["parent"] + "`.\n" + diff
     elif categ == "REMOVE":
-        diff = "```diff\n- " + amplification["oldValue"] + "\n```\n"
-        return "Remove " + amplification["role"] + " from `" + \
+        old_value_diff = amplification["oldValue"].replace('\n', '\n- ')
+        diff = "```diff\n- " + old_value_diff + "\n```\n"
+        return "Removed " + amplification["role"] + " from `" + \
             amplification["parent"] + "`.\n" + diff
     elif categ == "MODIFY":
-        diff = "```diff\n- " + amplification["oldValue"] + "\n+ " + \
-            amplification["newValue"] + "\n```\n"
-        return "Modified " + amplification["role"] + ", from `" + \
-            amplification["oldValue"] + "` to `" + \
-            amplification["newValue"] + "`.\n" + diff
+        old_value_diff = amplification["oldValue"].replace('\n', '\n- ')
+        new_value_diff = amplification["newValue"].replace('\n', '\n+ ')
+        diff = "```diff\n- " + old_value_diff + "\n+ " + new_value_diff + \
+            "\n```\n"
+        return "Modified " + amplification["role"] + ' of `' + \
+            amplification['parent'] + "`.\n" + diff
     else:
         raise ValueError("Unknown category.")
 
@@ -98,10 +101,21 @@ def describe_asserts(new_asserts):
         res += "Generated " + str(nb_asserts) + " assertion" + \
             ("s" if nb_asserts > 1 else "") + " for the return value of `" + \
             shortname + "`.\n"
-        if len(new_asserts) < MAX_NB_ASSERTS:
+        if len(new_asserts) < MAX_NB_ASSERTS:  # add diff
             for assertion in new_asserts:
-                if assertion["newValue"].split('=')[-1].lstrip() == shortname:
-                    res += "```diff\n+ " + assertion["newValue"] + "\n```\n"
+                new_value = assertion["newValue"]
+                if new_value[:3] == 'try':  # try/catch amplification
+                    lines = new_value.split('\n')
+                    lines[0] = '+ ' + lines[0]
+                    lines[-1] = '+ ' + lines[-1]
+                    lines[-2] = '+ ' + lines[-2]
+                    lines[-3] = '+ ' + lines[-3]
+                    for i in range(1, len(lines)-3):
+                        lines[i] = '  ' + lines[i]
+                    res += "```diff\n" + '\n'.join(lines) + "\n```\n"
+                elif new_value.split('=')[-1].lstrip() == shortname:
+                    res += "```diff\n+ " + new_value.replace('\n', '\n+ ') + \
+                        "\n```\n"
     return res[:-1]
 
 
