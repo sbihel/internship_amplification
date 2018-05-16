@@ -1,0 +1,3 @@
+[submodule "dspot"]
+	path = dspot
+	url = https://github.com/sbihel/dspot/
