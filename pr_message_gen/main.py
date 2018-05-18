@@ -213,10 +213,13 @@ def describe_test_classes(report_dir, project_root_path,
     Natural language description of a set of amplified test classes.
     """
     i = 0
-    for file in os.listdir(report_dir):
-        if file.endswith('_mutants_killed.json'):
+    output_dir = os.listdir(report_dir)
+    for filename in output_dir:
+        if (filename.endswith('_mutants_killed.json')
+                and (filename[: -len('mutants_killed.json')] +
+                     'amp_log.json') in output_dir):
             test_class_description = describe_test_class(
-                report_dir + os.sep + file[: -len('_mutants_killed.json')],
+                report_dir + os.sep + filename[: -len('_mutants_killed.json')],
                 project_root_path, module_path, src_path, test_path)
             if test_class_description.count('\n') > 1:
                 if i:
