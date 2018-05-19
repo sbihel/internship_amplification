@@ -156,8 +156,8 @@ def describe_test_class(test_class_report_path,
     with open(test_class_report_path+'_amp_log.json', 'r') as json_file:
         amplification_log = json.load(json_file)
 
-    amplified_tests = (test_case["name"]
-                       for test_case in mutation_score["testCases"])
+    amplified_tests = [test_case["name"]
+                       for test_case in mutation_score["testCases"]]
     i = 0
     for amplified_test in list(amplification_log):
         if amplified_test not in amplified_tests:
@@ -203,7 +203,7 @@ def describe_test_class(test_class_report_path,
                 project_root_path,
                 module_path,
                 src_path) + '\n'
-        i += 1
+            i += 1
     return res[:-1]
 
 
