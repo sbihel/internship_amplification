@@ -109,8 +109,12 @@ def describe_asserts(new_asserts):
                     lines[0] = '+ ' + lines[0]
                     lines[-1] = '+ ' + lines[-1]
                     lines[-2] = '+ ' + lines[-2]
+                    nb_lines_modified_end = 3
+                    if lines[-3].lstrip()[0] == '}':
+                        nb_lines_modified_end = 4
+                        lines[-4] = '+ ' + lines[-4]
                     lines[-3] = '+ ' + lines[-3]
-                    for i in range(1, len(lines)-3):
+                    for i in range(1, len(lines)-nb_lines_modified_end):
                         lines[i] = '  ' + lines[i]
                     res += "```diff\n" + '\n'.join(lines) + "\n```\n"
                 elif new_value.split('=')[-1].lstrip() == shortname:
