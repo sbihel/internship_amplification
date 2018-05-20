@@ -597,11 +597,11 @@ the same template as humans do.
   + [X] Experiment results
     - no results yet 😞
   + [X] Related works
-*** TODO Talk @ Workshop Software Engineering Research <2018-05-08 Tue>
+*** DONE Talk @ Workshop Software Engineering Research <2018-05-08 Tue>
 *** TODO Defense Rehearsal @ ENS <2018-06-22 Fri>
 
 
-* Journal [14/21]
+* Journal [15/21]
 ** DONE Preliminary Bibliographical Work <2017-09-18 Mon>--<2018-02-07 Wed>
 *** Things Done
 - Meeting with Benoit <2017-09-22 Fri>
@@ -1820,15 +1820,65 @@ for filename in ../dspot/javapoet/dspot-out/*_amp_log.json; do; python3 main.py 
 - [ ] Don't add ~try/catch~ when src_java[:exports code]{@Test(expected = IllegalArgumentException.class)}
 
 
-** TODO Week 15 <2018-05-14 Mon>--<2018-05-20 Sun>
+** DONE Week 15 <2018-05-14 Mon>--<2018-05-20 Sun>
 *** Things Done
+- Spoon talk
+- [[https://askubuntu.com/questions/623577/no-such-file-or-directory-when-trying-to-remove-a-file-but-the-file-exists]]
+- DSpot was not generating inputs... 😰🤬😰🤬😰🤬😰🤬
+  + =java -jar ~/internship_amplification/dspot/dspot/target/dspot-1.1.1-SNAPSHOT-jar-with-dependencies.jar --path-to-properties dspot.properties --amplifiers AllLiteralAmplifiers:MethodAdd:MethodRemove:StatementAdd:ReplacementAmplifier --clean --verbose=
+- run on javapoet
+  + added ~jvmArgs=['-Xmx2048m','-Xms1024m','-XX:-UseGCOverheadLimit']~
+    - didn't work
+  + bumped to =-Xms16G -Xmx32G=
+  + removed
+    - too messy
+- =java.lang.OutOfMemoryError: GC overhead limit exceeded=
+  + removing weak keys (and ~concurrencyLevel~ at 4)
+    - didn't change anything with =-XX:-UseGCOverheadLimit=
+    - was taking forever without =-XX:-UseGCOverheadLimit=, and couldn't kill it
+  + raising ~concurrencyLevel~ to 16 (and keeping weak keys)
+    - didn't change anything
+  + raising ~concurrencyLevel~ to 16 without weak keys
+    - didn't change anything
+  + same errors without the ~ampTestToParentName~ map
+    - had to put it back because of the NPE
+  + removed =MethodRemove= and =AllLiteralAmplifier=
+    - was taking forever and couldn't kill it
+  + with only =StatementAdd=
+    - =java.lang.OutOfMemoryError: GC overhead limit exceeded= after an hour,
+      instead of 30 minutes
+  +
+#+BEGIN_SRC sh
+java -jar ~/internship_amplification/dspot/dspot/target/dspot-1.1.1-SNAPSHOT-jar-with-dependencies.jar --test com.squareup.javapoet.ParameterSpecTest --cases equalsAndHashCode --path-to-properties dspot.properties --amplifiers StatementAdd --verbose
+#+END_SRC
+    - no result
+  + =xwiki-commons-crypto-cipher=
+#+BEGIN_SRC sh
+java -jar ~/internship_amplification/dspot/dspot/target/dspot-1.1.1-SNAPSHOT-jar-with-dependencies.jar --path-to-properties dspot.properties --amplifiers MethodAdd --test-criterion PitMutantScoreSelector --clean --verbose
+#+END_SRC
+    - reproduced the results of Massol 👍
+    - 17min
+- ~java.lang.OutOfMemoryError: Java heap space~ with main DSpot(master), all
+  amplifiers
+- =java.lang.OutOfMemoryError: GC overhead limit exceeded= with main
+- =java.lang.OutOfMemoryError: Java heap space= with main DSpot(master), only
+  =StatementAdd=, after 1h21min
+  DSpot(master), without ~MethodRemove~ and ~AllLiteralAmplifier~
+- some much time gone in the wind 🤬
+- main DSpot(master)
+#+BEGIN_SRC sh
+java -jar ~/dspot/dspot/target/dspot-1.1.1-SNAPSHOT-jar-with-dependencies.jar --test com.squareup.javapoet.AbstractTypesTest --cases getBasicTypeMirror --path-to-properties dspot.properties --amplifiers StatementAdd --clean --verbose
+#+END_SRC
+  + didn't yield anything, but didn't crash
+
 
 *** Blocking Points
 - [ ] Need to identify the main object that is interacted with
+- [ ] null ~parentName~
 
-*** Planned Work [0/11]
-- [ ] IELTS Speaking <2018-05-18 Fri 10:00>
-- [ ] IELTS <2018-05-19 Sat 08:30>
+*** Planned Work [8/15]
+- [X] IELTS Speaking <2018-05-18 Fri 10:00>
+- [X] IELTS <2018-05-19 Sat 08:30>
 - [ ] Integrate WALA to compute a slice per new mutant
   + [ ] Adding as dependency
   + [ ] Use it
@@ -1836,8 +1886,12 @@ for filename in ../dspot/javapoet/dspot-out/*_amp_log.json; do; python3 main.py 
   + [ ] add categories of modifying amplifiers
     - MODIFY LITERALS
     - MODIFY INTERACTIONS
-- [ ] Retrieve mutants
+- [X] +Retrieve mutants+
   + The [[https://github.com/STAMP-project/dspot/issues/122][issue]] on runtime info from PIT
+  + [X] +Modify PIT to print the changed line+
+  + [[https://groups.google.com/forum/#!searchin/pitusers/mutated$20line%7Csort:date/pitusers/7AMYsBAixPs/o_XGTqkpBgAJ]]
+    - "Pitest mutates bytecode. Unfortunately there is no easy way to convert
+      from bytecode to java source."
 - [ ] Work on report [0/4]
   + [ ] add Java examples
   + [ ] describe thoroughly the oracle problem
@@ -1845,16 +1899,16 @@ for filename in ../dspot/javapoet/dspot-out/*_amp_log.json; do; python3 main.py 
     - [[http://jasonrudolph.com/blog/2008/07/01/testing-anti-patterns-overspecification/]]
   + [ ] make a table for related works?
 - [ ] ask for opinions (e.g. Simon U, XWiki, SAT4J)
-- [-] unspecify tests [4/5]
+- [X] unspecify tests [5/5]
   + use a Set to avoid failing tests due to the ordering of assertions
   + [X] ~testBuildNewAssertWithComment(fr.inria.diversify.dspot.assertGenerator.MethodsAssertGeneratorTest): expected:<....junit.Assert.assert[True(((fr.inria.sample.ClassWithBoolean)cl).getTrue());(..)~
   + [X] ~testBuildNewAssert(fr.inria.diversify.dspot.assertGenerator.MethodsAssertGeneratorTest): expected:<....junit.Assert.assert[True(((fr.inria.sample.ClassWithBoolean)cl).getTrue());(..)~
   + [X] ~testNoInstrumentationOnGeneratedObject(fr.inria.diversify.dspot.assertGenerator.AssertGeneratorHelperTest): expected:<..."test_sd6__1");(..)~
   + [X] ~testWithLoop(fr.inria.diversify.dspot.amplifier.StatementAddTest): expected:<...compute(0);(..)~
-  + [ ] find others that could fail
+  + [X] +find others that could fail+
   + problem of readability when it fails
   + [[https://github.com/STAMP-project/dspot/pull/413]]
-- [ ] improvements [0/6]
+- [-] improvements [3/6]
   + [ ] "The new test can detect if toBuilder returns XXX instead of the regular
     value. The original test 'toto' could not detect this fault"
     where XXX is the value injected by the mutation
@@ -1864,22 +1918,57 @@ for filename in ../dspot/javapoet/dspot-out/*_amp_log.json; do; python3 main.py 
   + [ ] also consider when mutation modifies the state and is detected later
   + [ ] Don't name mutators, only explain the transformation instance
     (i.e. mutator category?)
-  + [ ] don't talk about 'new detectable bugs' but about 'assess more behavior
+  + [X] don't talk about 'new detectable bugs' but about 'assess more behavior
     than original' and/or 'reach more paths than original'
-  + [ ] For example, "this new test assesses more behavior as the original: it
+  + [X] For example, "this new test assesses more behavior as the original: it
     can detect 5 changes in the source code that the original test could not
     detect:" and then show the changes (diffs)
-  + [ ] handle ~try/catch~
+  + [X] handle ~try/catch~
 - [ ] Make better names for generated tests
-- [ ] Don't add ~try/catch~ when src_java[:exports code]{@Test(expected = IllegalArgumentException.class)}
+- [X] Don't add ~try/catch~ when src_java[:exports code]{@Test(expected = IllegalArgumentException.class)}
+  + [[https://github.com/STAMP-project/dspot/pull/433]]
+  + the problem was that the annotation was overridden to add the timeout
+- [X] send email for the job at fb
+- [ ] differentiate assert, trycatch, +and test annotations+
+- [X] add DSpot and +PIT+ forks as submodules
+- [X] reproduce DSpot on xwiki-commons
+  + asked for the xwiki-commons version
 
 
 ** TODO Week 16 <2018-05-21 Mon>--<2018-05-27 Sun>
 *** Things Done
 
 *** Blocking Points
+- [ ] Need to identify the main object that is interacted with
+- [ ] null ~parentName~
 
-*** Planned Work
+*** Planned Work [0/7]
+- [ ] Integrate WALA to compute a slice per new mutant
+  + [ ] Adding as dependency
+  + [ ] Use it
+- [ ] Retrieve amplifications [0/1]
+  + [ ] add categories of modifying amplifiers
+    - MODIFY LITERALS
+    - MODIFY INTERACTIONS
+- [ ] Work on report [0/4]
+  + [ ] add Java examples
+  + [ ] describe thoroughly the oracle problem
+  + [ ] overspecification
+    - [[http://jasonrudolph.com/blog/2008/07/01/testing-anti-patterns-overspecification/]]
+  + [ ] make a table for related works?
+- [ ] ask for opinions (e.g. Simon U, XWiki, SAT4J)
+- [ ] improvements [0/3]
+  + [ ] "The new test can detect if toBuilder returns XXX instead of the regular
+    value. The original test 'toto' could not detect this fault"
+    where XXX is the value injected by the mutation
+    - isn't really suitable for other kinds of mutants, and even for
+      return-related mutants as what might be interesting is that they change
+      the state of the SUT, but don't have a direct relation with the test case
+  + [ ] also consider when mutation modifies the state and is detected later
+  + [ ] Don't name mutators, only explain the transformation instance
+    (i.e. mutator category?)
+- [ ] Make better names for generated tests
+- [ ] differentiate assert, trycatch, +and test annotations+
 
 
 ** TODO Week 17 <2018-05-28 Mon>--<2018-06-03 Sun>
