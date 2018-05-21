@@ -143,7 +143,7 @@ def describe_mutants(mutants, project_root_path, module_path, src_path):
         res += "#### The new test can detect " + str(nb_mutants) + \
             " change" + ('s' if nb_mutants > 1 else '') + " in `" + \
             class_mutated.split('.')[-1] + '#' + method_mutated + \
-            "`, line " + str(line_number) + ". " + link + "\n"
+            "`, line " + str(line_number) + ".\n" + link + "\n"
         i = 0
         for full_mutant in mutants:
             if (full_mutant['lineNumber'] == mutant[0] and
