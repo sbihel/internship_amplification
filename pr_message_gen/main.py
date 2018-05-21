@@ -104,7 +104,8 @@ def describe_asserts(new_asserts):
         if len(new_asserts) < MAX_NB_ASSERTS:  # add diff
             for assertion in new_asserts:
                 new_value = assertion["newValue"]
-                if new_value[:3] == 'try':  # try/catch amplification
+                if (new_value[:3] == 'try' and
+                        get_assert_target(assertion) == shortname):
                     lines = new_value.split('\n')
                     lines[0] = '+ ' + lines[0]
                     lines[-1] = '+ ' + lines[-1]
@@ -117,9 +118,13 @@ def describe_asserts(new_asserts):
                     for i in range(1, len(lines)-nb_lines_modified_end):
                         lines[i] = '  ' + lines[i]
                     res += "```diff\n" + '\n'.join(lines) + "\n```\n"
-                elif new_value.split('=')[-1].lstrip() == shortname:
+                elif ('=' in new_value and not
+                      new_value.lstrip().startswith('org.junit.Assert.assert')
+                      and new_value.split('=')[-1].lstrip() == shortname):
                     res += "```diff\n+ " + new_value.replace('\n', '\n+ ') + \
                         "\n```\n"
+                elif get_assert_target(assertion) == shortname:
+                    res += "```diff\n+ " + new_value + "\n```\n"
     return res[:-1]
 
 
