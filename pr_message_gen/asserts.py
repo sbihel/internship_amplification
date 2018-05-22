@@ -22,6 +22,21 @@ def __is_assert(assert_stmt):
     return (not __is_trycatch(assert_stmt)) and (not __is_assign(assert_stmt))
 
 
+def __sort_asserts(a_amps):
+    trycatchs = []
+    assigns = []
+    asserts = []
+    while a_amps:
+        amplification = a_amps.pop(0)
+        if __is_trycatch(amplification['newValue']):
+            trycatchs += [amplification]
+        elif __is_assign(amplification['newValue']):
+            assigns += [amplification]
+        else:
+            asserts += [amplification]
+    return trycatchs, assigns, asserts
+
+
 def __get_assert_target(assertion):
     """
     Extract the variable/method tested by an assertion.
@@ -66,42 +81,77 @@ def __get_assert_target(assertion):
         return assert_stmt[position:-1].strip()
 
 
-def describe_asserts(new_asserts):
+def __get_variable_name(assign):
+    return assign['newValue'].split(' ')[1]
+
+
+def __describe_trycatch(trycatch):
+    res = "#### Generated an exception handler for " + \
+        __get_assert_target(trycatch) + ".\n\n"
+    lines = trycatch["newValue"].split('\n')
+    lines[0] = '+ ' + lines[0]
+    lines[-1] = '+ ' + lines[-1]
+    lines[-2] = '+ ' + lines[-2]
+    nb_lines_modified_end = 3
+    if lines[-3].lstrip()[0] == '}':
+        nb_lines_modified_end = 4
+        lines[-4] = '+ ' + lines[-4]
+    lines[-3] = '+ ' + lines[-3]
+    for i in range(1, len(lines)-nb_lines_modified_end):
+        lines[i] = '  ' + lines[i]
+    res += "```diff\n" + '\n'.join(lines) + "\n```\n"
+    return res
+
+
+def describe_asserts(a_amps):
     """
     Natural language description of a set of assertions.
     """
-    new_asserts_shortname = []
-    for assertion in new_asserts:
-        new_asserts_shortname += [__get_assert_target(assertion)]
-
-    count_asserts = Counter(new_asserts_shortname)
+    trycatchs, assigns, new_asserts = __sort_asserts(a_amps)
     res = ""
-    for shortname in count_asserts:
-        nb_asserts = count_asserts[shortname]
-        res += "Generated " + str(nb_asserts) + " assertion" + \
+    nb_asserts = len(new_asserts)
+
+    for trycatch in trycatchs:
+        res += __describe_trycatch(trycatch)
+
+    new_asserts_targets = []
+    for assertion in new_asserts:
+        new_asserts_targets += [__get_assert_target(assertion)]
+
+    for assign in assigns:
+        assign_variable = __get_variable_name(assign)
+        i = 0
+        related_asserts = []
+        asserts_done = []
+        for assertion in new_asserts:
+            if assign_variable in new_asserts_targets[i]:
+                related_asserts += [assertion]
+                asserts_done += [i]
+            i += 1
+        res += "#### Generated " + str(len(related_asserts)) + " assertion" + \
+            ('s' if len(related_asserts) > 1 else '') + \
+            " for the observations from `" + __get_assert_target(assign) + \
+            "`.\n\n"
+        res += "```diff\n+ " + assign['newValue'].replace('\n', '\n+ ') + \
+            "\n```\n\n"
+        if nb_asserts < MAX_NB_ASSERTS:
+            for related_assert in related_asserts:
+                res += "```diff\n+ " + related_assert['newValue'] + "\n```\n"
+
+        for index in reversed(asserts_done):
+            new_asserts.pop(index)
+            new_asserts_targets.pop(index)
+
+    count_asserts = Counter(new_asserts_targets)
+    for target in count_asserts:
+        nb_asserts = count_asserts[target]
+        res += "#### Generated " + str(nb_asserts) + " assertion" + \
             ("s" if nb_asserts > 1 else "") + " for the return value of `" + \
-            shortname + "`.\n"
-        if len(new_asserts) < MAX_NB_ASSERTS:  # add diff
+            target + "`.\n\n"
+        if nb_asserts < MAX_NB_ASSERTS:  # add diff
             for assertion in new_asserts:
                 new_value = assertion["newValue"]
-                if (__is_trycatch(new_value) and
-                        __get_assert_target(assertion) == shortname):
-                    lines = new_value.split('\n')
-                    lines[0] = '+ ' + lines[0]
-                    lines[-1] = '+ ' + lines[-1]
-                    lines[-2] = '+ ' + lines[-2]
-                    nb_lines_modified_end = 3
-                    if lines[-3].lstrip()[0] == '}':
-                        nb_lines_modified_end = 4
-                        lines[-4] = '+ ' + lines[-4]
-                    lines[-3] = '+ ' + lines[-3]
-                    for i in range(1, len(lines)-nb_lines_modified_end):
-                        lines[i] = '  ' + lines[i]
-                    res += "```diff\n" + '\n'.join(lines) + "\n```\n"
-                elif (__is_assign(new_value) and
-                      new_value.split('=')[-1].lstrip() == shortname):
-                    res += "```diff\n+ " + new_value.replace('\n', '\n+ ') + \
-                        "\n```\n"
-                elif __get_assert_target(assertion) == shortname:
-                    res += "```diff\n+ " + new_value + "\n```\n"
+                if __get_assert_target(assertion) == target:
+                    res += "```diff\n+ " + new_value + "\n```\n\n"
+
     return res[:-1]

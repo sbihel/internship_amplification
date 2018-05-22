@@ -32,7 +32,7 @@ def describe_test_class(test_class_report_path,
             amplification_log.pop(amplified_test, None)
         else:
             if i:
-                res += '\n'
+                res += '\n\n'
             parent_name = mutation_score["testCases"][i]["parentName"]
             if amplified_test != parent_name:
                 res += '## Generated test `' + amplified_test + \
@@ -52,7 +52,7 @@ def describe_test_class(test_class_report_path,
                 res += '### ' + \
                     str(mutation_score["testCases"][i]["nbInputAdded"]) + \
                     ' generated inputs.\n'
-                res += input_res
+                res += input_res + '\n\n'
 
             assert_res = ''
             if new_asserts:
@@ -61,7 +61,7 @@ def describe_test_class(test_class_report_path,
                 res += '### ' + \
                     str(mutation_score["testCases"][i]["nbAssertionAdded"]) + \
                     ' generated assertions.\n'
-                res += assert_res
+                res += assert_res + '\n\n'
 
             mutants = mutation_score["testCases"][i]["mutantsKilled"]
             res += "### " + str(len(mutants)) + " new behavior" + \
@@ -72,7 +72,7 @@ def describe_test_class(test_class_report_path,
                 module_path,
                 src_path) + '\n'
             i += 1
-    return res[:-1]
+    return res[:-2]
 
 
 def describe_test_classes(report_dir, project_root_path,
