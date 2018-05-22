@@ -11,6 +11,60 @@ from mutants import describe_mutants
 from i_amplification import describe_amplification
 
 
+def describe_test_case(amplified_test, mutation_score, amplification_log,
+                       project_root_path, module_path, src_path):
+    """
+    Natural language description of an amplified test case.
+    """
+    res = ""
+    # HEADER
+    parent_name = mutation_score["parentName"]
+    if amplified_test != parent_name:
+        res += '## Generated test `' + amplified_test + \
+            '` based on `' + parent_name + '`\n'
+    else:
+        res += '## Original test `' + amplified_test + '`\n'
+    new_asserts = [amplification
+                   for amplification in amplification_log
+                   if amplification["ampCategory"] == "ASSERT"]
+
+    # ASSERTS
+    assert_res, useless_assigns = '', []
+    if new_asserts:
+        message, useless_assigns = describe_asserts(new_asserts)
+        assert_res += message + '\n'
+
+    # INPUTS
+    input_res = ''
+    for amplification in amplification_log:
+        if amplification not in new_asserts:
+            input_res += describe_amplification(amplification) + '\n'
+    for amplification in useless_assigns:
+        amplification["ampCategory"] = "ADD"
+        input_res += describe_amplification(amplification) + '\n'
+    if input_res:
+        nb_inputs = mutation_score["nbInputAdded"] + len(useless_assigns)
+        res += '### ' + str(nb_inputs) + ' generated inputs.\n'
+        res += input_res + '\n'
+
+    # show the asserts after the inputs
+    if assert_res:
+        nb_asserts = mutation_score["nbAssertionAdded"] - len(useless_assigns)
+        res += '### Generated ' + str(nb_asserts) + ' assertions.\n'
+        res += assert_res + '\n'
+
+    # MUTANTS
+    mutants = mutation_score["mutantsKilled"]
+    res += "### " + str(len(mutants)) + " new behavior" + \
+        ("s" if len(mutants) > 1 else "") + " covered.\n"
+    res += describe_mutants(
+        mutants,
+        project_root_path,
+        module_path,
+        src_path) + '\n'
+    return res
+
+
 def describe_test_class(test_class_report_path,
                         project_root_path, module_path, src_path, test_path):
     """
@@ -31,56 +85,12 @@ def describe_test_class(test_class_report_path,
         if amplified_test not in amplified_tests:
             amplification_log.pop(amplified_test, None)
         else:
-            # HEADER
             if i:
                 res += '\n\n'
-            parent_name = mutation_score["testCases"][i]["parentName"]
-            if amplified_test != parent_name:
-                res += '## Generated test `' + amplified_test + \
-                    '` based on `' + parent_name + '`\n'
-            else:
-                res += '## Original test `' + amplified_test + '`\n'
-            new_asserts = [
-                amplification
-                for amplification in amplification_log[amplified_test]
-                if amplification["ampCategory"] == "ASSERT"]
-
-            # ASSERTS
-            assert_res, useless_assigns = '', []
-            if new_asserts:
-                message, useless_assigns = describe_asserts(new_asserts)
-                assert_res += message + '\n'
-
-            # INPUTS
-            input_res = ''
-            for amplification in amplification_log[amplified_test]:
-                if amplification not in new_asserts:
-                    input_res += describe_amplification(amplification) + '\n'
-            for amplification in useless_assigns:
-                amplification["ampCategory"] = "ADD"
-                input_res += describe_amplification(amplification) + '\n'
-            if input_res:
-                res += '### ' + \
-                    str(mutation_score["testCases"][i]["nbInputAdded"]) + \
-                    ' generated inputs.\n'
-                res += input_res + '\n'
-
-            # show the asserts after the inputs
-            if assert_res:
-                res += '### ' + \
-                    str(mutation_score["testCases"][i]["nbAssertionAdded"]) + \
-                    ' generated assertions.\n'
-                res += assert_res + '\n'
-
-            # MUTANTS
-            mutants = mutation_score["testCases"][i]["mutantsKilled"]
-            res += "### " + str(len(mutants)) + " new behavior" + \
-                ("s" if len(mutants) > 1 else "") + " covered.\n"
-            res += describe_mutants(
-                mutants,
-                project_root_path,
-                module_path,
-                src_path) + '\n'
+            res += describe_test_case(amplified_test,
+                                      mutation_score["testCases"][i],
+                                      amplification_log[amplified_test],
+                                      project_root_path, module_path, src_path)
             i += 1
     return res[:-2]
 

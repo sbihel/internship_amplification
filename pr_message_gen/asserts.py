@@ -27,7 +27,7 @@ def __get_trycatch_target(trycatch_stmt):
 
 
 def __get_assign_target(assign_stmt):
-    return '='.join(assign_stmt.split('=')[1:]).strip()[:-1]
+    return '='.join(assign_stmt.split('=')[1:]).strip()
 
 
 def __get_assert_target(assert_stmt):
@@ -98,8 +98,8 @@ def __get_variable_name(assign):
 
 
 def __describe_trycatch(trycatch):
-    res = "#### Generated an exception handler for " + \
-        __get_a_amp_target(trycatch) + ".\n"
+    res = "#### Generated an exception handler for `" + \
+        __get_a_amp_target(trycatch) + "`.\n"
     lines = trycatch["newValue"].split('\n')
     lines[0] = '+ ' + lines[0]
     lines[-1] = '+ ' + lines[-1]
@@ -132,7 +132,7 @@ def __describe_assign(assign, new_asserts, new_asserts_targets, nb_asserts):
         res += "#### Generated " + str(nb_related_asserts) + " assertion" + \
             ('s' if nb_related_asserts > 1 else '') + \
             " for the observations from `" + __get_a_amp_target(assign) + \
-            "`.\n\n"
+            "`.\n"
         res += "```diff\n+ " + assign['newValue'].replace('\n', '\n+ ') + \
             "\n```\n\n"
         if nb_asserts < MAX_NB_ASSERTS:
@@ -176,7 +176,8 @@ def describe_asserts(a_amps):
             message, useless_assigns_ = __describe_assign(assign, new_asserts,
                                                           new_asserts_targets,
                                                           nb_asserts)
-            res += message + '\n'
+            if message:
+                res += message + '\n'
             useless_assigns += useless_assigns_
         else:  # assign with assert
             res += __describe_assign_with_assert(assign)
