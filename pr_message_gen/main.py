@@ -31,6 +31,7 @@ def describe_test_class(test_class_report_path,
         if amplified_test not in amplified_tests:
             amplification_log.pop(amplified_test, None)
         else:
+            # HEADER
             if i:
                 res += '\n\n'
             parent_name = mutation_score["testCases"][i]["parentName"]
@@ -44,25 +45,34 @@ def describe_test_class(test_class_report_path,
                 for amplification in amplification_log[amplified_test]
                 if amplification["ampCategory"] == "ASSERT"]
 
+            # ASSERTS
+            assert_res, useless_assigns = '', []
+            if new_asserts:
+                message, useless_assigns = describe_asserts(new_asserts)
+                assert_res += message + '\n'
+
+            # INPUTS
             input_res = ''
             for amplification in amplification_log[amplified_test]:
                 if amplification not in new_asserts:
                     input_res += describe_amplification(amplification) + '\n'
+            for amplification in useless_assigns:
+                amplification["ampCategory"] = "ADD"
+                input_res += describe_amplification(amplification) + '\n'
             if input_res:
                 res += '### ' + \
                     str(mutation_score["testCases"][i]["nbInputAdded"]) + \
                     ' generated inputs.\n'
-                res += input_res + '\n\n'
+                res += input_res + '\n'
 
-            assert_res = ''
-            if new_asserts:
-                assert_res += describe_asserts(new_asserts) + '\n'
+            # show the asserts after the inputs
             if assert_res:
                 res += '### ' + \
                     str(mutation_score["testCases"][i]["nbAssertionAdded"]) + \
                     ' generated assertions.\n'
-                res += assert_res + '\n\n'
+                res += assert_res + '\n'
 
+            # MUTANTS
             mutants = mutation_score["testCases"][i]["mutantsKilled"]
             res += "### " + str(len(mutants)) + " new behavior" + \
                 ("s" if len(mutants) > 1 else "") + " covered.\n"

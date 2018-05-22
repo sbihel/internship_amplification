@@ -27,7 +27,7 @@ def __get_trycatch_target(trycatch_stmt):
 
 
 def __get_assign_target(assign_stmt):
-    return '='.join(assign_stmt.split('=')[1:]).strip()
+    return '='.join(assign_stmt.split('=')[1:]).strip()[:-1]
 
 
 def __get_assert_target(assert_stmt):
@@ -99,7 +99,7 @@ def __get_variable_name(assign):
 
 def __describe_trycatch(trycatch):
     res = "#### Generated an exception handler for " + \
-        __get_a_amp_target(trycatch) + ".\n\n"
+        __get_a_amp_target(trycatch) + ".\n"
     lines = trycatch["newValue"].split('\n')
     lines[0] = '+ ' + lines[0]
     lines[-1] = '+ ' + lines[-1]
@@ -121,26 +121,31 @@ def __describe_assign(assign, new_asserts, new_asserts_targets, nb_asserts):
     i = 0
     related_asserts = []
     asserts_done = []
+    useless_assigns = []
     for assertion in new_asserts:
         if assign_variable in new_asserts_targets[i]:
             related_asserts += [assertion]
             asserts_done += [i]
         i += 1
-    res += "#### Generated " + str(len(related_asserts)) + " assertion" + \
-        ('s' if len(related_asserts) > 1 else '') + \
-        " for the observations from `" + __get_a_amp_target(assign) + \
-        "`.\n\n"
-    res += "```diff\n+ " + assign['newValue'].replace('\n', '\n+ ') + \
-        "\n```\n\n"
-    if nb_asserts < MAX_NB_ASSERTS:
-        for related_assert in related_asserts:
-            res += "```diff\n+ " + related_assert['newValue'] + "\n```\n"
+    nb_related_asserts = len(related_asserts)
+    if nb_related_asserts:
+        res += "#### Generated " + str(nb_related_asserts) + " assertion" + \
+            ('s' if nb_related_asserts > 1 else '') + \
+            " for the observations from `" + __get_a_amp_target(assign) + \
+            "`.\n\n"
+        res += "```diff\n+ " + assign['newValue'].replace('\n', '\n+ ') + \
+            "\n```\n\n"
+        if nb_asserts < MAX_NB_ASSERTS:
+            for related_assert in related_asserts:
+                res += "```diff\n+ " + related_assert['newValue'] + "\n```\n"
 
-    for index in reversed(asserts_done):
-        new_asserts.pop(index)
-        new_asserts_targets.pop(index)
+        for index in reversed(asserts_done):
+            new_asserts.pop(index)
+            new_asserts_targets.pop(index)
+    else:  # seemingly useless amplification
+        useless_assigns += [assign]
 
-    return res
+    return res, useless_assigns
 
 
 def __describe_assign_with_assert(assign):
@@ -154,9 +159,10 @@ def describe_asserts(a_amps):
     """
     Natural language description of a set of assertions.
     """
-    trycatchs, assigns, new_asserts = __sort_asserts(a_amps)
+    trycatchs, assigns, new_asserts = __sort_asserts(a_amps[:])
     res = ""
     nb_asserts = len(new_asserts)
+    useless_assigns = []
 
     for trycatch in trycatchs:
         res += __describe_trycatch(trycatch)
@@ -167,8 +173,11 @@ def describe_asserts(a_amps):
 
     for assign in assigns:
         if 'org.junit.Assert' not in assign['newValue']:  # normal assign
-            res += __describe_assign(assign, new_asserts,
-                                     new_asserts_targets, nb_asserts)
+            message, useless_assigns_ = __describe_assign(assign, new_asserts,
+                                                          new_asserts_targets,
+                                                          nb_asserts)
+            res += message + '\n'
+            useless_assigns += useless_assigns_
         else:  # assign with assert
             res += __describe_assign_with_assert(assign)
 
@@ -184,4 +193,4 @@ def describe_asserts(a_amps):
                 if __get_a_amp_target(assertion) == target:
                     res += "```diff\n+ " + new_value + "\n```\n\n"
 
-    return res[:-1]
+    return res[:-1], useless_assigns
