@@ -11,8 +11,13 @@ from mutants import describe_mutants
 from i_amplification import describe_amplification
 
 
-def describe_test_case(amplified_test, mutation_score, amplification_log,
-                       project_root_path, module_path, src_path):
+PROJECT_ROOT_PATH = ''
+MODULE_PATH = ''
+SRC_PATH = ''
+TEST_PATH = ''
+
+
+def describe_test_case(amplified_test, mutation_score, amplification_log):
     """
     Natural language description of an amplified test case.
     """
@@ -57,16 +62,12 @@ def describe_test_case(amplified_test, mutation_score, amplification_log,
     mutants = mutation_score["mutantsKilled"]
     res += "### " + str(len(mutants)) + " new behavior" + \
         ("s" if len(mutants) > 1 else "") + " covered.\n"
-    res += describe_mutants(
-        mutants,
-        project_root_path,
-        module_path,
-        src_path) + '\n'
+    res += describe_mutants(mutants, PROJECT_ROOT_PATH,
+                            MODULE_PATH, SRC_PATH) + '\n'
     return res
 
 
-def describe_test_class(test_class_report_path,
-                        project_root_path, module_path, src_path, test_path):
+def describe_test_class(test_class_report_path):
     """
     Natural language description of an amplified test class.
     """
@@ -89,14 +90,12 @@ def describe_test_class(test_class_report_path,
                 res += '\n\n'
             res += describe_test_case(amplified_test,
                                       mutation_score["testCases"][i],
-                                      amplification_log[amplified_test],
-                                      project_root_path, module_path, src_path)
+                                      amplification_log[amplified_test])
             i += 1
     return res[:-2]
 
 
-def describe_test_classes(report_dir, project_root_path,
-                          module_path, src_path, test_path):
+def describe_test_classes(report_dir):
     """
     Natural language description of a set of amplified test classes.
     """
@@ -107,8 +106,7 @@ def describe_test_classes(report_dir, project_root_path,
                 and (filename[: -len('mutants_killed.json')] +
                      'amp_log.json') in output_dir):
             test_class_description = describe_test_class(
-                report_dir + os.sep + filename[: -len('_mutants_killed.json')],
-                project_root_path, module_path, src_path, test_path)
+                report_dir + os.sep + filename[: -len('_mutants_killed.json')])
             if test_class_description.count('\n') > 1:
                 if i:
                     print()
@@ -138,9 +136,12 @@ def main():
     if opts.properties_file[0] == os.sep:
         dir_prop = os.path.join(os.sep, dir_prop)
     project_root = None
-    module_path = None
-    src_path = None
-    test_path = None
+    global MODULE_PATH
+    MODULE_PATH = None
+    global SRC_PATH
+    SRC_PATH = None
+    global TEST_PATH
+    TEST_PATH = None
     output_directory = None
     with open(opts.properties_file, 'r') as properties_file:
         for line in properties_file:
@@ -148,42 +149,33 @@ def main():
             if line.startswith('project='):
                 project_root = line[len("project="):]
             elif line.startswith('targetModule='):
-                module_path = line[len('targetModule='):]
+                MODULE_PATH = line[len('targetModule='):]
             elif line.startswith('src='):
-                src_path = line[len('src='):]
+                SRC_PATH = line[len('src='):]
             elif line.startswith('testSrc='):
-                test_path = line[len('testSrc='):]
+                TEST_PATH = line[len('testSrc='):]
             elif line.startswith('outputDirectory='):
                 output_directory = line[len('outputDirectory='):]
-    project_root_path = os.path.join(dir_prop, project_root)
+    global PROJECT_ROOT_PATH
+    PROJECT_ROOT_PATH = os.path.join(dir_prop, project_root)
 
     # Message generation
     if opts.test:  # describe only the provided test class
         test_class_report_path = os.path.join(dir_prop,
                                               project_root,
-                                              module_path,
+                                              MODULE_PATH,
                                               output_directory,
                                               opts.test)
         if not os.path.exists(test_class_report_path+"_mutants_killed.json"):
             raise ValueError("Test class report not found.")
-        describe_test_class(
-            test_class_report_path,
-            project_root_path,
-            module_path,
-            src_path,
-            test_path)
+        describe_test_class(test_class_report_path)
     else:  # describe every amplified test class
         report_dir = os.path.join(
             dir_prop,
             project_root,
-            module_path,
+            MODULE_PATH,
             output_directory)
-        describe_test_classes(
-            report_dir,
-            project_root_path,
-            module_path,
-            src_path,
-            test_path)
+        describe_test_classes(report_dir)
 
 
 if __name__ == '__main__':
