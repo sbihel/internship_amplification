@@ -134,7 +134,8 @@ def __describe_assign(assign, new_asserts, new_asserts_targets, nb_asserts):
             " for the observations from `" + __get_a_amp_target(assign) + \
             "`.\n"
         res += "```diff\n+ " + assign['newValue'].replace('\n', '\n+ ') + \
-            "\n```\n\n"
+            "\n```\nAssertion" + ('s' if nb_related_asserts > 1 else '') + \
+            ":\n"
         if nb_asserts < MAX_NB_ASSERTS:
             for related_assert in related_asserts:
                 res += "```diff\n+ " + related_assert['newValue'] + "\n```\n"
@@ -150,8 +151,11 @@ def __describe_assign(assign, new_asserts, new_asserts_targets, nb_asserts):
 
 def __describe_assign_with_assert(assign):
     res = "#### Generated a bundle input amplification with assertions.\n"
-    res += "```diff\n+ " + assign['newValue'].replace('\n', '\n+ ') + \
-        "\n```\n\n"
+    stmt = assign['newValue']
+    # Remove overindented (non-first) lines
+    if stmt[0] != '\t' and stmt.split('\n')[1][0] == '\t':
+        stmt = stmt.replace('\n\t', '\n')
+    res += "```diff\n+ " + stmt.replace('\n', '\n+ ') + "\n```\n\n"
     return res
 
 
@@ -164,6 +168,7 @@ def describe_asserts(a_amps):
     nb_asserts = len(new_asserts)
     useless_assigns = []
 
+    # Try/catchs first.
     for trycatch in trycatchs:
         res += __describe_trycatch(trycatch)
 
@@ -171,6 +176,7 @@ def describe_asserts(a_amps):
     for assertion in new_asserts:
         new_asserts_targets += [__get_a_amp_target(assertion)]
 
+    # Group assertions by the variable they're testing.
     for assign in assigns:
         if 'org.junit.Assert' not in assign['newValue']:  # normal assign
             message, useless_assigns_ = __describe_assign(assign, new_asserts,
@@ -182,6 +188,7 @@ def describe_asserts(a_amps):
         else:  # assign with assert
             res += __describe_assign_with_assert(assign)
 
+    # Remaining assertions.
     count_asserts = Counter(new_asserts_targets)
     for target in count_asserts:
         nb_asserts = count_asserts[target]
