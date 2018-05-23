@@ -6,6 +6,9 @@ Functions related to assertions.
 from collections import Counter
 
 
+import utils
+
+
 MAX_NB_ASSERTS = 10
 
 
@@ -166,13 +169,16 @@ def __describe_assign(assign, new_asserts, new_asserts_targets, nb_asserts):
             " for the observations from `" + __get_a_amp_target(assign) + \
             "`.\n"
         res += "```diff\n+ " + assign['newValue'].replace('\n', '\n+ ') + \
-            "\n```\nAssertion" + ('s' if nb_related_asserts > 1 else '') + \
-            ":\n"
+            "\n```\n"
+
+        list_title = "Assertion" + ('s' if nb_related_asserts > 1 else '')
+        list_asserts = ''
         if nb_asserts < MAX_NB_ASSERTS:
             for i in range(len(related_asserts)):
-                res += str(i+1) + '. ' + \
+                list_asserts += str(i+1) + '. ' + \
                     __describe_assert_variable(related_asserts[i]['newValue'],
                                                assign_variable)
+        res += utils.fold_block(list_title, list_asserts)
 
         for index in reversed(asserts_done):
             new_asserts.pop(index)
