@@ -65,6 +65,38 @@ def __get_assert_target(assert_stmt):
     return assert_stmt[position:-1].strip()
 
 
+def __get_first_argument(assert_stmt):
+    """
+    Return the first argument of an assert with 2 arguments.
+    """
+    position = 0  # position of the arguments of the assert
+    for char in assert_stmt:
+        position += 1
+        if char == '(':
+            break
+    position_1st = position
+
+    looking_for = [',']
+    skip_next = False
+    for char in assert_stmt[position_1st:]:
+        position += 1
+        if skip_next:
+            skip_next = False
+            continue
+        if char == looking_for[0]:
+            looking_for.pop(0)
+            if looking_for == []:
+                break
+        elif char == '\"':
+            looking_for = ['\"'] + looking_for
+        elif char == '(':
+            looking_for = [')'] + looking_for
+        elif char == '\\':
+            skip_next = True
+            continue
+    return assert_stmt[position_1st:position-1]
+
+
 def __get_a_amp_target(a_amp):
     """
     Extract the variable/method tested by an a-amplification.
@@ -137,8 +169,10 @@ def __describe_assign(assign, new_asserts, new_asserts_targets, nb_asserts):
             "\n```\nAssertion" + ('s' if nb_related_asserts > 1 else '') + \
             ":\n"
         if nb_asserts < MAX_NB_ASSERTS:
-            for related_assert in related_asserts:
-                res += "```diff\n+ " + related_assert['newValue'] + "\n```\n"
+            for i in range(len(related_asserts)):
+                res += str(i+1) + '. ' + \
+                    __describe_assert_variable(related_asserts[i]['newValue'],
+                                               assign_variable)
 
         for index in reversed(asserts_done):
             new_asserts.pop(index)
@@ -157,6 +191,35 @@ def __describe_assign_with_assert(assign):
         stmt = stmt.replace('\n\t', '\n')
     res += "```diff\n+ " + stmt.replace('\n', '\n+ ') + "\n```\n\n"
     return res
+
+
+def __describe_assert_variable(assert_stmt: str, variable: str) -> str:
+    """
+    Natural language paraphrasing of an assert that checks something on a
+    variable.
+    """
+    method_called = list(assert_stmt.split(variable)[-1].strip())
+    if method_called[-1] == ';':
+        method_called = method_called[:-1]
+    while method_called[0] == ')':  # remove parentheses
+        method_called.pop(0)
+    method_called.pop(0)  # remove dot
+    extra_closing = method_called.count(')') - method_called.count('(')
+    if extra_closing:
+        method_called = method_called[: -extra_closing]
+    method_called = ''.join(method_called)
+
+    beggining = "Check that `" + method_called + "` "
+    if assert_stmt.startswith('org.junit.Assert.assertEquals'):
+        return beggining + 'returns `' + __get_first_argument(assert_stmt) + \
+            '`.\n'
+    if assert_stmt.startswith('org.junit.Assert.assertFalse'):
+        return beggining + " is false.\n"
+    if assert_stmt.startswith('org.junit.Assert.assertTrue'):
+        return beggining + " is true.\n"
+    if assert_stmt.startswith('org.junit.Assert.assertNull'):
+        return beggining + " is null.\n"
+    raise ValueError("Unknown assert function.")
 
 
 def describe_asserts(a_amps):
