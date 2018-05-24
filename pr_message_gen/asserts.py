@@ -68,6 +68,16 @@ def __get_assert_target(assert_stmt):
     return assert_stmt[position:-1].strip()
 
 
+def __is_direct_variable_test(assign_stmt, variable_tested):
+    left_part = list(assign_stmt.split(variable_tested)[-1])
+    try:
+        while left_part[0] == ')' or left_part[0] == ';':
+            left_part.pop(0)
+        return False
+    except IndexError:
+        return True
+
+
 def __get_first_argument(assert_stmt):
     """
     Return the first argument of an assert with 2 arguments.
@@ -171,14 +181,22 @@ def __describe_assign(assign, new_asserts, new_asserts_targets, nb_asserts):
         res += "```diff\n+ " + assign['newValue'].replace('\n', '\n+ ') + \
             "\n```\n"
 
-        list_title = "Assertion" + ('s' if nb_related_asserts > 1 else '')
-        list_asserts = ''
         if nb_asserts < MAX_NB_ASSERTS:
-            for i in range(len(related_asserts)):
-                list_asserts += str(i+1) + '. ' + \
-                    __describe_assert_variable(related_asserts[i]['newValue'],
-                                               assign_variable)
-        res += utils.fold_block(list_title, list_asserts)
+            if (nb_related_asserts == 1 and
+                __is_direct_variable_test(related_asserts[0]['newValue'],
+                                          assign_variable)):
+                res += __paraphrase_assert(related_asserts[0]['newValue'],
+                                           assign_variable)
+            else:
+                list_title = "Assertion" + ('s' if nb_related_asserts > 1
+                                            else '')
+                list_asserts = ''
+                for i in range(nb_related_asserts):
+                    list_asserts += str(i+1) + '. ' + \
+                        __describe_assert_variable(
+                            related_asserts[i]['newValue'],
+                            assign_variable)
+                res += utils.fold_block(list_title, list_asserts)
 
         for index in reversed(asserts_done):
             new_asserts.pop(index)
@@ -199,9 +217,39 @@ def __describe_assign_with_assert(assign):
     return res
 
 
+def __paraphrase_assert(assert_stmt: str, target: str) -> str:
+    beggining = "Check that `" + target + "` "
+    if assert_stmt.startswith('org.junit.Assert.assertEquals'):
+        if __is_direct_variable_test(assert_stmt, target):
+            return beggining + 'is equal to `' + \
+                __get_first_argument(assert_stmt) + '`.\n'
+        else:
+            return beggining + 'returns `' + \
+                __get_first_argument(assert_stmt) + '`.\n'
+    if assert_stmt.startswith('org.junit.Assert.assertFalse'):
+        if __is_direct_variable_test(assert_stmt, target):
+            return beggining + " is false.\n"
+        else:
+            return beggining + " returns false.\n"
+    if assert_stmt.startswith('org.junit.Assert.assertTrue'):
+        if __is_direct_variable_test(assert_stmt, target):
+            return beggining + " is true.\n"
+        else:
+            return beggining + " returns true.\n"
+    if assert_stmt.startswith('org.junit.Assert.assertNull'):
+        if __is_direct_variable_test(assert_stmt, target):
+            return beggining + " is null.\n"
+        else:
+            return beggining + " returns null.\n"
+    raise ValueError("Unknown assert function.")
+
+
 def __describe_assert_variable(assert_stmt: str, variable: str) -> str:
     """
     Natural language paraphrasing of an assert that checks something on a
+    variable.
+
+    Assumes that the assertion tests the return value of a method call on the
     variable.
     """
     method_called = list(assert_stmt.split(variable)[-1].strip())
@@ -215,17 +263,7 @@ def __describe_assert_variable(assert_stmt: str, variable: str) -> str:
         method_called = method_called[: -extra_closing]
     method_called = ''.join(method_called)
 
-    beggining = "Check that `" + method_called + "` "
-    if assert_stmt.startswith('org.junit.Assert.assertEquals'):
-        return beggining + 'returns `' + __get_first_argument(assert_stmt) + \
-            '`.\n'
-    if assert_stmt.startswith('org.junit.Assert.assertFalse'):
-        return beggining + " is false.\n"
-    if assert_stmt.startswith('org.junit.Assert.assertTrue'):
-        return beggining + " is true.\n"
-    if assert_stmt.startswith('org.junit.Assert.assertNull'):
-        return beggining + " is null.\n"
-    raise ValueError("Unknown assert function.")
+    return __paraphrase_assert(assert_stmt, method_called)
 
 
 def describe_asserts(a_amps):
@@ -261,13 +299,19 @@ def describe_asserts(a_amps):
     count_asserts = Counter(new_asserts_targets)
     for target in count_asserts:
         nb_asserts = count_asserts[target]
-        res += "#### Generated " + str(nb_asserts) + " assertion" + \
-            ("s" if nb_asserts > 1 else "") + " for the return value of `" + \
-            target + "`.\n\n"
+        asserts_targeting = [assertion for assertion in new_asserts
+                             if __get_a_amp_target(assertion) == target]
+        if __is_direct_variable_test(asserts_targeting[0]['newValue'], target):
+            res += "#### Generated " + str(nb_asserts) + " assertion" + \
+                ("s" if nb_asserts > 1 else "") + \
+                " for the value of `" + target + "`.\n\n"
+        else:
+            res += "#### Generated " + str(nb_asserts) + " assertion" + \
+                ("s" if nb_asserts > 1 else "") + \
+                " for the return value of `" + target + "`.\n\n"
         if nb_asserts < MAX_NB_ASSERTS:  # add diff
-            for assertion in new_asserts:
+            for assertion in asserts_targeting:
                 new_value = assertion["newValue"]
-                if __get_a_amp_target(assertion) == target:
-                    res += "```diff\n+ " + new_value + "\n```\n\n"
+                res += "```diff\n+ " + new_value + "\n```\n\n"
 
     return res[:-1], useless_assigns
