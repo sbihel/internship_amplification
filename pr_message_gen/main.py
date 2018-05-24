@@ -36,7 +36,8 @@ def describe_test_case(class_name, amplified_test,
     class_path = next(glob.iglob(PROJECT_ROOT_PATH + os.sep + OUTPUT_DIRECTORY
                                  + os.sep + '**' + os.sep + 'Ampl' + class_name
                                  + '.java', recursive=True))
-    whole_test = utils.get_test_method(class_path, amplified_test)
+    whole_test = utils.get_test_method(class_path, amplified_test,
+                                       unindent=True)
     whole_test = '```java\n' + whole_test + '```\n'
     res += utils.fold_block('Whole test', whole_test) + '\n'
 

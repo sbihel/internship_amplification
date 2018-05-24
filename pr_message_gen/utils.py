@@ -11,7 +11,8 @@ def fold_block(title: str, content: str) -> str:
     return res + '</details>\n'
 
 
-def get_test_method(file_path: str, test_name: str) -> str:
+def get_test_method(file_path: str, test_name: str,
+                    unindent: bool = False) -> str:
     res = ''
     with open(file_path, 'r') as test_file:
         log_line = False
@@ -21,7 +22,11 @@ def get_test_method(file_path: str, test_name: str) -> str:
                 log_line = True
                 indent_level = line[: len(line) - len(line.lstrip())]
             elif line.startswith(indent_level + '}'):
-                return res + line
+                res += line
+                if unindent:
+                    res = res[len(indent_level):].replace('\n' + indent_level,
+                                                          '\n')
+                return res
             if log_line:
                 res += line
     raise ValueError("Couldn't get the test method.")
