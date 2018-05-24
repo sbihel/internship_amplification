@@ -102,7 +102,7 @@ def describe_test_class(test_class_report_path):
             amplification_log.pop(amplified_test, None)
         else:
             if i:
-                res += '\n\n'
+                res += '\n\n****\n'
             res += describe_test_case(class_name,
                                       amplified_test,
                                       mutation_score["testCases"][i],
@@ -126,6 +126,7 @@ def describe_test_classes(report_dir):
             if test_class_description.count('\n') > 1:
                 if i:
                     print()
+                    print('****')
                 print(test_class_description)
                 i += 1
 
