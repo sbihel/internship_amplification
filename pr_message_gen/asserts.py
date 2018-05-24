@@ -310,8 +310,12 @@ def describe_asserts(a_amps):
                 ("s" if nb_asserts > 1 else "") + \
                 " for the return value of `" + target + "`.\n\n"
         if nb_asserts < MAX_NB_ASSERTS:  # add diff
-            for assertion in asserts_targeting:
-                new_value = assertion["newValue"]
-                res += "```diff\n+ " + new_value + "\n```\n\n"
+            similar_asserts = Counter([assertion['newValue']
+                                       for assertion in asserts_targeting])
+            for assert_stmt in similar_asserts:
+                if similar_asserts[assert_stmt] > 1:
+                    res += str(similar_asserts[assert_stmt]) + \
+                        " identical assertions:\n"
+                res += "```diff\n+ " + assert_stmt + "\n```\n\n"
 
     return res[:-1], useless_assigns
