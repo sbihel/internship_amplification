@@ -3,21 +3,25 @@
 """ PR_MESSAGE_GEN
 """
 import argparse
+import glob
 import json
 import os
 
 from asserts import describe_asserts
 from mutants import describe_mutants
 from i_amplification import describe_amplification
+import utils
 
 
 PROJECT_ROOT_PATH = ''
 MODULE_PATH = ''
 SRC_PATH = ''
 TEST_PATH = ''
+OUTPUT_DIRECTORY = ''
 
 
-def describe_test_case(amplified_test, mutation_score, amplification_log):
+def describe_test_case(class_name, amplified_test,
+                       mutation_score, amplification_log):
     """
     Natural language description of an amplified test case.
     """
@@ -29,6 +33,13 @@ def describe_test_case(amplified_test, mutation_score, amplification_log):
             '` based on `' + parent_name + '`\n'
     else:
         res += '## Original test `' + amplified_test + '`\n'
+    class_path = next(glob.iglob(PROJECT_ROOT_PATH + os.sep + OUTPUT_DIRECTORY
+                                 + os.sep + '**' + os.sep + 'Ampl' + class_name
+                                 + '.java', recursive=True))
+    whole_test = utils.get_test_method(class_path, amplified_test)
+    whole_test = '```java\n' + whole_test + '```\n'
+    res += utils.fold_block('Whole test', whole_test) + '\n'
+
     new_asserts = [amplification
                    for amplification in amplification_log
                    if amplification["ampCategory"] == "ASSERT"]
@@ -75,7 +86,8 @@ def describe_test_class(test_class_report_path):
     """
     if not os.path.exists(test_class_report_path + '_mutants_killed.json'):
         return ''
-    res = "# Class: " + test_class_report_path.split('.')[-1] + "\n"
+    class_name = test_class_report_path.split('.')[-1]
+    res = "# Class: " + class_name + "\n"
     with open(test_class_report_path+'_mutants_killed.json', 'r') as json_file:
         mutation_score = json.load(json_file)
     with open(test_class_report_path+'_amp_log.json', 'r') as json_file:
@@ -90,7 +102,8 @@ def describe_test_class(test_class_report_path):
         else:
             if i:
                 res += '\n\n'
-            res += describe_test_case(amplified_test,
+            res += describe_test_case(class_name,
+                                      amplified_test,
                                       mutation_score["testCases"][i],
                                       amplification_log[amplified_test])
             i += 1
@@ -144,7 +157,8 @@ def main():
     SRC_PATH = None
     global TEST_PATH
     TEST_PATH = None
-    output_directory = None
+    global OUTPUT_DIRECTORY
+    OUTPUT_DIRECTORY = None
     with open(opts.properties_file, 'r') as properties_file:
         for line in properties_file:
             line = line.strip()
@@ -157,7 +171,7 @@ def main():
             elif line.startswith('testSrc='):
                 TEST_PATH = line[len('testSrc='):]
             elif line.startswith('outputDirectory='):
-                output_directory = line[len('outputDirectory='):]
+                OUTPUT_DIRECTORY = line[len('outputDirectory='):]
     global PROJECT_ROOT_PATH
     PROJECT_ROOT_PATH = os.path.join(dir_prop, project_root)
 
@@ -166,7 +180,7 @@ def main():
         test_class_report_path = os.path.join(dir_prop,
                                               project_root,
                                               MODULE_PATH,
-                                              output_directory,
+                                              OUTPUT_DIRECTORY,
                                               opts.test)
         if not os.path.exists(test_class_report_path+"_mutants_killed.json"):
             raise ValueError("Test class report not found.")
@@ -176,7 +190,7 @@ def main():
             dir_prop,
             project_root,
             MODULE_PATH,
-            output_directory)
+            OUTPUT_DIRECTORY)
         describe_test_classes(report_dir)
 
 
