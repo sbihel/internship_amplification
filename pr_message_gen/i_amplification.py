@@ -5,6 +5,30 @@ Functions related to input amplifications.
 """
 
 
+def __add_amp(amplification):
+    amp_tokens = amplification['newValue'].lstrip().split(' ')
+    nb_tokens = len(amp_tokens)
+    if nb_tokens > 2 and amp_tokens[2] == '=':  # new assignment
+        return 'Created new variable `' + amp_tokens[1] + '`.\n'
+    elif nb_tokens > 1 and amp_tokens[1] == '=':  # change value of variable
+        return 'Modified the value of `' + amp_tokens[0] + '`.\n'
+    else:
+        return "Added new " + amplification["role"] + " to `" + \
+            amplification["parent"] + "`.\n"
+
+
+def __modify_amp(amplification):
+    amp_tokens = amplification['newValue'].lstrip().split(' ')
+    nb_tokens = len(amp_tokens)
+    if nb_tokens > 2 and amp_tokens[2] == '=':  # new assignment
+        return 'Modified variable `' + amp_tokens[1] + '` initialization.\n'
+    elif nb_tokens > 1 and amp_tokens[1] == '=':  # change value of variable
+        return 'Modified variable `' + amp_tokens[0] + ' assignment`.\n'
+    else:
+        return "Modified " + amplification["role"] + ' of `' + \
+            amplification['parent'] + "`.\n"
+
+
 def describe_amplification(amplification):
     """
     Natural language description of an amplification.
@@ -15,8 +39,7 @@ def describe_amplification(amplification):
     elif categ == "ADD":
         new_value_diff = amplification["newValue"].replace('\n', '\n+ ')
         diff = "```diff\n+ " + new_value_diff + "\n```\n"
-        return "Added new " + amplification["role"] + " to `" + \
-            amplification["parent"] + "`.\n" + diff
+        return __add_amp(amplification) + diff
     elif categ == "REMOVE":
         old_value_diff = amplification["oldValue"].replace('\n', '\n- ')
         diff = "```diff\n- " + old_value_diff + "\n```\n"
@@ -27,7 +50,6 @@ def describe_amplification(amplification):
         new_value_diff = amplification["newValue"].replace('\n', '\n+ ')
         diff = "```diff\n- " + old_value_diff + "\n+ " + new_value_diff + \
             "\n```\n"
-        return "Modified " + amplification["role"] + ' of `' + \
-            amplification['parent'] + "`.\n" + diff
+        return __modify_amp(amplification) + diff
     else:
         raise ValueError("Unknown category.")
