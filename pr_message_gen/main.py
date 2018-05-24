@@ -49,13 +49,15 @@ def describe_test_case(amplified_test, mutation_score, amplification_log):
         input_res += describe_amplification(amplification) + '\n'
     if input_res:
         nb_inputs = mutation_score["nbInputAdded"] + len(useless_assigns)
-        res += '### ' + str(nb_inputs) + ' generated inputs.\n'
+        res += '### Generated ' + str(nb_inputs) + ' input' + \
+            ('s' if nb_inputs > 1 else '') + '.\n'
         res += input_res + '\n'
 
     # show the asserts after the inputs
     if assert_res:
         nb_asserts = mutation_score["nbAssertionAdded"] - len(useless_assigns)
-        res += '### Generated ' + str(nb_asserts) + ' assertions.\n'
+        res += '### Generated ' + str(nb_asserts) + ' assertion' + \
+            ('s' if nb_asserts > 1 else '') + '.\n'
         res += assert_res + '\n'
 
     # MUTANTS
