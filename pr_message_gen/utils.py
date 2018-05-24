@@ -17,10 +17,15 @@ def get_test_method(file_path: str, test_name: str,
     with open(file_path, 'r') as test_file:
         log_line = False
         indent_level = ''
+        test_annotation = ''
         for line in test_file:
+            if '@Test' in line:
+                test_annotation = line
             if 'public void ' + test_name + '()' in line:
                 log_line = True
                 indent_level = line[: len(line) - len(line.lstrip())]
+                if test_annotation != line:
+                    res = test_annotation
             elif line.startswith(indent_level + '}'):
                 res += line
                 if unindent:
