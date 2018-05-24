@@ -54,7 +54,7 @@ def describe_test_case(amplified_test, mutation_score, amplification_log):
         res += input_res + '\n'
 
     # show the asserts after the inputs
-    if assert_res:
+    if assert_res and assert_res != '\n':
         nb_asserts = mutation_score["nbAssertionAdded"] - len(useless_assigns)
         res += '### Generated ' + str(nb_asserts) + ' assertion' + \
             ('s' if nb_asserts > 1 else '') + '.\n'
