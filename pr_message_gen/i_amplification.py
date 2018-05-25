@@ -5,6 +5,10 @@ Functions related to input amplifications.
 """
 
 
+USELESS_PARENTS = ['CtBlockImpl']
+USELESS_ROLES = ['child']
+
+
 def __add_amp(amplification):
     amp_tokens = amplification['newValue'].lstrip().split(' ')
     nb_tokens = len(amp_tokens)
@@ -13,8 +17,13 @@ def __add_amp(amplification):
     elif nb_tokens > 1 and amp_tokens[1] == '=':  # change value of variable
         return 'Modified the value of `' + amp_tokens[0] + '`.\n'
     else:
-        return "Added new " + amplification["role"] + " to `" + \
-            amplification["parent"] + "`.\n"
+        if (amplification['role'] in USELESS_ROLES and
+                amplification['parent'].split('.')[-1].split('@')[0]
+                in USELESS_PARENTS):
+            return ""
+        else:
+            return "Added new " + amplification["role"] + " to `" + \
+                amplification["parent"] + "`.\n"
 
 
 def __modify_amp(amplification):
@@ -25,8 +34,13 @@ def __modify_amp(amplification):
     elif nb_tokens > 1 and amp_tokens[1] == '=':  # change value of variable
         return 'Modified variable `' + amp_tokens[0] + ' assignment`.\n'
     else:
-        return "Modified " + amplification["role"] + ' of `' + \
-            amplification['parent'] + "`.\n"
+        if (amplification['role'] in USELESS_ROLES and
+                amplification['parent'].split('.')[-1].split('@')[0]
+                in USELESS_PARENTS):
+            return ""
+        else:
+            return "Modified " + amplification["role"] + ' of `' + \
+                amplification['parent'] + "`.\n"
 
 
 def describe_amplification(amplification):
