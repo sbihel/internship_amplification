@@ -144,19 +144,7 @@ def __get_variable_name(assign):
 
 def __describe_trycatch(trycatch):
     res = "#### Generated an exception handler for `" + \
-        __get_a_amp_target(trycatch) + "`.\n"
-    lines = trycatch["newValue"].split('\n')
-    lines[0] = '+ ' + lines[0]
-    lines[-1] = '+ ' + lines[-1]
-    lines[-2] = '+ ' + lines[-2]
-    nb_lines_modified_end = 3
-    if lines[-3].lstrip()[0] == '}':
-        nb_lines_modified_end = 4
-        lines[-4] = '+ ' + lines[-4]
-    lines[-3] = '+ ' + lines[-3]
-    for i in range(1, len(lines)-nb_lines_modified_end):
-        lines[i] = '  ' + lines[i]
-    res += "```diff\n" + '\n'.join(lines) + "\n```\n"
+        __get_a_amp_target(trycatch) + "` aroung the whole test.\n"
     return res
 
 
