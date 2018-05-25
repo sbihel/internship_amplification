@@ -12,17 +12,17 @@ import utils
 MAX_NB_ASSERTS = 10
 
 
-def __is_trycatch(assert_stmt):
+def is_trycatch(assert_stmt):
     return assert_stmt[:3] == 'try'
 
 
-def __is_assign(assert_stmt):
+def is_assign(assert_stmt):
     return ('=' in assert_stmt and
             not assert_stmt.lstrip().startswith('org.junit.Assert.assert'))
 
 
-def __is_assert(assert_stmt):
-    return (not __is_trycatch(assert_stmt)) and (not __is_assign(assert_stmt))
+def is_assert(assert_stmt):
+    return (not is_trycatch(assert_stmt)) and (not is_assign(assert_stmt))
 
 
 def __get_trycatch_target(trycatch_stmt):
@@ -115,9 +115,9 @@ def __get_a_amp_target(a_amp):
     Extract the variable/method tested by an a-amplification.
     """
     assert_stmt = a_amp["newValue"]
-    if __is_trycatch(assert_stmt):
+    if is_trycatch(assert_stmt):
         return __get_trycatch_target(assert_stmt)
-    if __is_assign(assert_stmt):
+    if is_assign(assert_stmt):
         return __get_assign_target(assert_stmt)
     # assert statement
     return __get_assert_target(assert_stmt)
@@ -129,9 +129,9 @@ def __sort_asserts(a_amps):
     asserts = []
     while a_amps:
         amplification = a_amps.pop(0)
-        if __is_trycatch(amplification['newValue']):
+        if is_trycatch(amplification['newValue']):
             trycatchs += [amplification]
-        elif __is_assign(amplification['newValue']):
+        elif is_assign(amplification['newValue']):
             assigns += [amplification]
         else:
             asserts += [amplification]

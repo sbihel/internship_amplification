@@ -7,7 +7,7 @@ import glob
 import json
 import os
 
-from asserts import describe_asserts
+from asserts import describe_asserts, is_assign
 from mutants import describe_mutants
 from i_amplification import describe_amplification
 import utils
@@ -67,7 +67,9 @@ def describe_test_case(class_name, amplified_test,
 
     # show the asserts after the inputs
     if assert_res and assert_res != '\n':
-        nb_asserts = mutation_score["nbAssertionAdded"] - len(useless_assigns)
+        nb_asserts = mutation_score["nbAssertionAdded"] - \
+            len([assertion for assertion in new_asserts
+                 if is_assign(assertion['newValue'])])
         res += '### Generated ' + str(nb_asserts) + ' assertion' + \
             ('s' if nb_asserts > 1 else '') + '.\n'
         res += assert_res + '\n'
