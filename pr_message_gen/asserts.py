@@ -162,10 +162,13 @@ def __describe_assign(assign, new_asserts, new_asserts_targets, nb_asserts):
         i += 1
     nb_related_asserts = len(related_asserts)
     if nb_related_asserts:
-        res += "#### Generated " + str(nb_related_asserts) + " assertion" + \
-            ('s' if nb_related_asserts > 1 else '') + \
-            " for the observations from `" + __get_a_amp_target(assign) + \
-            "`.\n"
+        if nb_related_asserts > 1:
+            res += "#### Generated " + str(nb_related_asserts) + \
+                " assertions for the observations from `" + \
+                __get_a_amp_target(assign) + "`.\n"
+        else:
+            res += "#### Generated an assertion for an observation from `" + \
+                __get_a_amp_target(assign) + "`.\n"
         res += "```diff\n+ " + assign['newValue'].replace('\n', '\n+ ') + \
             "\n```\n"
 
