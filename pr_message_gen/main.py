@@ -33,9 +33,10 @@ def describe_test_case(class_name, amplified_test,
             '` based on `' + parent_name + '`\n'
     else:
         res += '## Original test `' + amplified_test + '`\n'
-    class_path = next(glob.iglob(PROJECT_ROOT_PATH + os.sep + OUTPUT_DIRECTORY
-                                 + os.sep + '**' + os.sep + 'Ampl' + class_name
-                                 + '.java', recursive=True))
+
+    glob_path = os.path.join(PROJECT_ROOT_PATH, MODULE_PATH, OUTPUT_DIRECTORY,
+                             '**', 'Ampl' + class_name + '.java')
+    class_path = next(glob.iglob(glob_path, recursive=True))
     whole_test = utils.get_test_method(class_path, amplified_test,
                                        unindent=True)
     whole_test = '```java\n' + whole_test + '```\n'
@@ -96,8 +97,13 @@ def describe_test_class(test_class_report_path):
     with open(test_class_report_path+'_amp_log.json', 'r') as json_file:
         amplification_log = json.load(json_file)
 
-    amplified_tests = [test_case["name"]
-                       for test_case in mutation_score["testCases"]]
+    ordered_tests = utils.order_tests(
+        {test_case['name']: test_case['parentName']
+         for test_case in mutation_score['testCases']})
+    amplified_tests = [test_case
+                       for tests_list in ordered_tests
+                       for test_case in tests_list]
+
     i = 0
     for amplified_test in list(amplification_log):
         if amplified_test not in amplified_tests:
