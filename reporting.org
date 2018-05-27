@@ -601,7 +601,7 @@ the same template as humans do.
 *** TODO Defense Rehearsal @ ENS <2018-06-22 Fri>
 
 
-* Journal [15/21]
+* Journal [16/21]
 ** DONE Preliminary Bibliographical Work <2017-09-18 Mon>--<2018-02-07 Wed>
 *** Things Done
 - Meeting with Benoit <2017-09-22 Fri>
@@ -1935,48 +1935,182 @@ java -jar ~/dspot/dspot/target/dspot-1.1.1-SNAPSHOT-jar-with-dependencies.jar --
   + asked for the xwiki-commons version
 
 
-** TODO Week 16 <2018-05-21 Mon>--<2018-05-27 Sun>
+** DONE Week 16 <2018-05-21 Mon>--<2018-05-27 Sun>
 *** Things Done
+- Observations from [[https://github.com/sbihel/xwiki-commons/issues/1]]
+  + *very* long names for new variables
+- looked at =mutations.csv= (had to comment out the deletion of the pit results)
+  + collected description from the xml report
+- run on javapoet
+#+BEGIN_SRC sh
+java -jar ~/internship_amplification/dspot/dspot/target/dspot-1.1.1-SNAPSHOT-jar-with-dependencies.jar --path-to-properties dspot.properties --amplifiers MethodAdd:StatementAdd:NumberLiteralAmplifier:BooleanLiteralAmplifier --test-criterion PitMutantScoreSelector --test com.squareup.javapoet.TypeSpecTest --clean --verbose
+#+END_SRC
+  + didn't finish, got stuck
+  + rerun with only =MethodAdd= -> GC overhead
+  + rerun with only =MethodAdd= on UtilTest, no new tests
+#+BEGIN_SRC sh
+java -jar ~/internship_amplification/dspot/dspot/target/dspot-1.1.1-SNAPSHOT-jar-with-dependencies.jar --path-to-properties dspot.properties --amplifiers MethodAdd:StatementAdd:NumberLiteralAmplifier:BooleanLiteralAmplifier --test-criterion PitMutantScoreSelector --test com.squareup.javapoet.NameAllocatorTest --clean --verbose
+#+END_SRC
+  + worked, in 33min
 
 *** Blocking Points
-- [ ] Need to identify the main object that is interacted with
-- [ ] null ~parentName~
+- [X] +Need to identify the main object that is interacted with+
+- [X] null ~parentName~
+  + not with =IdentityHashMap=
+  + we'll keep that as we have no time to care about performances
+- [ ] total number of assertions not matching
+  + sometimes total is higher (minimisation not caught?)
+  + sometimes total is lower
+- [ ] no direct parent, for the ordering, so it is useless
 
-*** Planned Work [0/7]
-- [ ] Integrate WALA to compute a slice per new mutant
-  + [ ] Adding as dependency
-  + [ ] Use it
-- [ ] Retrieve amplifications [0/1]
-  + [ ] add categories of modifying amplifiers
+*** Planned Work [12/23]
+- [X] +Integrate WALA to compute a slice per new mutant+
+  + [X] +Adding as dependency+
+  + [X] +Use it+
+- [X] Retrieve amplifications [1/1]
+  + [X] +add categories of modifying amplifiers+
     - MODIFY LITERALS
     - MODIFY INTERACTIONS
-- [ ] Work on report [0/4]
+    - yeah, no, maybe in the future
+- [ ] Work on report [0/10]
   + [ ] add Java examples
   + [ ] describe thoroughly the oracle problem
   + [ ] overspecification
     - [[http://jasonrudolph.com/blog/2008/07/01/testing-anti-patterns-overspecification/]]
   + [ ] make a table for related works?
-- [ ] ask for opinions (e.g. Simon U, XWiki, SAT4J)
-- [ ] improvements [0/3]
-  + [ ] "The new test can detect if toBuilder returns XXX instead of the regular
+  + [ ] DSpot
+    - [ ] the process of removing all assertions, then adding some, then
+      input-amplification, then assertions
+  + [ ] What have I done [0/3]
+    - [ ] Conceptual contribution
+      + variables created through a-amplification, that aren't useful for an
+      assertion but that raise exceptions
+      + long names, so NL simple syntheses are nice
+    - [ ] Implementation
+      + lines
+    - [ ] Aside stuff
+      + [ ] bugs encountered and fixed
+  + [ ] Problems encountered
+    - ideally we would like to have infos about whether a mutant modifies the
+      state of the CUT or if it's something else
+  + [ ] Evaluation
+    + low overhead
+    + it works (e.g. right total number of asserts)
+  + [ ] Go through ... to remember what I did [0/4]
+    - [ ] previous journal entries
+    - [ ] emails
+    - [ ] commits
+    - [ ] functions of =pr_message_gen=
+  + [ ] Reduce the number of references
+- [-] ask for opinions (e.g. Simon U, XWiki, SAT4J)
+  + [-] XWiki
+    - [X] get all infos necessary
+    - [X] reproduce experiment
+    - [ ] ask for feedback
+  + [ ] others
+- [X] improvements [7/7]
+  + [X] "The new test can detect if toBuilder returns XXX instead of the regular
     value. The original test 'toto' could not detect this fault"
     where XXX is the value injected by the mutation
     - isn't really suitable for other kinds of mutants, and even for
       return-related mutants as what might be interesting is that they change
       the state of the SUT, but don't have a direct relation with the test case
-  + [ ] also consider when mutation modifies the state and is detected later
-  + [ ] Don't name mutators, only explain the transformation instance
+    - yeah, no.
+  + [X] +also consider when mutation modifies the state and is detected later+
+  + [X] Don't name mutators, only explain the transformation instance
     (i.e. mutator category?)
-- [ ] Make better names for generated tests
-- [ ] differentiate assert, trycatch, +and test annotations+
+    - PIT description
+  + [X] fix assignments with multiple lines
+  + [X] useless parent of i-amp
+  + [X] useless try/catch diff
+  + [X] use 'an' for 1
+- [ ] Fix names of generated tests and originals'
+- [X] +differentiate assert, trycatch?+
+  + do it in the message generator
+- [X] Meeting Benoit <2018-05-21 Mon 16:00>
+  + state of the tool
+  + state of the report
+  + what's planned for the coming month
+  +
+  + getters, is, toString only
+  + remove mutants killed by the original
+  + distinguish improving coverage or new capacity
+- [X] Group assertions for the variable they're testing
+- [ ] realise that only getters, is, and toString are used
+- [ ] realise that asserts always go through ~getFactory~
+- [ ] remove redundant mutants
+- [ ] differentiate additional coverage to new behaviours
+- [X] natural language description of assertions that target a variable
+- [X] add folds for overwhelming details
+- [X] Order tests, starting with the older one first
+- [ ] Sometimes an assertion for a variable directly test the variable (it can
+  be simply a string), so no need to find a method call
+- [ ] Reformat assertions for a variable when there is only one assert for this
+  variable
+- [X] Reformat multiple identical assertions
+- [X] New useless assert variable should be reported differently as inputs
+- [ ] Target grouping should be based on variable (not variable#method)
+- [X] Add whole test snippet for development
+- [ ] Maybe remaining assertions should be treated like assertions that check a
+  variable that was generated at the same time
 
 
 ** TODO Week 17 <2018-05-28 Mon>--<2018-06-03 Sun>
 *** Things Done
 
 *** Blocking Points
+- [ ] total number of assertions not matching
+  + sometimes total is higher (minimisation not caught?)
+  + sometimes total is lower
+- [ ] no direct parent, for the ordering, so it is useless
 
-*** Planned Work
+*** Planned Work [0/11]
+- [ ] Work on report [0/10]
+  + [ ] add Java examples
+  + [ ] describe thoroughly the oracle problem
+  + [ ] overspecification
+    - [[http://jasonrudolph.com/blog/2008/07/01/testing-anti-patterns-overspecification/]]
+  + [ ] make a table for related works?
+  + [ ] DSpot
+    - [ ] the process of removing all assertions, then adding some, then
+      input-amplification, then assertions
+  + [ ] What have I done [0/3]
+    - [ ] Conceptual contribution
+      + variables created through a-amplification, that aren't useful for an
+      assertion but that raise exceptions
+      + long names, so NL simple syntheses are nice
+    - [ ] Implementation
+      + lines
+    - [ ] Aside stuff
+      + [ ] bugs encountered and fixed
+  + [ ] Problems encountered
+    - ideally we would like to have infos about whether a mutant modifies the
+      state of the CUT or if it's something else
+  + [ ] Evaluation
+    + low overhead
+    + it works (e.g. right total number of asserts)
+  + [ ] Go through ... to remember what I did [0/4]
+    - [ ] previous journal entries
+    - [ ] emails
+    - [ ] commits
+    - [ ] functions of =pr_message_gen=
+  + [ ] Reduce the number of references
+- [ ] ask for opinions (e.g. Simon U, XWiki, SAT4J)
+  + [ ] XWiki
+    - [ ] ask for feedback
+  + [ ] others
+- [ ] Fix names of generated tests and originals'
+- [ ] realise that only getters, is, and toString are used
+- [ ] realise that asserts always go through ~getFactory~
+- [ ] remove redundant mutants
+- [ ] differentiate additional coverage to new behaviours
+- [ ] Sometimes an assertion for a variable directly test the variable (it can
+  be simply a string), so no need to find a method call
+- [ ] Reformat assertions for a variable when there is only one assert for this
+  variable
+- [ ] Target grouping should be based on variable (not variable#method)
+- [ ] Maybe remaining assertions should be treated like assertions that check a
+  variable that was generated at the same time
 
 
 ** TODO Week 18 <2018-06-04 Mon>--<2018-06-10 Sun>
@@ -2012,7 +2146,7 @@ java -jar ~/dspot/dspot/target/dspot-1.1.1-SNAPSHOT-jar-with-dependencies.jar --
 *** Blocking Points
 
 *** Planned Work [0/1]
-- [ ] Defense <2018-06-25 Mon>
+- [ ] Defense <2018-06-27 Wed 14:00> @Jersey
 
 
 * Conclusion
