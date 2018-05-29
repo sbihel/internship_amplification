@@ -105,10 +105,8 @@ def describe_test_class(test_class_report_path):
                        for test_case in tests_list]
 
     i = 0
-    for amplified_test in list(amplification_log):
-        if amplified_test not in amplified_tests:
-            amplification_log.pop(amplified_test, None)
-        else:
+    for amplified_test in amplified_tests:
+        if amplified_test in amplification_log:
             if i:
                 res += '\n\n****\n'
             res += describe_test_case(class_name,
