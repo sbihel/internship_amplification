@@ -28,7 +28,7 @@ def describe_test_case(class_name, amplified_test,
     res = ""
     # HEADER
     parent_name = mutation_score["parentName"]
-    if amplified_test != parent_name:
+    if utils.is_not_original(amplified_test, parent_name):
         res += '## Generated test `' + amplified_test + \
             '` based on `' + parent_name + '`\n'
     else:
