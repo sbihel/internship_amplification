@@ -265,6 +265,7 @@ def describe_asserts(a_amps):
     res = ""
     nb_asserts = len(new_asserts)
     useless_assigns = []
+    nb_a_amps = nb_asserts + len(trycatchs)
 
     # Try/catchs first.
     for trycatch in trycatchs:
@@ -309,4 +310,4 @@ def describe_asserts(a_amps):
                         " identical assertions:\n"
                 res += "```diff\n+ " + assert_stmt + "\n```\n\n"
 
-    return res[:-1], useless_assigns
+    return res[:-1], useless_assigns, nb_a_amps - len(useless_assigns)
