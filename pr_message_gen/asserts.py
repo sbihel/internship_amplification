@@ -265,7 +265,7 @@ def describe_asserts(a_amps):
     res = ""
     nb_asserts = len(new_asserts)
     useless_assigns = []
-    nb_a_amps = nb_asserts + len(trycatchs)
+    nb_a_amps = nb_asserts + len(trycatchs) + len(assigns)
 
     # Try/catchs first.
     for trycatch in trycatchs:
