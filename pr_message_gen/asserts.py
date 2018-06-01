@@ -144,7 +144,7 @@ def __get_variable_name(assign):
 
 def __describe_trycatch(trycatch):
     res = "#### Generated an exception handler for `" + \
-        __get_a_amp_target(trycatch) + "` aroung the whole test.\n"
+        __get_a_amp_target(trycatch) + "` around the whole test.\n"
     return res
 
 
