@@ -601,7 +601,7 @@ the same template as humans do.
 *** TODO Defense Rehearsal @ ENS <2018-06-22 Fri>
 
 
-* Journal [16/21]
+* Journal [17/21]
 ** DONE Preliminary Bibliographical Work <2017-09-18 Mon>--<2018-02-07 Wed>
 *** Things Done
 - Meeting with Benoit <2017-09-22 Fri>
@@ -2055,16 +2055,34 @@ java -jar ~/internship_amplification/dspot/dspot/target/dspot-1.1.1-SNAPSHOT-jar
   variable that was generated at the same time
 
 
-** TODO Week 17 <2018-05-28 Mon>--<2018-06-03 Sun>
+** DONE Week 17 <2018-05-28 Mon>--<2018-06-03 Sun>
 *** Things Done
+- =AmplificationLog= with strings as key to avoid losing parents
+  + no wait, shouldn't change anything, because no weak keys
 
 *** Blocking Points
 - [ ] total number of assertions not matching
   + sometimes total is higher (minimisation not caught?)
   + sometimes total is lower
-- [ ] no direct parent, for the ordering, so it is useless
+  + not using DSpot's report number for now
+- [X] +no direct parent, for the ordering, so it is useless+ +wrong parenting+
+  no direct parent
+  + using all =String=s for the parenting map doesn't work either
+  + =ampTestToParentName= was cleared before report
+    - nope
+  + the problem was in pr_gen?? I'm the worst
+  + still no direct parent
+  + no direct parent because only a-amp(?)
+    - yes, so two cases
+      1. only better oracle
+      2. also better inputs
+- [ ] Why, sometime, are there amplified tests with 3 iterations of amplifications
+  with no logged parent, and sometimes there is 1 parent?
+- [ ] Speaking about different behaviour and different oracle defeats the goal
+  of keeping things very simple
+- [ ] Amplifications log not kept for every test?
 
-*** Planned Work [0/11]
+*** Planned Work [1/12]
 - [ ] Work on report [0/10]
   + [ ] add Java examples
   + [ ] describe thoroughly the oracle problem
@@ -2074,11 +2092,14 @@ java -jar ~/internship_amplification/dspot/dspot/target/dspot-1.1.1-SNAPSHOT-jar
   + [ ] DSpot
     - [ ] the process of removing all assertions, then adding some, then
       input-amplification, then assertions
+    - [ ] iterations
   + [ ] What have I done [0/3]
     - [ ] Conceptual contribution
       + variables created through a-amplification, that aren't useful for an
       assertion but that raise exceptions
       + long names, so NL simple syntheses are nice
+      + identifying killing assertions isn't so great because it's not
+        necessarily direct
     - [ ] Implementation
       + lines
     - [ ] Aside stuff
@@ -2099,7 +2120,7 @@ java -jar ~/internship_amplification/dspot/dspot/target/dspot-1.1.1-SNAPSHOT-jar
   + [ ] XWiki
     - [ ] ask for feedback
   + [ ] others
-- [ ] Fix names of generated tests and originals'
+- [X] +Fix names of generated tests and originals'+
 - [ ] realise that only getters, is, and toString are used
 - [ ] realise that asserts always go through ~getFactory~
 - [ ] remove redundant mutants
@@ -2111,16 +2132,77 @@ java -jar ~/internship_amplification/dspot/dspot/target/dspot-1.1.1-SNAPSHOT-jar
 - [ ] Target grouping should be based on variable (not variable#method)
 - [ ] Maybe remaining assertions should be treated like assertions that check a
   variable that was generated at the same time
+- [ ] In the case of a useless (alone) i-amp, still need to recover these to
+  explain the a-amp that follow
 
 
 ** TODO Week 18 <2018-06-04 Mon>--<2018-06-10 Sun>
 *** Things Done
 
 *** Blocking Points
+- [ ] total number of assertions not matching
+  + sometimes total is higher (minimisation not caught?)
+  + sometimes total is lower
+  + not using DSpot's report number for now
+- [ ] Why, sometime, are there amplified tests with 3 iterations of amplifications
+  with no logged parent, and sometimes there is 1 parent?
+- [ ] Speaking about different behaviour and different oracle defeats the goal
+  of keeping things very simple
+- [ ] Amplifications log not kept for every test?
 
-*** Planned Work [0/2]
+*** Planned Work [0/13]
 - [ ] Report <2018-06-08 Fri 12:00>
 - [ ] Renew SL access card <2018-06-07 Thu>
+- [ ] Work on report [0/10]
+  + [ ] add Java examples
+  + [ ] describe thoroughly the oracle problem
+  + [ ] overspecification
+    - [[http://jasonrudolph.com/blog/2008/07/01/testing-anti-patterns-overspecification/]]
+  + [ ] make a table for related works?
+  + [ ] DSpot
+    - [ ] the process of removing all assertions, then adding some, then
+      input-amplification, then assertions
+    - [ ] iterations
+  + [ ] What have I done [0/3]
+    - [ ] Conceptual contribution
+      + variables created through a-amplification, that aren't useful for an
+      assertion but that raise exceptions
+      + long names, so NL simple syntheses are nice
+      + identifying killing assertions isn't so great because it's not
+        necessarily direct
+    - [ ] Implementation
+      + lines
+    - [ ] Aside stuff
+      + [ ] bugs encountered and fixed
+  + [ ] Problems encountered
+    - ideally we would like to have infos about whether a mutant modifies the
+      state of the CUT or if it's something else
+  + [ ] Evaluation
+    + low overhead
+    + it works (e.g. right total number of asserts)
+  + [ ] Go through ... to remember what I did [0/4]
+    - [ ] previous journal entries
+    - [ ] emails
+    - [ ] commits
+    - [ ] functions of =pr_message_gen=
+  + [ ] Reduce the number of references
+- [ ] ask for opinions (e.g. Simon U, XWiki, SAT4J)
+  + [ ] XWiki
+    - [ ] ask for feedback
+  + [ ] others
+- [ ] realise that only getters, is, and toString are used
+- [ ] realise that asserts always go through ~getFactory~
+- [ ] remove redundant mutants
+- [ ] differentiate additional coverage to new behaviours
+- [ ] Sometimes an assertion for a variable directly test the variable (it can
+  be simply a string), so no need to find a method call
+- [ ] Reformat assertions for a variable when there is only one assert for this
+  variable
+- [ ] Target grouping should be based on variable (not variable#method)
+- [ ] Maybe remaining assertions should be treated like assertions that check a
+  variable that was generated at the same time
+- [ ] In the case of a useless (alone) i-amp, still need to recover these to
+  explain the a-amp that follow
 
 
 ** TODO Week 19 <2018-06-11 Mon>--<2018-06-17 Sun>
