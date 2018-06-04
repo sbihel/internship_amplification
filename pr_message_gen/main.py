@@ -108,6 +108,7 @@ def describe_test_case_with_relative(class_name, amplified_test,
                                      all_relatives):
     i_mutation_score = utils.index_in_mutation_score(mutation_score,
                                                      amplified_test)
+    m_score = mutation_score['testCases'][i_mutation_score]
     amp_log = amplification_log[amplified_test]
     direct_parent = '_'.join(amplified_test.split('_')[:-1])
     direct_parent_backup = direct_parent
@@ -117,12 +118,19 @@ def describe_test_case_with_relative(class_name, amplified_test,
             direct_parent_backup = direct_parent
             try:
                 amp_log += amplification_log[direct_parent]
+                i_mut_parent = utils.index_in_mutation_score(mutation_score,
+                                                             direct_parent)
+                if i_mut_parent is not None:
+                    m_score['nbAssertionAdded'] += mutation_score['testCases'][
+                        i_mut_parent]['nbAssertionAdded']
+                    m_score['nbInputAdded'] += mutation_score['testCases'][
+                        i_mut_parent]['nbInputAdded']
             except KeyError:
                 pass
             direct_parent = '_'.join(direct_parent.split('_')[:-1])
     return describe_test_case(class_name,
                               amplified_test,
-                              mutation_score["testCases"][i_mutation_score],
+                              m_score,
                               amp_log,
                               direct_parent_backup)
 
