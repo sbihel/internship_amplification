@@ -20,7 +20,7 @@ def __add_amp(amplification):
         if (amplification['role'] in USELESS_ROLES and
                 amplification['parent'].split('.')[-1].split('@')[0]
                 in USELESS_PARENTS):
-            return ""
+            return "Added new statement.\n"
         else:
             return "Added new " + amplification["role"] + " to `" + \
                 amplification["parent"] + "`.\n"
