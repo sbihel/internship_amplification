@@ -21,7 +21,8 @@ OUTPUT_DIRECTORY = ''
 
 
 def describe_test_case(class_name, amplified_test,
-                       mutation_score, amplification_log):
+                       mutation_score, amplification_log,
+                       first_useful_parent):
     """
     Natural language description of an amplified test case.
     """
@@ -30,7 +31,7 @@ def describe_test_case(class_name, amplified_test,
     parent_name = mutation_score["parentName"]
     if utils.is_not_original(amplified_test, parent_name):
         res += '## Generated test `' + amplified_test + \
-            '` based on `' + parent_name + '`\n'
+            '` based on `' + first_useful_parent + '`\n'
     else:
         res += '## Original test `' + amplified_test + '`\n'
 
@@ -81,7 +82,7 @@ def describe_test_case(class_name, amplified_test,
     mutants = mutation_score["mutantsKilled"]
     if nb_a_amps:
         if input_res:
-            res += "### Better oracle and new behavior detects " + \
+            res += "### Better oracle and new behavior detect " + \
                 str(len(mutants)) + " new change" + \
                 ("s" if len(mutants) > 1 else "") + ".\n"
         else:
@@ -94,6 +95,31 @@ def describe_test_case(class_name, amplified_test,
                                            MODULE_PATH, SRC_PATH)
     res += utils.fold_block('Changes detected', mutants_description) + '\n'
     return res
+
+
+def describe_test_case_with_relative(class_name, amplified_test,
+                                     mutation_score, amplification_log,
+                                     relative1, relative2,
+                                     all_relatives):
+    i_mutation_score = utils.index_in_mutation_score(mutation_score,
+                                                     amplified_test)
+    amp_log = amplification_log[amplified_test]
+    direct_parent = '_'.join(amplified_test.split('_')[:-1])
+    direct_parent_backup = direct_parent
+    if ((relative1 is not None and relative1 is not direct_parent) or
+            (relative1 is None and utils.is_not_original(amplified_test))):
+        while direct_parent and direct_parent not in all_relatives:
+            direct_parent_backup = direct_parent
+            try:
+                amp_log += amplification_log[direct_parent]
+            except KeyError:
+                pass
+            direct_parent = '_'.join(direct_parent.split('_')[:-1])
+    return describe_test_case(class_name,
+                              amplified_test,
+                              mutation_score["testCases"][i_mutation_score],
+                              amp_log,
+                              direct_parent_backup)
 
 
 def describe_test_class(test_class_report_path):
@@ -112,20 +138,30 @@ def describe_test_class(test_class_report_path):
     ordered_tests = utils.order_tests(
         {test_case['name']: test_case['parentName']
          for test_case in mutation_score['testCases']})
-    amplified_tests = [test_case
-                       for tests_list in ordered_tests
-                       for test_case in tests_list]
 
     i = 0
-    for amplified_test in amplified_tests:
-        if amplified_test in amplification_log:
-            if i:
-                res += '\n\n****\n'
-            res += describe_test_case(class_name,
-                                      amplified_test,
-                                      mutation_score["testCases"][i],
-                                      amplification_log[amplified_test])
-            i += 1
+    for test_list in ordered_tests:
+        for test_case_i in range(len(test_list)):
+            amplified_test = test_list[test_case_i]
+            if not ('_' not in amplified_test and
+                    amplified_test[0].istitle() and
+                    amplified_test[-4:] == 'Test'):
+                # Avoid when it's the name of the test class
+                if i:
+                    res += '\n\n****\n'
+                relative1 = test_list[test_case_i-1] if test_case_i else None
+                relative2 = (test_list[test_case_i+1]
+                             if test_case_i < len(test_list) - 1
+                             else None)
+                if relative1 == amplified_test:
+                    continue
+                res += describe_test_case_with_relative(class_name,
+                                                        amplified_test,
+                                                        mutation_score,
+                                                        amplification_log,
+                                                        relative1, relative2,
+                                                        test_list)
+                i += 1
     return res[:-2]
 
 

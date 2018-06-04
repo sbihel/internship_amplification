@@ -6,7 +6,7 @@ Functions related to input amplifications.
 
 
 USELESS_PARENTS = ['CtBlockImpl']
-USELESS_ROLES = ['child']
+USELESS_ROLES = ['child', 'statement']
 
 
 def __add_amp(amplification):

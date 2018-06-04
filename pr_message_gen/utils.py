@@ -113,9 +113,16 @@ def order_tests(tests_parenting: Dict[str, str]) -> List[List[str]]:
     return ordered_lists
 
 
-def is_not_original(amplified_test_name: str, parent_name: str) -> bool:
+def is_not_original(amplified_test_name: str, parent_name: str = None) -> bool:
     # TODO assumes that the project uses camelCase
     return amplified_test_name != parent_name or '_' in amplified_test_name
+
+
+def index_in_mutation_score(mutation_score, test_name: str) -> int:
+    for i in range(len(mutation_score['testCases'])):
+        if mutation_score['testCases'][i]['name'] == test_name:
+            return i
+    return None
 
 
 if __name__ == '__main__':
