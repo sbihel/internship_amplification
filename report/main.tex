@@ -39,6 +39,7 @@
 \newcommand{\review}{\colorbox{YellowOrange!100}{\textcolor{white}{\textbf{REVIEW}}}}
 
 \newcommand{\dspot}{DSpot\xspace}
+\newcommand{\prgen}{PR\_GEN\xspace}
 
 \usepackage[newfloat]{minted}
 % \usepackage{inconsolata}
@@ -62,7 +63,17 @@
 
 \abstract{%
   \justify{%
-    \todo{}
+% ----- Context
+With practices such a test-driven development, software projects now come with strong test suites.
+They embed knowledge of supported inputs and expected behaviour which make it easy to detect bugs such as unwanted changes in behaviour as the code evolves with time.
+But writing and maintaining a large number of test cases is time consuming for the developers and as they are humans they can miss some edge cases resulting in sub-optimal testing.
+% ----- SBST
+To address these problems, automated methods have been developed to generate tests from scratch, optimize test suites, or extend test suites.
+Because the space of possible tests is so vast, approximate meta-heuristic methods are often used for these problems.
+In particular, evolutionary methods are particularly suited for amplifying and improving an existing test suite by generating random variants of test cases.
+% -----
+Tools have been developed to amplify test suites but optimizing the generated tests is still an open problem.
+Because developers are still involved in the loop, by reviewing and merging new tests, this thesis focuses on reducing the amount of work the developer has to provide by making them easier to understand for a human.
   }
 }
 
@@ -77,6 +88,31 @@
 \label{sec:intro}%
 \addcontentsline{toc}{section}{\nameref{sec:intro}}
 \todo{}
+The adoption of test-driven and agile methods for software development and with the more recent emergence of DevOps, developers have serious incentives to write strong test suites.
+They contain large number of test cases, which embed rich knowledge about relevant input and expected behaviour.
+The key incentive for developers is that these test suites can be automatically executed on demand to minimize regression bugs as the code continuously evolves.
+However, the production and maintenance of large test suites to detect these regressions is time-consuming, and, consequently, developers tend to focus on nominal paths when writing test cases, missing the corner, rare cases.
+The key challenge we address in this thesis is as follows: automatically analyze existing test cases and exploit the knowledge that developers have embedded there in order to generate variant test cases that target new behaviour.
+This is called \emph{test amplification}~\cite{danglot2017emerging}.
+
+Automatic test generation is a traditional area in software testing~\cite{mcminn2011search}: the goal is to generate test cases according to a specific test criterion.
+However, test generation techniques tend to ignore the existence of manually written test suites: they assume that no tests exist at all, or that they are either too few or of too low quality for being considered useful in the generation process.
+The emerging field of test amplification considers a different approach and explicitly aims at exploiting knowledge from existing test cases.
+For this thesis, we focus on search-based techniques to exploit this knowledge.
+
+Search-based software engineering~\cite{harman2001search} is the discipline that investigates meta-heuristic search (e.g., genetic algorithms or simulated annealing) to automate software engineering tasks.
+In the case of automatic test generation, this consists in iteratively generating test cases and selecting the ones that improve an objective, expressed as a fitness function (e.g., increase code coverage).
+This thesis investigates meta-heuristics to optimize the process of unit test amplification.
+For example, test amplification tends to generate many new test cases.
+This is challenging for the developers who wish to minimize the time spent on test execution and who want to understand these new tests before integrating them in their code base.
+Meta-heuristics can serve to minimize the number of relevant test cases, or generate summaries for developers to understand the new test cases.
+
+This thesis aims at increasing the adoption of test suite amplification tools by developing a generator of messages that present and explain amplified tests in a human-friendly way.
+Such generator has been implemented for the \dspot{}~\cite{baudry2015dspot} tool.
+
+Section~\ref{sec:background} provides the necessary background on software testing and Section~\ref{sec:test_suite_amplification} explains the concepts of test suite amplification.
+Section~\ref{sec:problem_statement} lies down the challenges of integrating test cases generators in developers' workflow and Section~\ref{sec:related_works} presents the works done on this topic.
+Section~\ref{sec:contribution} and Section~\ref{sec:eval} present the contribution of this thesis and how it was evaluated.
 
 \todo{\footnote{\url{https://www.infoq.com/articles/architecturally-aligned-testing}}}
 
@@ -116,7 +152,7 @@ From~\cite{barr2015oracle}, we use the following definition for to combination o
   The disjoint union is used to label the elements of $A$.
 \end{definition}
 
-\begin{wrapfigure}[15]{R}{22em}
+\begin{wrapfigure}[17]{R}{23em}
   \centering
   \includegraphics[width=22em]{stim_and_obs}
   \caption{Stimuli and observations: $S$ is anything that can change the observable behaviour of the SUT $f$; $R$ is anything that can be observed about the system's behaviour; $I$ includes $f$'s explicit inputs; $O$ is its explicit outputs; everything not in $S \cup R$ neither affects nor is affected by $f$.}%
@@ -342,7 +378,7 @@ These metrics, especially the statement coverage, are wide spread in the industr
 An example of coverage visual report is shown in \figurename~\ref{fig:screenshot_coverage}.
 
 It is generally acknowledged that a system with high coverage means that the system is less likely to have bugs --- but it is not foolproof~\cite{hovemeyer2004finding,inozemtseva2014coverage}.
-Such simple metrics are not good at pointing out corner cases.
+Such simple metrics are not good at pointing out corner cases\footnote{\url{https://martinfowler.com/bliki/TestCoverage.html}}.
 If we take the following example \texttt{if ($C_1$ AND ($C_2$ OR $C_3$))} and $C_3$ makes the program crash, then it is possible to explore both branches without executing $C_3$.
 \todo{What are their limits}
 
@@ -525,7 +561,7 @@ Going back to our definition of tests, with the notions of stimuli and observati
 New inputs are generated, and new observations are made.
 A visual representation is given in \figurename~\ref{fig:spaces}.
 Because of the oracle problem, \dspot{} focuses on regression testing --- assertions (i.e.\ specifications) are generated from observations of an actual execution of the test.
-It is a Java tool and it uses Spoon~\cite{pawlak2016spoon} to manipulate the source code.
+It is a Java tool, it uses Spoon~\cite{pawlak2016spoon} to manipulate the source code, and consists in about 14000 physical lines of code (i.e.\ non-comment and non-blank).
 
 To explore more of the input space (we also talk about \emph{amplifying} inputs), operators called I-Amplification are applied.
 \begin{description}
@@ -538,6 +574,17 @@ Because the random amplification can create flaky tests, they are executed three
 
 As for the amplification of observations (A-Amplification), focus is put on checking more properties to kill more mutants.
 Assertions are generated as follows: the state of program is collected after execution of the test case to know the actual values and use these values as oracle.
+
+The global amplification process is as follow:
+\begin{enumerate}
+  \item remove all assertions, but keeping the method calls used for the assertions' arguments to make sure the test triggers the same behaviour;
+  \item execute the test with instrumentation to collect the values from getter methods, and then generate assertions with the values from the observations;
+  \item generate multiple tests by applying input amplifiers;
+  \item create new assertions if possible;
+  \item compute the mutation score, noting the tests that have a higher score;
+  \item if the amplified test raises an exception, a \texttt{try/catch} statement is added around the whole test to catch this exception, and at the end of the \texttt{try} block, a \texttt{fail} statement is added to make sure the exception is raised all the time; and
+  \item repeat a certain amount of time.
+\end{enumerate}
 
 Using mutation score as the target metric allows us to see the problem of amplification as a problem of finding bugs.
 In other words~\cite{shamshiri2015automatically}, the amplification process consists of improving the code coverage to execute faulty statements, and improving the propagation of faulty program states to an observable output.
@@ -554,7 +601,7 @@ First, is the review process.
 Developers have to review changes before it is accepted in the main code.
 During the review process developers can tweak the assertions, rearrange the inputs, etc.
 In that sense, \dspot{} fits as a software development bot, integrated in the workflow~\cite{urli2018design}, that could be run on code changes, after making sure the test suite is passing.
-The amplified tests would then be submitted as a Pull Request (or Merge Request) in the code version control platform used.
+The amplified tests would then be submitted as a Pull Request (a.k.a.\ Merge Request) in the code version control platform used.
 Secondly, it is more efficient.\todo{}
 
 
@@ -594,7 +641,7 @@ It is important to restrict the scope to simple text, as it would not require a 
 \label{ssec:random_noise}
 Through the search process, noise is injected in the test case.
 This problem of ugly generated tests code is a shared problem between all kinds of generators~\cite{rojas2017search}.
-Generated tests are equally helpful than hand-written tests (with randomized names) for software maintenance tasks~\cite{shamshiri2018how}, but don't seem to find more bugs~\cite{fraser2015does}, based on the limited data available.
+Generated tests are equally helpful than hand-written tests (with randomized names) for software maintenance tasks~\cite{shamshiri2018how}\todo{\cite{grano2018empirical}}, but don't seem to find more bugs~\cite{fraser2015does}, based on the limited data available.
 So the goal is to make a similar job than humans, and because documentation is not sufficient to understand and review the code, tests need to be clean and logical to speedup the comprehension process.
 Even though it has been known for a long time that the amount of time needed by developers to locate and understand code is frequently greater than the amount of time that they spend making modifications~\cite{ko2006exploratory}, existing works have largely focused on best efforts.
 
@@ -868,45 +915,57 @@ An example is given in \listingname~\ref{lst:daka2017generating_example}.
 Most of the papers related to human assistance reviewed here were evaluated with developers surveys.
 Proteum/IM 2.0~\cite{delamaro2001proteum} used a case study, and \textsc{Code Defenders} conducted a lab study.
 
+\todo{add conclusion}
+
 
 % ================================================================================
 \section{Contribution}%
 \label{sec:contribution}
-\todo{}
+
+In this section, we present this thesis' contribution which mainly consists in developing a generator of messages to present amplified tests produced by \dspot{}.
+First, a fork of DSpot\footnote{\url{https://github.com/sbihel/dspot/tree/collect_amp}} was made to implement a logging process for amplifications (more details in Section~\ref{ssec:retrieve_amplifications}).
+It was made with about 250 new lines of code.
+Then, a generator of explanations, called \prgen{}\footnote{\url{https://github.com/sbihel/internship_amplification/tree/master/pr_message_gen}}, was written to use the information logged to automatically generate messages that present the amplified tests (Section~\ref{ssec:nl_description}), like a human developer would add a descriptive message when submitting a Pull Request.
+It is written in Python, with 655 physical lines of code, and generates messages in Markdown.
+As a side effect of the internship, 6 Pull Request were pushed to the main repository\footnote{\url{https://github.com/STAMP-project/dspot/commits?author=sbihel}}, fixing bugs and contributing to the documentation, consisting in about 350 new lines of code.
 
 % --------------------------------------------------------------------------------
-\subsection{Identifying Amplifications}%
+\subsection{Collecting Amplifications}%
 \label{ssec:retrieve_amplifications}
 \todo{}
 
-% --------------------------------------------------------------------------------
-\subsection{Minimisation}%
-\label{ssec:minimisation}
-\todo{}
-\todo{put slicing before?}
+% % --------------------------------------------------------------------------------
+% \subsection{Minimisation}%
+% \label{ssec:minimisation}
+% \todo{}
+% \todo{put slicing before?}
 
-\todo{removing useless assertions}
+% \todo{cannot use general purpose techniques\cite{leitner2007efficient,zeller1999yesterday} because we want the original part intact?}
 
-\todo{cannot use general purpose techniques\cite{leitner2007efficient,zeller1999yesterday} because we want the original part intact?}
+% \subsubsection{Removing useless assertions}%
+% \label{ssrc:useles_asserts}
+% \todo{}
 
-% --------------------------------------------------------------------------------
-\subsection{Replace or Keep}%
-\label{ssec:replace_keep}
-\todo{}
+% \todo{cannot use general purpose techniques\cite{leitner2007efficient,zeller1999yesterday} because we want the original part intact?}
 
-% --------------------------------------------------------------------------------
-\subsection{Focus}%
-\label{ssec:focus}
-\todo{}
-\cite{liu2006approach}
+% % --------------------------------------------------------------------------------
+% \subsection{Replace or Keep}%
+% \label{ssec:replace_keep}
+% \todo{not possible?}
 
-% --------------------------------------------------------------------------------
-\subsection{Slicing}%
-\label{ssec:slicing}
-\todo{}
-\footnote{\url{http://wala.sourceforge.net/}}~\cite{dolby2015tj}
+% % --------------------------------------------------------------------------------
+% \subsection{Focus}%
+% \label{ssec:focus}
+% \todo{}
+% \cite{liu2006approach}
 
-\todo{srcSlice\footnote{\url{https://github.com/srcML/srcSlice}}~\cite{newman2016srcslice} does not support Java (yet)}
+% % --------------------------------------------------------------------------------
+% \subsection{Slicing}%
+% \label{ssec:slicing}
+% \todo{}
+% \footnote{\url{http://wala.sourceforge.net/}}~\cite{dolby2015tj}
+
+% \todo{srcSlice\footnote{\url{https://github.com/srcML/srcSlice}}~\cite{newman2016srcslice} does not support Java (yet)}
 
 % --------------------------------------------------------------------------------
 \subsection{Natural Language Description}%
@@ -952,10 +1011,12 @@ List of possible information:
 
 \todo{assuming knowledge of original test or not}
 
-% --------------------------------------------------------------------------------
-\subsection{Ranking}%
-\label{ssec:ranking}
-\todo{}
+\todo{ordered by chronological order}
+
+% % --------------------------------------------------------------------------------
+% \subsection{Ranking}%
+% \label{ssec:ranking}
+% \todo{}
 
 
 % ================================================================================
@@ -969,6 +1030,10 @@ List of possible information:
 \todo{}
 
 \todo{DSpot is not yet established and recognized in the community. It is difficult to have input data (valid amplified tests)}
+
+\todo{especially difficult to generate i-amplified tests}
+
+\todo{test suite don't often pass, even for releases}
 
 % --------------------------------------------------------------------------------
 \subsection{Case Studies}%
@@ -994,9 +1059,11 @@ List of possible information:
 \addcontentsline{toc}{section}{\nameref{sec:ack}}
 Thanks to Benoit Baudry and Martin Monperrus for their guidance.
 Thanks to Benjamin Danglot for his collaboration and all his work on \dspot.
-Thanks to Zimin Chen, Nicolas Harrand, He Ye and Long Zhang for making daily life enjoyable.
+Thanks to Zimin Chen, Thomas Durieux, Nicolas Harrand, He Ye and Long Zhang for making daily life enjoyable.
+Thanks to Vincent Massol for his feedbacks.
+
 This internship was supported by the Fondation Rennes 1 and its patrons.
-Many thanks to KTH for hosting me.
+Many thanks to KTH for hosting me and providing housing.
 
 
 % ================================================================================
