@@ -55,18 +55,19 @@ def describe_test_case(class_name, amplified_test,
 
     # INPUTS
     input_res = ''
-    i = 0
+    nb_inputs = 0
     for amplification in amplification_log:
         if amplification not in new_asserts:
-            i += 1
-            input_res += str(i) + '. ' + \
+            nb_inputs += 1
+            input_res += str(nb_inputs) + '. ' + \
                 describe_amplification(amplification) + '\n'
     for amplification in useless_assigns:
         amplification["ampCategory"] = "ADD"
-        i += 1
-        input_res += str(i) + '. ' + describe_amplification(amplification) + \
-            '\n'
-    nb_inputs = mutation_score["nbInputAdded"] + len(useless_assigns)
+        nb_inputs += 1
+        input_res += str(nb_inputs) + '. ' + \
+            describe_amplification(amplification) + '\n'
+    #  nb_inputs = mutation_score["nbInputAdded"] + len(useless_assigns)
+    # TODO wrong nb of inputs reported by DSpot
     if input_res:
         res += '### Generated ' + str(nb_inputs) + ' input' + \
             ('s' if nb_inputs > 1 else '') + '.\n'
