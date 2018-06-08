@@ -68,13 +68,13 @@
 % ----- Context
 With practices such a test-driven development, software projects now come with strong test suites.
 They embed knowledge of supported inputs and expected behaviour which make it easy to detect bugs such as unwanted changes in behaviour as the code evolves with time.
-But writing and maintaining a large number of test cases is time consuming for the developers and as they are humans they can miss some edge cases resulting in sub-optimal testing.
+But writing and maintaining many test cases is time-consuming for the developers and as they are humans they can miss some edge cases resulting in sub-optimal testing.
 % ----- SBST
-To address these problems, automated methods have been developed to generate tests from scratch, optimize test suites, or extend test suites.
+To address these problems, automated methods have been developed to generate tests from scratch, optimise test suites, or extend test suites.
 Because the space of possible tests is so vast, approximate meta-heuristic methods are often used for these problems.
 In particular, evolutionary methods are particularly suited for amplifying and improving an existing test suite by generating random variants of test cases.
 % -----
-Tools have been developed to amplify test suites but optimizing the generated tests is still an open problem.
+Tools have been developed to amplify test suites but optimising the generated tests is still an open problem.
 Because developers are still involved in the loop, by reviewing and merging new tests, this thesis focuses on reducing the amount of work the developer has to provide by making them easier to understand for a human.
   }
 }
@@ -91,9 +91,9 @@ Because developers are still involved in the loop, by reviewing and merging new 
 \addcontentsline{toc}{section}{\nameref{sec:intro}}
 The adoption of test-driven and agile methods for software development and with the more recent emergence of DevOps, developers have serious incentives to write strong test suites.
 They contain large number of test cases, which embed rich knowledge about relevant input and expected behaviour.
-The key incentive for developers is that these test suites can be automatically executed on demand to minimize regression bugs as the code continuously evolves.
+The key incentive for developers is that these test suites can be automatically executed on demand to minimise regression bugs as the code continuously evolves.
 However, the production and maintenance of large test suites to detect these regressions is time-consuming, and, consequently, developers tend to focus on nominal paths when writing test cases, missing the corner, rare cases.
-The key challenge we address in this thesis is as follows: automatically analyze existing test cases and exploit the knowledge that developers have embedded there in order to generate variant test cases that target new behaviour.
+The key challenge we address in this thesis is as follows: automatically analyse existing test cases and exploit the knowledge that developers have embedded there in order to generate variant test cases that target new behaviour.
 This is called \emph{test amplification}~\cite{danglot2017emerging}.
 
 Automatic test generation is a traditional area in software testing~\cite{mcminn2011search}: the goal is to generate test cases according to a specific test criterion.
@@ -103,8 +103,8 @@ For this thesis, we focus on search-based techniques to exploit this knowledge.
 
 Search-based software engineering~\cite{harman2001search} is the discipline that investigates meta-heuristic search (e.g., genetic algorithms or simulated annealing) to automate software engineering tasks.
 In the case of automatic test generation, this consists in iteratively generating test cases and selecting the ones that improve an objective, expressed as a fitness function (e.g., increase code coverage).
-Automatically generated tests are challenging for the developers who wish to minimize the time spent on test execution and who want to understand these new tests before integrating them in their code base.
-Meta-heuristics can serve to minimize the number of relevant test cases, or generate summaries for developers to understand the new test cases.
+Automatically generated tests are challenging for the developers who wish to minimise the time spent on test execution and who want to understand these new tests before integrating them in their code base.
+Meta-heuristics can serve to minimise the number of relevant test cases, or generate summaries for developers to understand the new test cases.
 
 This thesis aims at increasing the adoption of test suite amplification tools by developing a generator of messages that present and explain amplified tests in a human-friendly way.
 Such generator has been implemented for the \dspot{}~\cite{baudry2015dspot} tool.
@@ -227,7 +227,7 @@ Tests are generally separated into three distinct categories.
 The top category is for the End-to-End tests, which means testing the program as a whole.
 It can mean interacting with the UI and evaluating the visual responses.
 Whilst it allows for directly evaluating the well behaviour of the program, each test is costly in time and resources because the whole program has to be run.
-Not only will each component be run, whether or not it requires testing, but time will also be spent on call to external libraries that are already tested.
+Not only will each component be run, whether it requires testing or not, but time will also be spent on call to external libraries that are already tested.
 At the other end of the test spectrum are the unit tests.
 The goal is to test each and every component of the program (e.g.\ every function), as an individual and isolated from the rest of the program.
 Running a single component is faster than running the whole program, but require much more work from the person writing tests, as every component needs its set of tests.
@@ -418,7 +418,7 @@ The first obvious flaw is that it is slow.
 For compiled languages, all mutants have to be compiled, and that process often takes a lot of time for large programs.
 Then the whole test suite has to be executed for each mutant, which again is a long process.
 However, given certain trade-offs in terms of quality of the mutation analysis process (e.g.\ not generating all possible mutants), the computational complexity can be dodged~\cite{offutt1993experimental,movzucha2016mutation}.
-Optimized techniques for regression testing also exist~\cite{yoo2012regression}, including minimisation, selection and prioritisation, which can reduce the execution time of the test suite.
+Optimised techniques for regression testing also exist~\cite{yoo2012regression}, including minimisation, selection and prioritisation, which can reduce the execution time of the test suite.
 The mutant generation is also full of traps.
 The major pitfall that cannot be avoided is the equivalent mutant problem.
 Some mutants, although they have a different program than the original, have the same semantics.
@@ -481,7 +481,7 @@ Thus, we must aim at producing tools with little overhead and fully integrated w
 \section{Test Suite Amplification}%
 \label{sec:test_suite_amplification}
 In this Section, we provide more context for this thesis' contribution.
-We explain how global optimization techniques, including metaheuristic search techniques (e.g.\ genetic algorithms) can be applied to software engineering problems --- for example, by using software metrics as target functions.
+We explain how global optimisation techniques, including metaheuristic search techniques (e.g.\ genetic algorithms) can be applied to software engineering problems --- for example, by using software metrics as target functions.
 Section~\ref{ssec:genetic_improvement} presents how source code can be manipulated for search processes, and Section~\ref{ssec:test_amplification} presents the specific problem of improving test suites.
 Section~\ref{ssec:dspot} introduces~\dspot{}, a tool that enhances tests for a better coverage, and also the software on which this thesis builds on.
 
@@ -549,7 +549,7 @@ Because the random amplification can create flaky tests, they are executed three
 As for the amplification of observations (A-Amplification), focus is put on checking more properties to kill more mutants.
 Assertions are generated as follows: the state of program is collected after execution of the test case to know the actual values and use these values as oracle.
 
-The global amplification process is as follow:
+The global amplification process is as follows:
 \begin{enumerate}
   \item remove all assertions, but keeping the method calls used for the assertions' arguments to make sure the test triggers the same behaviour;
   \item execute the test with instrumentation to collect the values from getter methods, and then generate assertions with the values from the observations;
@@ -1021,7 +1021,7 @@ The remaining assertions are listed at the end.
 \subsubsection{Mutation Score Details}%
 \label{sssec:mutants_details}
 The mutation testing tool that \dspot{} uses is PIT (presented in Section~\ref{ssec:mutation_testing}).
-PIT applies mutations at the bytecode level, which makes it nearly impossible to get the Java code of the mutant but we still have several pieces of information at our disposal.
+PIT applies mutations at the bytecode level, which makes it nearly impossible to get the Java code of the mutant, but we still have several pieces of information at our disposal.
 \begin{description}[itemindent=0em,labelwidth=9em,leftmargin=9em,align=right]
   \item[\texttt{mutantOperator}] The mutator applied.
   \item[\texttt{mutatedMethod}] The method that contains the mutation.
@@ -1032,7 +1032,7 @@ PIT applies mutations at the bytecode level, which makes it nearly impossible to
 Because mutation testing is not well understood, we try not to speak directly about mutants, but we still want to provide details about the added value of the new test in case it is not obvious.
 For this reason, the name of the mutator is not useful.
 We decided to focus on regression testing, and talk about detectable changes.
-Thus we say that changes at the line \texttt{lineNumber} in the method \texttt{mutatedMethod} can be detected.
+Thus, we say that changes at the line \texttt{lineNumber} in the method \texttt{mutatedMethod} can be detected.
 Details about each mutant are given by giving directly the natural language description of PIT\@.
 
 We also mention whether it is because of a better oracle or thanks to new behaviours that mutants are detected.
@@ -1050,24 +1050,23 @@ For that, we do not track the direct effect of each new assertion or new input, 
 \label{sec:eval}
 In this section we go through the evaluation of our contribution.
 First, we give a few words on the limits of our evaluation in Section~\ref{ssec:threat_to_validity}.
-Then, through a case study on the XWiki project in Section~\ref{ssec:case_studies}, we detail the strengths and weaknesses of the generated messages.
-Finally, in Section~\ref{ssec:performances} we show the performance overhead of our contribution.
+Then, in Section~\ref{ssec:performances} we show the performance overhead of our contribution.
 
 % --------------------------------------------------------------------------------
 \subsection{Threat to Validity}%
 \label{ssec:threat_to_validity}
-This thesis' contribution was only tested on a small number of projects and we did not collect developers' feedback.
+This thesis' contribution was only tested on a few projects, and we did not collect developers' feedback.
 A large scale study would be difficult to conduct as \dspot{} is not yet a robust and established tool, but thorough case studies with active developers would give hints at the usefulness of our work.
 
 A concern to be aware of, which arises from PIT and \dspot{}, is that we do not know if a new mutant was really killed by one particular amplified test.
 When running a batch of test, PIT does not report which test killed which mutant, which means that the mutation score is not accurate for individual test.
 This bug could be fixed in the future.
 
-% --------------------------------------------------------------------------------
-\subsection{Case Study: XWiki}%
-\label{ssec:case_studies}
-We used XWiki\footnote{\url{http://www.xwiki.org/}} as an experiment subject because it is project for which DSpot has already shown results\footnote{\url{http://massol.myxwiki.org/xwiki/bin/view/Blog/TestGenerationDspot}}.
-It is the project shown in \appendixname~\ref{app:appendix_message}.
+% % --------------------------------------------------------------------------------
+% \subsection{Case Study: XWiki}%
+% \label{ssec:case_studies}
+% We used XWiki\footnote{\url{http://www.xwiki.org/}} as an experiment subject because it is project for which DSpot has already shown results\footnote{\url{http://massol.myxwiki.org/xwiki/bin/view/Blog/TestGenerationDspot}}.
+% It is the project shown in \appendixname~\ref{app:appendix_message}.
 
 % --------------------------------------------------------------------------------
 \subsection{Performances}%
