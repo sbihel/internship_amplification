@@ -103,9 +103,7 @@ For this thesis, we focus on search-based techniques to exploit this knowledge.
 
 Search-based software engineering~\cite{harman2001search} is the discipline that investigates meta-heuristic search (e.g., genetic algorithms or simulated annealing) to automate software engineering tasks.
 In the case of automatic test generation, this consists in iteratively generating test cases and selecting the ones that improve an objective, expressed as a fitness function (e.g., increase code coverage).
-This thesis investigates meta-heuristics to optimize the process of unit test amplification.
-For example, test amplification tends to generate many new test cases.
-This is challenging for the developers who wish to minimize the time spent on test execution and who want to understand these new tests before integrating them in their code base.
+Automatically generated tests are challenging for the developers who wish to minimize the time spent on test execution and who want to understand these new tests before integrating them in their code base.
 Meta-heuristics can serve to minimize the number of relevant test cases, or generate summaries for developers to understand the new test cases.
 
 This thesis aims at increasing the adoption of test suite amplification tools by developing a generator of messages that present and explain amplified tests in a human-friendly way.
@@ -123,7 +121,7 @@ Section~\ref{sec:contribution} and Section~\ref{sec:eval} present the contributi
 \label{sec:background}
 In this section, we present the landscape this thesis fits into.
 We define testing (Section~\ref{ssec:software_testing}) as well as go over its use in the industry.
-In particular, to understand the needs of practitioners, we present how they assess the quality of their code (Sections~\ref{ssec:elementary_metrics} and~\ref{ssec:mutation_testing}) and what it takes for a new tool to be incorporated in their workflow (Sections~\ref{ssec:need_easy} and~\ref{ssec:cognitive_support}).
+In particular, to understand the needs of practitioners, we present how they assess the quality of their code (Sections~\ref{ssec:elementary_metrics} and~\ref{ssec:mutation_testing}) and what it takes for a new tool to be incorporated in their workflow (Sections~\ref{ssec:need_easy}).
 
 % --------------------------------------------------------------------------------
 \subsection{Software Testing}%
@@ -260,7 +258,7 @@ But to test a graphical user interface, one might need to run a window system an
 A unit test is supposed to target a precise component of the SUT, but defining the level of granularity is not trivial, even for experienced programmers\footnote{\url{https://martinfowler.com/bliki/TestPyramid.html}}\footnote{\url{https://martinfowler.com/bliki/UnitTest.html}}~\cite{runeson2006survey}.
 In the case of a program written with an Object-Oriented language, such as Java --- we will put our focus on Java for the rest of this thesis --- the targeted component can be a class or just a method of a class.
 
-\begin{listing}[H]
+\begin{listing}
   \centering
   \begin{minted}[linenos,frame=topline,breaklines,highlightlines={3,5,7},highlightcolor=YellowOrange!20]{java}
 public class TreeListTest {
@@ -478,20 +476,6 @@ The field of software testing, in which this thesis is set, is no stranger to th
 Tests are, in most cases, written and maintained by general software engineers.
 Thus, we must aim at producing tools with little overhead and fully integrated with popular test frameworks --- making it easy for developers to try the tool to see if it fits their needs, and, if they incorporate it in their workflow, it brings important data to demonstrate the scientific value of the tool.
 
-% --------------------------------------------------------------------------------
-\subsection{Cognitive Support Tool Development}%
-\label{ssec:cognitive_support}
-Acceptance of a tool, outside of the research world, depends on many parameters, including its accessibility.
-In this section we describe how a tool can be designed to fit this requirement.
-
-Research has been done on designing tool that do not overwhelm users (e.g.\ designing interfaces~\cite{oviatt2006human}) and theories on design processes have been developped.
-The grounded theory~\cite{stol2016grounded}, for example, argues for an iterative design process, by refining the product based on data and feedback from users.
-
-Tools, including SBST, need a high level on interactivity with the developers, to guide the search process (to inject domain knowledge, to select useful objectives, etc.)~\cite{marculescu2017transferring}
-
-% Another method of evaluation that should not be dismissed are case studies~\cite{flyvbjerg2006five}.
-% \todo{}
-
 
 % ================================================================================
 \section{Test Suite Amplification}%
@@ -579,6 +563,14 @@ The global amplification process is as follow:
 Using mutation score as the target metric allows us to see the problem of amplification as a problem of finding bugs.
 In other words~\cite{shamshiri2015automatically}, the amplification process consists of improving the code coverage to execute faulty statements, and improving the propagation of faulty program states to an observable output.
 
+A minimisation phase is done on useful amplified tests, to remove noisy amplifications.
+This make the test easier to understand for a human, but has certain drawbacks.
+When using general purpose minimisation techniques (e.g.\ delta-debugging, variable in-lining), the delimitation between original test and amplifications fades away and might produce a test that looks completely different to the original test.
+
+Another to know about \dspot{} is the way it stores tests.
+Test methods are Spoon ASTs, and when an amplification is applied, the whole method is cloned.
+And because of the large number of amplifications, the memory usage ramps up and can quickly reach the memory limit.
+
 \dspot{} is different from traditional test generator like EvoSuite~\cite{fraser2011evosuite} for multiple reasons.
 It is more than just using the existing test suite as a good starting population.
 Building on top of human knowledge allows to cover all possible goals~\cite{rojas2017detailed}.
@@ -595,6 +587,7 @@ The amplified tests would then be submitted as a Pull Request (a.k.a.\ Merge Req
 Secondly, it is more efficient.
 Developers will not write tests that are equivalent to generated tests.
 If a generated test fails they might ignore it or spend a lot of time trying to understand it at a crucial time.
+And, in general, automated Pull Requests can make developers more keen to maintain a project~\cite{mirhosseini2017can}.
 
 A real-life example of amplified is given in \appendixname~\ref{app:res_dspot} with the XWiki\footnote{\url{http://www.xwiki.org/}} project.
 
@@ -1121,6 +1114,7 @@ On the other hand, automatic test improvement is promising as it fit the iterati
 But in order to integrate the workflows of developers, much has to be done to ease the integration between the humans and the machine-generated tests.
 To tackle this problem we developed a generator of textual explanations that help the developers understand the changes and why these changes are useful.
 This work will really be proven useful once the code of the generated tests is cleaner and once the user base of test enhancement tools grows.
+Additional information could be added to the messages, for example explaining the relation between an assertion and the mutant it kills, or an explanation of the repercussions of a mutant on the Class Under Test.
 
 
 % ================================================================================
