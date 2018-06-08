@@ -1,5 +1,6 @@
 \documentclass[a4paper,11pt]{sdm_internship}
 \usepackage[british]{babel}
+\usepackage[toc,page]{appendix}
 
 \usepackage{graphicx}
 \graphicspath{{../img/}}
@@ -13,6 +14,7 @@
 \usepackage{cprotect}
 \usepackage{booktabs}
 \usepackage{dirtytalk}
+\usepackage{amssymb}
 
 \usepackage{enumitem}
 \setlist{nolistsep}
@@ -604,6 +606,8 @@ In that sense, \dspot{} fits as a software development bot, integrated in the wo
 The amplified tests would then be submitted as a Pull Request (a.k.a.\ Merge Request) in the code version control platform used.
 Secondly, it is more efficient.\todo{}
 
+A real-life example of amplified is given in \appendixname~\ref{app:res_dspot} with the XWiki\footnote{\url{http://www.xwiki.org/}} project.
+
 
 % ================================================================================
 \section{Problem Statement}%
@@ -915,7 +919,8 @@ An example is given in \listingname~\ref{lst:daka2017generating_example}.
 Most of the papers related to human assistance reviewed here were evaluated with developers surveys.
 Proteum/IM 2.0~\cite{delamaro2001proteum} used a case study, and \textsc{Code Defenders} conducted a lab study.
 
-\todo{add conclusion}
+As we can see, a large corpus of works already exists for automatic test documentation.
+But, two main aspects in our case have not been studied: the documentation of test amplification (i.e.\ code changes specifically about tests) and the explanation of mutation scores.
 
 
 % ================================================================================
@@ -927,12 +932,34 @@ First, a fork of DSpot\footnote{\url{https://github.com/sbihel/dspot/tree/collec
 It was made with about 250 new lines of code.
 Then, a generator of explanations, called \prgen{}\footnote{\url{https://github.com/sbihel/internship_amplification/tree/master/pr_message_gen}}, was written to use the information logged to automatically generate messages that present the amplified tests (Section~\ref{ssec:nl_description}), like a human developer would add a descriptive message when submitting a Pull Request.
 It is written in Python, with 655 physical lines of code, and generates messages in Markdown.
-As a side effect of the internship, 6 Pull Request were pushed to the main repository\footnote{\url{https://github.com/STAMP-project/dspot/commits?author=sbihel}}, fixing bugs and contributing to the documentation, consisting in about 350 new lines of code.
+As a side effect of the internship, 6 Pull Requests were pushed to the main repository\footnote{\url{https://github.com/STAMP-project/dspot/commits?author=sbihel}}, fixing bugs and contributing to the documentation, consisting in about 350 new lines of code.
 
 % --------------------------------------------------------------------------------
 \subsection{Collecting Amplifications}%
 \label{ssec:retrieve_amplifications}
-\todo{}
+Before explaining how amplifications are logged, we present our categorisation of amplifications.
+We use four categories: one for all a-amplifications and three for the i-amplifications.
+\begin{description}[itemindent=0em,labelwidth=5em,leftmargin=5em,align=right]
+  \item[\texttt{ASSERT}] encompasses new assertions, \texttt{try/catch} blocks, and new variables used for assertions.
+  \item[\texttt{ADD}] is for new method calls.
+  \item[\texttt{DEL}] is for deleted method calls.
+  \item[\texttt{MODIFY}] is for all modified elements (i.e.\ nodes in the AST) so it can be a modified literal, a modified variable assignment, etc.
+\end{description}
+
+Then, the central element of the amplifications logging system is a \texttt{map} that links every amplified test to a list of all the amplifications applied.
+An amplification is characterised by the following attributes:
+\begin{description}[itemindent=0em,labelwidth=7em,leftmargin=7em,align=right]
+  \item[\texttt{ampCategory}] the amplification category;
+  \item[\texttt{parent}] the parent node of the modified node (e.g.\ the block that contains a new statement, or the method invocation that has a modified argument);
+  \item[\texttt{role}] the role of the modified node for its parent (e.g.\ the new statement is a \textit{child} of the parent block, or the modified argument is an \textit{argument} of the method invocation);
+  \item[\texttt{oldValue}] the value before the amplification, can be \texttt{null} if the amplification is an addition; and
+  \item[\texttt{newValue}] the current value.
+\end{description}
+Even if we talk about nodes in the AST, \texttt{parent}, \texttt{oldValue} and \texttt{newValue} are the textual representation.
+
+\todo{minimisation}
+
+\todo{alternatives}
 
 % % --------------------------------------------------------------------------------
 % \subsection{Minimisation}%
@@ -970,48 +997,63 @@ As a side effect of the internship, 6 Pull Request were pushed to the main repos
 % --------------------------------------------------------------------------------
 \subsection{Natural Language Description}%
 \label{ssec:nl_description}
-\todo{}
 
-\todo{Focus on mutation testing}
+We chose to focus on mutation testing, so the goal of \prgen{} is to explain: (i) the amplifications that constitute the amplified test (Section~\ref{sssec:amp_overview}); and (ii) the reasons why this amplified test was kept, i.e.\ the improved mutation score (Section~\ref{sssec:mutants_details}).
 
-\todo{avoid talking about mutants}
-\todo{How to describe a mutant}
+We wrote a tool, \prgen{}, in Python, that formats the information in the Markdown language.
+This is because popular source code management services such as GitHub\footnote{\url{https://github.com/}} or GitLab\footnote{\url{https://gitlab.com/}} use a Markdown syntax for users' messages.
+Screenshots are given in \appendixname~\ref{app:appendix_message} to show how the text generated by \prgen{} is rendered on GitHub.
 
-\cite{alali2008s,hattori2008nature,letovsky1987cognitive}
+% \cite{alali2008s,hattori2008nature,letovsky1987cognitive}
 
-Elements at our disposal:
-\begin{enumerate}
-  \item the original test;
-  \item the amplified test (with the list of amplified nodes); and
-  \item the newly killed mutants.
-\end{enumerate}
+% List of possible information:
+% \begin{itemize}
+%   \item control flow branches
+%   \item name of mutant
+%   \item code under test~\cite{qusef2011scotch}
+%   \item traceability link
+%   \item label/stereotype
+% \end{itemize}
 
-Information available about mutants:
-\begin{description}
-  \item[\texttt{state}] Indicates whether the mutant is live, killed, or has not been executed, but can also give reasons in case of an error (time-out, ran out of memory).
-  \item[\texttt{mutatedClass}] The class that contains the mutation.
-  \item[\texttt{mutantOperator}] The mutator applied.
-  \item[\texttt{mutatedMethod}] The method that contains the mutation.
-  \item[\texttt{lineNumber}] Line number where the mutation is.
-  \item[\texttt{killer}] The test method that killed the mutant.
-\end{description}
-
-List of possible information:
-\begin{itemize}
-  \item control flow branches
-  \item name of mutant
-  \item code under test~\cite{qusef2011scotch}
-  \item traceability link
-  \item label/stereotype
-\end{itemize}
-
-\todo{on the usefulness of nlg}
-
-\todo{what can we draw from the related works}
+Natural language sentences are generated using simple templates.
+A Natural Language Generator was not needed as each sentence carry a single simple piece of information, and the intricacies of details are display using a hierarchy of titles and sections.
 
 \todo{assuming knowledge of original test or not}
 
-\todo{ordered by chronological order}
+\subsubsection{Amplifications Overview}%
+\label{sssec:amp_overview}
+There are two sections to present the amplifications: one for the new inputs and one for the new assertions related instructions.
+
+Inputs are presented by simply listing them.
+For each, their role and the name of the type (e.g.\ \texttt{CtBlock} is the Spoon type of a block) of the parent is given --- unless it is so generic that it becomes irrelevant, e.g.\ ``New \textit{child} of \textit{CtBlock}''.
+Then a \texttt{diff} is generated to display the old and new values.
+
+For a-amplifications, there are different scenarios.
+When a \texttt{try/catch} is generated, we only say that an exception handler has been added (around the whole test) for the specifically targeted exception.
+When a variable is generated, we group every new assertion using that variable.
+If a new variable is not used by any assertion, we move it to the input category.
+The remaining assertions are then listed.\todo{we could have grouped them by their target}
+
+\subsubsection{Mutation Score Details}%
+\label{sssec:mutants_details}
+The mutation testing tool that \dspot{} uses is PIT (presented in Section~\ref{ssec:mutation_testing}).
+PIT applies mutations at the bytecode level, which makes it nearly impossible to get the Java code of the mutant but we still have several pieces of information at our disposal.
+\begin{description}[itemindent=0em,labelwidth=9em,leftmargin=9em,align=right]
+  \item[\texttt{mutantOperator}] The mutator applied.
+  \item[\texttt{mutatedMethod}] The method that contains the mutation.
+  \item[\texttt{lineNumber}] Line number where the mutation is.
+  \item[\texttt{description}] A natural language description of the mutant.
+\end{description}
+
+Because mutation testing is not well understood, we try not to speak directly about mutants, but we still want to provide details about the added value of the new test in case it is not obvious.
+For this reason, the name of the mutator is not useful.
+We decided to focus on regression testing, and talk about detectable changes.
+Thus we say that changes at the line \texttt{lineNumber} in the method \texttt{mutatedMethod} can be detected.
+Details about each mutant are given by giving directly the natural language description of PIT\@.
+
+We also mention whether it is because of a better oracle or thanks to new behaviours that mutants are detected.
+For that, we do not track the direct effect of each new assertion or new input, and simply assume that if there are new assertion we have a better oracle, and if we have new inputs we have new behaviours.
+
 
 % % --------------------------------------------------------------------------------
 % \subsection{Ranking}%
@@ -1022,28 +1064,58 @@ List of possible information:
 % ================================================================================
 \section{Evaluation}%
 \label{sec:eval}
-\todo{}
+In this section we go through the evaluation of our contribution.
+First, we give a few words on the limits of our evaluation in Section~\ref{ssec:threat_to_validity}.
+Then, through a case study on the XWiki project in Section~\ref{ssec:case_studies}, we detail the strengths and weaknesses of the generated messages.
+Finally, in Section~\ref{ssec:performances} we show the performance overhead of our contribution.
 
 % --------------------------------------------------------------------------------
 \subsection{Threat to Validity}%
 \label{ssec:threat_to_validity}
-\todo{}
-
-\todo{DSpot is not yet established and recognized in the community. It is difficult to have input data (valid amplified tests)}
-
-\todo{especially difficult to generate i-amplified tests}
-
-\todo{test suite don't often pass, even for releases}
+This thesis' contribution was only tested on a small number of projects and we did not collect developers' feedback.
+A large scale study would be difficult to conduct as \dspot{} is not yet a robust and established tool, but thorough case studies with active developers would give hints at the usefulness of our work.
 
 % --------------------------------------------------------------------------------
-\subsection{Case Studies}%
+\subsection{Case Study: XWiki}%
 \label{ssec:case_studies}
 \todo{}
+
+We used XWiki\footnote{\url{http://www.xwiki.org/}} as an experiment subject because it is project for which DSpot has already shown results\footnote{\url{http://massol.myxwiki.org/xwiki/bin/view/Blog/TestGenerationDspot}}.
+It is the project shown in \appendixname~\ref{app:appendix_message}.
 
 % --------------------------------------------------------------------------------
 \subsection{Performances}%
 \label{ssec:performances}
-\todo{}
+As the contribution consists in two parts, the amplification logging system and the generator of messages, both should be evaluated on a performance criterion.
+For the former, in addition to the obvious overhead in execution time, because \dspot{} can easily reach an Out of memory (OOM) state it is essential to assess that the amplification log does not precipitate such error.
+For the later, because of its programming triviality, only the execution time was measured.
+Comparisons were made between our modified version and the main repository at the last change that was included in our fork.
+% commit \texttt{f9fd484c389c1905155f0dd3316e4bb13684f2d0}
+
+\begin{table}
+  \centering
+  \begin{tabular}{rll}
+    \toprule
+    \multicolumn{1}{c}{} & \multicolumn{1}{c}{\textbf{Main}} & \multicolumn{1}{c}{\textbf{Fork}} \\
+    \midrule
+    Run without monitoring & 19 min 52 sec & 20 min 27 sec \\
+    Run with monitoring & 21 min 56 sec; & 21 min 40 sec; \\
+      & 834 MB max used heap & 884 MB max used heap \\
+    \bottomrule
+  \end{tabular}
+  \caption{Performance evaluation on XWiki's \texttt{cipher} module\protect\footnotemark.}%
+  \label{tab:perf_exp}
+\end{table}
+\footnotetext{\url{https://github.com/xwiki/xwiki-commons/tree/master/xwiki-commons-core/xwiki-commons-crypto/xwiki-commons-crypto-cipher}}
+
+The results of the evaluation of the logging system are given in \tablename~\ref{tab:perf_exp}.
+Standard runs showed no real discrepancy between the two versions' execution time.
+A run with monitoring (using VisualVM 1.4.1) was made to measure the peak of memory usage.
+It is not an ideal way to measure the memory overhead of the logging system, because measurements are done by intervals so the can miss the true maximum.
+Our modified version shows a higher memory usage of 6\%.
+The logging system could be improved by regularly removing discarded amplified tests with only discarded children, but that would probably come as a trade-off for execution time.
+
+The message generator completes its task in a 5 seconds for 11 amplified tests.
 
 
 % ================================================================================
@@ -1070,5 +1142,114 @@ Many thanks to KTH for hosting me and providing housing.
 \addcontentsline{toc}{section}{References}
 \bibliographystyle{ieeetr}%
 \bibliography{../bibl}
+
+
+% ================================================================================
+\begin{appendices}
+
+\section{Example of Amplified Test}%
+\label{app:res_dspot}
+\begin{listing}[H]
+  \centering
+  \begin{minted}[linenos,frame=lines,breaklines]{java}
+@Test
+public void testRSAEncryptionDecryptionProgressive() throws Exception
+{
+    Cipher cipher = factory.getInstance(true, publicKey);
+    cipher.update(input, 0, 17);
+    cipher.update(input, 17, 1);
+    cipher.update(input, 18, input.length - 18);
+    byte[] encrypted = cipher.doFinal();
+    cipher = factory.getInstance(false, privateKey);
+    cipher.update(encrypted, 0, 65);
+    cipher.update(encrypted, 65, 1);
+    cipher.update(encrypted, 66, encrypted.length - 66);
+    assertThat(cipher.doFinal(), equalTo(input));
+
+    cipher = factory.getInstance(true, privateKey);
+    cipher.update(input, 0, 15);
+    cipher.update(input, 15, 1);
+    encrypted = cipher.doFinal(input, 16, input.length - 16);
+    cipher = factory.getInstance(false, publicKey);
+    cipher.update(encrypted);
+    assertThat(cipher.doFinal(), equalTo(input));
+}
+  \end{minted}
+  \caption{Test from the XWiki project.}%
+\label{lst:xwiki_test}
+\end{listing}
+\begin{listing}[H]
+  \centering
+  \begin{minted}[linenos,frame=lines,xleftmargin=-3em,xrightmargin=-5em,breaklines]{java}
+@Test(timeout = 10000)
+public void testRSAEncryptionDecryptionProgressive_add2945_failAssert7_add3361_add4592() throws Exception {
+    try {
+        Cipher o_testRSAEncryptionDecryptionProgressive_add2945_failAssert7_add3361__3 = this.factory.getInstance(true, AmplBcRsaOaepCipherFactoryTest.publicKey);
+        Cipher o_testRSAEncryptionDecryptionProgressive_add2945_failAssert7_add3361_add4592__6 = this.factory.getInstance(true, AmplBcRsaOaepCipherFactoryTest.publicKey);
+        Assert.assertTrue(((org.xwiki.crypto.cipher.internal.asymmetric.BcBufferedAsymmetricCipher)o_testRSAEncryptionDecryptionProgressive_add2945_failAssert7_add3361_add4592__6).isForEncryption());
+        Assert.assertEquals("RSA/OAEP", ((org.xwiki.crypto.cipher.internal.asymmetric.BcBufferedAsymmetricCipher)o_testRSAEncryptionDecryptionProgressive_add2945_failAssert7_add3361_add4592__6).getAlgorithmName());
+        Assert.assertEquals(256, ((int) (((org.xwiki.crypto.cipher.internal.asymmetric.BcBufferedAsymmetricCipher)o_testRSAEncryptionDecryptionProgressive_add2945_failAssert7_add3361_add4592__6).getOutputBlockSize())));
+        Assert.assertEquals(214, ((int) (((org.xwiki.crypto.cipher.internal.asymmetric.BcBufferedAsymmetricCipher)o_testRSAEncryptionDecryptionProgressive_add2945_failAssert7_add3361_add4592__6).getInputBlockSize())));
+        Cipher cipher = this.factory.getInstance(true, AmplBcRsaOaepCipherFactoryTest.publicKey);
+        cipher.update(AmplBcRsaOaepCipherFactoryTest.input, 0, 17);
+        cipher.update(AmplBcRsaOaepCipherFactoryTest.input, 17, 1);
+        cipher.update(AmplBcRsaOaepCipherFactoryTest.input, 18, ((AmplBcRsaOaepCipherFactoryTest.input.length) - 18));
+        cipher.update(AmplBcRsaOaepCipherFactoryTest.input, 18, ((AmplBcRsaOaepCipherFactoryTest.input.length) - 18));
+        byte[] encrypted = cipher.doFinal();
+        cipher = this.factory.getInstance(false, AmplBcRsaOaepCipherFactoryTest.privateKey);
+        cipher.update(encrypted, 0, 65);
+        cipher.update(encrypted, 65, 1);
+        cipher.update(encrypted, 66, ((encrypted.length) - 66));
+        cipher.doFinal();
+        CoreMatchers.equalTo(AmplBcRsaOaepCipherFactoryTest.input);
+        cipher = this.factory.getInstance(true, AmplBcRsaOaepCipherFactoryTest.privateKey);
+        cipher.update(AmplBcRsaOaepCipherFactoryTest.input, 0, 15);
+        cipher.update(AmplBcRsaOaepCipherFactoryTest.input, 15, 1);
+        encrypted = cipher.doFinal(AmplBcRsaOaepCipherFactoryTest.input, 16, ((AmplBcRsaOaepCipherFactoryTest.input.length) - 16));
+        cipher = this.factory.getInstance(false, AmplBcRsaOaepCipherFactoryTest.publicKey);
+        cipher.update(encrypted);
+        cipher.doFinal();
+        CoreMatchers.equalTo(AmplBcRsaOaepCipherFactoryTest.input);
+        cipher.doFinal();
+        CoreMatchers.equalTo(AmplBcRsaOaepCipherFactoryTest.input);
+        org.junit.Assert.fail("testRSAEncryptionDecryptionProgressive_add2945 should have thrown GeneralSecurityException");
+    } catch (GeneralSecurityException expected) {
+        expected.getMessage();
+    }
+}
+  \end{minted}
+  \caption{Amplified test for the test \texttt{testRSAEncryptionDecryptionProgressive} in \listingname~\ref{lst:xwiki_test}.}%
+\label{lst:xwiki_amp_test}
+\end{listing}
+
+\section{Example of PR Message}%
+\label{app:appendix_message}
+\begin{figure}[H]
+  \centering
+  \fbox{\includegraphics[height=0.88\textheight]{message_ex1}}%
+  \caption{Example of a message as rendered by GitHub.}%
+  \label{fig:message_ex1}
+\end{figure}
+
+\begin{figure}[H]
+  \centering
+  \fbox{\includegraphics[trim=0cm 11cm 0cm 9cm,clip,width=\textwidth]{message_ex1_unfolded}}%
+  \caption{Example of a message as rendered by GitHub with assertions and mutation score details unfolded blocks.}%
+  \label{fig:message_ex1_unfolded}
+\end{figure}
+
+\figurename~\ref{fig:message_ex1} is a screenshot of a message explaining the amplified tests of the \texttt{cipher} module of XWiki, as rendered by GitHub on June 7th 2018.
+
+\figurename~\ref{fig:message_ex1_unfolded}
+
+$\blacktriangleright$
+
+links
+
+mutants description
+
+ordered by chronological order
+
+\end{appendices}
 
 \end{document}
