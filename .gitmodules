@@ -1,3 +1,4 @@
 [submodule "dspot"]
 	path = dspot
 	url = https://github.com/sbihel/dspot/
+	branch = collect_amp
