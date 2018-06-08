@@ -45,6 +45,19 @@ def describe_test_case(class_name, amplified_test,
                                        unindent=True)
     whole_test = '```java\n' + whole_test + '```\n'
     res += utils.fold_block('Whole test', whole_test) + '\n'
+    if utils.is_not_original(amplified_test, parent_name):
+        original_whole_test = utils.get_test_method(class_path,
+                                                    first_useful_parent,
+                                                    unindent=True)
+        if original_whole_test == '}\n':
+            glob_path = os.path.join(PROJECT_ROOT_PATH, MODULE_PATH, TEST_PATH,
+                                     '**', class_name + '.java')
+            class_path = next(glob.iglob(glob_path, recursive=True))
+            original_whole_test = utils.get_test_method(class_path,
+                                                        first_useful_parent,
+                                                        unindent=True)
+        original_whole_test = '```java\n' + original_whole_test + '```\n'
+        res += utils.fold_block('Original test', original_whole_test) + '\n'
 
     new_asserts = [amplification
                    for amplification in amplification_log
