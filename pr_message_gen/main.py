@@ -32,6 +32,9 @@ def describe_test_case(class_name, amplified_test,
     if utils.is_not_original(amplified_test, parent_name):
         res += '## Generated test `' + amplified_test + \
             '` based on `' + first_useful_parent + '`\n'
+        if '_' not in first_useful_parent:
+            res += '_Removed original assertions ' + \
+                '(and extracted method calls)._\n'
     else:
         res += '## Original test `' + amplified_test + '`\n'
 
