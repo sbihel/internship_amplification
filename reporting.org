@@ -583,8 +583,8 @@ the same template as humans do.
 [[https://github.com/STAMP-project/dspot/issues/362][Issue]]
 
 
-* Global Goals [0/2]
-** TODO Report <2018-06-08 Fri 12:00>
+* Global Goals [1/2]
+** DONE Report <2018-06-08 Fri 12:00>
 - [X] Thanks all the team in report (Benjamin, Benoit, Martin)
 ** TODO Defense <2018-06-25 Mon>
 *** DONE Talk @ Workshop Software Engineering Research <2018-03-08 Thu 10:00>--<2018-03-08 Thu 10:20>
@@ -598,10 +598,11 @@ the same template as humans do.
     - no results yet 😞
   + [X] Related works
 *** DONE Talk @ Workshop Software Engineering Research <2018-05-08 Tue>
-*** TODO Defense Rehearsal @ ENS <2018-06-22 Fri>
+*** Defense Rehearsal @ ENS <2018-06-22 Fri>
+- Actually, no
 
 
-* Journal [17/21]
+* Journal [18/21]
 ** DONE Preliminary Bibliographical Work <2017-09-18 Mon>--<2018-02-07 Wed>
 *** Things Done
 - Meeting with Benoit <2017-09-22 Fri>
@@ -2136,48 +2137,70 @@ java -jar ~/internship_amplification/dspot/dspot/target/dspot-1.1.1-SNAPSHOT-jar
   explain the a-amp that follow
 
 
-** TODO Week 18 <2018-06-04 Mon>--<2018-06-10 Sun>
+** DONE Week 18 <2018-06-04 Mon>--<2018-06-10 Sun>
 *** Things Done
+- run on xwiki cipher [xwiki-commons-10.0] [VisualVM 1.4.1]
+  + =--amplifiers MethodAdd --test-criterion PitMutantScoreSelector --clean --verbose=
+  + fork: 20m27s, 21m40s 884MB max used heap
+  + main master: 19m52s, 21m56s 834MB max used heap
+- run on javapoet
+  + =--amplifiers MethodAdd:StatementAdd:NumberLiteralAmplifier:BooleanLiteralAmplifier --test-criterion PitMutantScoreSelector --test com.squareup.javapoet.NameAllocatorTest --clean --verbose=
+  + fork:
+  + main master:
+  + =Failed to execute goal org.pitest:pitest-maven:1.3.0:mutationCoverage (default-cli) on project javapoet: Execution default-cli of goal org.pitest:pitest-maven:1.3.0:mutationCoverage failed: All tests did not pass without mutation when calculating line coverage. Mutation testing requires a green suite.=
 
 *** Blocking Points
 - [ ] total number of assertions not matching
   + sometimes total is higher (minimisation not caught?)
   + sometimes total is lower
   + not using DSpot's report number for now
-- [ ] Why, sometime, are there amplified tests with 3 iterations of amplifications
+- [X] Why, sometime, are there amplified tests with 3 iterations of amplifications
   with no logged parent, and sometimes there is 1 parent?
+  + not true
 - [ ] Speaking about different behaviour and different oracle defeats the goal
   of keeping things very simple
-- [ ] Amplifications log not kept for every test?
+- [X] Amplifications log not kept for every test?
+  + it was a problem with using the name of the class when ~ampliedTest == null~
 
-*** Planned Work [0/13]
-- [ ] Report <2018-06-08 Fri 12:00>
-- [ ] Renew SL access card <2018-06-07 Thu>
-- [ ] Work on report [0/10]
-  + [ ] add Java examples
-  + [ ] describe thoroughly the oracle problem
+*** Planned Work [4/14]
+- [X] Report <2018-06-08 Fri 12:00>
+- [X] Renew SL access card <2018-06-07 Thu>
+- [-] Work on report [8/11]
+  + [X] add Java examples
+  + [X] +describe thoroughly the oracle problem+
   + [ ] overspecification
     - [[http://jasonrudolph.com/blog/2008/07/01/testing-anti-patterns-overspecification/]]
-  + [ ] make a table for related works?
-  + [ ] DSpot
-    - [ ] the process of removing all assertions, then adding some, then
+  + [X] +make a table for related works?+
+  + [X] DSpot
+    - [X] the process of removing all assertions, then adding some, then
       input-amplification, then assertions
-    - [ ] iterations
-  + [ ] What have I done [0/3]
-    - [ ] Conceptual contribution
-      + variables created through a-amplification, that aren't useful for an
-      assertion but that raise exceptions
-      + long names, so NL simple syntheses are nice
-      + identifying killing assertions isn't so great because it's not
+    - [X] iterations
+    - [X] minimisation
+    - [X] heavy memory usage
+  + [-] What have I done [2/3]
+    - [-] Conceptual contribution
+      + [X] variables created through a-amplification, that aren't useful for an
+        assertion but that raise exceptions
+      + [ ] long names, so NL simple syntheses are nice
+      + [X] identifying killing assertions isn't so great because it's not
         necessarily direct
-    - [ ] Implementation
+      + [X] assume that the original is known and understood by the developer?
+      + [X] better oracle and/or new behaviour
+    - [X] Implementation
       + lines
-    - [ ] Aside stuff
-      + [ ] bugs encountered and fixed
-  + [ ] Problems encountered
-    - ideally we would like to have infos about whether a mutant modifies the
-      state of the CUT or if it's something else
-  + [ ] Evaluation
+      + aimed at GitHub, but could be used for GitLab, but not for BitBucket
+        (because of the html of the fold blocks)
+    - [X] Aside stuff
+      + [X] bugs encountered and fixed
+  + [X] Problems encountered
+    - [X] ideally we would like to have infos about whether a mutant modifies
+      the state of the CUT or if it's something else
+    - [X] balance between complex information and information simplified to a
+      useless point
+    - [X] speaking of mutants by talking about changes
+    - [X] very hard to log everything that happens, especially after with
+      minisation where the border between original and amplification thins down
+  + [X] Evaluation
     + low overhead
     + it works (e.g. right total number of asserts)
   + [ ] Go through ... to remember what I did [0/4]
@@ -2185,7 +2208,8 @@ java -jar ~/internship_amplification/dspot/dspot/target/dspot-1.1.1-SNAPSHOT-jar
     - [ ] emails
     - [ ] commits
     - [ ] functions of =pr_message_gen=
-  + [ ] Reduce the number of references
+  + [X] +Reduce the number of references+
+  + [X] Screenshots
 - [ ] ask for opinions (e.g. Simon U, XWiki, SAT4J)
   + [ ] XWiki
     - [ ] ask for feedback
@@ -2201,16 +2225,38 @@ java -jar ~/internship_amplification/dspot/dspot/target/dspot-1.1.1-SNAPSHOT-jar
 - [ ] Target grouping should be based on variable (not variable#method)
 - [ ] Maybe remaining assertions should be treated like assertions that check a
   variable that was generated at the same time
-- [ ] In the case of a useless (alone) i-amp, still need to recover these to
+- [X] In the case of a useless (alone) i-amp, still need to recover these to
   explain the a-amp that follow
+- [X] Update =AmplificationLog= after minimization
 
 
 ** TODO Week 19 <2018-06-11 Mon>--<2018-06-17 Sun>
 *** Things Done
 
 *** Blocking Points
+- [ ] total number of assertions not matching
+  + sometimes total is higher (minimisation not caught?)
+  + sometimes total is lower
+  + not using DSpot's report number for now
+- [ ] Speaking about different behaviour and different oracle defeats the goal
+  of keeping things very simple
 
-*** Planned Work
+*** Planned Work [0/9]
+- [ ] ask for opinions (e.g. Simon U, XWiki, SAT4J)
+  + [ ] XWiki
+    - [ ] ask for feedback
+  + [ ] others
+- [ ] realise that only getters, is, and toString are used
+- [ ] realise that asserts always go through ~getFactory~
+- [ ] remove redundant mutants
+- [ ] differentiate additional coverage to new behaviours
+- [ ] Sometimes an assertion for a variable directly test the variable (it can
+  be simply a string), so no need to find a method call
+- [ ] Reformat assertions for a variable when there is only one assert for this
+  variable
+- [ ] Target grouping should be based on variable (not variable#method)
+- [ ] Maybe remaining assertions should be treated like assertions that check a
+  variable that was generated at the same time
 
 
 ** TODO Week 20 <2018-06-18 Mon>--<2018-06-24 Sun>
