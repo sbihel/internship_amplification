@@ -203,7 +203,7 @@ public class TreeListTest {
 
 \begin{frame}{Related Works}
   \begin{center}
-    \textbf{\Large{Software Artefact Summarization}}
+    \textbf{\Large{Software Artefact Summarization}}\footcite{nazar2016summarizing}
   \end{center}
 
   Includes: documentation for source code, code changes, \alert{test cases}.
@@ -211,8 +211,13 @@ public class TreeListTest {
   \vfill{}
   \pause{}
 
-  \textit{UnitTestScribe}\footcite{li2016automatically}
-  Summarises actions in natural language (Software Word Usage Model, method stereotypes).
+  \metroset{block=fill}
+  \begin{block}{Example}
+    \begin{itemize}
+      % \item<+-> Classification of test cases.\footcite{li2018automatically}
+      \item<+-> \textit{UnitTestScribe}\footcite{li2016automatically} Summarises actions in natural language.
+    \end{itemize}
+  \end{block}
 \end{frame}
 
 \begin{frame}{Contribution}
@@ -237,6 +242,8 @@ public class TreeListTest {
   \end{description}
 
   \pause{}
+
+  250 ELoC.
 
   Logging call in each amplifier.
 \end{frame}
@@ -266,11 +273,26 @@ public class TreeListTest {
   \includegraphics[width=9em]{Bitbucket-blue}
 \end{frame}
 
-\begin{frame}{Demo}
+\begin{frame}{Message Generator}
+  655 Python ELoC.
+
   \href{https://github.com/sbihel/xwiki-commons/issues/2\#issuecomment-394699634}{Demo XWiki}
 \end{frame}
 
 \begin{frame}{Evaluation}
+  \metroset{block=fill}
+  \begin{block}{Performances}
+    Logging:
+    \begin{itemize}
+      \item no impact on time,
+      \item 6\% higher memory usage.
+    \end{itemize}
+
+    Few seconds for the message generation.
+  \end{block}
+
+  \pause{}
+
   No case study with users. Only discussions with my supervisor.
 \end{frame}
 
