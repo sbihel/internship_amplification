@@ -192,6 +192,7 @@ the same template as humans do.
   + Jasmine (testing framework for javascript includes directly NL description)
     - [[https://jasmine.github.io/2.0/introduction.html]]
   + TODO
+  + the internship should have been centred around it
 - /A Survey on Unit Testing Practices and Problems/
   ([[https://pdfs.semanticscholar.org/f193/e68ce6f3200b1f801e64bf49e56f668fd3ef.pdf][daka2014survey]])
   + TODO
@@ -583,10 +584,10 @@ the same template as humans do.
 [[https://github.com/STAMP-project/dspot/issues/362][Issue]]
 
 
-* Global Goals [1/2]
+* Global Goals [2/2]
 ** DONE Report <2018-06-08 Fri 12:00>
 - [X] Thanks all the team in report (Benjamin, Benoit, Martin)
-** TODO Defense <2018-06-25 Mon>
+** DONE Defense <2018-06-27 Wed 14:00>
 *** DONE Talk @ Workshop Software Engineering Research <2018-03-08 Thu 10:00>--<2018-03-08 Thu 10:20>
 - Room 4523
 - 10 minutes talk
@@ -602,7 +603,7 @@ the same template as humans do.
 - Actually, no
 
 
-* Journal [18/21]
+* Journal [21/21]
 ** DONE Preliminary Bibliographical Work <2017-09-18 Mon>--<2018-02-07 Wed>
 *** Things Done
 - Meeting with Benoit <2017-09-22 Fri>
@@ -784,7 +785,7 @@ public class RemoveIfReturn extends AbstractProcessor<CtIf> {
 - [ ] Run tools that I encounter in papers
 
 
-** DONE Week 3 <2018-02-19 Mon>--<2018-02-25 Sun>
+** DONE Week 3  <2018-02-19 Mon>--<2018-02-25 Sun>
 *** Things Done
 - Work on DSpot documentation
 - Read reviews of bibliographic report
@@ -901,7 +902,7 @@ purpose of a source code method.
 - [ ] Search for papers on mutation testing and same location targeting
 
 
-** DONE Week 4 <2018-02-26 Mon>--<2018-03-04 Sun>
+** DONE Week 4  <2018-02-26 Mon>--<2018-03-04 Sun>
 *** Things Done
 - Added git hook to commit the html version of the reporting
 - Explored the use of slicing to detect the cause of new killed mutant
@@ -2230,7 +2231,7 @@ java -jar ~/internship_amplification/dspot/dspot/target/dspot-1.1.1-SNAPSHOT-jar
 - [X] Update =AmplificationLog= after minimization
 
 
-** TODO Week 19 <2018-06-11 Mon>--<2018-06-17 Sun>
+** DONE Week 19 <2018-06-11 Mon>--<2018-06-17 Sun>
 *** Things Done
 
 *** Blocking Points
@@ -2241,7 +2242,7 @@ java -jar ~/internship_amplification/dspot/dspot/target/dspot-1.1.1-SNAPSHOT-jar
 - [ ] Speaking about different behaviour and different oracle defeats the goal
   of keeping things very simple
 
-*** Planned Work [0/9]
+*** Planned Work [2/12]
 - [ ] ask for opinions (e.g. Simon U, XWiki, SAT4J)
   + [ ] XWiki
     - [ ] ask for feedback
@@ -2257,24 +2258,40 @@ java -jar ~/internship_amplification/dspot/dspot/target/dspot-1.1.1-SNAPSHOT-jar
 - [ ] Target grouping should be based on variable (not variable#method)
 - [ ] Maybe remaining assertions should be treated like assertions that check a
   variable that was generated at the same time
+- [ ] Work on slides [0/1]
+  + [ ] add references
+- [X] Return keys to Kista
+- [X] Meeting Benoit <2018-06-13 Wed 14:00>
+  + +Kista keys?+
 
 
-** TODO Week 20 <2018-06-18 Mon>--<2018-06-24 Sun>
+** DONE Week 20 <2018-06-18 Mon>--<2018-06-24 Sun>
+*** Things Done
+- Threw printed papers. Hard to see all these promising annotations go.
+
+*** Blocking Points
+
+*** Planned Work [3/4]
+- [X] +Defense Rehearsal @ ENS+ <2018-06-22 Fri>
+- [X] Hand in grant form <2018-06-21 Thu>
+- [X] Return keys
+  + [X] office
+  + [X] apartment
+- [ ] Work on slides [0/2]
+  + [ ] add references
+  + [ ] a bit of state of the art
+
+
+** DONE Week 21 <2018-06-25 Mon>--<2018-06-27 Wed>
 *** Things Done
 
 *** Blocking Points
 
-*** Planned Work [0/1]
-- [ ] Defense Rehearsal @ ENS <2018-06-22 Fri>
-
-
-** TODO Week 21 <2018-06-25 Mon>--<2018-07-01 Sun>
-*** Things Done
-
-*** Blocking Points
-
-*** Planned Work [0/1]
-- [ ] Defense <2018-06-27 Wed 14:00> @Jersey
+*** Planned Work [2/2]
+- [X] Defense <2018-06-27 Wed 14:00> @ Jersey Room
+- [X] Work on slides [2/2]
+  + [X] add references
+  + [X] a bit of state of the art
 
 
 * Conclusion
